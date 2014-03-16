@@ -17,7 +17,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: pfe_development
+  database: jeremythiry
   pool: 5
   password:
 
