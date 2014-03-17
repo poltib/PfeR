@@ -2,3 +2,12 @@
 <p>
   The time is now: <%= Time.now %>
 </p>
+
+<ul>
+	<% for happening in @happenings %>
+		<li>
+			<h3><%= happening.name %></h3>
+			<%= happening.description %>
+		</li>	
+	<% end %>
+</ul>

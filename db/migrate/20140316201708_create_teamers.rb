@@ -1,0 +1,10 @@
+class CreateTeamers < ActiveRecord::Migration
+  def change
+    create_table :teamers do |t|
+      t.belongs_to :user
+      t.belongs_to :team
+
+      t.timestamps
+    end
+  end
+end

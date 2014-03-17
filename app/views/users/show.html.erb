@@ -1,0 +1,18 @@
+<h1>Salut <%= @user.username %></h1>
+
+<p><%= @user.description %></p>
+
+<h2>Info</h2>
+<ul>
+	<li><%= @user.lastname %></li>
+	<li><%= @user.firstname %></li>
+	<li><%= @user.email %></li>
+</ul>
+
+<%= image_tag @user.avatar.url %>
+<%= image_tag @user.avatar.url(:medium) %>
+<%= image_tag @user.avatar.url(:thumb) %>
+
+
+
+

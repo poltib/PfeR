@@ -1,0 +1,2 @@
+module HappeningHelper
+end

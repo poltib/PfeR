@@ -8,6 +8,40 @@
 </head>
 <body>
 
+<h1><a href="/">Sportfun</a></h1>
+
+<h2>Recherche</h2>
+<ul>
+	<li><%= link_to "Evenements", happenings_path %></li>
+	<li><%= link_to "Groupe", groups_path %></li>
+	<li><%= link_to "Club", teams_path %></li>
+</ul>
+
+<h2>Communauté</h2>
+<ul>
+	<li>Tracés</li>
+	<li><%= link_to "Forums", forums_path %></li>
+</ul>
+<% if user_signed_in? %>	
+<h2>Mon compte</h2>
+<ul>
+	<li><%= link_to "Votre profil", user_path(current_user) %></li>
+	<li><%= link_to "Créer evenement", new_happening_path %></li>
+	<li><%= link_to "Créer groupe", new_group_path %></li>
+	<li><%= link_to "Créer club", new_team_path %></li>
+	<li><%= link_to "Créer forum", new_forum_path %></li>
+	<li>Tracé</li>
+</ul>
+<% end %>
+
+<ul class="hmenu">
+  <%= render 'devise/menu/registration_items' %>
+  <%= render 'devise/menu/login_items' %>
+</ul>
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
 <%= yield %>
 
 </body>

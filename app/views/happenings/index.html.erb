@@ -1,0 +1,13 @@
+<h1>Liste des évènements</h1>
+
+<ul>
+	<% for happening in @happenings %>
+		<li>
+			<%= link_to happening.name, happening_path(happening) %>
+			<% if happening.user_id == current_user.id %>
+				| <%= link_to "Edit", edit_happening_path(happening) %>
+				| <%= link_to "Delete", happening, :method => 'delete' %>
+			<% end %>
+		</li>	
+	<% end %>
+</ul>

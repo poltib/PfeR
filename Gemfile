@@ -46,3 +46,8 @@ end
 
 gem 'rails_12factor', group: :production
 
+# Auth service
+gem 'devise'
+
+# files managment
+gem "paperclip", "~> 4.1"

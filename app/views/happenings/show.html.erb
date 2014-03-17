@@ -1,0 +1,9 @@
+<h2><%= @happening.name %></h2>
+
+<%= link_to "Edit", edit_happening_path(@happening) %>
+
+<p><%= @happening.description %></p>
+<p><%= @happening.date %></p>
+<p><%= @happening.address %></p>
+<p><%= @happening.owner.email %></p>
+<p><%= @happening.link %></p>
