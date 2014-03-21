@@ -1,40 +1,46 @@
+<section>
+<div class="container">
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :multipart => true }) do |f| %>
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :multipart => true, :class => 'create' }) do |f| %>
+  <fieldset>
+
   <%= devise_error_messages! %>
+  <ul>
+  <li><%= f.label :email %><br />
+  <%= f.email_field :email, :autofocus => true %></li>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+  <li><%= f.label :username %><br />
+  <%= f.text_field :username %></li>
 
-  <div><%= f.label :username %><br />
-  <%= f.text_field :username %></div>
+  <li><%= f.label :lastname %><br />
+  <%= f.text_field :lastname %></li>
 
-  <div><%= f.label :lastname %><br />
-  <%= f.text_field :lastname %></div>
+  <li><%= f.label :firstname %><br />
+  <%= f.text_field :firstname %></li>
 
-  <div><%= f.label :firstname %><br />
-  <%= f.text_field :firstname %></div>
+  <li><%= f.label :description %><br />
+  <%= f.text_area :description %></li>
 
-  <div><%= f.label :description %><br />
-  <%= f.text_area :description %></div>
-
-  <div><%= f.label :avatar %><br />
-  <%= f.file_field :avatar %></div>
+  <li><%= f.label :avatar %><br />
+  <%= f.file_field :avatar %></li>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <li>Currently waiting confirmation for: <%= resource.unconfirmed_email %></li>
   <% end %>
 
-  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-  <%= f.password_field :password, :autocomplete => "off" %></div>
+  <li><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+  <%= f.password_field :password, :autocomplete => "off" %></li>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+  <li><%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation %></li>
 
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-  <%= f.password_field :current_password %></div>
+  <li><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+  <%= f.password_field :current_password %></li>
 
-  <div><%= f.submit "Update" %></div>
+  <li><%= f.submit "Update" %></li>
+  </ul>
+  </fieldset>
 <% end %>
 
 <h3>Cancel my account</h3>
@@ -42,3 +48,5 @@
 <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %></p>
 
 <%= link_to "Back", :back %>
+</div>
+</section>

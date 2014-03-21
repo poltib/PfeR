@@ -5,8 +5,6 @@ class CreateHappenings < ActiveRecord::Migration
       t.text :description
       t.string :address
       t.string :link
-      t.string :file_name
-      t.string :file_ext
       t.timestamp :date
       t.belongs_to :user
       t.belongs_to :event_type

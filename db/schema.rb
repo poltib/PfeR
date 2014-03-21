@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140316201803) do
+ActiveRecord::Schema.define(version: 20140320195223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,14 @@ ActiveRecord::Schema.define(version: 20140316201803) do
   create_table "categories_forms", id: false, force: true do |t|
     t.integer "category_id", null: false
     t.integer "form_id",     null: false
+  end
+
+  create_table "comments", force: true do |t|
+    t.text     "comment"
+    t.integer  "forum_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "conversations", force: true do |t|
@@ -66,11 +74,13 @@ ActiveRecord::Schema.define(version: 20140316201803) do
   create_table "groups", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.string   "image"
-    t.string   "thumb"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   create_table "groups_users", id: false, force: true do |t|
@@ -83,13 +93,12 @@ ActiveRecord::Schema.define(version: 20140316201803) do
     t.text     "description"
     t.string   "address"
     t.string   "link"
-    t.string   "file_name"
-    t.string   "file_ext"
     t.datetime "date"
     t.integer  "user_id"
     t.integer  "event_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "route"
   end
 
   create_table "images", force: true do |t|
@@ -114,12 +123,14 @@ ActiveRecord::Schema.define(version: 20140316201803) do
 
   create_table "sponsors", force: true do |t|
     t.string   "name"
-    t.string   "image"
-    t.string   "thumb"
     t.string   "addresse"
     t.integer  "happening_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   create_table "statuses", force: true do |t|
@@ -138,11 +149,13 @@ ActiveRecord::Schema.define(version: 20140316201803) do
   create_table "teams", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.string   "image"
-    t.string   "thumb"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   create_table "user_statuses", force: true do |t|
@@ -159,10 +172,6 @@ ActiveRecord::Schema.define(version: 20140316201803) do
     t.string   "lastname"
     t.text     "description"
     t.integer  "role_id"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -176,6 +185,10 @@ ActiveRecord::Schema.define(version: 20140316201803) do
     t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

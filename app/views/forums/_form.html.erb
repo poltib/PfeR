@@ -1,0 +1,24 @@
+<%= form_for @forum, :html => { :multipart => true, :class => 'create' } do |f| %>
+  <fieldset>
+  <% if @forum.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@forum.errors.count, "error") %> prohibited
+        this forum from being saved:</h2>
+      <ul>
+      <% @forum.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  	<ul>
+	<li><%= f.label :title %>
+	<%= f.text_field :title %></li>
+
+	<li><%= f.label :post %>
+	<%= f.text_area :post %></li>
+
+	<%= f.submit %>
+	</ul>
+	</fieldset>
+<% end %>

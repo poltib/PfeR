@@ -1,6 +1,13 @@
+<section>
+<div class="container">
 <h1>Salut <%= @user.username %></h1>
 
 <p><%= @user.description %></p>
+
+<% if current_user.id != @user.id %>
+ adduser To groupe
+ adduser to team
+<% end %>
 
 <h2>Info</h2>
 <ul>
@@ -9,10 +16,38 @@
 	<li><%= @user.email %></li>
 </ul>
 
-<%= image_tag @user.avatar.url %>
+<h2>Trucs</h2>
+<h3>Groups</h3>
+<ul>
+	<% for group in @user.groups_as_owner %>
+	<li><%= link_to group.name, group_path(group) %></li>
+	<% end %>
+</ul>
+<h3>Forums</h3>
+<ul>
+	<% for forum in @user.forums %>
+	<li><%= link_to forum.title, forum_path(forum) %></li>
+	<% end %>
+</ul>
+
+<h3>Happenings</h3>
+<ul>
+	<% for happening in @user.happenings_as_owner %>
+	<li><%= link_to happening.name, happening_path(happening) %></li>
+	<% end %>
+</ul>
+
+<h3>com</h3>
+<ul>
+	<% for comment in @user.comments %>
+	<li><%= comment.comment %>
+		<p><%= comment.forum_id %></p>
+	</li>
+	<% end %>
+</ul>
+
 <%= image_tag @user.avatar.url(:medium) %>
 <%= image_tag @user.avatar.url(:thumb) %>
 
-
-
-
+</div>
+</section>

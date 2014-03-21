@@ -1,2 +1,17 @@
-<h1>Group#index</h1>
-<p>Find me in app/views/group/index.html.erb</p>
+<section>
+	<div class="container">
+		<ul>
+		<% for group in @groups %>
+      <li class="thumbRace">
+        <h4 role="heading" aria-level="4">
+                <%= link_to group.name, group_path(group) %>
+			  <% if group.owner.id == current_user.id %>
+				| <%= link_to "Edit", edit_group_path(group) %>
+				| <%= link_to "Delete", group, :method => 'delete' %>
+			  <% end %>
+				</h4>
+		  </li>
+		<% end %>
+		</ul>
+	</div>
+</section>

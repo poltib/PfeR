@@ -1,0 +1,126 @@
+
+
+
+
+
+form{
+	fieldset{
+		padding:0;
+		margin:0;
+		border:none;
+	}
+    .distances{
+        width: 100%;
+        label:first-child{
+            width: 100%;
+            margin-bottom: 0.5em;
+        }
+        label{
+            width: auto;
+        }
+        input{
+            width: auto;
+            margin-right: 0.4em;
+        }
+    }
+
+    #error_explanation{
+        box-sizing:border-box;
+        width: 100%;
+        padding: 1em;
+        background-color: $sky;
+        border: 1px solid $red;
+        h2{
+            margin: 0.5em 0;
+        }
+    }
+
+    div{
+        width: 33%;
+        margin-bottom: 1em;
+        float: left;
+        label{
+            box-sizing: border-box;
+            width: 100%;
+            display: inline-block;
+            margin-bottom: 0.3em;
+        }
+        input{
+            box-sizing: border-box;
+            width: 80%;
+        }
+    }
+    div:last-child{
+        margin:0;
+    }
+    div:after{
+        content:"";
+        display: block;
+        clear:both;
+    }
+}
+
+[type="text"],[type="password"]{
+    padding: 0.4em;
+}
+
+[type="date"]{
+    padding:0.2em;
+}
+
+[type="text"],[type="password"],[type="date"],[type="email"]{
+    background-color: transparent;
+    border: 1px solid white;
+    margin-top: 0.1em;
+    margin-bottom: 0.3em;
+    font-size: 1em;
+    color:white;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+    font-weight: lighter;
+    border-radius: 3px;
+}
+
+
+[type="submit"]:focus, [type="text"]:focus,[type="password"]:focus,[type="date"]:focus,[type="email"]:focus{
+    outline:none;
+}
+
+[type="submit"]:hover{
+    cursor:pointer;
+    background-color: $font;
+    border-color: $font;
+    color: $sky;
+}
+
+[type="submit"]{
+    background-color: $sky;
+    border:1px solid $sky;
+    padding:0.4em;
+    font-size: 1em;
+    color:$font;
+}
+
+input:focus{
+    border: 1px solid #FF7C00;
+}
+
+.button_to{
+    margin:0;
+    padding:0;
+    display: inline-block;
+    input{
+        width: auto;
+        padding: 0;
+        margin: 0;
+        background-color:transparent;
+        border:none;
+        display: inline;
+        border-bottom: 1px dotted silver;
+        &:hover, &:focus{
+            background-color:transparent;
+            color:$blue;
+            border-color: $blue;
+        }
+    }
+
+}

@@ -1,0 +1,12 @@
+<section>
+  <div class="container">
+  <%= image_tag @group.avatar.url(:medium) %>
+<%= image_tag @group.avatar.url(:thumb) %>
+    <h2><%= @group.name %> <span><%= @group.owner.username %></span></h2>
+    <% if @group.owner.id == current_user.id %>
+    | <%= link_to "Edit", edit_group_path(@group) %>
+    | <%= link_to "Delete", @group, :method => 'delete' %>
+    <% end %>
+    <p><%= @group.description %></p>
+  </div>
+</section>

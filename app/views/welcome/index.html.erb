@@ -1,13 +1,48 @@
-<h2>Hello World</h2>
-<p>
-  The time is now: <%= Time.now %>
-</p>
-
-<ul>
+<section>
+  <div class="container">
+    <h2 role="heading" aria-level="2" class="hidden">Presentation</h2>
+    <div class="presenter">
+      <img src="../img/item1.jpg">
+      <h3 role="heading" aria-level="3">Step 1</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+    </div>
+    <div class="presenter">
+      <img src="../img/item1.jpg">
+      <h3 role="heading" aria-level="3">Step 2</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+    </div>
+    <div class="presenter">
+      <img src="../img/item1.jpg">
+      <h3 role="heading" aria-level="3">Step 3</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container index">
+    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
+    <h2 role="heading" class="eventTitle" aria-level="2">Les courses à venir</h2>
+    <span><%= link_to "toutes les courses", happenings_path %></span>
+    <ul class="events">
+        <li class="month">
+            <h3 role="heading" aria-level="3">Octobre</h3>
+        </li>
 	<% for happening in @happenings %>
-		<li>
-			<h3><%= happening.name %></h3>
-			<%= happening.description %>
+        <li class="thumbRace">
+           <ul>
+            <li class="date"><span class="day">12</span> <span class="monthName">Oct</span></li>
+            <li class="location">Liège</li>
+            <li class="name"><h4 role="heading" aria-level="4"><%= link_to happening.name, happening_path(happening) %></h4></li>
+            <li class="distances"><a href="#">10km</a> | <a href="#">20km</a></li>
+          </ul>
 		</li>	
 	<% end %>
 </ul>
+</div>
+    </section>

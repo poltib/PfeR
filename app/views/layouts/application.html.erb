@@ -1,48 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Site de vente de matériel de protection d'ondes">
   <title>Pfe</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <!-- <link rel="stylesheet" href="/assets/fontello.css?body=1 "> -->
+  <!-- <link rel="stylesheet" href="/assets/animation.css?body=1 "> -->
+  <!--[if IE 7]>
+    <link rel="stylesheet" href="/assets/fontello-ie7.css?body=1 ">
+  <![endif]-->
+  <!-- <link rel="stylesheet" href="/assets/screen.css?body=1 "> -->
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="/assets/html5shiv.min.js?body=1"></script>
+    <script src="/assets/hespond.min.js?body=1 "></script>
+  <![endif]-->
+  <%= stylesheet_link_tag "fontello", media: "all" %>
+  <%= stylesheet_link_tag "animation", media: "all" %>
+  <%= stylesheet_link_tag "screen", media: "all" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<h1><a href="/">Sportfun</a></h1>
-
-<h2>Recherche</h2>
-<ul>
-	<li><%= link_to "Evenements", happenings_path %></li>
-	<li><%= link_to "Groupe", groups_path %></li>
-	<li><%= link_to "Club", teams_path %></li>
-</ul>
-
-<h2>Communauté</h2>
-<ul>
-	<li>Tracés</li>
-	<li><%= link_to "Forums", forums_path %></li>
-</ul>
-<% if user_signed_in? %>	
-<h2>Mon compte</h2>
-<ul>
-	<li><%= link_to "Votre profil", user_path(current_user) %></li>
-	<li><%= link_to "Créer evenement", new_happening_path %></li>
-	<li><%= link_to "Créer groupe", new_group_path %></li>
-	<li><%= link_to "Créer club", new_team_path %></li>
-	<li><%= link_to "Créer forum", new_forum_path %></li>
-	<li>Tracé</li>
-</ul>
-<% end %>
-
-<ul class="hmenu">
-  <%= render 'devise/menu/registration_items' %>
-  <%= render 'devise/menu/login_items' %>
-</ul>
+  <header class="header">
+    <div class="header__navbar">
+      <div class="container">
+        <div class="header__logo">
+          <a href="/" title="Etude et vie accueil">
+            <h1 role="heading" aria-level="1">SportiveFun</h1>
+          </a>
+        </div>
+        <nav role="navigation">
+          <ul class="nav-menu"><!-- 
+            --><li class="nav-item"><a href="categorie.html" title="Protection ondes">Recherche</a>
+              <section class="sub-nav">
+                <ul class="sub-nav-group">
+                  <li><%= link_to "Evenements", happenings_path %></li>
+                  <li><%= link_to "Groupe", groups_path %></li>
+                  <li><%= link_to "Club", teams_path %></li>
+                  <li><%= link_to "Users", users_path %></li>
+                </ul>
+              </section>
+            </li><!-- 
+            --><li class="nav-item"><a href="categorie.html" title="Nos marques">Communauté</a>
+              <section class="sub-nav">
+                <ul class="sub-nav-group">
+                  <li><a href="#">Tracés</a></li>
+                  <li><%= link_to "Forums", forums_path %></li>
+                </ul>
+              </section>
+            </li><!-- 
+             --><li class="nav-item"><a href="categorie.html" title="Nos marques">Mon compte</a>
+              <section class="sub-nav">
+                <ul class="sub-nav-group">
+                  <% if user_signed_in? %>
+                    <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+                    <li><%= link_to('Edit registration', edit_user_registration_path) %></li>
+                    <li><%= link_to "Votre profil", user_path(current_user) %></li>
+                    <li><%= link_to "Créer evenement", new_happening_path %></li>
+                    <li><%= link_to "Créer groupe", new_group_path %></li>
+                    <li><%= link_to "Créer club", new_team_path %></li>
+                    <li><%= link_to "Créer forum", new_forum_path %></li>
+                    <li><a href="#">Tracé</a></li>
+                  <% else %>
+                    <li><%= link_to('Login', new_user_session_path)  %></li>
+                    <li><%= link_to('Register', new_user_registration_path)  %></li>
+                  <% end %>
+                </ul>
+              </section>
+            </li>
+          </ul>     
+        </nav>
+        <div class="searchForm">
+          <form action="#" class="search">
+            <input type="text" name="searchField" id="searchField" placeholder="rechercher..."><!-- 
+            --><button class="buttonSearch"><i class="icon-search"></i></button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="headingImg">
+      <div class="container">
+        <div class="intro">
+          <h2 role="heading" aria-level="2">Bienvenue sur SportiveFun</h2>
+          <p>Site pour partager ou trouver les meilleurs courses ou tracés de course à pied!</p>
+        </div>
+      </div>
+    </div>
+  </header>
 
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
 
-<%= yield %>
+  <%= yield %>
 
+  <footer role="footer">
+        <div class="container">
+            <div>
+                <div class="footDiv">
+                    <h4 role="heading" aria-level="4"><i class="icon-phone-circled"></i>A propos</h4>
+                    <ul>
+                        <li><a href="contact.html" title="Contact">Contact</a></li>
+                        <li><a href="#" title="Service client">Service client</a></li>
+                        <li><a href="#" title="Support technique">Support technique</a></li>
+                        <li><a href="#" title="Accueil">Accueil</a></li>
+                    </ul>
+                </div>
+                <div class="footDiv">
+                    <h4 role="heading" aria-level="4"><i class="icon-info-circled"></i>Informations</h4>
+                    <ul>
+                        <li><a href="page.html" title="Livraisons et retours">Livraisons et retours</a></li>
+                        <li><a href="#" title="Réservations">Réservations</a></li>
+                        <li><a href="#" title="Conditions">Conditions</a></li>
+                        <li><a href="#" title="Plop">Plop</a></li>
+                    </ul>
+                    
+                </div>
+                <div class="footDiv">
+                    <h4 role="heading" aria-level="4"><i class="icon-group-circled"></i>Social</h4>
+                    <ul>
+                        <li><a href="#" title="Facebook"><i class="icon-facebook-circled"></i>Facebook</a></li>
+                        <li><a href="#" title="Twitter"><i class="icon-twitter-circled"></i>Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <p>© Jérémy Thiry 2014</p>
+        </div>
+  </footer>
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA9m3Ix3AmZHlnvQCQAIUo4yyFjD7c9eLw&sensor=true">
+  </script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <%= javascript_include_tag "application" %>
+  <%= yield :script %>
 </body>
 </html>

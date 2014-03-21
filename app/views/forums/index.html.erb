@@ -1,2 +1,53 @@
-<h1>Forum#index</h1>
-<p>Find me in app/views/forum/index.html.erb</p>
+<section>
+  <div class="container">
+    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
+    <div class="cat">
+    	<h3 role="heading" aria-level="3">Catégories</h3>
+    	<ul>
+    		<li>Conseils</li>
+    		<li>Entrainements</li>
+    		<li>Equipements</li>
+
+    	</ul>
+    </div>
+    <div class="forums">
+    	<h2 role="heading" aria-level="2">Derniers forums</h3>
+    	<ul>
+<% for forum in @forums %>
+    	<li class="forum">
+  			<article>
+  				<div class="aside">
+    				<ul class="actions">
+    					<li><a href="#"><i class="icon-heart-empty"></i> (89)</a></li>
+    					<li class="shareButton"><i class="shareDart">&rarr;</i>&nbsp;Share
+    						<ul class="shareForum">
+        					<li><a href="#"><i class="icon-facebook-circled"></i></a></li>
+                  <li><a href="#"><i class="icon-gplus-circled"></i></a></li>
+                  <li><a href="#"><i class="icon-twitter-circled"></i></a></li>
+                  <li><a href="#"><i class="icon-mail"></i></a></li>
+                  <li><a href="#"><i class="icon-rss"></i></a></li>
+      					</ul>
+      				</li>
+    				</ul>
+  				</div>
+  				<header>
+            <h3 role="heading" aria-level="3">
+            	<%= link_to forum.title, forum_path(forum) %>
+							<% if user_signed_in? && forum.user_id == current_user.id %>
+							| <%= link_to "Edit", edit_forum_path(forum) %>
+							| <%= button_to "Delete", forum, :method => 'DELETE' %>
+							<% end %><br><span>Posté par Admin</span></h3>
+              <ul class="forumDetails">
+                  <li><i class="icon-clock-1"></i><%= forum.created_at %></li>
+                  <li><i class="icon-bookmarks"></i>Entrainements</li>
+                  <li><i class="icon-chat"></i><%= forum.comments.count %> réponses</li>
+              </ul>
+          </header>
+  				<p><%= forum.post %></p>
+  			</article>
+  		</li>
+<% end %>
+			</ul>
+			</div>
+			</div>
+			</section>

@@ -1,0 +1,15 @@
+<li class="thumbRace">
+	<article class="comment">
+		<header class="comment__header">
+			<%= image_tag comment.user.avatar.url(:thumb) %>
+			<h4><%= link_to comment.user.username, user_path(comment.user) %></h4>
+			<span><%= comment.created_at %></span>
+		</header>
+		<div class="comment__body">
+			<p><%= comment.comment %></p>
+			<% if  user_signed_in? && comment.user.id == current_user.id %>
+				<%= button_to "supprimer", [comment.forum, comment], :method => 'DELETE' %>
+			<% end %>
+		</div>
+	</article>
+</li>

@@ -1,4 +1,7 @@
 class Happening < ActiveRecord::Base
+
+	mount_uploader :route, RouteUploader
+
   validates :name, :description, :address, :link, :date, presence: true
 
   has_many :user_statuses

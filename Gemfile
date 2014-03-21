@@ -50,4 +50,11 @@ gem 'rails_12factor', group: :production
 gem 'devise'
 
 # files managment
+gem 'carrierwave'
 gem "paperclip", "~> 4.1"
+
+# Xml parser
+gem 'nokogiri', '~> 1.6.1'
+
+gem 'awesome_print'
+

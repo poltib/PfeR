@@ -1,0 +1,75 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "normalize";
+@import "variables";
+@import "navigation";
+@import "content";
+@import "header"; 
+@import "footer";
+@import "form";
+
+h1      { font-size: 2em;}
+h2      { font-size: 1.5em;}
+h3      { font-size: 1.17em;}
+h4      { font-size: 1em;}
+h5      { font-size: 0.83em;}
+h6      { font-size: 0.75em;}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif; 
+    line-height: 1.3em;
+}
+html{font-size: 16px;}
+body{
+    font-size: 16px;
+    //background: fixed url("../img/bright_squares.png");
+    //background-color: $sky;
+}
+
+.container{
+    position:relative;
+    width: 90%;
+    margin:0 auto;
+    font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    color: $font;
+    //Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    //Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    font-weight: lighter;
+    line-height: 1.3em;
+}
+
+p{
+    font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+}
+
+.container:after{
+    content:"";
+    display:block;
+    clear:both;
+}
+
+a{
+    border-bottom: 1px dotted silver;
+    color:$font;
+    text-decoration: none;
+}
+
+a:hover{
+    color:$blue;
+    border-color: $blue;
+}
+
+.hidden{
+    visibility:hidden;
+    position:absolute;
+    text-indent: -10000px;
+    display:none;
+}
+
+.none{
+    display: none;
+}
+

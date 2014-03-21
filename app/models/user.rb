@@ -5,10 +5,15 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
-  
-  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
-  # validates :username, presence: true, length: {maximum: 255}, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9]*\z/, message: "may only contain letters and numbers." }
+  # Validate content type
+  validates_attachment_content_type :avatar, :content_type => /\Aimage/
+
+  # Validate filename
+  validates_attachment_file_name :avatar, :matches => [/png\Z/, /jpe?g\Z/]
+
+  # Explicitly do not validate
+  do_not_validate_attachment_file_type :avatar
 
 
   has_many :user_statuses
@@ -29,5 +34,6 @@ class User < ActiveRecord::Base
 
   has_many :forums
   has_many :announces
+  has_many :comments
   belongs_to :role
 end
