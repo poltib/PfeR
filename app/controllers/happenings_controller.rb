@@ -10,7 +10,7 @@ class HappeningsController < ApplicationController
   def show
   	@happening = Happening.find params[:id]
   	@fileExt = File.extname(@happening.route.current_path)
-  	
+
   	if @fileExt == '.tcx'
 	  	xml = Nokogiri::XML(open(@happening.route.current_path))
 			@coords = xml.search('Trackpoint').map do |coord| 
@@ -25,14 +25,6 @@ class HappeningsController < ApplicationController
 			@coords = xml.search('trkpt') do |coord| 
 			end
 		end
-
-		if @fileExt == '.kml'
-	  	xml = Nokogiri::XML(open(@happening.route.current_path))
-			@coords = xml.search('coordinates') do |coord| 
-			end
-		end
-
-
   end
 
   def create
@@ -57,6 +49,16 @@ class HappeningsController < ApplicationController
     else
         render 'edit'
     end
+  end
+
+  def newusers
+    @happening = Happening.find params[:id]
+  end
+
+  def addusers
+    @happening = Happening.find params[:id]
+    @users = param
+    
   end
 
   def destroy

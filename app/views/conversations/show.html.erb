@@ -1,0 +1,32 @@
+
+<section>
+<div class="container">
+<h2 role="heading" aria-level="2">Sujet : <%= conversation.subject %></h2>
+
+<ul class="events">
+	<% conversation.receipts_for(current_user).each do |receipt| %>
+	<li class="thumbRace">
+		<article class="comment">
+			<header class="comment__header">
+				<%= image_tag receipt.message.sender.avatar.url(:thumb) %>
+			</header>
+			<div class="comment__body">
+			<% if receipt.is_read %>
+				Lut
+			<% else %>
+				Non lut
+			<% end %>
+				<h4>
+					<%= link_to receipt.message.sender.username, user_path(receipt.message.sender) %>
+					<span><%= distance_of_time_in_words_to_now(receipt.message.created_at, include_seconds: true) %> ago</span>
+				</h4>
+				<p><%= receipt.message.body %></p>
+			</div>
+		</article>
+	</li>
+	<% end %>
+</ul>
+
+<%= render 'messages/form' %>
+</div>
+</section>

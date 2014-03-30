@@ -25,7 +25,6 @@ form{
     }
 
     #error_explanation{
-        box-sizing:border-box;
         width: 100%;
         padding: 1em;
         background-color: $sky;
@@ -35,29 +34,19 @@ form{
         }
     }
 
-    div{
-        width: 33%;
-        margin-bottom: 1em;
-        float: left;
-        label{
-            box-sizing: border-box;
-            width: 100%;
-            display: inline-block;
-            margin-bottom: 0.3em;
-        }
-        input{
-            box-sizing: border-box;
-            width: 80%;
-        }
+    label{
+        width: 100%;
+        display: inline-block;
+        margin-top: 0.3em;
+        padding:0.3em 0;
+    }
+    input{
+        width: 80%;
     }
     div:last-child{
         margin:0;
     }
-    div:after{
-        content:"";
-        display: block;
-        clear:both;
-    }
+
 }
 
 [type="text"],[type="password"]{
@@ -68,20 +57,22 @@ form{
     padding:0.2em;
 }
 
-[type="text"],[type="password"],[type="date"],[type="email"]{
+[type="text"],[type="password"],[type="date"],[type="email"], textarea{
     background-color: transparent;
-    border: 1px solid white;
+    border: 1px solid $font;
     margin-top: 0.1em;
     margin-bottom: 0.3em;
     font-size: 1em;
-    color:white;
+    padding:0.5em;
+    color:$font;
+    width: 100%;
     font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
     font-weight: lighter;
     border-radius: 3px;
 }
 
 
-[type="submit"]:focus, [type="text"]:focus,[type="password"]:focus,[type="date"]:focus,[type="email"]:focus{
+[type="submit"]:focus, textarea:focus, [type="text"]:focus,[type="password"]:focus,[type="date"]:focus,[type="email"]:focus{
     outline:none;
 }
 
@@ -104,9 +95,20 @@ input:focus{
     border: 1px solid #FF7C00;
 }
 
+.field_with_errors{
+    width: 100%;
+    input, textarea{
+        border-color: $red;
+        background-color:$sky;
+    }
+}
+
+.create{
+    @include span-columns(6);
+    @include shift(3);
+}
+
 .button_to{
-    margin:0;
-    padding:0;
     display: inline-block;
     input{
         width: auto;

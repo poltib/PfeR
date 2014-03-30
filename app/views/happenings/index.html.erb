@@ -1,30 +1,69 @@
 <section>
-<div class="container index">
-  <h2 role="heading" aria-level="2" class="hidden">Content</h2>
-  <h2 role="heading" class="eventTitle" aria-level="2">Les courses à venir</h2>
-  <ul class="events">
-    <li class="month">
-      <h3 role="heading" aria-level="3">Octobre 2014</h3>
-    </li>
-	<% for happening in @happenings %>
-      <li class="thumbRace">
-        <ul>
-         <li class="date"><span class="day">12</span> <span class="monthName">Oct</span></li>
+  <div class="container">
+    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
+    <div class="left_column">
+      <h3 role="heading" aria-level="3">Rechercher une course</h3>
+      <form>
+        <fieldset>
+          <ul>
+          <li>
+            <label>Date</label>
+            <input type="date">
+          </li>
+          <li>
+            <label>Pays</label>
+            <input type="text">
+          </li>
+          <li>
+            <label>Code postal</label>
+            <input type="text">
+          </li>
+          <li class="distances">
+            <label>Distances</label>
+            <label>5km</label>
+            <input type="checkbox">
+            <label>10km</label>
+            <input type="checkbox">
+            <label>20km</label>
+            <input type="checkbox">
+            <label>40km</label>
+            <input type="checkbox">
+            <label>toutes</label>
+            <input type="checkbox">
+          </li>
+          <li>
+            <input type="submit" value="filter">
+          </li>
+          </ul>
+        </fieldset>
+      </form>
+    </div>
+    <div class="primary_content">
+      <h2 role="heading" class="eventTitle" aria-level="2">Les courses à venir</h2>
+      <ul class="forum">
+        <li class="month">
+          <h3 role="heading" aria-level="3">Octobre 2014</h3>
+        </li>
+        <% for happening in @happenings %>
+          <li class="thumbRace">
+            <ul>
+             <li class="date"><span class="day">12</span> <span class="monthName">Oct</span></li>
             <li class="location">Liège</li>
             <li class="name">
-            <h4 role="heading" aria-level="4">
+              <h4 role="heading" aria-level="4">
                 <%= link_to happening.name, happening_path(happening) %>
-			  <% if user_signed_in? && happening.user_id == current_user.id %>
-				| <%= link_to "Edit", edit_happening_path(happening) %>
-				| <%= button_to "Delete", happening_path(happening),
-                    method: :delete, data: { confirm: 'Are you sure?' }  %>
-			  <% end %>
-			</h4>
-	      </li>
-          <li class="distances"><a href="#">10km</a> | <a href="#">20km</a></li>
-        </ul>
-	  </li>
-	<% end %>
-	</ul>
+        			  <% if user_signed_in? && happening.user_id == current_user.id %>
+        				| <%= link_to "Edit", edit_happening_path(happening) %>
+        				| <%= button_to "Delete", happening_path(happening),
+                            method: :delete, data: { confirm: 'Are you sure?' }  %>
+        			  <% end %>
+        			</h4>
+    	      </li>
+              <li class="distances"><a href="#">10km</a> | <a href="#">20km</a></li>
+            </ul>
+      	  </li>
+      	<% end %>
+    	</ul>
+    </div>
   </div>
 </section>

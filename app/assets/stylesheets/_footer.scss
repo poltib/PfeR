@@ -8,12 +8,15 @@
 
 .footDiv{
     margin-bottom: 1.5em;
+    @include span-columns(3);
+    @include omega(4n);
+    padding: 1em;
     h4{
         padding:0.2em;
         margin-bottom: 0.3em;
     }
     ul{
-       margin-left:1em;
+        display: block;
        li{
             margin-top: 0.3em;
        }
@@ -25,12 +28,10 @@
 }
 
 footer{
+    margin-top: 2em;
     box-shadow: 0 0 5px black;
     width: 100%;
-    background-color: $darkBlue;
-    >div>div{
-        padding:1em;
-    }
+    background-color: $blue;
     p{
         padding-top: 0.5em; 
         text-align: center;

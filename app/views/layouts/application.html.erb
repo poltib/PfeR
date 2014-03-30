@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Site de vente de matériel de protection d'ondes">
+  <meta name="description" content="Site sur la course à pied">
   <title>Pfe</title>
   <!-- <link rel="stylesheet" href="/assets/fontello.css?body=1 "> -->
   <!-- <link rel="stylesheet" href="/assets/animation.css?body=1 "> -->
@@ -19,82 +19,93 @@
   <![endif]-->
   <%= stylesheet_link_tag "fontello", media: "all" %>
   <%= stylesheet_link_tag "animation", media: "all" %>
-  <%= stylesheet_link_tag "screen", media: "all" %>
+  <%= stylesheet_link_tag "application", media: "all" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <header class="header">
-    <div class="header__navbar">
-      <div class="container">
-        <div class="header__logo">
-          <a href="/" title="Etude et vie accueil">
-            <h1 role="heading" aria-level="1">SportiveFun</h1>
-          </a>
-        </div>
-        <nav role="navigation">
-          <ul class="nav-menu"><!-- 
-            --><li class="nav-item"><a href="categorie.html" title="Protection ondes">Recherche</a>
-              <section class="sub-nav">
-                <ul class="sub-nav-group">
-                  <li><%= link_to "Evenements", happenings_path %></li>
-                  <li><%= link_to "Groupe", groups_path %></li>
-                  <li><%= link_to "Club", teams_path %></li>
-                  <li><%= link_to "Users", users_path %></li>
+  <div class="wrapper">
+    <header class="header">
+      <div class="header__navbar">
+        <div class="container">
+          <div class="header__logo">
+            <a href="/" title="Etude et vie accueil">
+              <%= image_tag "logo.png" %>
+              <h1 role="heading" aria-level="1">SportFun</h1>
+            </a>
+          </div>
+          <nav role="navigation">
+            <ul><!-- 
+              --><li>
+                <span><%= link_to "Evenements", happenings_path %></span>
+              </li><!-- 
+              --><li>
+                <span>Tracés</span>
+              </li><!-- 
+              --><li>
+                <span><%= link_to "Forum", forums_path %></span>
+              </li><!-- 
+              --><% if user_signed_in? %><!-- 
+                 --><li>
+                  <span class="tooltip" data-tooltip="<%= current_user.username %>">
+                    <%= link_to user_path(current_user) do %>
+                      <i class="icon-user"></i>
+                    <% end %>
+                  </span>
+                </li><!-- 
+               --><li>
+               <span class="actions" data-tooltip="Actions">
+                <i class="icon-plus"></i><i class="icon-down-open"></i>
+                <ul>
+                  <li><%= link_to "Créer evenement", new_happening_path %></li>
+                  <li><%= link_to "Créer groupe", new_group_path %></li>
+                  <li><%= link_to "Créer club", new_team_path %></li>
+                  <li><%= link_to "Créer forum", new_forum_path %></li>
+                  <li><a href="#">Tracé</a></li>
                 </ul>
-              </section>
-            </li><!-- 
-            --><li class="nav-item"><a href="categorie.html" title="Nos marques">Communauté</a>
-              <section class="sub-nav">
-                <ul class="sub-nav-group">
-                  <li><a href="#">Tracés</a></li>
-                  <li><%= link_to "Forums", forums_path %></li>
-                </ul>
-              </section>
-            </li><!-- 
-             --><li class="nav-item"><a href="categorie.html" title="Nos marques">Mon compte</a>
-              <section class="sub-nav">
-                <ul class="sub-nav-group">
-                  <% if user_signed_in? %>
-                    <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
-                    <li><%= link_to('Edit registration', edit_user_registration_path) %></li>
-                    <li><%= link_to "Votre profil", user_path(current_user) %></li>
-                    <li><%= link_to "Créer evenement", new_happening_path %></li>
-                    <li><%= link_to "Créer groupe", new_group_path %></li>
-                    <li><%= link_to "Créer club", new_team_path %></li>
-                    <li><%= link_to "Créer forum", new_forum_path %></li>
-                    <li><a href="#">Tracé</a></li>
-                  <% else %>
-                    <li><%= link_to('Login', new_user_session_path)  %></li>
-                    <li><%= link_to('Register', new_user_registration_path)  %></li>
-                  <% end %>
-                </ul>
-              </section>
-            </li>
-          </ul>     
-        </nav>
-        <div class="searchForm">
-          <form action="#" class="search">
-            <input type="text" name="searchField" id="searchField" placeholder="rechercher..."><!-- 
-            --><button class="buttonSearch"><i class="icon-search"></i></button>
-          </form>
+               </span>
+              </li><!--
+                --><li>
+                  <span class="tooltip" data-tooltip="Modifier profil">
+                    <%= link_to edit_user_registration_path do %>
+                      <i class="icon-tools"></i>
+                    <% end %>
+                  </span>
+                </li><!--
+                 --><li>
+                  <span class="tooltip" data-tooltip="Logout">
+                    <%= link_to destroy_user_session_path, :method => :delete do %>
+                      <i class="icon-logout"></i>
+                    <% end %>
+                  </span>
+                </li><!--
+              --><% else %><!-- 
+                 --><li>
+                  <span class="tooltip"  data-tooltip="Login">
+                    <%= link_to new_user_session_path do %>
+                      <i class="icon-login"></i>
+                    <% end %>
+                  </span>
+                </li><!--
+              --><% end %><!-- 
+             --></ul>     
+          </nav>
+          <div class="searchForm">
+            <form action="#" class="search">
+              <input type="text" name="searchField" id="searchField" placeholder="rechercher..."><!-- 
+              --><button class="buttonSearch"><i class="icon-search"></i></button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="headingImg">
-      <div class="container">
-        <div class="intro">
-          <h2 role="heading" aria-level="2">Bienvenue sur SportiveFun</h2>
-          <p>Site pour partager ou trouver les meilleurs courses ou tracés de course à pied!</p>
-        </div>
-      </div>
-    </div>
-  </header>
+      <br>
+      <%= yield :head %>
+    </header>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
 
-  <%= yield %>
-
+    <%= yield %>
+  </div>
   <footer role="footer">
         <div class="container">
             <div>
@@ -128,9 +139,6 @@
             <p>© Jérémy Thiry 2014</p>
         </div>
   </footer>
-  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA9m3Ix3AmZHlnvQCQAIUo4yyFjD7c9eLw&sensor=true">
-  </script>
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <%= javascript_include_tag "application" %>
   <%= yield :script %>
 </body>

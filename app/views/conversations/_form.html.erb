@@ -1,0 +1,11 @@
+<%= form_for :conversation, url: :conversations do |f| %>
+	<% if @user %>
+		<%= f.hidden_field :recipients, :value =>  @user.email %>
+	<% else %>
+  	<%= f.text_field :recipients %>
+  <% end %>
+  <%= f.text_field :subject %>
+  <%= f.text_area :body %>
+  <%= f.button :submit %>
+
+<% end %>

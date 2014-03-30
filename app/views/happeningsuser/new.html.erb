@@ -1,0 +1,30 @@
+<section>
+<div class="container">
+<h2 role="heading" aria-level="2">Ajouter des amis à la course  "<%= @happening.name %>"</h2>
+
+<%= form_tag({controller: "happeningsuser", action: "create"}, method: "post", class: "create") do %>
+  <fieldset>
+  <% if @happening.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@happening.errors.count, "error") %> prohibited
+        this happening from being saved:</h2>
+      <ul>
+      <% @happening.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  	<ul>
+	<% for group in current_user.groups %>
+		<li><h3 role="heading" aria-level="3">Amis du groupe "<%= group.name %>"</h3>
+			<%= collection_check_boxes(:happening,:user_ids,User.all,:id,:username) %>
+		</li>
+	<% end %>
+
+  <%= submit_tag("Ajouter") %>
+  </ul>
+  </fieldset>
+<% end %>
+</div>
+</section>

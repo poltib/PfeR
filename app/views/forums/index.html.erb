@@ -1,17 +1,17 @@
 <section>
   <div class="container">
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
-    <div class="cat">
+    <div class="left_column">
     	<h3 role="heading" aria-level="3">Catégories</h3>
-    	<ul>
-    		<li>Conseils</li>
+    	<ul class="cat">
+    		<li class="actif">Conseils</li>
     		<li>Entrainements</li>
     		<li>Equipements</li>
 
     	</ul>
     </div>
-    <div class="forums">
-    	<h2 role="heading" aria-level="2">Derniers forums</h3>
+    <div class="primary_content">
+    	<h2 role="heading" aria-level="2">Derniers forums</h2>
     	<ul>
 <% for forum in @forums %>
     	<li class="forum">
@@ -36,7 +36,7 @@
 							<% if user_signed_in? && forum.user_id == current_user.id %>
 							| <%= link_to "Edit", edit_forum_path(forum) %>
 							| <%= button_to "Delete", forum, :method => 'DELETE' %>
-							<% end %><br><span>Posté par Admin</span></h3>
+							<% end %><br><span>Posté par <%= link_to forum.user.username, user_path(forum.user) %></span></h3>
               <ul class="forumDetails">
                   <li><i class="icon-clock-1"></i><%= forum.created_at %></li>
                   <li><i class="icon-bookmarks"></i>Entrainements</li>

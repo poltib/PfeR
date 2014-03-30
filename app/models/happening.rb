@@ -1,4 +1,6 @@
 class Happening < ActiveRecord::Base
+	include PublicActivity::Model
+	tracked
 
 	mount_uploader :route, RouteUploader
 
@@ -6,7 +8,7 @@ class Happening < ActiveRecord::Base
 
   has_many :user_statuses
 
-  has_many :users, :through => :user_status
+  has_many :users, :through => :user_statuses
 
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
 

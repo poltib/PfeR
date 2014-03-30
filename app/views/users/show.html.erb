@@ -1,53 +1,53 @@
 <section>
-<div class="container">
-<h1>Salut <%= @user.username %></h1>
+	<div class="container">
+		<h2 role="heading" aria-level="2" class="hidden">Content</h2>
+    <div class="left_column">
+        <h3 role="heading" aria-level="3">Profile de <%= @user.username %></h3>
+        <% if user_signed_in? &&  current_user.id != @user.id %>
+        <%= link_to 'Envoyer un message', new_user_conversation_path(@user) %>
+				<% for group in current_user.groups_as_owner %>
+					<% if !group.users.include?(@user) %>
+					<p><%= group.name %></p>
+					<%= form_for group , :html => { :class => 'button_to' } do |f| %>
+				  	<%= f.hidden_field :user_id, :value => @user.id %>
+				  	<%= f.submit %>
+				  <% end %>
+				  <% end %>
+				<% end %>
+			 	<p>adduser to team</p>
+			<% end %>
+    	<%= image_tag @user.avatar.url(:thumb) %>
+    	<p><%= @user.description %></p>
+    	<ul>
+    		<li>Localisation</li>
+    		<li>Email : <%= @user.email %></li>
+    		<li>Groupes :
+					<ul>
+						<% for group in @user.groups %>
+							<li><%= link_to group.name, group_path(group) %></li>
+						<% end %>
+					</ul>
+    		</li>
+    		<li>Clubs :
+					<ul>
+						<% for group in @user.teams %>
+							<li><%= link_to team.name, team_path(team) %></li>
+						<% end %>
+					</ul>
+    		</li>
 
-<p><%= @user.description %></p>
-
-<% if current_user.id != @user.id %>
- adduser To groupe
- adduser to team
-<% end %>
-
-<h2>Info</h2>
-<ul>
-	<li><%= @user.lastname %></li>
-	<li><%= @user.firstname %></li>
-	<li><%= @user.email %></li>
-</ul>
-
-<h2>Trucs</h2>
-<h3>Groups</h3>
-<ul>
-	<% for group in @user.groups_as_owner %>
-	<li><%= link_to group.name, group_path(group) %></li>
-	<% end %>
-</ul>
-<h3>Forums</h3>
-<ul>
-	<% for forum in @user.forums %>
-	<li><%= link_to forum.title, forum_path(forum) %></li>
-	<% end %>
-</ul>
-
-<h3>Happenings</h3>
-<ul>
-	<% for happening in @user.happenings_as_owner %>
-	<li><%= link_to happening.name, happening_path(happening) %></li>
-	<% end %>
-</ul>
-
-<h3>com</h3>
-<ul>
-	<% for comment in @user.comments %>
-	<li><%= comment.comment %>
-		<p><%= comment.forum_id %></p>
-	</li>
-	<% end %>
-</ul>
-
-<%= image_tag @user.avatar.url(:medium) %>
-<%= image_tag @user.avatar.url(:thumb) %>
-
-</div>
+    	</ul>
+    </div>
+    <div class="primary_content">
+    	<h2 role="heading" aria-level="2">Activitées (feed)</h2>
+    	<ul class="events">
+        <% @activities.each do |activity| %>
+            <li class="thumbRace">
+            <%= link_to activity.owner.username, activity.owner if activity.owner %>
+            <%= render_activity activity %>
+          </li>
+        <% end %>
+        </ul>
+		</div>
+	</div>
 </section>

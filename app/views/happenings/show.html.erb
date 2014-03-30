@@ -1,10 +1,13 @@
 <ul class="none">
 	<li class="fileExt"><%= @fileExt %></li>
+	<li class="filePath"><%= @happening.route %></li>
+  <% if @coords %>
 	<% for coord in @coords %>
 		<% for latlang in coord %>
 			<li class="<%= latlang[0] %>"><%= latlang[1] %></li>
 		<% end %>
 	<% end %>
+  <% end %>
 </ul>
 
 <section>
@@ -20,11 +23,24 @@
         <div class="aside">
           <div class="users">
             <h3 role="heading" aria-level="3">Participer</h3>
-            <p>123 utilisateurs y participent</p>
+            <p><%= @happening.users.count %> <%= link_to 'utilisateurs y participent', happening_user_statuses_path(@happening) %></p>
           </div>
           <ul class="actions">
-            <li><a href="#"><i class="icon-check"></i>Participer</a></li>
-            <li><a href="#"><i class="icon-user-add"></i>Inviter amis</a></li>
+            <li>
+            <% if @happening.user_statuses.include? current_user %>
+              <%= form_for ([@happening, @happening.user_statuses.build]) do |f| %>
+                <%= f.submit %>
+              <% end %>
+            <% else %>
+              
+            <% end %>
+            <!-- <i class="icon-check"></i>Participer -->
+            </li>
+            <li>
+              <%= link_to(new_happening_user_path(@happening)) do %>
+                <i class="icon-user-add"></i>Inviter amis
+              <% end %>
+            </li>
             <li><a href="#">&#9829; (89)</a></li>
             <li class="shareButton"><i class="shareDart">&rarr;</i>&nbsp;share
               <ul class="shareForum">
@@ -46,6 +62,12 @@
           <li class="address">Rue Haute 11 400 flémalle</li>
           <li>description :</li>
         </ul>
+        <h3 role="heading" aria-level="3">Users</h3>
+        <ul>
+          <% for user in @happening.users %>
+            <li><%= link_to user.username, user_path(user) %></li>
+          <% end %>
+        </ul>
       </div>
       <div class="gallery">
         <h3 role="heading" aria-level="3">Gallerie photo</h3>
@@ -63,5 +85,13 @@
   </div>
 </section>
 <% content_for :script do %>
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA9m3Ix3AmZHlnvQCQAIUo4yyFjD7c9eLw&sensor=true">
+  </script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<% if @fileExt == '.kml' %>
+		<%= javascript_include_tag "geoxml3" %>
+		<%= javascript_include_tag "ProjectedOverlay" %>
+	<% end %>
 	<%= javascript_include_tag "happening" %>
+
 <% end %>

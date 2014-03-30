@@ -12,7 +12,7 @@ class Group < ActiveRecord::Base
 
   validates :name, :description, :avatar, presence: true
 
-  has_many :groupers
+  has_many :groupers, :dependent => :destroy
 
   has_many :users, :through => :groupers
 

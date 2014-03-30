@@ -46,44 +46,8 @@ table{
 
 
 .container h2{
-    margin: 3em 0 2em;
+    margin: 1em 0 0.5em;
     text-align: center;
-}
-
-
-.create{
-    width: 60%;
-    margin: 0 auto;
-    label{
-        display:inline-block;
-        width:100%;
-        
-        padding:0.3em 0;
-    }
-
-    [type="text"], textarea, [type="email"], [type="password"]{
-        border-color: $font;
-        color: $font;
-    }
-
-    .field_with_errors{
-        width: 100%;
-        input, textarea{
-            border-color: $red;
-            background-color:$sky;
-        }
-    }
-
-    input, select, textarea{
-        font-size: 1em;
-        margin-top: 0;
-        padding:0.5em;
-        margin-bottom: 0.6em;
-        width:100%;
-        
-        box-sizing:border-box;
-    -moz-box-sizing:border-box;
-    }
 }
 
 .add:hover{
@@ -123,8 +87,14 @@ table{
 }
 
 .events{
-    width: 80%;
-    margin: 0 auto;
+    @include span-columns(10);
+    @include shift(1);
+}
+
+.events:after{
+    content:"";
+    display: block;
+    clear:both;
 }
 
 .eventTitle{
@@ -245,10 +215,10 @@ li.sameDay{
 }
 
 .visuels{
-    width: 85%;
+    @include span-columns(10);
+    @include shift(2);
+    @include omega;
     position:relative;
-    margin-left:15%;
-    background-color: white;
     border: 3px solid $sky;
     box-sizing: border-box;
     img{
@@ -256,8 +226,8 @@ li.sameDay{
     }
 
     .aside{
-        width: 17.647059%;
-        left:-17.647059%;
+        width: 21%;
+        left:-21.3%;
     }
 }
 .head{
@@ -267,7 +237,6 @@ li.sameDay{
 .users{
     padding:1em;
     border-bottom:1px solid $sky;
-    border-right:1px solid $sky;
     li{
         width: 30%;
         margin: 1%;
@@ -286,13 +255,12 @@ li.sameDay{
 }
 
 .raceTitle{
-    background: white;
     text-align: center;
     margin-top: 2em;
     margin-bottom: 1em;
     padding:0.3em 0.6em;
     span{
-        float: left;
+
         font-size: 0.8em;
         color:$orange;
     }
@@ -302,18 +270,16 @@ li.sameDay{
     width: 49%;
     float: left;
     margin-right: 1%;
-    background: white;
+    border:1px solid black;
     padding:1em;
-    box-sizing:border-box;
 }
 
 .gallery{
     width: 49%;
-    box-sizing:border-box;
     padding:1em;
     float: right;
     margin-left: 1%;
-    background: white;
+    border:1px solid black;
     li{
         width: 23%;
         margin: 1%;
@@ -326,7 +292,6 @@ li.sameDay{
 
 .sponsors{
     background: white;
-    box-sizing:border-box;
     padding:1em;
     margin-top: 1.5em;
     li{
@@ -351,7 +316,6 @@ li.sameDay{
 }
 
 .thumbs li img{
-    box-sizing:border-box;
     border: 2px solid silver;
 }
 
@@ -366,24 +330,36 @@ li.sameDay{
 }
 
 /////////----------------------------------------------------------------------------------
+/////////Show user  -----------------------------------------------------------------------
+/////////----------------------------------------------------------------------------------
+
+.left_column{
+    img{
+        border:3px solid $darkBlue;
+        display: block;
+        margin:auto;
+        margin-bottom: 0.5em;
+    }
+
+    h3{
+        padding: 1em 0 0.5em;
+    }
+
+}
+
+
+/////////----------------------------------------------------------------------------------
 /////////Forums  --------------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 
-.cat{
-    width: 23%;
-    margin-right: 2%;
-    float: left;
-    box-sizing:border-box;
-    padding: 1em;
-    background-color:white;
+.left_column{
+    @include span-columns(3);
 }
 
-.forums{
-    width: 75%;
-    float: right;
-    h3{
-        background-color: white; 
-        color:black;
+.primary_content{
+    @include span-columns(9);
+    @include omega;
+    h3{ 
         padding:0.3em;
         font-size: 1.3em;
         margin-bottom: 0.3em;
@@ -395,6 +371,22 @@ li.sameDay{
             color:silver;
         }
     }
+}
+
+.cat{
+    margin-top: 1em;
+    li{
+        padding: 0.6em;
+        margin-top: 0.1em;
+        &:hover{
+            background-color: $sky;
+        }
+    }
+}
+
+.actif{
+    margin-left: -3px;
+    border-left: 3px solid $sky;
 }
 
 .forumDetails{
@@ -414,11 +406,11 @@ li.sameDay{
     margin-bottom: 1.5em;
     article{
         position:relative;
-        width: 90%;
-        margin-left: 10%;
-        border-left: 4px solid $sky;
+        @include span-columns(8 of 9);
+        @include shift(1);
+        @include omega;
+        border-left: 3px solid $sky;
         background-color:white;
-        box-sizing:border-box;
         padding:1em;
         header{
             margin-bottom: 1em;
@@ -442,7 +434,6 @@ li.sameDay{
     transition: left 0.5s;
     left:-16em; 
     li{
-        box-sizing:border-box;
         display: block;
         width: 50%;
         float: left; 
@@ -468,7 +459,6 @@ li.sameDay{
             display: block;
         }
     }
-
     .shareDart{
         transform: rotate(90deg);
     }
@@ -477,8 +467,9 @@ li.sameDay{
 .aside{
     position:absolute;
     top:0;
-    width: 11%;
-    left:-11.5%;
+    width: 13%;
+    left:-13.5%;
+    text-align: center;
     .actions li{
         a{
             border:none;
@@ -486,7 +477,6 @@ li.sameDay{
             display: block;
         }
         text-align: center;
-        box-sizing:border-box;
         border-bottom:1px solid $sky;
         &:hover{
             background-color: $orange;
@@ -517,9 +507,7 @@ article.events{
 
 .comment__header{
     padding:0.5em;
-    box-sizing:border-box;
-    width: 15%;
-    float: left;
+    @include span-columns(2 of 10);
     border-right: 1px solid $sky;
     h4{
         text-align: center;
@@ -535,217 +523,216 @@ article.events{
 
 .comment__body{
     padding:0.5em;
-    box-sizing:border-box;
-    width: 85%;
-    float: right;
+    @include span-columns(8 of 10);
+    @include omega;
 }
 
 /////////----------------------------------------------------------------------------------
 /////////Media    -------------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 
-@media screen and (min-width: 20em){
+// @media screen and (min-width: 20em){
 
 
-    aside{
-        padding:1em;
-    }
+//     aside{
+//         padding:1em;
+//     }
 
-    .contact{
-        margin:0;
-    }
-    .product{
-        padding:1em;
-        .item{
-            width:74%;
-            margin:0 auto 3em;
-            float:none;
-            padding:4%;
-        }
-        section{
-            padding-bottom: 0.1em;
-        }
-    }
+//     .contact{
+//         margin:0;
+//     }
+//     .product{
+//         padding:1em;
+//         .item{
+//             width:74%;
+//             margin:0 auto 3em;
+//             float:none;
+//             padding:4%;
+//         }
+//         section{
+//             padding-bottom: 0.1em;
+//         }
+//     }
 
-    .swipe{
-        display:none;
-    }
-
-
-    .header__logo, .user, .utils{
-        width:100%;
-        float:none;
-    }
-
-    div.user form{
-        width:100%;
-        padding:0;
-        left:0;
-        position:relative;
-        z-index: 100;
-    }
-
-    nav{
-        display:none;
-    }
-    .minWidth{
-        display:block;
-    }
-}
-
-@media screen and (min-width: 25em){
-
-    .header__logo, .user{
-        width:49%;
-        float:left;
-    }
-
-    .user{
-        margin-left:2%;
-        h3{
-        }
-    }
-
-    .product{
-        .item{
-            width:47%;
-            padding:1%;
-            float:left;
-        }
-        .item:nth-child(odd){
-            margin-right: 2%;
-        }
-    }
-
-}
+//     .swipe{
+//         display:none;
+//     }
 
 
-@media screen and (min-width: 30em){
-    .utils{
-        width:49%;
-        float:left; 
-    }
+//     .header__logo, .user, .utils{
+//         width:100%;
+//         float:none;
+//     }
 
-    .header__logo{
-        width:100%;
-    }
+//     div.user form{
+//         width:100%;
+//         padding:0;
+//         left:0;
+//         position:relative;
+//         z-index: 100;
+//     }
 
-    .user{
-        margin-left:0;
-        margin-right:2%;
-    }
+//     nav{
+//         display:none;
+//     }
+//     .minWidth{
+//         display:block;
+//     }
+// }
+
+// @media screen and (min-width: 25em){
+
+//     .header__logo, .user{
+//         width:49%;
+//         float:left;
+//     }
+
+//     .user{
+//         margin-left:2%;
+//         h3{
+//         }
+//     }
+
+//     .product{
+//         .item{
+//             width:47%;
+//             padding:1%;
+//             float:left;
+//         }
+//         .item:nth-child(odd){
+//             margin-right: 2%;
+//         }
+//     }
+
+// }
+
+
+// @media screen and (min-width: 30em){
+//     .utils{
+//         width:49%;
+//         float:left; 
+//     }
+
+//     .header__logo{
+//         width:100%;
+//     }
+
+//     .user{
+//         margin-left:0;
+//         margin-right:2%;
+//     }
         
-    .minWidth{
-        .cat{
-            width:49%;
-            float:left;
-        }
-        .cat:nth-child(odd){
-            margin-right: 2%;
-        }
-    }
-    .minWidth:after{
-        content:"";
-        display:block;
-        clear:both;
-    }
-}
+//     .minWidth{
+//         .cat{
+//             width:49%;
+//             float:left;
+//         }
+//         .cat:nth-child(odd){
+//             margin-right: 2%;
+//         }
+//     }
+//     .minWidth:after{
+//         content:"";
+//         display:block;
+//         clear:both;
+//     }
+// }
 
 
 
 
-@media screen and (min-width: 43em){
+// @media screen and (min-width: 43em){
 
-    .contact{
-        margin:0 10%;
-    }
+//     .contact{
+//         margin:0 10%;
+//     }
 
-    .footDiv{
-        width:33.3333333%;
-        float:left;
-    }
+//     .footDiv{
+//         width:33.3333333%;
+//         float:left;
+//     }
 
 
-    aside{
-        padding:0;
-    }
+//     aside{
+//         padding:0;
+//     }
 
-    .product{
-        .item{
-            width:22%;
-            margin-right: 1%;
-            padding:1%;
-            float:left;
-        }
-        .item:nth-child(odd){
-            margin-right: 1%;
-        }
-    }
+//     .product{
+//         .item{
+//             width:22%;
+//             margin-right: 1%;
+//             padding:1%;
+//             float:left;
+//         }
+//         .item:nth-child(odd){
+//             margin-right: 1%;
+//         }
+//     }
     
-}
+// }
 
 
-@media screen and (min-width: 52.5em){
-    nav{
-        display:block;
-    }
+// @media screen and (min-width: 52.5em){
+//     nav{
+//         display:block;
+//     }
 
-    .login, .singin{
-        width:50%;
-        float:left;
-        margin-bottom: 1em;
-    }
+//     .login, .singin{
+//         width:50%;
+//         float:left;
+//         margin-bottom: 1em;
+//     }
 
-    .user h3{
-        width: 50%;
-        float:left;
-    }
+//     .user h3{
+//         width: 50%;
+//         float:left;
+//     }
 
-    .swipe{
-        display:block;
-    }
-    .minWidth{
-        display:none;
-    }
+//     .swipe{
+//         display:block;
+//     }
+//     .minWidth{
+//         display:none;
+//     }
 
-    aside{
-        width:27%;
-        margin: 1.5%;
-        float:right;
-    }
+//     aside{
+//         width:27%;
+//         margin: 1.5%;
+//         float:right;
+//     }
 
-    .product{
-        float:left;
-        width:67%;
-        padding:1.5%;  
-    }
+//     .product{
+//         float:left;
+//         width:67%;
+//         padding:1.5%;  
+//     }
     
-}
+// }
 
-@media screen and (min-width:60em){
-    .header__logo{
-        width:20%;
-        float:left;
-    }
+// @media screen and (min-width:60em){
+//     .header__logo{
+//         width:20%;
+//         float:left;
+//     }
 
-    .utils{
-        width:30%;
-        float:left;
-        margin-top: 0.5em;
-    }
+//     .utils{
+//         width:30%;
+//         float:left;
+//         margin-top: 0.5em;
+//     }
 
-    .user{
-        width: 35%;
-        float: left;
-        margin-left:0;
-        margin-right: 2%;
-        h3{
-            padding-top:0.5em;
-        }
-    }
-}
-@media screen and (min-width: 80em){
-    div.container{
-        width:75em;
-    }
-}
+//     .user{
+//         width: 35%;
+//         float: left;
+//         margin-left:0;
+//         margin-right: 2%;
+//         h3{
+//             padding-top:0.5em;
+//         }
+//     }
+// }
+// @media screen and (min-width: 80em){
+//     div.container{
+//         width:75em;
+//     }
+// }

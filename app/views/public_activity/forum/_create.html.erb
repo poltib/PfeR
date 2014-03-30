@@ -1,0 +1,7 @@
+à ajouté un forum
+
+<% if activity.trackable %>
+  <%= link_to activity.trackable.title, activity.trackable %>
+<% else %>
+  qui à été supprimé depuis.
+<% end %>

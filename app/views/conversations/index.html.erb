@@ -1,0 +1,12 @@
+<section>
+<div class="container">
+
+<ul class="events">
+<li class="month"><h3 role="heading" aria-level="3">Conversations</h3></li>
+<%= render mailbox.conversations %>
+<li class="month"><h3 role="heading" aria-level="3">Corbeille</h3></li>
+<%= render mailbox.trash %>
+</ul>
+<%= link_to 'Start Conversation', :new_conversation %>
+</div>
+</section>

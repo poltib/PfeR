@@ -1,0 +1,7 @@
+à mit à jour un évènement
+
+<% if activity.trackable %>
+  <%= link_to activity.trackable.name, activity.trackable %>
+<% else %>
+  qui à été supprimé depuis.
+<% end %>

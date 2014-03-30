@@ -5,7 +5,7 @@
       <li class="thumbRace">
         <h4 role="heading" aria-level="4">
                 <%= link_to group.name, group_path(group) %>
-			  <% if group.owner.id == current_user.id %>
+			  <% if user_signed_in? &&  group.owner.id == current_user.id %>
 				| <%= link_to "Edit", edit_group_path(group) %>
 				| <%= link_to "Delete", group, :method => 'delete' %>
 			  <% end %>

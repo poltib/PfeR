@@ -1,0 +1,8 @@
+à ajouté un commentaire
+
+<% if activity.trackable %>
+  to <%= link_to activity.trackable.forum.title, activity.trackable.forum %>
+	<%= activity.trackable.comment %>
+<% else %>
+  qui à été supprimé depuis.
+<% end %>

@@ -28,9 +28,7 @@ body>header{
         max-width: 100%;
     }
     .container{
-        position: absolute;
-        bottom: 10%;
-        left: 5%;
+        top: 40%;
     }
 }
 
@@ -47,13 +45,11 @@ body>header{
         margin-bottom: 1em;
     }
     // position: absolute;
-    margin-top: 4em;
     padding: 1.5em;
     background-color: $darkBlueLight; 
     color:$sky;
-    width: 80%;
-    box-sizing:border-box;
-    margin: 0 auto;
+    @include span-columns(10);
+    @include shift(1);
     /*right: 50%;*/
 }
 
@@ -70,34 +66,31 @@ body>header{
 
 .header__logo a{
     border:none;
-    text-align: center;
     color:$cloud;
     h1{
-        margin:0;
+        box-sizing:border-box;
+        margin: 0.3em 0 0;
+        padding-left: 0.3em;
+        font-size: 1.3em;
+        width: 80%;
+        float: right;
+    }
+    img{
+        margin-top: 0.15em;
+        box-sizing:border-box;
+        width: 20%;
+        float: left;
     }
 }
 
 .header__logo{
-    box-shadow: 0 0 5px black;
-    position:absolute;
+    @include span-columns(2);
     box-sizing:border-box;
-    padding: 0.3em 0;
-    border-right: 1px solid $sky;
-    border-left: 1px solid $sky;
-    border-bottom: 1px solid $sky;
-    background-color: $blue;
-    border-bottom-left-radius: 18px;
-    border-bottom-right-radius: 18px;
-    transition: padding-top 0.2s;
-    &:hover{
-        padding-top: 0.6em; 
-        a{color:$red;}
-    }
 }
 
 .searchForm{
-    width: 20%;
-    float: right;
+    @include span-columns(3);
+    @include omega;
     margin-top: 0.1em;
 }
 
@@ -113,15 +106,13 @@ body>header{
     -moz-appearance: none;
     font-size: 1em;
     left:0;
-    width:15%;
+    width:20%;
     border-top: 1px solid $sky;
     border-right: 1px solid $sky;
     border-bottom: 1px solid $sky;
     color:$sky;
-    padding: 0.33em;
+    padding: 0.33em 0.1em;
     font-weight: lighter;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
 }
 
 .buttonSearch:hover{
@@ -145,10 +136,8 @@ body>header{
 #searchField{
     font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
     font-weight: lighter;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
     font-size: 1em;
-    width:85%;
+    width:80%;
     color:$sky;
     margin:0;
     padding:0;

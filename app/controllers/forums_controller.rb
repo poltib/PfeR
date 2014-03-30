@@ -1,6 +1,6 @@
 class ForumsController < ApplicationController
   def index
-    @forums = Forum.all
+    @forums = Forum.all.order("created_at desc")
   end
 
   def new

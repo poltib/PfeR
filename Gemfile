@@ -58,3 +58,13 @@ gem 'nokogiri', '~> 1.6.1'
 
 gem 'awesome_print'
 
+# css & grid
+gem "autoprefixer-rails"
+gem 'bourbon'
+gem 'neat'
+
+# activity
+gem 'public_activity'
+
+# private messages
+gem 'mailboxer'

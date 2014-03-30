@@ -10,7 +10,7 @@ class Team < ActiveRecord::Base
   # Explicitly do not validate
   do_not_validate_attachment_file_type :avatar
   
-  has_many :teamers
+  has_many :teamers, :dependent => :destroy
   has_many :users, :through => :teamers
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
 end

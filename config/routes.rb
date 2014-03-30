@@ -2,17 +2,32 @@ Pfe::Application.routes.draw do
 
   devise_for :users, :controllers => {:registrations => "users/registrations"}
 
-  resources :messages, :categories, :forums, :teams, :groups, :happenings, :users, :comments
+  resources :categories, :forums, :teams, :groups, :happenings, :users
+
+  get 'users/:id/activities' => 'activities#index'
 
   resources :forums do
     resources :comments
   end
 
+  resources :happenings do
+    resources :users, :controller => 'happeningsuser', :only => [:new, :create, :destroy]
+  end
+
+  resources :happenings do
+    resources :user_statuses
+  end
   root :to =>  'welcome#index'
 
-  get 'groups/:id/addusers' => 'groups#addusers', as: :addusers_group
+  get 'conversations/new/:id' => 'conversations#new', as: :new_user_conversation
 
-
+  resources :conversations, only: [:index, :show, :new, :create] do
+    member do
+      post :reply
+      post :trash
+      post :untrash
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,0 +1,8 @@
+<section>
+  <div class="container">
+		<% for user_status in @user_statuses %>
+			<%= user_status.user.username %>
+			<%= user_status.user.id %>
+		<% end %>
+  </div>
+</section>
