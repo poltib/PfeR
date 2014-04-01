@@ -72,6 +72,6 @@ class HappeningsController < ApplicationController
 
   private
     def happening_params
-      params.require(:happening).permit(:name, :description, :address, :link, :date, :route)
+      params.require(:happening).permit(:name, :description, :address, :link, :date, :route, :city, :postalCode, :country)
     end
 end

@@ -3,7 +3,9 @@ class ConversationsController < ApplicationController
   helper_method :mailbox, :conversation
 
   def new
-    @user = User.find params[:id]
+    if params[:id]
+      @user = User.find params[:id]
+    end
   end
 
   def create

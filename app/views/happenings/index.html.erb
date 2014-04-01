@@ -40,14 +40,14 @@
     </div>
     <div class="primary_content">
       <h2 role="heading" class="eventTitle" aria-level="2">Les courses à venir</h2>
-      <ul class="forum">
+      <ul>
         <li class="month">
           <h3 role="heading" aria-level="3">Octobre 2014</h3>
         </li>
         <% for happening in @happenings %>
           <li class="thumbRace">
             <ul>
-             <li class="date"><span class="day">12</span> <span class="monthName">Oct</span></li>
+             <li class="date"><span class="day"><%= happening.date.strftime("%d") %></span> <span class="monthName"><%= happening.date.strftime("%b") %></span></li>
             <li class="location">Liège</li>
             <li class="name">
               <h4 role="heading" aria-level="4">

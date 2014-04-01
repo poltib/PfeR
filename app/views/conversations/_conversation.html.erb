@@ -10,11 +10,18 @@
    	<% else %>
 			vous
    	<% end %>
+   		<%= conversation.participants.count %>
    	</li>
 		<% if conversation.is_completely_trashed?(current_user) %>
 			<li class="distances"><%= link_to 'Untrash', [:untrash, conversation], method: :post %></li>
 		<% else %>
-			<li class="distances"><%= link_to 'Move to trash', [:trash, conversation], method: :post %></li>
+			<li class="distances">
+				<span class="tooltip" data-tooltip="Corbeille">
+					<%= link_to [:trash, conversation], method: :post do %>
+          	<i class="icon-trash"></i>
+        	<% end %>
+        </span>
+			</li>
 		<% end %>
 		</ul>
 	<% end %>

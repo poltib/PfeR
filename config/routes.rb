@@ -21,6 +21,8 @@ Pfe::Application.routes.draw do
 
   get 'conversations/new/:id' => 'conversations#new', as: :new_user_conversation
 
+  get 'conversations/trash' => 'conversations#indextrash', as: :indextrash_conversation
+
   resources :conversations, only: [:index, :show, :new, :create] do
     member do
       post :reply

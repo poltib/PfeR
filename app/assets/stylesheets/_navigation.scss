@@ -40,44 +40,25 @@ nav{
         cursor: pointer;
     }
     &:hover, &:focus {
-    &:before, ul {
+        ul {
         visibility: visible;
         opacity: 1;
-        transition: .2s .3s;
         }
     }
 
-    &:before, ul {
+    ul {
         transform: translate3d(0, 0, 0);
         position: absolute;
         visibility: hidden;
         opacity: 0;
         z-index: 1000000;
-        transition: .2s;
-    }
-    &:before {
-        content: '';
-        border: 5px solid transparent;
-        bottom: 0;
-        z-index: 1000001;
-    }
-
-    ul {
-        background-color: rgba(0,0,0,0.8);
-        border-radius: 3px;
+        background-color: rgb(79,95,115);
         text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
         white-space: nowrap;
         box-shadow: 1px 1px 3px rgba(0, 0, 0, .2);
-
-        li:first-child{
-            border-top-left-radius: 3px;
-            border-top-right-radius: 3px;
-        }
-
-        li:last-child{
-            border-bottom-left-radius: 3px;
-            border-bottom-right-radius: 3px;
-        }
+        left: 185%;
+        transform: translateX(-50%);
+        top: 100%;
 
         li{
             text-align: left;
@@ -85,7 +66,7 @@ nav{
             margin:0;
             padding: 0 0.3em;
             &:hover{
-                background-color:$font;
+                background-color:$blue;
                 a{
                     color:white;
                 }
@@ -94,25 +75,6 @@ nav{
                 color:white;
             }
         }
-    }
-    &:hover, &:focus {
-      &:before {
-        bottom: -15%;
-      }
-      ul {
-        top: 115%;
-      }
-    }
-    &:before, ul {
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    &:before {
-      border-bottom-color: rgba(0,0,0,0.8);
-      bottom: -35%;
-    }
-    ul {
-      top: 135%;
     }
 }
 

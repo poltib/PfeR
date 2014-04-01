@@ -2,10 +2,13 @@
 	<% if @user %>
 		<%= f.hidden_field :recipients, :value =>  @user.email %>
 	<% else %>
+		<%= f.label :recipients %>
   	<%= f.text_field :recipients %>
   <% end %>
+  <%= f.label :subject %>
   <%= f.text_field :subject %>
+  <%= f.label :body %>
   <%= f.text_area :body %>
-  <%= f.button :submit %>
+  <%= f.button :envoyer %>
 
 <% end %>

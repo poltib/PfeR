@@ -3,8 +3,11 @@ class Happening < ActiveRecord::Base
 	tracked
 
 	mount_uploader :route, RouteUploader
+	mount_uploader :routegpx, RouteUploader
+	mount_uploader :routekml, RouteUploader
+	mount_uploader :routetcx, RouteUploader
 
-  validates :name, :description, :address, :link, :date, presence: true
+  validates :name, :description, :address, :link, :date, :city, :postalCode, :country, presence: true
 
   has_many :user_statuses
 

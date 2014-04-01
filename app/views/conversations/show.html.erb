@@ -1,6 +1,23 @@
 
 <section>
 <div class="container">
+<div class="left_column">
+	<h3 role="heading" aria-level="3">Catégories</h3>
+  <ul class="cat">
+		<li>
+			<%= link_to 'Boite de messagerie', :conversations %>
+		</li>
+		<li>
+			<%= link_to 'Messages supprimés', :indextrash_conversation %>
+		</li>
+		<li>
+			<%= link_to 'Start Conversation', :new_conversation %>
+		</li>
+	</ul>
+	
+</div>
+
+<div class="primary_content">
 <h2 role="heading" aria-level="2">Sujet : <%= conversation.subject %></h2>
 
 <ul class="events">
@@ -28,5 +45,7 @@
 </ul>
 
 <%= render 'messages/form' %>
+</div>
+</div>
 </div>
 </section>

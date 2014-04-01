@@ -1,5 +1,4 @@
 <%= form_for @happening, :html => { :multipart => true, :class => 'create' } do |f| %>
-  <fieldset>
   <% if @happening.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@happening.errors.count, "error") %> prohibited
@@ -11,26 +10,36 @@
       </ul>
     </div>
   <% end %>
-  	<ul>
-	<li><%= f.label :name %>
-	<%= f.text_field :name %></li>
+  <fieldset>
+	  	<ul>
+		<li><%= f.label :name %>
+		<%= f.text_field :name %></li>
 
-	<li><%= f.label :description %>
-	<%= f.text_area :description %></li>
+		<li><%= f.label :description %>
+		<%= f.text_area :description %></li>
 
-	<li><%= f.label :address %>
-	<%= f.text_field :address %></li>
+		<li><%= f.label :address %>
+		<%= f.text_field :address %></li>
 
-	<li><%= f.label :link %>
-	<%= f.text_field :link %></li>
+		<li><%= f.label :city %>
+		<%= f.text_field :city %></li>
 
-	<li><%= f.label :date %>
-	<%= f.text_field :date %></li>
+		<li><%= f.label :postalCode %>
+		<%= f.text_field :postalCode %></li>
 
-	<li><%= f.label :route %>
-	<%= f.file_field :route %></li>
+		<li><%= f.label :country %>
+		<%= f.text_field :country %></li>
 
-	<%= f.submit %>
-	</ul>
-	</fieldset>
+		<li><%= f.label :link %>
+		<%= f.text_field :link %></li>
+
+		<li><%= f.label :date %>
+		<%= f.text_field :date %></li>
+
+		<li><%= f.label :route %>
+		<%= f.file_field :route %></li>
+
+		<%= f.submit %>
+		</ul>
+		</fieldset>
 <% end %>

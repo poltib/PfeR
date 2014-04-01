@@ -39,22 +39,18 @@
                 <span><%= link_to "Evenements", happenings_path %></span>
               </li><!-- 
               --><li>
-                <span>Tracés</span>
+                <span><a href="#">Tracés</a></span>
               </li><!-- 
               --><li>
-                <span><%= link_to "Forum", forums_path %></span>
+                <span><%= link_to "Forums", forums_path %></span>
+              </li><!-- 
+              --><li>
+                <span><%= link_to "Users", users_path %></span>
               </li><!-- 
               --><% if user_signed_in? %><!-- 
-                 --><li>
-                  <span class="tooltip" data-tooltip="<%= current_user.username %>">
-                    <%= link_to user_path(current_user) do %>
-                      <i class="icon-user"></i>
-                    <% end %>
-                  </span>
-                </li><!-- 
                --><li>
                <span class="actions" data-tooltip="Actions">
-                <i class="icon-plus"></i><i class="icon-down-open"></i>
+                <i class="icon-plus"></i>
                 <ul>
                   <li><%= link_to "Créer evenement", new_happening_path %></li>
                   <li><%= link_to "Créer groupe", new_group_path %></li>
@@ -64,6 +60,20 @@
                 </ul>
                </span>
               </li><!--
+                 --><li>
+                  <span class="tooltip" data-tooltip="<%= current_user.username %>">
+                    <%= link_to user_path(current_user) do %>
+                      <i class="icon-user"></i>
+                    <% end %>
+                  </span>
+                </li><!-- 
+                --><li>
+                  <span class="tooltip" data-tooltip="Messages">
+                    <%= link_to conversations_path do %>
+                      <i class="icon-chat"></i>
+                    <% end %>
+                  </span>
+                </li><!-- 
                 --><li>
                   <span class="tooltip" data-tooltip="Modifier profil">
                     <%= link_to edit_user_registration_path do %>
@@ -100,7 +110,6 @@
       <br>
       <%= yield :head %>
     </header>
-
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
@@ -113,18 +122,12 @@
                     <h4 role="heading" aria-level="4"><i class="icon-phone-circled"></i>A propos</h4>
                     <ul>
                         <li><a href="contact.html" title="Contact">Contact</a></li>
-                        <li><a href="#" title="Service client">Service client</a></li>
-                        <li><a href="#" title="Support technique">Support technique</a></li>
                         <li><a href="#" title="Accueil">Accueil</a></li>
                     </ul>
                 </div>
                 <div class="footDiv">
-                    <h4 role="heading" aria-level="4"><i class="icon-info-circled"></i>Informations</h4>
+                    <h4 role="heading" aria-level="4">Informations</h4>
                     <ul>
-                        <li><a href="page.html" title="Livraisons et retours">Livraisons et retours</a></li>
-                        <li><a href="#" title="Réservations">Réservations</a></li>
-                        <li><a href="#" title="Conditions">Conditions</a></li>
-                        <li><a href="#" title="Plop">Plop</a></li>
                     </ul>
                     
                 </div>

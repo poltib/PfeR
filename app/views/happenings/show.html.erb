@@ -25,7 +25,7 @@
             <h3 role="heading" aria-level="3">Participer</h3>
             <p><%= @happening.users.count %> <%= link_to 'utilisateurs y participent', happening_user_statuses_path(@happening) %></p>
           </div>
-          <ul class="actions">
+          <ul class="share">
             <li>
             <% if @happening.user_statuses.include? current_user %>
               <%= form_for ([@happening, @happening.user_statuses.build]) do |f| %>
@@ -44,9 +44,9 @@
             <li><a href="#">&#9829; (89)</a></li>
             <li class="shareButton"><i class="shareDart">&rarr;</i>&nbsp;share
               <ul class="shareForum">
-                <li><a href="#"><i class="icon-facebook-circled"></i></a></li>
-                <li><a href="#"><i class="icon-gplus-circled"></i></a></li>
-                <li><a href="#"><i class="icon-twitter-circled"></i></a></li>
+                <li><a href="#"><i class="icon-facebook-squared"></i></a></li>
+                <li><a href="#"><i class="icon-gplus-squared"></i></a></li>
+                <li><a href="#"><i class="icon-twitter-squared"></i></a></li>
                 <li><a href="#"><i class="icon-mail"></i></a></li>
                 <li><a href="#"><i class="icon-rss"></i></a></li>
               </ul>

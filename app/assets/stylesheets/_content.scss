@@ -4,6 +4,18 @@
 /////////----------------------------------------------------------------------------------
 /////////Content  -------------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
+.notice, .alert{
+
+}
+
+
+h2 span{
+    float: right;
+    font-size: 0.8em;
+    a{    
+        color:silver;
+    }
+}
 
 table{
     width: 80%;
@@ -46,8 +58,10 @@ table{
 
 
 .container h2{
-    margin: 1em 0 0.5em;
+    margin: 0 0 0.7em;
+    padding: 0.3em 0 0.5em;
     text-align: center;
+    border-bottom: 1px solid $sky;
 }
 
 .add:hover{
@@ -99,7 +113,6 @@ table{
 
 .eventTitle{
     text-align: center;
-    padding: 1em;
 }
 li.sameDay{
     border-top: 1px dotted $sky;
@@ -108,7 +121,7 @@ li.sameDay{
 .thumbRace{
     //margin-bottom: 1em;
     //border:1px solid $sky;
-    border-top: 1px solid $sky;
+    border-bottom: 1px solid $sky;
     padding: 0.6em 0;
     box-sizing: border-box;
 
@@ -160,24 +173,21 @@ li.sameDay{
     //border-left:4px solid $red;
 }
 .links, .distances{
+    span{
+        @include tooltip(e, rgba(0,0,0,0.8), 2px);
+        padding: 0.3em 0 0;
+    }
     a{
-        padding:0.3em;
         margin:0;
         border:none;
+        color: rgba(0,0,0,0.5);
         display:inline-block;
         &:hover{
-            background-color: $orange;
-            color:$sky;
-            border-radius: 1em;
+            color:black;
         }
     }
 }
 
-.index .forums{
-    width: 80%;
-    margin: 2em auto;
-    float: none;
-}
 
 
 ///////////////////////////////////Presentation///////////////////////////////////////////
@@ -342,7 +352,13 @@ li.sameDay{
     }
 
     h3{
-        padding: 1em 0 0.5em;
+        padding: 0.5em 0 0.9em;
+        text-align: center;
+        border-bottom: 1px solid $sky;
+    }
+
+    form{
+        padding: 0.5em;
     }
 
 }
@@ -353,26 +369,26 @@ li.sameDay{
 /////////----------------------------------------------------------------------------------
 
 .left_column{
+    border-right: 1px solid $sky;
     @include span-columns(3);
 }
 
 .primary_content{
     @include span-columns(9);
     @include omega;
-    h3{ 
-        padding:0.3em;
-        font-size: 1.3em;
-        margin-bottom: 0.3em;
-        border-bottom: 1px solid silver;
-        span{
-            font-weight: lighter;
-            display: block;
-            font-size: 0.6em;
-            color:silver;
-        }
-    }
 }
 
+.formTitle{ 
+    padding:0.3em 0;
+    font-size: 1.3em;
+    margin-bottom: 0.3em;
+    span{
+        font-weight: lighter;
+        display: block;
+        font-size: 0.6em;
+        color:silver;
+    }
+}
 .cat{
     margin-top: 1em;
     li{
@@ -401,17 +417,19 @@ li.sameDay{
 }
 
 .forum{
+    .formTitle span{
+        color: $font;
+    }
     overflow-x:hidden;
     width: 100%;
-    margin-bottom: 1.5em;
+    background-color: $cloud;
+    margin-bottom: 1em;
     article{
         position:relative;
-        @include span-columns(8 of 9);
-        @include shift(1);
+        @include span-columns(9 of 9);
+        @include shift(0);
         @include omega;
-        border-left: 3px solid $sky;
-        background-color:white;
-        padding:1em;
+        padding:0.5em;
         header{
             margin-bottom: 1em;
         }
@@ -442,6 +460,9 @@ li.sameDay{
     li:nth-child(odd){
         border-right: 1px solid $sky;
     }
+    li:last-child{
+        border-bottom:none;
+    }
 }
 
 .shareDart{
@@ -470,7 +491,11 @@ li.sameDay{
     width: 13%;
     left:-13.5%;
     text-align: center;
-    .actions li{
+}
+
+.share{
+    min-height: 176px;
+    li{
         a{
             border:none;
             padding: 0.4em 0.3em;
@@ -488,11 +513,8 @@ li.sameDay{
     }
 }
 
-article.events{
-    padding: 1em;
-    header{
-        margin-bottom: 1em;
-    }
+.events>article{
+    border-bottom: 1px solid $sky;
 }
 
 .comment:after{
@@ -502,11 +524,12 @@ article.events{
 }
 
 .comment{
-    
+    overflow-x:hidden;
 }
 
 .comment__header{
-    padding:0.5em;
+    padding:0.5em 0.5em 0;
+    margin-bottom: 0.5em;
     @include span-columns(2 of 10);
     border-right: 1px solid $sky;
     h4{
@@ -525,6 +548,12 @@ article.events{
     padding:0.5em;
     @include span-columns(8 of 10);
     @include omega;
+    header{
+        h3{
+
+        }
+        margin-bottom:0.6em;
+    }
 }
 
 /////////----------------------------------------------------------------------------------

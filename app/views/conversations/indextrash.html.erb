@@ -6,10 +6,10 @@
 		<li>
 			<%= link_to 'Boite de messagerie', :conversations %>
 		</li>
-		<li>
+		<li class="actif">
 			<%= link_to 'Messages supprimés', :indextrash_conversation %>
 		</li>
-		<li class="actif">
+		<li>
 			<%= link_to 'Start Conversation', :new_conversation %>
 		</li>
 	</ul>
@@ -17,9 +17,9 @@
 </div>
 
 <div class="primary_content">
-	<h2 role="heading" aria-level="2">Nouveau message</h2>
+	<h2 role="heading" aria-level="2">Corbeille</h2>
 	<ul class="events">
-	<%= render 'form' %>
+	<%= render mailbox.trash %>
 	</ul>
 	
 </div>

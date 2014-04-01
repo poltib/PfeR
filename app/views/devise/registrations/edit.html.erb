@@ -21,7 +21,10 @@
 
   <li><%= f.label :description %><br />
   <%= f.text_area :description %></li>
-
+  <li>
+    <p>Votre avatar actuel</p>
+    <%= image_tag @user.avatar.url(:medium) %>
+  </li>
   <li><%= f.label :avatar %><br />
   <%= f.file_field :avatar %></li>
 

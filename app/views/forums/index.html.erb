@@ -16,22 +16,8 @@
 <% for forum in @forums %>
     	<li class="forum">
   			<article>
-  				<div class="aside">
-    				<ul class="actions">
-    					<li><a href="#"><i class="icon-heart-empty"></i> (89)</a></li>
-    					<li class="shareButton"><i class="shareDart">&rarr;</i>&nbsp;Share
-    						<ul class="shareForum">
-        					<li><a href="#"><i class="icon-facebook-circled"></i></a></li>
-                  <li><a href="#"><i class="icon-gplus-circled"></i></a></li>
-                  <li><a href="#"><i class="icon-twitter-circled"></i></a></li>
-                  <li><a href="#"><i class="icon-mail"></i></a></li>
-                  <li><a href="#"><i class="icon-rss"></i></a></li>
-      					</ul>
-      				</li>
-    				</ul>
-  				</div>
   				<header>
-            <h3 role="heading" aria-level="3">
+            <h3 class="formTitle" role="heading" aria-level="3">
             	<%= link_to forum.title, forum_path(forum) %>
 							<% if user_signed_in? && forum.user_id == current_user.id %>
 							| <%= link_to "Edit", edit_forum_path(forum) %>
@@ -43,7 +29,6 @@
                   <li><i class="icon-chat"></i><%= forum.comments.count %> réponses</li>
               </ul>
           </header>
-  				<p><%= forum.post %></p>
   			</article>
   		</li>
 <% end %>
