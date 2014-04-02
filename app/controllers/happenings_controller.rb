@@ -28,7 +28,27 @@ class HappeningsController < ApplicationController
   end
 
   def create
-  	@happening = Happening.new(happening_params)
+    require 'builder'
+    file = File.new(Rails.root.join("public", "route.xml"), "w")
+
+    xml = Builder::XmlMarkup.new(:target=>file, :indent => 2)
+    xml.instruct!
+    xml.kml(
+      "xmlns" => "http://www.opengis.net/kml/2.2",
+      "xmlns:gx" => "http://www.google.com/kml/ext/2.2",
+      "xmlns:kml" => "http://www.opengis.net/kml/2.2",
+      "xmlns:atom" => "http://www.w3.org/2005/Atom"){
+      xml.Document{
+        xml.Placemark{
+          xml.Name(happening_params[:name])
+          xml.LineString{
+            xml.Coordinates(happening_params[:route].gsub(/[\(-\)]/, ""))
+          }
+        }
+      }
+    }
+
+  	@happening = Happen ing.new(happening_params)
   	@happening.user_id = current_user.id
     if @happening.save
       redirect_to happenings_path, :notice => 'Your happening has been successfully created!'

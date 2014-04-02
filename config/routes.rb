@@ -23,11 +23,12 @@ Pfe::Application.routes.draw do
 
   get 'conversations/trash' => 'conversations#indextrash', as: :indextrash_conversation
 
-  resources :conversations, only: [:index, :show, :new, :create] do
+  resources :conversations, only: [:index, :show, :new, :create, :delete] do
     member do
       post :reply
       post :trash
       post :untrash
+      delete :delete
     end
   end
 

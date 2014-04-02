@@ -1,33 +1,53 @@
 var map, path = new google.maps.MVCArray(),
     service = new google.maps.DirectionsService(), 
     poly,
-    allPath;
-var SAMPLES = 200;
-var elevationReqActive = false;
-var mousemarker = null;
+    allPath,
+    SAMPLES = 200,
+    elevationReqActive = false,
+    mousemarker = null;
 
 google.maps.event.addDomListener(window, 'load', loadFestivalMap);
 google.load("visualization", "1", {packages: ["columnchart"]});
 
 
 function loadFestivalMap() {
+  jsLi = document.getElementById("jsRoute");
+  jsInput = jsLi.childNodes[1];
+  upLi = document.getElementById("upRoute");
+  upLi.remove();
 
-  var newDiv = document.createElement('div');
-  var newDiv2 = document.createElement('div');
-  var newDiv3 = document.createElement('div');
+  var resetButton = document.createElement('div');
+  var saveButton = document.createElement('div');
+  var closeButton = document.createElement('div');
+  var distButton = document.createElement('div');
+  var fullButton = document.createElement('div');
+
   var saveContent = document.createTextNode("save");
-  var beforeContent = document.createTextNode("before");
+  var beforeContent = document.createTextNode("reset");
   var closeContent = document.createTextNode("close");
+  var distContent = document.createTextNode("dist");
+  var fullContent = document.createTextNode("full");
 
-  var beforeButton = newDiv.appendChild(beforeContent);
-  var saveButton = newDiv2.appendChild(saveContent);
-  var closeButton = newDiv3.appendChild(closeContent);
+  distButton.appendChild(distContent);
+  fullButton.appendChild(fullContent);
+  resetButton.appendChild(beforeContent);
+  saveButton.appendChild(saveContent);
+  closeButton.appendChild(closeContent);
+
+  resetButton.setAttribute("class","reset");
+  saveButton.setAttribute("class","save");
+  closeButton.setAttribute("class","close");
+  distButton.setAttribute("class","dist");
+  fullButton.setAttribute("class","full");
+
 
   my_div = document.getElementById("happening-map");
   parentMy_div = my_div.parentNode;
-  parentMy_div.insertBefore(newDiv, my_div);
-  parentMy_div.insertBefore(newDiv2, my_div);
-  parentMy_div.insertBefore(newDiv3, my_div);
+  parentMy_div.insertBefore(resetButton, my_div);
+  parentMy_div.insertBefore(saveButton, my_div);
+  parentMy_div.insertBefore(closeButton, my_div);
+  parentMy_div.insertBefore(distButton, my_div);
+  parentMy_div.insertBefore(fullButton, my_div);
 
   var myOptions = {
     zoom: 14,
@@ -42,7 +62,7 @@ function loadFestivalMap() {
 
 
   map = new google.maps.Map(document.getElementById("happening-map"), myOptions);
-  poly = new google.maps.Polyline({ draggable: true, editable:true, geodesic:true, map: map, strokeColor: 'rgba(244,129,64,0.8)'});
+  poly = new google.maps.Polyline({ draggable: true, editable:true, geodesic:true, map: map, strokeColor: 'rgba(0,0,0,0.6)'});
 
   // Create a new chart in the elevation_chart DIV.
   chart = new google.visualization.ColumnChart(document.getElementById('elevation_chart'));
@@ -89,22 +109,24 @@ function loadFestivalMap() {
               i < len; i++) {
             path.push(result.routes[0].overview_path[i]);
             drawPath(path.j);
-
+            distButton.childNodes[0].nodeValue = poly.inKm();
+            distButton.childNodes[0].nodeValue.replace(/^(\d{1,}.)(\d{2})/, '$1$2 km');
           }
         }
       });
     }
   });
 
-  newDiv.addEventListener("click", function(evt) {
+  resetButton.addEventListener("click", function(evt) {
     path.clear();
     document.getElementById('elevation_chart').style.display = 'none';
+    distButton.childNodes[0].nodeValue = 'dist';
     if (mousemarker != null) {
       mousemarker.setMap(null);
     }
   });
 
-  newDiv3.addEventListener("click", function(evt) {
+  closeButton.addEventListener("click", function(evt) {
     if (path.getLength() === 0) {
 
     } else {
@@ -118,9 +140,19 @@ function loadFestivalMap() {
               i < len; i++) {
             path.push(result.routes[0].overview_path[i]);
             drawPath(path.j);
+            distButton.childNodes[0].nodeValue = poly.inKm();
+
           }
         }
       });
+    }
+  },false);
+
+  saveButton.addEventListener("click", function(evt) {
+    if (path.getLength() === 0) {
+
+    } else {
+      jsInput.value = path.j.toString();
     }
   },false);
 
@@ -163,7 +195,7 @@ function loadFestivalMap() {
       document.getElementById('elevation_chart').style.display = 'block';
       chart.draw(data, {
         width: 'auto',
-        height: 150,
+        height: 90,
         legend: 'none',
         titleY: 'Elevation (m)'
       });
@@ -184,7 +216,8 @@ function loadFestivalMap() {
     var a = this.getPath(n), len = a.getLength(), dist = 0; 
     for(var i=0; i<len-1; i++){ 
       dist += a.getAt(i).kmTo(a.getAt(i+1)); 
-    } 
+    }
+    dist = dist.toString().replace(/^(\d{1,}.)(\d{2})(\d{1,})$/, '$1$2 km');
     return dist; 
   } 
 

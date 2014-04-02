@@ -5,7 +5,46 @@
 /////////Content  -------------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 .notice, .alert{
+    
+}
 
+.save{
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    background-color: $sky;
+    z-index: 10;
+    padding: 0.4em;
+    margin-right: 0.5em;
+    font-size: 1.3em;
+    &:hover{
+        cursor:pointer;
+        background-color: white;
+    }
+}
+
+.reset{
+    @extend .save;
+    right: 90px;
+}
+
+.close{
+    @extend .save;
+    right: 180px;
+}
+
+.dist{
+    @extend .save;
+    right: 270px;
+    &:hover{
+        cursor:default;
+        background-color: $sky;
+    }
+}
+
+.full{
+    @extend .save;
+    bottom:0;
 }
 
 
@@ -224,12 +263,16 @@ li.sameDay{
     height: 25em;
 }
 
+.map{
+    border: 3px solid $sky;
+    position:relative;
+}
+
 .visuels{
     @include span-columns(10);
     @include shift(2);
     @include omega;
     position:relative;
-    border: 3px solid $sky;
     box-sizing: border-box;
     img{
         max-width: 100%;
@@ -391,7 +434,9 @@ li.sameDay{
 }
 .cat{
     margin-top: 1em;
-    li{
+    li a{
+        display: block;
+        border: none;
         padding: 0.6em;
         margin-top: 0.1em;
         &:hover{

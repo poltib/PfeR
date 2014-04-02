@@ -36,6 +36,11 @@ class ConversationsController < ApplicationController
     redirect_to :conversations
   end
 
+  def delete
+    conversation.delete
+    redirect_to :conversations
+  end
+
 
   private
 
