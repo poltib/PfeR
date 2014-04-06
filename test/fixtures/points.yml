@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tracksegment_id: 
+  name: MyString
+  latitude: 1.5
+
+two:
+  tracksegment_id: 
+  name: MyString
+  latitude: 1.5

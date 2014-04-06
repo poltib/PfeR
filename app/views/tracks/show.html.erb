@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Name:</strong>
+  <%= @track.name %>
+  <table>
+  <% for point in @track.points %>
+  	<tr>
+      <td><%= point.id %></td>
+      <td><%= point.longitude %></td>
+      <td><%= point.latitude %></td>
+      <td><%= point.elevation %></td>
+    </tr>
+	<% end %>
+	</table>
+  <dl class="dl-horizontal">
+    <dd><%= @track.name %></dd>
+  </dl>
+</p>
+
+<div id="map_canvas"></div>
+
+<%= link_to 'Edit', edit_track_path(@track) %> |
+<%= link_to 'Back', tracks_path %>
+
+<% content_for :script do %>
+	<%= google_maps_api %>
+	<%= track_id_to_js(@track.id) if @track %>
+<% end %>

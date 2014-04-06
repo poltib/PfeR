@@ -1,0 +1,22 @@
+<section>
+<div class="container">
+<h2>Create track</h2>
+<div class="map">
+	<div id="save">Save</div>
+	<div id="close">Close</div>
+	<div id="reset">Reset</div>
+	<div id="dist">dist</div>
+	<div id="full">full</div>
+	<div id="map_canvas"></div>
+	<div id="elevation_chart"></div>
+</div>
+<%= render 'form' %>
+</div>
+<div id="happening_id"><%= @happening.id %></div>
+</section>
+
+<%= link_to 'Back', tracks_path %>
+<% content_for :script do %>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<%= google_maps_api %>
+<% end %>

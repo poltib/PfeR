@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140330201258) do
+ActiveRecord::Schema.define(version: 20140405221524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,9 +115,6 @@ ActiveRecord::Schema.define(version: 20140330201258) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "route"
-    t.string   "routegpx"
-    t.string   "routetcx"
-    t.string   "routekml"
     t.string   "city"
     t.integer  "postalCode"
     t.string   "country"
@@ -148,6 +145,18 @@ ActiveRecord::Schema.define(version: 20140330201258) do
   end
 
   add_index "notifications", ["conversation_id"], name: "index_notifications_on_conversation_id", using: :btree
+
+  create_table "points", force: true do |t|
+    t.integer  "tracksegment_id"
+    t.string   "name"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.float    "elevation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "points", ["tracksegment_id"], name: "index_points_on_tracksegment_id", using: :btree
 
   create_table "receipts", force: true do |t|
     t.integer  "receiver_id"
@@ -205,6 +214,22 @@ ActiveRecord::Schema.define(version: 20140330201258) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
   end
+
+  create_table "tracks", force: true do |t|
+    t.string   "name"
+    t.integer  "happening_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "route"
+  end
+
+  create_table "tracksegments", force: true do |t|
+    t.integer  "track_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tracksegments", ["track_id"], name: "index_tracksegments_on_track_id", using: :btree
 
   create_table "user_statuses", force: true do |t|
     t.integer  "user_id"

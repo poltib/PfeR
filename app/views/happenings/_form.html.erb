@@ -12,8 +12,6 @@
   <% end %>
   <fieldset>
 	  	<ul>
-	  <li id="jsRoute">
-		<%= f.hidden_field :route %></li>
 		<li><%= f.label :name %>
 		<%= f.text_field :name %></li>
 
@@ -37,9 +35,6 @@
 
 		<li><%= f.label :date %>
 		<%= f.text_field :date %></li>
-
-		<li id="upRoute"><%= f.label :route %>
-		<%= f.file_field :route %></li>
 
 		<%= f.submit %>
 		</ul>

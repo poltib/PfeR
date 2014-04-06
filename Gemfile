@@ -68,3 +68,5 @@ gem 'public_activity'
 
 # private messages
 gem 'mailboxer'
+
+gem 'polylines'

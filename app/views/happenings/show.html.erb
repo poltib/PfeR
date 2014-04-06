@@ -1,15 +1,3 @@
-<ul class="none">
-	<li class="fileExt"><%= @fileExt %></li>
-	<li class="filePath"><%= @happening.route %></li>
-  <% if @coords %>
-	<% for coord in @coords %>
-		<% for latlang in coord %>
-			<li class="<%= latlang[0] %>"><%= latlang[1] %></li>
-		<% end %>
-	<% end %>
-  <% end %>
-</ul>
-
 <section>
   <div class="container">
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
@@ -17,7 +5,7 @@
     <div class="head">
       <div class="visuels">
         <div class="map">
-					<div id="happening-map"></div>
+					<div id="map_canvas"></div>
         	<div id="elevation_chart"></div>
         </div>
         <div class="aside">
@@ -39,6 +27,11 @@
             <li>
               <%= link_to(new_happening_user_path(@happening)) do %>
                 <i class="icon-user-add"></i>Inviter amis
+              <% end %>
+            </li>
+            <li>
+              <%= link_to(new_happening_track_path(@happening)) do %>
+                <i class="icon-user-add"></i>Ajouter un parcours
               <% end %>
             </li>
             <li><a href="#">&#9829; (89)</a></li>
@@ -85,13 +78,8 @@
   </div>
 </section>
 <% content_for :script do %>
-  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA9m3Ix3AmZHlnvQCQAIUo4yyFjD7c9eLw&sensor=true">
-  </script>
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<% if @fileExt == '.kml' %>
-		<%= javascript_include_tag "geoxml3" %>
-		<%= javascript_include_tag "ProjectedOverlay" %>
-	<% end %>
-	<%= javascript_include_tag "happening" %>
-
+  <%= google_maps_api %>
+  <% for track in @happening.tracks %>
+    <%= track_id_to_js(track.id) if track %>
+  <% end %>
 <% end %>

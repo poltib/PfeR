@@ -39,7 +39,7 @@
                 <span><%= link_to "Evenements", happenings_path %></span>
               </li><!-- 
               --><li>
-                <span><a href="#">Tracés</a></span>
+                <span><%= link_to "Tracés", tracks_path %></span>
               </li><!-- 
               --><li>
                 <span><%= link_to "Forums", forums_path %></span>
@@ -56,7 +56,7 @@
                   <li><%= link_to "Créer groupe", new_group_path %></li>
                   <li><%= link_to "Créer club", new_team_path %></li>
                   <li><%= link_to "Créer forum", new_forum_path %></li>
-                  <li><a href="#">Tracé</a></li>
+                  <li><%= link_to "Créer tracé", new_track_path %></li>
                 </ul>
                </span>
               </li><!--
@@ -143,7 +143,7 @@
             <p>© Jérémy Thiry 2014</p>
         </div>
   </footer>
-  <%= javascript_include_tag "application" %>
   <%= yield :script %>
+  <%= javascript_include_tag "application" %>
 </body>
 </html>

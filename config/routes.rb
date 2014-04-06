@@ -1,5 +1,7 @@
 Pfe::Application.routes.draw do
 
+  resources :tracks
+
   devise_for :users, :controllers => {:registrations => "users/registrations"}
 
   resources :categories, :forums, :teams, :groups, :happenings, :users
@@ -12,6 +14,7 @@ Pfe::Application.routes.draw do
 
   resources :happenings do
     resources :users, :controller => 'happeningsuser', :only => [:new, :create, :destroy]
+    resources :tracks, :controller => 'happeningtracks', :only => [:new, :create, :destroy]
   end
 
   resources :happenings do

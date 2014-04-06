@@ -94,6 +94,7 @@ GEM
       mime-types
     pg (0.17.1)
     polyglot (0.3.4)
+    polylines (0.1.1)
     public_activity (1.4.1)
       actionpack (>= 3.0.0)
       activerecord (>= 3.0)
@@ -174,6 +175,7 @@ DEPENDENCIES
   nokogiri (~> 1.6.1)
   paperclip (~> 4.1)
   pg
+  polylines
   public_activity
   rails (= 4.0.3)
   rails_12factor

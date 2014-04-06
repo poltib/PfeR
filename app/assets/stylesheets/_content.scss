@@ -8,7 +8,7 @@
     
 }
 
-.save{
+#save{
     display: inline-block;
     position: absolute;
     right: 10px;
@@ -23,18 +23,18 @@
     }
 }
 
-.reset{
-    @extend .save;
+#reset{
+    @extend #save;
     right: 90px;
 }
 
-.close{
-    @extend .save;
+#close{
+    @extend #save;
     right: 180px;
 }
 
-.dist{
-    @extend .save;
+#dist{
+    @extend #save;
     right: 270px;
     &:hover{
         cursor:default;
@@ -42,8 +42,8 @@
     }
 }
 
-.full{
-    @extend .save;
+#full{
+    @extend #save;
     bottom:0;
 }
 
@@ -259,7 +259,7 @@ li.sameDay{
 /////////Show race  -----------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 
-#happening-map{
+#happening-map, #map_canvas{
     height: 25em;
 }
 
