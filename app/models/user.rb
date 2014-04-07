@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
   # has_many :messages_as_owner, :class_name => "Message"
 
   has_many :forums
+  has_many :tracks
   has_many :announces
   has_many :comments
   belongs_to :role

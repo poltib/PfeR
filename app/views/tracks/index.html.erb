@@ -1,27 +1,31 @@
-<h1>Listing tracks</h1>
+<section>
+  <div class="container">
+    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
+    <div class="left_column">
+      <h3 role="heading" aria-level="3">Rechercher un tracé</h3>
+    </div>
+    <div class="primary_content">
+      <h2 role="heading" class="eventTitle" aria-level="2">Tous les tracés</h2>
+      <ul>
+      <% @tracks.each do |track| %>
+        <li class="thumbRace">
+          <ul>
+            <li class="location">Liège</li>
+            <li class="name">
+              <h4 role="heading" aria-level="4">
+                <%= link_to track.name, track_path(track) %>
+                <% if user_signed_in? && track.user_id == current_user.id %>
+                | <%= link_to "Edit", edit_track_path(track) %>
+                | <%= button_to "Delete", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
+                <% end %>
+              </h4>
+            </li>
+            <li class="distances"><a href="#">10km</a> | <a href="#">20km</a></li>
+          </ul>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+</section>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @tracks.each do |track| %>
-      <tr>
-        <td><%= track.name %></td>
-        <td><%= link_to 'Show', track %></td>
-        <td><%= link_to 'Edit', edit_track_path(track) %></td>
-        <td><%= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Track', new_track_path %>

@@ -11,7 +11,7 @@ class HappeningtracksController < ApplicationController
     if track_params[:route].is_a? String
       @track = Track.new
       tracksegment = Tracksegment.new
-      coords = track_params[:route].scan(/(\d+.\d+),(\d+.\d+),(\d+)/).to_a
+      coords = track_params[:route].scan(/(\d+.\d+),(\d+.\d+),(\d+.\d+)/).to_a
       for coord in coords do
         point = Point.new
         point.longitude = coord[0]

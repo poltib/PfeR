@@ -1,7 +1,10 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-if document.location.pathname == '/tracks/new' || document.location.pathname == '/happenings/'+document.getElementById('happening_id').innerText+'/tracks/new'
+
+NUMBER_DOT_FIVENUMBERS = /^(\d+.)(\d{0,5})(\d+)/
+NUMBER_DOT_TWONUMBERS = /^(\d+.)(\d{0,2})(\d+)/
+if document.location.pathname == '/tracks/new' 
   gm_service = new google.maps.DirectionsService()
   path = new google.maps.MVCArray()
   poly = 1
@@ -29,17 +32,17 @@ growPath = (origin, destination) ->
       destination: destination,
       travelMode: google.maps.DirectionsTravelMode.WALKING
     }, (result, status) ->
-      if status == google.maps.DirectionsStatus.OK
-        for i in result.routes[0].overview_path by 1
-          path.push(i)
-        drawPath(path.j)
-        dist.childNodes[0].nodeValue = poly.inKm()
-        undefined
+      return if status != google.maps.DirectionsStatus.OK
+      
+      for i in result.routes[0].overview_path by 1
+        path.push(i)
+      drawPath(path.j)
+      dist.childNodes[0].textContent = poly.inKm()
+      undefined
   )
 
 drawPath = (path) ->
-  if elevationReqActive || !path
-    return
+  return if elevationReqActive || !path
   # Create a PathElevationRequest object using this array.
   # Ask for 100 samples along that path.
   pathRequest = {
@@ -52,21 +55,21 @@ drawPath = (path) ->
 
 plotElevation = (results, status) ->
   elevationReqActive = false
-  if status == google.maps.ElevationStatus.OK
-    elevations = results
-    # Extract the data from which to populate the chart.
-    # Because the samples are equidistant, the 'Sample'
-    # column here does double duty as distance along the
-    # X axis.
-    data = new google.visualization.DataTable()
-    data.addColumn('string', 'Sample')
-    data.addColumn('number', 'Elevation')
-    for i in results by 1
-      data.addRow(['', elevations[_i].elevation]);
-    # Draw the chart using the data within its DIV.
-    elevation_chart.style.display = 'block'
-    chart.draw(data, { width: 'auto', height: 90, legend: 'none', titleY: 'Elevation (m)'})
-    undefined
+  return if status != google.maps.ElevationStatus.OK
+  elevations = results
+  # Extract the data from which to populate the chart.
+  # Because the samples are equidistant, the 'Sample'
+  # column here does double duty as distance along the
+  # X axis.
+  data = new google.visualization.DataTable()
+  data.addColumn('string', 'Sample')
+  data.addColumn('number', 'Elevation')
+  for i in results by 1
+    data.addRow(['', elevations[_i].elevation]);
+  # Draw the chart using the data within its DIV.
+  elevation_chart.style.display = 'block'
+  chart.draw(data, { width: 'auto', height: 90, legend: 'none', titleY: 'Elevation (m)'})
+  undefined
 
 
 load_track = (id,map) ->
@@ -102,11 +105,14 @@ $ ->
 
   if save?
     jsInput = document.getElementById("jsRoute").childNodes[0];
+    locationInput = document.getElementById("track_location");
+    distanceInput = document.getElementById("track_distance");
     elevation_chart = document.getElementById('elevation_chart')
     chart = new google.visualization.ColumnChart(elevation_chart);
     upLi = document.getElementById("upRoute");
     upLi.remove();
     poly = poly_init(map)
+
     google.maps.event.addListener map, 'click', (evt) ->
       if path.getLength() == 0
         path.push(evt.latLng)
@@ -126,27 +132,45 @@ $ ->
         growPath(path.getAt(path.getLength() - 1),path.getAt(0))
 
     save.addEventListener 'click', (evt) ->
-      if path.getLength() != 0
-        for i in elevations by 1
-          newRoute[_i] = elevations[_i].location.A.toString().replace(/^(\d+.)(\d{0,5})(\d+)/, '$1$2') + ',' + elevations[_i].location.k.toString().replace(/^(\d+.)(\d{0,5})(\d+)/, '$1$2') + ',' + elevations[_i].elevation.toString().replace(/^(\d+)(.)(\d+)$/, '$1')
-        jsInput.value = newRoute
-        undefined
+      return if path.getLength() == 0
+      getZipCode(path.j[0].k, path.j[0].A)
+      for i in elevations by 1
+        newRoute[_i] = 
+          elevations[_i].location.A.toString().replace(NUMBER_DOT_FIVENUMBERS, '$1$2') + ','+ elevations[_i].location.k.toString().replace(NUMBER_DOT_FIVENUMBERS, '$1$2') + ','+ elevations[_i].elevation.toString().replace(NUMBER_DOT_TWONUMBERS, '$1$2')
+      jsInput.value = newRoute
+      console.log(location)
+      locationInput.value = location
+      distanceInput.value = dist.childNodes[0].textContent
+      undefined
+
+    google.maps.LatLng::kmTo = (a) ->
+      e = Math 
+      ra = e.PI/180
+      b = this.lat() * ra
+      c = a.lat() * ra
+      d = b - c
+      g = this.lng() * ra - a.lng() * ra
+      f = 2 * e.asin(e.sqrt(e.pow(e.sin(d/2), 2) + e.cos(b) * e.cos(c) * e.pow(e.sin(g/2), 2)))
+      return f * 6378.137
 
     google.maps.Polyline::inKm = (n) ->
       a = this.getPath(n)
-      len = a.getLength()
-      dist = 0
-      for i in len-1 by 1
-        dist += a.getAt(i).kmTo(a.getAt(_i+1))
-      dist = dist.toString().replace(/^(\d+.)(\d{2})(\d+)$/, '$1$2 km')
-      return dist
+      len = a.getLength()-1
+      pathLenght = 0
+      for i in [0...len] by 1
+        pathLenght += a.getAt(i).kmTo(a.getAt(i+1))
+      pathLenght.toString().replace(NUMBER_DOT_TWONUMBERS, '$1$2 km')
 
-    google.maps.LatLng::kmTo = (a) ->
-      e = Math ra = e.PI/180
-      b = this.lat() * ra c = a.lat() * ra d = b - c
-      g = this.lng() * ra - a.lng() * ra
-      f = 2 * e.asin(e.sqrt(e.pow(e.sin(d/2), 2) + e.cos(b) * e.cos 
-      (c) * e.pow(e.sin(g/2), 2)))
-      return f * 6378.137
+    getZipCode = (lat, lon) ->
+      url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{ lat },#{ lon }&sensor=true&callback=zipmap"
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        cache: true,
+      }).success (data) ->
+        for c in data.results[0].address_components
+          if c.types[0] == 'postal_code'
+            locationInput.value = c.short_name
+
   else
     load_track(js_track_id,map)

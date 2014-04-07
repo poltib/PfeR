@@ -2,7 +2,8 @@ class Track < ActiveRecord::Base
 	before_save :parse_file
 	mount_uploader :route, RouteUploader
 
-	belongs_to :happening
+  belongs_to :happening
+	belongs_to :users
   has_many :tracksegments, :dependent => :destroy
   has_many :points, :through => :tracksegments
 

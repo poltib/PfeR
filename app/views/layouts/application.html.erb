@@ -45,11 +45,18 @@
                 <span><%= link_to "Forums", forums_path %></span>
               </li><!-- 
               --><li>
-                <span><%= link_to "Users", users_path %></span>
-              </li><!-- 
-              --><% if user_signed_in? %><!-- 
+               <span class="actions">
+                <i class="icon-users"></i>
+                <ul>
+                  <li><%= link_to "Groups", groups_path %></li>
+                  <li><%= link_to "Clubs", teams_path %></li>
+                  <li><%= link_to "Utilisateurs", users_path %></li>
+                </ul>
+               </span>
+              </li><!--
+              --><% if user_signed_in? %><!--
                --><li>
-               <span class="actions" data-tooltip="Actions">
+               <span class="actions">
                 <i class="icon-plus"></i>
                 <ul>
                   <li><%= link_to "Créer evenement", new_happening_path %></li>
@@ -117,31 +124,9 @@
     <%= yield %>
   </div>
   <footer role="footer">
-        <div class="container">
-            <div>
-                <div class="footDiv">
-                    <h4 role="heading" aria-level="4"><i class="icon-phone-circled"></i>A propos</h4>
-                    <ul>
-                        <li><a href="contact.html" title="Contact">Contact</a></li>
-                        <li><a href="#" title="Accueil">Accueil</a></li>
-                    </ul>
-                </div>
-                <div class="footDiv">
-                    <h4 role="heading" aria-level="4">Informations</h4>
-                    <ul>
-                    </ul>
-                    
-                </div>
-                <div class="footDiv">
-                    <h4 role="heading" aria-level="4"><i class="icon-group-circled"></i>Social</h4>
-                    <ul>
-                        <li><a href="#" title="Facebook"><i class="icon-facebook-circled"></i>Facebook</a></li>
-                        <li><a href="#" title="Twitter"><i class="icon-twitter-circled"></i>Twitter</a></li>
-                    </ul>
-                </div>
-            </div>
-            <p>© Jérémy Thiry 2014</p>
-        </div>
+    <div class="container">
+      <p>© Jérémy Thiry 2014</p>
+    </div>
   </footer>
   <%= yield :script %>
   <%= javascript_include_tag "application" %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140405221524) do
+ActiveRecord::Schema.define(version: 20140407193041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -221,6 +221,9 @@ ActiveRecord::Schema.define(version: 20140405221524) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "route"
+    t.integer  "user_id"
+    t.integer  "distance"
+    t.integer  "location"
   end
 
   create_table "tracksegments", force: true do |t|
