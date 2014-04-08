@@ -5,7 +5,7 @@
 		</header>
 		<div class="comment__body">
 			<h4>
-				<%= link_to comment.user.username, user_path(comment.user) %>
+				<%= link_to comment.user.username, member_path(comment.user) %>
 				<span><%= distance_of_time_in_words_to_now(comment.created_at, include_seconds: true) %> ago</span>
 			</h4>
 			<p><%= comment.comment %></p>

@@ -43,7 +43,7 @@
     	<ul class="events">
         <% @activities.each do |activity| %>
             <li class="thumbRace">
-            <%= link_to activity.owner.username, activity.owner if activity.owner %>
+						<%= @user.username %>
             <%= render_activity activity %>
           </li>
         <% end %>

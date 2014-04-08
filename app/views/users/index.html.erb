@@ -4,10 +4,9 @@
 		<% for user in @users %>
       <li class="thumbRace">
         <h4 role="heading" aria-level="4">
-                <%= link_to user.username, user_path(user) %>
+                <%= link_to user.username, member_path(user) %>
 			  <% if user_signed_in? &&  user.id == current_user.id %>
-				| <%= link_to "Edit", edit_user_path(user) %>
-				| <%= link_to "Delete", user, :method => 'delete' %>
+				| <%= link_to "Edit", edit_user_registration_path(user) %>
 			  <% end %>
 				</h4>
 		  </li>

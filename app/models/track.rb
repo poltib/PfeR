@@ -3,9 +3,7 @@ class Track < ActiveRecord::Base
 	mount_uploader :route, RouteUploader
 
   belongs_to :happening
-	belongs_to :users
-  has_many :tracksegments, :dependent => :destroy
-  has_many :points, :through => :tracksegments
+	belongs_to :user
 
   def parse_file
     if route.path
@@ -31,31 +29,28 @@ class Track < ActiveRecord::Base
 
   def parse_track_segments(node)
     if node.node_name.eql? 'trkseg'
-      tmp_segment = Tracksegment.new
+      tmp_segment = []
       node.elements.each do |node|
         parse_points(node,tmp_segment)
       end
-      self.tracksegments << tmp_segment
+      self.polyline = Polylines::Encoder.encode_points(tmp_segment)
     end
   end
 
   def parse_points(node,tmp_segment)
     if node.node_name.eql? 'trkpt'
-      tmp_point = Point.new
-      tmp_point.latitude = node.attr("lat")
-      tmp_point.longitude = node.attr("lon")
-      node.elements.each do |node|
-        tmp_point.elevation = node.text.to_s if node.name.eql? 'ele'
-      end
-      tmp_segment.points << tmp_point
+      tmp_point = []
+      tmp_point.push = node.attr("lat")
+      tmp_point.push = node.attr("lon")
+      tmp_segment << tmp_point
     end
   end
   
-  def polyline_points
-    self.points.map(&:latlng)
-  end
+  # def polyline_points
+  #   self.points.map(&:latlng)
+  # end
 
-  def polyline
-    Polylines::Encoder.encode_points(self.polyline_points)
-  end
+  # def polyline
+  #   Polylines::Encoder.encode_points(self.polyline_points)
+  # end
 end

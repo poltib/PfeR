@@ -2,8 +2,7 @@
   <fieldset>
   <% if @forum.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@forum.errors.count, "error") %> prohibited
-        this forum from being saved:</h2>
+      <h2><%= pluralize(@forum.errors.count, "erreur") %> empêchent le forum d'être enregistré:</h2>
       <ul>
       <% @forum.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>

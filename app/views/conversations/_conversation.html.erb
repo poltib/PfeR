@@ -6,7 +6,7 @@
     </li>
     <li class="location">auteur :&nbsp;
     <% if conversation.originator != current_user %>
-   		<%= link_to conversation.originator.username, user_path(conversation.originator.username) %>
+   		<%= link_to conversation.originator.username, member_path(conversation.originator.username) %>
    	<% else %>
 			vous
    	<% end %>

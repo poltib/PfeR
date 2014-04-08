@@ -50,7 +50,7 @@
                 <ul>
                   <li><%= link_to "Groups", groups_path %></li>
                   <li><%= link_to "Clubs", teams_path %></li>
-                  <li><%= link_to "Utilisateurs", users_path %></li>
+                  <li><%= link_to "Utilisateurs", members_path %></li>
                 </ul>
                </span>
               </li><!--
@@ -69,7 +69,7 @@
               </li><!--
                  --><li>
                   <span class="tooltip" data-tooltip="<%= current_user.username %>">
-                    <%= link_to user_path(current_user) do %>
+                    <%= link_to member_path(current_user) do %>
                       <i class="icon-user"></i>
                     <% end %>
                   </span>
@@ -89,7 +89,7 @@
                   </span>
                 </li><!--
                  --><li>
-                  <span class="tooltip" data-tooltip="Logout">
+                  <span class="tooltip" data-tooltip="Déconnexion">
                     <%= link_to destroy_user_session_path, :method => :delete do %>
                       <i class="icon-logout"></i>
                     <% end %>
@@ -97,7 +97,7 @@
                 </li><!--
               --><% else %><!-- 
                  --><li>
-                  <span class="tooltip"  data-tooltip="Login">
+                  <span class="tooltip"  data-tooltip="Connexion">
                     <%= link_to new_user_session_path do %>
                       <i class="icon-login"></i>
                     <% end %>
@@ -129,5 +129,6 @@
     </div>
   </footer>
   <%= yield :script %>
+  <%= javascript_include_tag "application" %>
 </body>
 </html>

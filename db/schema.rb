@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140407193041) do
+ActiveRecord::Schema.define(version: 20140408182458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,18 +146,6 @@ ActiveRecord::Schema.define(version: 20140407193041) do
 
   add_index "notifications", ["conversation_id"], name: "index_notifications_on_conversation_id", using: :btree
 
-  create_table "points", force: true do |t|
-    t.integer  "tracksegment_id"
-    t.string   "name"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.float    "elevation"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "points", ["tracksegment_id"], name: "index_points_on_tracksegment_id", using: :btree
-
   create_table "receipts", force: true do |t|
     t.integer  "receiver_id"
     t.string   "receiver_type"
@@ -224,15 +212,8 @@ ActiveRecord::Schema.define(version: 20140407193041) do
     t.integer  "user_id"
     t.integer  "distance"
     t.integer  "location"
+    t.text     "polyline"
   end
-
-  create_table "tracksegments", force: true do |t|
-    t.integer  "track_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tracksegments", ["track_id"], name: "index_tracksegments_on_track_id", using: :btree
 
   create_table "user_statuses", force: true do |t|
     t.integer  "user_id"

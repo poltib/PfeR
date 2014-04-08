@@ -1,4 +1,5 @@
 class HappeningsuserController < ApplicationController
+	before_action :authenticate_user!
 	def new
 		@happening = Happening.find params[:happening_id]
 	end

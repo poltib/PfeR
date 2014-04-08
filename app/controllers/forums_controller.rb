@@ -1,4 +1,5 @@
 class ForumsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
   def index
     @forums = Forum.all.order("created_at desc")
   end

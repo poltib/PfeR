@@ -1,4 +1,5 @@
 class TracksController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
   before_action :set_track, only: [:show, :edit, :update, :destroy]
 
   # GET /tracks
@@ -14,7 +15,7 @@ class TracksController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json {
-        render :json => @track.to_json(:methods => [:polyline],:only => [:name])
+        render :json => @track.to_json(:only => [:name, :polyline])
       }
     end
   end
@@ -31,24 +32,16 @@ class TracksController < ApplicationController
   # POST /tracks
   # POST /tracks.json
   def create
-    if track_params[:route].is_a? String
-      @track = Track.new
-      tracksegment = Tracksegment.new
-      coords = track_params[:route].scan(/(\d+.\d+),(\d+.\d+),(\d+.\d+)/).to_a
-      for coord in coords do
-        point = Point.new
-        point.longitude = coord[0]
-        point.latitude = coord[1]
-        point.elevation = coord[2]
-        tracksegment.points << point
+    @track = Track.new(track_params)
+    if !track_params[:route]
+      tmp_segment = track_params[:polyline].scan(/(\d+.\d+),(\d+.\d+)/).to_a
+      for coords in tmp_segment do
+        coords[0] = coords[0].to_f
+        coords[1] = coords[1].to_f
       end
-      @track.tracksegments << tracksegment
-      track_params[:route] = ""
-      @track.name = track_params[:name]
-    else
-      @track = Track.new(track_params)
+      @track.polyline = Polylines::Encoder.encode_points(tmp_segment)
     end
-
+    @track.user_id = current_user.id
     respond_to do |format|
       if @track.save
         format.html { redirect_to @track, notice: 'Track was successfully created.' }
@@ -92,6 +85,6 @@ class TracksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def track_params
-      params.require(:track).permit(:name, :route)
+      params.require(:track).permit(:name, :polyline, :location, :distance, :route)
     end
 end

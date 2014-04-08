@@ -1,16 +1,9 @@
-<p id="notice"><%= notice %></p>
+
 <p>
   <strong>Name:</strong>
   <%= @track.name %>
+  <%= link_to @track.user.username, member_path(@track.user) %>
   <table>
-  <% for point in @track.points %>
-  	<tr>
-      <td><%= point.id %></td>
-      <td><%= point.longitude %></td>
-      <td><%= point.latitude %></td>
-      <td><%= point.elevation %></td>
-    </tr>
-	<% end %>
 	</table>
   <dl class="dl-horizontal">
     <dd><%= @track.name %></dd>

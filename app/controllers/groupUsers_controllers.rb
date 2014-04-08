@@ -1,5 +1,5 @@
 class GroupUsersController < ApplicationController
-
+  before_action :authenticate_user!
   def create
   	@user = User.find(params[:user_id])
     @grouper = Grouper.new(grouper_params)

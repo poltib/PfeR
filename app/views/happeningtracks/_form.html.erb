@@ -1,7 +1,7 @@
 <%= form_for ([@happening, @happening.tracks.build]) , :html => { :multipart => true, :class => 'create' } do |f| %>
   <% if @track.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@track.errors.count, "error") %> prohibited this track from being saved:</h2>
+      <h2><%= pluralize(@track.errors.count, "erreur") %> empêchent le tracé d'être enregistré:</h2>
 
       <ul>
       <% @track.errors.full_messages.each do |msg| %>

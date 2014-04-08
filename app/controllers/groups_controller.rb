@@ -1,4 +1,5 @@
 class GroupsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
   def index
     @groups = Group.all
   end

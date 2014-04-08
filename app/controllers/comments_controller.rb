@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!
   def create
   	@forum = Forum.find(params[:forum_id])
     @comment = @forum.comments.create(comment_params)

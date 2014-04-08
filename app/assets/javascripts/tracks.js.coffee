@@ -37,7 +37,7 @@ growPath = (origin, destination) ->
       for i in result.routes[0].overview_path by 1
         path.push(i)
       drawPath(path.j)
-      dist.childNodes[0].textContent = poly.inKm()
+      dist.childNodes[0].textContent = poly.inKm() + 'km'
       undefined
   )
 
@@ -135,12 +135,11 @@ $ ->
       return if path.getLength() == 0
       getZipCode(path.j[0].k, path.j[0].A)
       for i in elevations by 1
-        newRoute[_i] = 
-          elevations[_i].location.A.toString().replace(NUMBER_DOT_FIVENUMBERS, '$1$2') + ','+ elevations[_i].location.k.toString().replace(NUMBER_DOT_FIVENUMBERS, '$1$2') + ','+ elevations[_i].elevation.toString().replace(NUMBER_DOT_TWONUMBERS, '$1$2')
+        newRoute[_i] = elevations[_i].location.k.toString() + ','+ elevations[_i].location.A.toString()
       jsInput.value = newRoute
       console.log(location)
       locationInput.value = location
-      distanceInput.value = dist.childNodes[0].textContent
+      distanceInput.value = poly.inKm()
       undefined
 
     google.maps.LatLng::kmTo = (a) ->
@@ -159,7 +158,7 @@ $ ->
       pathLenght = 0
       for i in [0...len] by 1
         pathLenght += a.getAt(i).kmTo(a.getAt(i+1))
-      pathLenght.toString().replace(NUMBER_DOT_TWONUMBERS, '$1$2 km')
+      pathLenght.toString().replace(NUMBER_DOT_TWONUMBERS, '$1$2')
 
     getZipCode = (lat, lon) ->
       url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{ lat },#{ lon }&sensor=true&callback=zipmap"

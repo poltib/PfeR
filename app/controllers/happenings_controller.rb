@@ -1,4 +1,5 @@
 class HappeningsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
   def index
     @happenings = Happening.all
   end
@@ -9,22 +10,6 @@ class HappeningsController < ApplicationController
 
   def show
   	@happening = Happening.find params[:id]
-  # 	@fileExt = File.extname(@happening.route.current_path)
-
-  # 	if @fileExt == '.tcx'
-	 #  	xml = Nokogiri::XML(open(@happening.route.current_path))
-		# 	@coords = xml.search('Trackpoint').map do |coord| 
-		# 	  %w[LatitudeDegrees LongitudeDegrees].each_with_object({}) do |n, o|
-		# 	    o[n] = coord.at(n).text
-		# 	  end
-		# 	end
-		# end
-
-		# if @fileExt == '.gpx'
-	 #  	xml = Nokogiri::XML(open(@happening.route.current_path))
-		# 	@coords = xml.search('trkpt') do |coord| 
-		# 	end
-		# end
   end
 
   def create
