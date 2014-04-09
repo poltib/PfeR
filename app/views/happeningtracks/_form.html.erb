@@ -15,7 +15,9 @@
   <ul>
     <li><%= f.label :name %>
   <%= f.text_field :name %></li>
-  <li id="jsRoute"><%= f.hidden_field :route %></li>
+  <li><%= f.hidden_field :location %></li>
+  <li><%= f.hidden_field :distance %></li>
+  <li id="jsRoute"><%= f.hidden_field :polyline %></li>
   <li id="upRoute"><%= f.label :route %>
   <%= f.file_field :route %></li>
   </ul>

@@ -4,8 +4,7 @@ Pfe::Application.routes.draw do
 
   devise_for :users, :controllers => {:registrations => "users/registrations"}
 
-  resources :categories, :forums, :teams, :groups, :happenings
-  resources :members, :controller => 'users', :only => [:show, :index] 
+  resources :categories, :forums, :teams, :groups, :happenings, :users
 
   get 'users/:id/activities' => 'activities#index'
 

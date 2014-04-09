@@ -32,13 +32,13 @@
     <li>Currently waiting confirmation for: <%= resource.unconfirmed_email %></li>
   <% end %>
 
-  <li><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+  <li><%= f.label :password %> <i>(Laissez vide si vous ne voulez pas changer votre mot-de-passe)</i><br />
   <%= f.password_field :password, :autocomplete => "off" %></li>
 
   <li><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></li>
 
-  <li><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+  <li><%= f.label :current_password %> <i>(Nous avons besoin de votre mot-de-passe si vous le changez)</i><br />
   <%= f.password_field :current_password %></li>
 
   <li><%= f.submit "Update" %></li>

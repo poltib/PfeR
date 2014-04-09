@@ -18,3 +18,4 @@
 # Ignore users avatars and routes
 /public/system
 /public/uploads
+.env

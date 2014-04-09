@@ -15,6 +15,16 @@ nav{
         .tooltip{
             @include tooltip(n, rgba(0,0,0,0.8), 2px);
         }
+        .button_to{
+            [type="submit"]{
+                background-color: $blue;
+                color:$sky;
+                border:none;
+                &:hover{
+                    background-color: rgba(84, 102, 120,0.8);
+                }
+            }
+        }
         span{
             display: inline-block;
             &:hover{

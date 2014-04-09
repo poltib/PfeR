@@ -59,7 +59,11 @@
         			  <% end %>
         			</h4>
     	      </li>
-              <li class="distances"><a href="#">10km</a> | <a href="#">20km</a></li>
+              <li class="distances">
+                <% for track in happening.tracks %>
+                  <%= track.distance %> km
+                <% end %>
+              </li>
             </ul>
       	  </li>
       	<% end %>

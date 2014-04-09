@@ -7,11 +7,11 @@
 					<li><a href="#"><i class="icon-heart-empty"></i> (89)</a></li>
 					<li class="shareButton"><i class="shareDart">&rarr;</i>&nbsp;Share
 						<ul class="shareForum">
-    					<li><a href="#"><i class="icon-facebook-squared"></i></a></li>
-              <li><a href="#"><i class="icon-gplus-squared"></i></a></li>
-              <li><a href="#"><i class="icon-twitter-squared"></i></a></li>
-              <li><a href="#"><i class="icon-mail"></i></a></li>
-              <li><a href="#"><i class="icon-rss"></i></a></li>
+    					<li><a href="http://www.facebook.com/share.php?u=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-facebook-squared"></i></a></li>
+                <li><a href="https://plus.google.com/share?url=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-gplus-squared"></i></a></li>
+                <li><a href="http://twitter.com/home?status=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-twitter-squared"></i></a></li>
+                <li><a href="mailto:?subject=Article sur Sportfun&amp;body=Article intéressant <%= @forum.title %> : <%= request.original_url %>" rel="nofollow"><i class="icon-mail"></i></a></li>
+                <li><a href="#"><i class="icon-rss"></i></a></li>
   					</ul>
   				</li>
 				</ul>
@@ -23,7 +23,7 @@
 					<% if  user_signed_in? && @forum.user_id == current_user.id %>
 					| <%= link_to "Edit", edit_forum_path(@forum) %>
 					| <%= button_to "Delete", @forum, :method => 'DELETE' %>
-					<% end %><br><span>Posté par <%= link_to @forum.user.username, member_path(@forum.user) %></span></h3>
+					<% end %><br><span>Posté par <%= link_to @forum.user.username, user_path(@forum.user) %></span></h3>
           <ul class="forumDetails">
               <li><i class="icon-clock-1"></i><%= @forum.created_at %></li>
               <li><i class="icon-bookmarks"></i>Entrainements</li>

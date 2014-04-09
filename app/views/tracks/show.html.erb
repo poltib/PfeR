@@ -1,21 +1,34 @@
-
-<p>
-  <strong>Name:</strong>
-  <%= @track.name %>
-  <%= link_to @track.user.username, member_path(@track.user) %>
-  <table>
-	</table>
-  <dl class="dl-horizontal">
-    <dd><%= @track.name %></dd>
-  </dl>
-</p>
-
-<div id="map_canvas"></div>
-
-<%= link_to 'Edit', edit_track_path(@track) %> |
-<%= link_to 'Back', tracks_path %>
-
+<section>
+  <div class="container">
+    <h2><%= @track.name %> de <%= link_to @track.user.username, user_path(@track.user) %></h2>
+    <div class="head">
+      <div class="visuels">
+          <div class="map">
+            <div id="map_canvas"></div>
+            <div id="elevation_chart"></div>
+          </div>
+          <div class="aside">
+            <div class="users">
+              <h3 role="heading" aria-level="3"><%= @track.distance %> km</h3>
+              <ul class="share">
+              <li><a href="#">&#9829; (89)</a></li>
+              <li class="shareButton"><i class="shareDart">&rarr;</i>&nbsp;share
+                <ul class="shareForum">
+                  <li><a href="http://www.facebook.com/share.php?u=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-facebook-squared"></i></a></li>
+                  <li><a href="https://plus.google.com/share?url=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-gplus-squared"></i></a></li>
+                  <li><a href="http://twitter.com/home?status=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-twitter-squared"></i></a></li>
+                  <li><a href="mailto:?subject=Tracé intéressant sur Sportfun&amp;body=Tracé intéressant <%= @track.name %> : <%= request.original_url %>" rel="nofollow"><i class="icon-mail"></i></a></li>
+                  <li><a href="#"><i class="icon-rss"></i></a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <% content_for :script do %>
 	<%= google_maps_api %>
 	<%= track_id_to_js(@track.id) if @track %>
 <% end %>
+</section>

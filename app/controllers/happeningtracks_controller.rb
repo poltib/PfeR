@@ -8,26 +8,17 @@ class HappeningtracksController < ApplicationController
 
   def create
     @happening = Happening.find(params[:happening_id])
-
-    if track_params[:route].is_a? String
-      @track = Track.new
-      tracksegment = Tracksegment.new
-      coords = track_params[:route].scan(/(\d+.\d+),(\d+.\d+),(\d+.\d+)/).to_a
-      for coord in coords do
-        point = Point.new
-        point.longitude = coord[0]
-        point.latitude = coord[1]
-        point.elevation = coord[2]
-        tracksegment.points << point
+    @track = Track.new(track_params)
+    if !track_params[:route]
+      tmp_segment = track_params[:polyline].scan(/(\d+.\d+),(\d+.\d+)/).to_a
+      for coords in tmp_segment do
+        coords[0] = coords[0].to_f
+        coords[1] = coords[1].to_f
       end
-      @track.tracksegments << tracksegment
-      track_params[:route] = ""
-      @track.name = track_params[:name]
-      @happening.tracks << @track
-    else
-      @track = @happening.tracks.create(track_params)
+      @track.polyline = Polylines::Encoder.encode_points(tmp_segment)
     end
-    
+    @track.user_id = current_user.id
+    @happening.tracks << @track
     if @track.save
       redirect_to happening_path(@happening), :notice => 'Your track has been successfully created!'
     else
@@ -44,6 +35,6 @@ class HappeningtracksController < ApplicationController
 
   private
     def track_params
-      params.require(:track).permit(:name, :route)
+      params.require(:track).permit(:name, :polyline, :location, :distance, :route)
     end
 end

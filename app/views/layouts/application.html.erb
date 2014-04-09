@@ -50,7 +50,7 @@
                 <ul>
                   <li><%= link_to "Groups", groups_path %></li>
                   <li><%= link_to "Clubs", teams_path %></li>
-                  <li><%= link_to "Utilisateurs", members_path %></li>
+                  <li><%= link_to "Utilisateurs", users_path %></li>
                 </ul>
                </span>
               </li><!--
@@ -69,7 +69,7 @@
               </li><!--
                  --><li>
                   <span class="tooltip" data-tooltip="<%= current_user.username %>">
-                    <%= link_to member_path(current_user) do %>
+                    <%= link_to user_path(current_user) do %>
                       <i class="icon-user"></i>
                     <% end %>
                   </span>
@@ -90,7 +90,7 @@
                 </li><!--
                  --><li>
                   <span class="tooltip" data-tooltip="Déconnexion">
-                    <%= link_to destroy_user_session_path, :method => :delete do %>
+                    <%= button_to destroy_user_session_path, :method => :delete do %>
                       <i class="icon-logout"></i>
                     <% end %>
                   </span>
@@ -117,17 +117,20 @@
       <br>
       <%= yield :head %>
     </header>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <div>
+    <div class="container">
+      <p id="notice"><%= notice %></p>
+      <p id="alert"><%= alert %></p>
     </div>
-    <%= yield %>
+    <div class="<%= controller_name %> <%= action_name %>">
+      <%= yield %>
+    </div>
   </div>
   <footer role="footer">
     <div class="container">
       <p>© Jérémy Thiry 2014</p>
     </div>
   </footer>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <%= yield :script %>
   <%= javascript_include_tag "application" %>
 </body>

@@ -5,8 +5,8 @@
 		</header>
 		<div class="comment__body">
 			<h4>
-				<%= link_to comment.user.username, member_path(comment.user) %>
-				<span><%= distance_of_time_in_words_to_now(comment.created_at, include_seconds: true) %> ago</span>
+				<%= link_to comment.user.username, user_path(comment.user) %>
+				<span>Il y a <%= distance_of_time_in_words_to_now(comment.created_at, include_seconds: true) %></span>
 			</h4>
 			<p><%= comment.comment %></p>
 			<% if  user_signed_in? && comment.user.id == current_user.id %>

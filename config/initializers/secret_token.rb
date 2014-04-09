@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Pfe::Application.config.secret_key_base = '8c45383b3d29916188be3914f36eac8ea68bbc27c812e9a4e5df72d77675f47dfbda2c66db1ae495e3ddd82eeaa34c57aa41e9ce37fe389140fbfa350c217a0c'
+Pfe::Application.config.secret_key_base = ENV['SECRET_TOKEN']

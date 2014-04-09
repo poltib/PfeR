@@ -10,6 +10,14 @@ class HappeningsController < ApplicationController
 
   def show
   	@happening = Happening.find params[:id]
+    respond_to do |format|
+      format.html # show.html.erb
+      for track in @happening.tracks do
+        format.json {
+          render :json => track.to_json(:only => [:name, :polyline])
+        }
+      end
+    end
   end
 
   def create

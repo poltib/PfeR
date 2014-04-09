@@ -41,6 +41,7 @@ class TracksController < ApplicationController
       end
       @track.polyline = Polylines::Encoder.encode_points(tmp_segment)
     end
+    @track.distance = track_params[:distance].to_f
     @track.user_id = current_user.id
     respond_to do |format|
       if @track.save

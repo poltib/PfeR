@@ -10,7 +10,7 @@
       <% @tracks.each do |track| %>
         <li class="thumbRace">
           <ul>
-            <li class="location">Liège</li>
+            <li class="location"><%= track.location %></li>
             <li class="name">
               <h4 role="heading" aria-level="4">
                 <%= link_to track.name, track_path(track) %>
@@ -20,7 +20,7 @@
                 <% end %>
               </h4>
             </li>
-            <li class="distances"><a href="#">10km</a> | <a href="#">20km</a></li>
+            <li class="distances"><%= track.distance %>km</li>
           </ul>
         </li>
       <% end %>

@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.3'
 
+
 # Use postgresql as the database for Active Record
 gem 'pg'
 
@@ -48,6 +49,9 @@ gem 'rails_12factor', group: :production
 
 # Auth service
 gem 'devise'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 
 # files managment
 gem 'carrierwave'
@@ -70,3 +74,12 @@ gem 'public_activity'
 gem 'mailboxer'
 
 gem 'polylines'
+
+gem 'dotenv-rails'
+
+group :production do
+  gem 'dalli'                   # memcached
+  gem 'memcachier'              # heroku add-on for auto config of dalli
+  gem 'unicorn'
+  gem 'rails_12factor'          # https://devcenter.heroku.com/articles/rails4
+end

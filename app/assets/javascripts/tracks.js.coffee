@@ -1,20 +1,25 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-
-NUMBER_DOT_FIVENUMBERS = /^(\d+.)(\d{0,5})(\d+)/
 NUMBER_DOT_TWONUMBERS = /^(\d+.)(\d{0,2})(\d+)/
-if document.location.pathname == '/tracks/new' 
-  gm_service = new google.maps.DirectionsService()
-  path = new google.maps.MVCArray()
-  poly = 1
-  chart = 1
-  elevations = 1
-  SAMPLES = 200
-  newRoute = []
-  elevationReqActive = false
-  elevationService = new google.maps.ElevationService()
-  google.load("visualization", "1", {packages: ["columnchart"]})
+poly = 1
+chart = 1
+elevations = 1
+SAMPLES = 200
+newRoute = []
+elevationReqActive = false
+alert = document.getElementById("alert")
+notice = document.getElementById("notice")
+
+if !alert.innerText
+  alert.remove();
+else
+
+if !notice.innerText
+  notice.remove();
+else
+
+path = new google.maps.MVCArray()
+gm_service = new google.maps.DirectionsService()
+elevationService = new google.maps.ElevationService()
+google.load("visualization", "1", {packages: ["columnchart"]})
 
 gm_init = ->
   gm_center = new google.maps.LatLng(50.633333, 5.566667)
@@ -92,84 +97,82 @@ calc_bounds = (track_path) ->
   b.extend(gm_path.getAt(i[1]))
   b.extend(gm_path.getAt(i[2]))
 
-
-# When the page is loaded
-$ ->
+$(".tracks.new, .happeningtracks.new").ready ->
+  
   dist = document.getElementById "dist"
   reset = document.getElementById "reset"
   close = document.getElementById "close"
   clear = document.getElementById "clear"
   save = document.getElementById "save"
-
+  jsInput = document.getElementById("jsRoute").childNodes[0];
+  locationInput = document.getElementById("track_location");
+  distanceInput = document.getElementById("track_distance");
+  elevation_chart = document.getElementById('elevation_chart')
+  chart = new google.visualization.ColumnChart(elevation_chart);
+  upLi = document.getElementById("upRoute");
+  
   map = gm_init()
+  upLi.remove();
+  poly = poly_init(map)
 
-  if save?
-    jsInput = document.getElementById("jsRoute").childNodes[0];
-    locationInput = document.getElementById("track_location");
-    distanceInput = document.getElementById("track_distance");
-    elevation_chart = document.getElementById('elevation_chart')
-    chart = new google.visualization.ColumnChart(elevation_chart);
-    upLi = document.getElementById("upRoute");
-    upLi.remove();
-    poly = poly_init(map)
+  google.maps.event.addListener map, 'click', (evt) ->
+    if path.getLength() == 0
+      path.push(evt.latLng)
+      poly.setPath(path)
+    else
+      growPath(path.getAt(path.getLength() - 1), evt.latLng)
 
-    google.maps.event.addListener map, 'click', (evt) ->
-      if path.getLength() == 0
-        path.push(evt.latLng)
-        poly.setPath(path)
-      else
-        growPath(path.getAt(path.getLength() - 1), evt.latLng)
+  reset.addEventListener 'click', (evt) ->
+    path.clear();
+    elevation_chart.style.display = 'none'
+    dist.childNodes[0].nodeValue = 'dist'
+    if mousemarker != null
+      mousemarker.setMap(null)
 
-    reset.addEventListener 'click', (evt) ->
-      path.clear();
-      elevation_chart.style.display = 'none'
-      dist.childNodes[0].nodeValue = 'dist'
-      if mousemarker != null
-        mousemarker.setMap(null)
+  close.addEventListener 'click', (evt) ->
+    if path.getLength() != 0
+      growPath(path.getAt(path.getLength() - 1),path.getAt(0))
 
-    close.addEventListener 'click', (evt) ->
-      if path.getLength() != 0
-        growPath(path.getAt(path.getLength() - 1),path.getAt(0))
+  save.addEventListener 'click', (evt) ->
+    return if path.getLength() == 0
+    getZipCode(path.j[0].k, path.j[0].A)
+    for i in elevations by 1
+      newRoute[_i] = elevations[_i].location.k.toString() + ','+ elevations[_i].location.A.toString()
+    jsInput.value = newRoute
+    console.log(location)
+    locationInput.value = location
+    distanceInput.value = poly.inKm()
+    undefined
 
-    save.addEventListener 'click', (evt) ->
-      return if path.getLength() == 0
-      getZipCode(path.j[0].k, path.j[0].A)
-      for i in elevations by 1
-        newRoute[_i] = elevations[_i].location.k.toString() + ','+ elevations[_i].location.A.toString()
-      jsInput.value = newRoute
-      console.log(location)
-      locationInput.value = location
-      distanceInput.value = poly.inKm()
-      undefined
+  google.maps.LatLng::kmTo = (a) ->
+    e = Math 
+    ra = e.PI/180
+    b = this.lat() * ra
+    c = a.lat() * ra
+    d = b - c
+    g = this.lng() * ra - a.lng() * ra
+    f = 2 * e.asin(e.sqrt(e.pow(e.sin(d/2), 2) + e.cos(b) * e.cos(c) * e.pow(e.sin(g/2), 2)))
+    return f * 6378.137
 
-    google.maps.LatLng::kmTo = (a) ->
-      e = Math 
-      ra = e.PI/180
-      b = this.lat() * ra
-      c = a.lat() * ra
-      d = b - c
-      g = this.lng() * ra - a.lng() * ra
-      f = 2 * e.asin(e.sqrt(e.pow(e.sin(d/2), 2) + e.cos(b) * e.cos(c) * e.pow(e.sin(g/2), 2)))
-      return f * 6378.137
+  google.maps.Polyline::inKm = (n) ->
+    a = this.getPath(n)
+    len = a.getLength()-1
+    pathLenght = 0
+    for i in [0...len] by 1
+      pathLenght += a.getAt(i).kmTo(a.getAt(i+1))
+    pathLenght.toString().replace(NUMBER_DOT_TWONUMBERS, '$1$2')
 
-    google.maps.Polyline::inKm = (n) ->
-      a = this.getPath(n)
-      len = a.getLength()-1
-      pathLenght = 0
-      for i in [0...len] by 1
-        pathLenght += a.getAt(i).kmTo(a.getAt(i+1))
-      pathLenght.toString().replace(NUMBER_DOT_TWONUMBERS, '$1$2')
+  getZipCode = (lat, lon) ->
+    url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{ lat },#{ lon }&sensor=true&callback=zipmap"
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      cache: true,
+    }).success (data) ->
+      for c in data.results[0].address_components
+        if c.types[0] == 'postal_code'
+          locationInput.value = c.short_name
 
-    getZipCode = (lat, lon) ->
-      url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{ lat },#{ lon }&sensor=true&callback=zipmap"
-      $.ajax({
-        url: url,
-        dataType: 'json',
-        cache: true,
-      }).success (data) ->
-        for c in data.results[0].address_components
-          if c.types[0] == 'postal_code'
-            locationInput.value = c.short_name
-
-  else
-    load_track(js_track_id,map)
+$(".tracks.show, .happenings.show").ready ->
+  map = gm_init()
+  load_track(js_track_id,map)

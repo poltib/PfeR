@@ -3,8 +3,8 @@
     <div class="container">
       <div class="intro">
         <h2 role="heading" aria-level="2">Bienvenue sur SportiveFun</h2>
-        <p>Site pour partager ou trouver les meilleurs courses ou tracés de course à pied!</p>
-        <%= link_to "Sign in", new_user_session_path() %>
+        <h3 role="heading" aria-level="3">Site pour partager ou trouver les meilleurs courses ou tracés de course à pied!</h3>
+        <%= link_to "S'inscrire", new_user_session_path() %>
       </div>
     </div>
   </div>
@@ -14,25 +14,32 @@
   <div class="container">
     <h2 role="heading" aria-level="2" class="hidden">Presentation</h2>
     <div class="presenter">
-      <img src="../img/item1.jpg">
-      <h3 role="heading" aria-level="3">Step 1</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+      <div class="presenter__icon">
+        <i class="icon-trophy"></i>
+      </div>
+      <h3 role="heading" aria-level="3">Courses</h3>
+      <p>Trouvez toutes les courses à proximité de chez vous. Ou ajouter vos évènements.</p>
     </div>
     <div class="presenter">
-      <img src="../img/item1.jpg">
-      <h3 role="heading" aria-level="3">Step 2</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+      <div class="presenter__icon">
+        <i class="icon-chart-line"></i>
+      </div>
+      <h3 role="heading" aria-level="3">Entrainements</h3>
+      <p>On sait tous que s'entrainer seul est parfois pénible, rechercher ici pour en trouver à proximité.</p>
     </div>
     <div class="presenter">
-      <img src="../img/item1.jpg">
-      <h3 role="heading" aria-level="3">Step 3</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+      <div class="presenter__icon">
+        <i class="icon-map"></i>
+      </div>
+      <h3 role="heading" aria-level="3">Tracés d'entrainements</h3>
+      <p>Parfois vous avez envie de changer d'entrainement mais vous ne savez pas ou aller, rechercher ici.</p>
+    </div>
+    <div class="presenter">
+      <div class="presenter__icon">
+        <i class="icon-users"></i>
+      </div>
+      <h3 role="heading" aria-level="3">Communauté</h3>
+      <p>les utilisateurs sont la pour s'entraider, consulter les forums pour trouver des informations.</p>
     </div>
   </div>
 </section>
@@ -49,10 +56,23 @@
 	<% for happening in @happenings %>
         <li class="thumbRace">
            <ul>
-            <li class="date"><span class="day">12</span> <span class="monthName">Oct</span></li>
+            <li class="date"><span class="day"><%= happening.date.strftime("%d") %></span> <span class="monthName"><%= happening.date.strftime("%b") %></span></li>
             <li class="location">Liège</li>
-            <li class="name"><h4 role="heading" aria-level="4"><%= link_to happening.name, happening_path(happening) %></h4></li>
-            <li class="distances"><a href="#">10km</a> | <a href="#">20km</a></li>
+            <li class="name">
+              <h4 role="heading" aria-level="4">
+                <%= link_to happening.name, happening_path(happening) %>
+                <% if user_signed_in? && happening.user_id == current_user.id %>
+                | <%= link_to "Edit", edit_happening_path(happening) %>
+                | <%= button_to "Delete", happening_path(happening),
+                            method: :delete, data: { confirm: 'Are you sure?' }  %>
+                <% end %>
+              </h4>
+            </li>
+              <li class="distances">
+                <% for track in happening.tracks %>
+                  <%= track.distance %> km
+                <% end %>
+              </li>
           </ul>
 		</li>	
 	<% end %>

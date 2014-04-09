@@ -11,7 +11,7 @@
         <div class="aside">
           <div class="users">
             <h3 role="heading" aria-level="3">Participer</h3>
-            <p><%= @happening.users.count %> <%= link_to 'utilisateurs y participent', happening_user_statuses_path(@happening) %></p>
+            <!-- <p><%= @happening.users.count %> <%= link_to 'utilisateurs y participent', happening_user_statuses_path(@happening) %></p> -->
           </div>
           <ul class="share">
             <li>
@@ -24,23 +24,25 @@
             <% end %>
             <!-- <i class="icon-check"></i>Participer -->
             </li>
-            <li>
+            <!-- <li>
               <%= link_to(new_happening_user_path(@happening)) do %>
                 <i class="icon-user-add"></i>Inviter amis
               <% end %>
-            </li>
+            </li> -->
+            <% if (!@happening.tracks.count) %>
             <li>
               <%= link_to(new_happening_track_path(@happening)) do %>
-                <i class="icon-user-add"></i>Ajouter un parcours
+                <i class="icon-location"></i>Ajouter un parcours
               <% end %>
             </li>
+            <% end %>
             <li><a href="#">&#9829; (89)</a></li>
             <li class="shareButton"><i class="shareDart">&rarr;</i>&nbsp;share
               <ul class="shareForum">
-                <li><a href="#"><i class="icon-facebook-squared"></i></a></li>
-                <li><a href="#"><i class="icon-gplus-squared"></i></a></li>
-                <li><a href="#"><i class="icon-twitter-squared"></i></a></li>
-                <li><a href="#"><i class="icon-mail"></i></a></li>
+                <li><a href="http://www.facebook.com/share.php?u=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-facebook-squared"></i></a></li>
+                <li><a href="https://plus.google.com/share?url=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-gplus-squared"></i></a></li>
+                <li><a href="http://twitter.com/home?status=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-twitter-squared"></i></a></li>
+                <li><a href="mailto:?subject=Course intéressante sur Sportfun&amp;body=Course intéressante <%= @happening.name %> : <%= request.original_url %>" rel="nofollow"><i class="icon-mail"></i></a></li>
                 <li><a href="#"><i class="icon-rss"></i></a></li>
               </ul>
             </li>
@@ -52,10 +54,11 @@
       <div class="informations">
         <h3 role="heading" aria-level="3">Informations</h3>
         <ul>
-          <li class="address">Rue Haute 11 400 flémalle</li>
-          <li>description :</li>
+          <li>Description : <%= @happening.description %></li>
+          <li>Adresse : <%= @happening.address %>, <%= @happening.postalCode %> <%= @happening.city %></li>
+          <li>Pays : <%= @happening.country %></li>
+          <li>lien : <a href"<%= @happening.link %>"><%= @happening.link %></a></li>
         </ul>
-        <h3 role="heading" aria-level="3">Users</h3>
         <ul>
           <% for user in @happening.users %>
             <li><%= link_to user.username, member_path(user) %></li>
@@ -65,14 +68,14 @@
       <div class="gallery">
         <h3 role="heading" aria-level="3">Gallerie photo</h3>
         <ul class="thumbs">
-          <li><img src="../img/race.png"></li>
+          <li></li>
         </ul>
       </div>
     </div>
     <div class="sponsors">
       <h3 role="heading" aria-level="3">Sponsors</h3>
       <ul class="thumbs">
-        <li><img src="../img/race.png"></li>
+        <li></li>
       </ul>
     </div>
   </div>
