@@ -1,7 +1,7 @@
 <section>
 <div class="container">
 <h2>Sign in</h2>
-<%= form_for(resource,:html => { :class => 'create' }, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+<%= form_for(resource,:html => { :class => 'createForm' }, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 <ul>
   <li><%= f.label :email %><br />
   <%= f.email_field :email, :autofocus => true %></li>

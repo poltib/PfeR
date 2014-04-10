@@ -2,7 +2,7 @@
 <div class="container">
 <h2>Sign up</h2>
 
-<%= form_for(resource, :html => { :class => 'create' }, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+<%= form_for(resource, :html => { :class => 'createForm' }, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 <ul>
   <li><%= f.label :email %><br />

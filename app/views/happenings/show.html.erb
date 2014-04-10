@@ -29,7 +29,7 @@
                 <i class="icon-user-add"></i>Inviter amis
               <% end %>
             </li> -->
-            <% if (!@happening.tracks.count) %>
+            <% if (@happening.tracks.count==0) && user_signed_in? && @happening.user_id == current_user.id %>
             <li>
               <%= link_to(new_happening_track_path(@happening)) do %>
                 <i class="icon-location"></i>Ajouter un parcours
