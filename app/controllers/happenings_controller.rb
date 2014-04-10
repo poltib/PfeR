@@ -24,7 +24,7 @@ class HappeningsController < ApplicationController
   	@happening = Happening.new(happening_params)
   	@happening.user_id = current_user.id
     if @happening.save
-      redirect_to happenings_path, :notice => 'Your happening has been successfully created!'
+      redirect_to happenings_path, :notice => 'Votre évènement à été ajouté avec succès.'
     else
       render 'new'
     end
@@ -38,7 +38,7 @@ class HappeningsController < ApplicationController
     @happening = Happening.find params[:id]
 
     if @happening.update_attributes happening_params
-        redirect_to happenings_path, :notice => 'Your happening has been successfully updated!'
+        redirect_to happenings_path, :notice => 'Votre évènement à été mis à jour avec succès.'
     else
         render 'edit'
     end
@@ -56,7 +56,7 @@ class HappeningsController < ApplicationController
 
   def destroy
     Happening.destroy params[:id]
-    redirect_to :back, :notice => 'Your happening has been successfully deleted!'
+    redirect_to :back, :notice => 'Votre évènement à été supprimé avec succès'
   end
 
   def confirm_destroy

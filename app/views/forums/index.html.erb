@@ -25,7 +25,6 @@
 							<% end %><br><span>Posté par <%= link_to forum.user.username, user_path(forum.user) %></span></h3>
               <ul class="forumDetails">
                   <li><i class="icon-clock-1"></i><%= forum.created_at %></li>
-                  <li><i class="icon-bookmarks"></i>Entrainements</li>
                   <li><i class="icon-chat"></i><%= forum.comments.count %> réponses</li>
               </ul>
           </header>

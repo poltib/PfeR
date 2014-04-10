@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
     @comment = @forum.comments.create(comment_params)
   	@comment.user_id = current_user.id
     if @comment.save
-      redirect_to forum_path(@forum), :notice => 'Your comment has been successfully created!'
+      redirect_to forum_path(@forum), :notice => 'Votre commentaire à été ajouté avec succès.'
     else
       render 'new'
     end
@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
     @forum = Forum.find(params[:forum_id])
     @comment = @forum.comments.find(params[:id])
     @comment.destroy
-    redirect_to forum_path(@forum), :notice => 'Your comment has been successfully deleted!'
+    redirect_to forum_path(@forum), :notice => 'Votre commentaire à été supprimé avec succès.'
   end
 
   private

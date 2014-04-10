@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
   	@group.user_id = current_user.id
     if @group.save
       @group.users << @user
-      redirect_to groups_path, :notice => 'Your group has been successfully created!'
+      redirect_to groups_path, :notice => 'Votre groupe à été ajouté avec succès.'
     else
       render 'new'
     end
@@ -42,7 +42,7 @@ class GroupsController < ApplicationController
       end
     else
       if @group.update_attributes group_params
-          redirect_to groups_path, :notice => 'Your group has been successfully updated!'
+          redirect_to groups_path, :notice => 'Votre groupe à été mis à jour avec succès.'
       else
           render 'edit'
       end
@@ -51,7 +51,7 @@ class GroupsController < ApplicationController
 
   def destroy
     Group.destroy params[:id]
-    redirect_to :back, :notice => 'Your group has been successfully deleted!'
+    redirect_to :back, :notice => 'Votre groupe à été supprimé avec succès.'
   end
 
   private

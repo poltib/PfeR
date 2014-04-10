@@ -105,9 +105,12 @@ table{
 
 
 .container h2{
-    margin: 0 0 0.7em;
-    padding: 0.3em 0 0.5em;
     text-align: center;
+    margin: 0 0 0.7em;
+}
+
+.primary_content h2{
+    padding: 0.3em 0 0.5em;
     border-bottom: 1px solid $sky;
 }
 
@@ -254,6 +257,21 @@ li.sameDay{
         margin-bottom: 1em;
     }
     margin-bottom:3em;
+
+    @include media($tablet) {
+        @include span-columns(4);
+        &:nth-child(1), &:nth-child(3){
+            @include omega;
+        }
+    }
+
+    @include media($mobile){
+        @include span-columns(4);
+        p{
+            @include span-columns(2);
+            @include shift(1);
+        }
+    }
 }
 
 /////////----------------------------------------------------------------------------------
@@ -567,7 +585,7 @@ li.sameDay{
         text-align: center;
         margin-top: 1em;
     }
-
+    height: 100%;
     img{
         border:3px solid $darkBlue;
         display: block;
@@ -585,6 +603,16 @@ li.sameDay{
         }
         margin-bottom:0.6em;
     }
+    p{
+        margin: 0.5em 0 0.5em;
+    }
+    h2{
+        text-align: left;
+    }
+}
+
+.commentItem{
+    @extend .thumbRace;
 }
 
 /////////----------------------------------------------------------------------------------

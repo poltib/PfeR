@@ -34,9 +34,9 @@ class User < ActiveRecord::Base
   # has_many :messages, :through => :conversation
   # has_many :messages_as_owner, :class_name => "Message"
 
-  has_many :forums
-  has_many :tracks
-  has_many :announces
-  has_many :comments
+  has_many :forums, :dependent => :destroy
+  has_many :tracks, :dependent => :destroy
+  has_many :announces, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
   belongs_to :role
 end

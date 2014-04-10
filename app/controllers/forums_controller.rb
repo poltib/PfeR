@@ -17,7 +17,7 @@ class ForumsController < ApplicationController
   	@forum = Forum.new(forum_params)
   	@forum.user_id = current_user.id
     if @forum.save
-      redirect_to forums_path, :notice => 'Your forum has been successfully created!'
+      redirect_to forums_path, :notice => 'Votre forum à été ajouté avec succès.'
     else
       render 'new'
     end
@@ -31,7 +31,7 @@ class ForumsController < ApplicationController
     @forum = Forum.find params[:id]
 
     if @forum.update_attributes forum_params
-        redirect_to forums_path, :notice => 'Your forum has been successfully updated!'
+        redirect_to forums_path, :notice => 'Votre forum à été mis à jour avec succès.'
     else
         render 'edit'
     end
@@ -39,7 +39,7 @@ class ForumsController < ApplicationController
 
   def destroy
     Forum.destroy params[:id]
-    redirect_to :back, :notice => 'Your forum has been successfully deleted!'
+    redirect_to :back, :notice => 'Votre forum à été supprimé avec succès.'
   end
 
   private

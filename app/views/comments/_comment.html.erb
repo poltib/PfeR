@@ -1,4 +1,4 @@
-<li class="thumbRace">
+<li class="commentItem">
 	<article class="comment">
 		<header class="comment__header">
 			<%= image_tag comment.user.avatar.url(:thumb) %>
@@ -8,7 +8,7 @@
 				<%= link_to comment.user.username, user_path(comment.user) %>
 				<span>Il y a <%= distance_of_time_in_words_to_now(comment.created_at, include_seconds: true) %></span>
 			</h4>
-			<p><%= comment.comment %></p>
+			<p><%= markdown(comment.comment) %></p>
 			<% if  user_signed_in? && comment.user.id == current_user.id %>
 				<%= button_to "supprimer", [@forum, comment], method: :delete %>
 			<% end %>
