@@ -2,6 +2,8 @@ class Track < ActiveRecord::Base
 	before_save :parse_file
 	mount_uploader :route, RouteUploader
 
+  validates :name, :route, presence: true
+
   belongs_to :happening
 	belongs_to :user
 

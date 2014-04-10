@@ -1,4 +1,4 @@
-<%= form_for @happening, :html => { :multipart => true, :class => 'create' } do |f| %>
+<%= form_for @happening, :html => { :multipart => true, :class => 'createForm' } do |f| %>
   <% if @happening.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@happening.errors.count, "erreur") %> empêchent l'évènement d'être enregistré:</h2>
