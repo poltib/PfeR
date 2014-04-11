@@ -16,11 +16,10 @@
 				<% end %>
 			 	<p>adduser to team</p>
 			<% end %>
-    	<%= image_tag @user.avatar.url(:thumb) %>
+    	<%= image_tag @user.avatar.url(:thumb) %>	
     	<p><%= @user.description %></p>
     	<ul>
     		<li>Localisation</li>
-    		<li>Email : <%= @user.email %></li>
     		<li>Groupes :
 					<ul>
 						<% for group in @user.groups %>
