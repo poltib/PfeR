@@ -35,6 +35,6 @@ class HappeningtracksController < ApplicationController
 
   private
     def track_params
-      params.require(:track).permit(:name, :polyline, :longitude, :latitude, :location, :distance, :route)
+      params.require(:track).permit(:name, :polyline, :description, :longitude, :latitude, :location, :distance, :route)
     end
 end

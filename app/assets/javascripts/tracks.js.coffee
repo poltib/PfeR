@@ -97,6 +97,9 @@ calc_bounds = (track_path) ->
   b.extend(gm_path.getAt(i[1]))
   b.extend(gm_path.getAt(i[2]))
 
+validateForm = ->
+  console.log('whoop!')
+
 $(".tracks.new, .happeningtracks.new").ready ->
   
   dist = document.getElementById "dist"
@@ -109,6 +112,7 @@ $(".tracks.new, .happeningtracks.new").ready ->
   distanceInput = document.getElementById("track_distance");
   longitudeInput = document.getElementById("track_longitude");
   latitudeInput = document.getElementById("track_latitude");
+  mapErrors = document.getElementById("mapErrors");
   elevation_chart = document.getElementById('elevation_chart')
   chart = new google.visualization.ColumnChart(elevation_chart);
   upLi = document.getElementById("upRoute");
@@ -116,6 +120,14 @@ $(".tracks.new, .happeningtracks.new").ready ->
   map = gm_init()
   upLi.remove();
   poly = poly_init(map)
+
+  $('.createForm').submit ->
+    if !!jsInput.value
+      true
+    else
+      mapErrors.style.display = 'block'
+      mapErrors.childNodes[1].innerText = 'Vous devez créer et sauvegarder votre tracer avant de nous l\'envoyer'
+      false
 
   google.maps.event.addListener map, 'click', (evt) ->
     if path.getLength() == 0

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140412063645) do
+ActiveRecord::Schema.define(version: 20140412070147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,6 +215,7 @@ ActiveRecord::Schema.define(version: 20140412063645) do
     t.text     "polyline"
     t.string   "longitude"
     t.string   "latitude"
+    t.text     "description"
   end
 
   create_table "user_statuses", force: true do |t|
