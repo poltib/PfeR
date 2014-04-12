@@ -31,21 +31,6 @@ poly_init = (map) ->
   poly_options = { draggable: true, editable:true, geodesic:true, map: map, strokeColor: 'rgba(0,0,0,0.6)'}
   new google.maps.Polyline(poly_options)
 
-growPath = (origin, destination) ->
-  gm_service.route({
-      origin: origin,
-      destination: destination,
-      travelMode: google.maps.DirectionsTravelMode.WALKING
-    }, (result, status) ->
-      return if status != google.maps.DirectionsStatus.OK
-      
-      for i in result.routes[0].overview_path by 1
-        path.push(i)
-      drawPath(path.j)
-      dist.childNodes[0].textContent = poly.inKm() + 'km'
-      undefined
-  )
-
 drawPath = (path) ->
   return if elevationReqActive || !path
   # Create a PathElevationRequest object using this array.
@@ -97,8 +82,6 @@ calc_bounds = (track_path) ->
   b.extend(gm_path.getAt(i[1]))
   b.extend(gm_path.getAt(i[2]))
 
-validateForm = ->
-  console.log('whoop!')
 
 $(".tracks.new, .happeningtracks.new").ready ->
   
@@ -126,13 +109,16 @@ $(".tracks.new, .happeningtracks.new").ready ->
       true
     else
       mapErrors.style.display = 'block'
-      mapErrors.childNodes[1].innerText = 'Vous devez créer et sauvegarder votre tracer avant de nous l\'envoyer'
+      mapErrors.childNodes[1].innerText = 'Vous devez créer un tracé'
       false
 
   google.maps.event.addListener map, 'click', (evt) ->
     if path.getLength() == 0
       path.push(evt.latLng)
       poly.setPath(path)
+      getZipCode(evt.latLng)
+      latitudeInput.value = path.j[0].k
+      longitudeInput.value = path.j[0].A
     else
       growPath(path.getAt(path.getLength() - 1), evt.latLng)
 
@@ -146,19 +132,6 @@ $(".tracks.new, .happeningtracks.new").ready ->
   close.addEventListener 'click', (evt) ->
     if path.getLength() != 0
       growPath(path.getAt(path.getLength() - 1),path.getAt(0))
-
-  save.addEventListener 'click', (evt) ->
-    return if path.getLength() == 0
-    getZipCode(path.j[0].k, path.j[0].A)
-    for i in elevations by 1
-      newRoute[_i] = elevations[_i].location.k.toString() + ','+ elevations[_i].location.A.toString()
-    jsInput.value = newRoute
-    console.log(location)
-    latitudeInput.value = path.j[0].k
-    longitudeInput.value = path.j[0].A
-    locationInput.value = location
-    distanceInput.value = poly.inKm()
-    undefined
 
   google.maps.LatLng::kmTo = (a) ->
     e = Math 
@@ -178,8 +151,8 @@ $(".tracks.new, .happeningtracks.new").ready ->
       pathLenght += a.getAt(i).kmTo(a.getAt(i+1))
     pathLenght.toString().replace(NUMBER_DOT_TWONUMBERS, '$1$2')
 
-  getZipCode = (lat, lon) ->
-    url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{ lat },#{ lon }&sensor=true&callback=zipmap"
+  getZipCode = (latLng) ->
+    url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{ latLng.k },#{ latLng.A }&sensor=true&callback=zipmap"
     $.ajax({
       url: url,
       dataType: 'json',
@@ -188,6 +161,30 @@ $(".tracks.new, .happeningtracks.new").ready ->
       for c in data.results[0].address_components
         if c.types[0] == 'postal_code'
           locationInput.value = c.short_name
+
+  growPath = (origin, destination) ->
+    gm_service.route({
+        origin: origin,
+        destination: destination,
+        travelMode: google.maps.DirectionsTravelMode.WALKING
+      }, (result, status) ->
+        return if status != google.maps.DirectionsStatus.OK
+        
+        for i in result.routes[0].overview_path by 1
+          path.push(i)
+        drawPath(path.j)
+        dist.childNodes[0].textContent = poly.inKm() + 'km'
+        newRoute = ''
+        for coords in path.j by 1
+          if _j == 0
+            newRoute += coords.k.toString() + ',' + coords.A.toString()
+          else
+            newRoute += ',' + coords.k.toString() + ',' + coords.A.toString()
+        console.log(newRoute)
+        jsInput.value = newRoute
+        distanceInput.value = poly.inKm()
+        undefined
+    )
 
 $(".tracks.show, .happenings.show").ready ->
   map = gm_init()

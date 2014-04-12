@@ -3,12 +3,27 @@
 
 
 
+#error_explanation{
+    width: 100%;
+    padding: 1em;
+    background-color: $sky;
+    border: 1px solid $red;
+    h2{
+        margin: 0.5em 0;
+    }
+}
+
+#mapErrors{
+    @extend #error_explanation;
+    display: none;
+}
+
 form{
-	fieldset{
-		padding:0;
-		margin:0;
-		border:none;
-	}
+    fieldset{
+        padding:0;
+        margin:0;
+        border:none;
+    }
     .distances{
         width: 100%;
         label:first-child{
@@ -24,15 +39,6 @@ form{
         }
     }
 
-    #error_explanation{
-        width: 100%;
-        padding: 1em;
-        background-color: $sky;
-        border: 1px solid $red;
-        h2{
-            margin: 0.5em 0;
-        }
-    }
 
     label{
         width: 100%;
