@@ -107,6 +107,8 @@ $(".tracks.new, .happeningtracks.new").ready ->
   jsInput = document.getElementById("jsRoute").childNodes[0];
   locationInput = document.getElementById("track_location");
   distanceInput = document.getElementById("track_distance");
+  longitudeInput = document.getElementById("track_longitude");
+  latitudeInput = document.getElementById("track_latitude");
   elevation_chart = document.getElementById('elevation_chart')
   chart = new google.visualization.ColumnChart(elevation_chart);
   upLi = document.getElementById("upRoute");
@@ -140,6 +142,8 @@ $(".tracks.new, .happeningtracks.new").ready ->
       newRoute[_i] = elevations[_i].location.k.toString() + ','+ elevations[_i].location.A.toString()
     jsInput.value = newRoute
     console.log(location)
+    latitudeInput.value = path.j[0].k
+    longitudeInput.value = path.j[0].A
     locationInput.value = location
     distanceInput.value = poly.inKm()
     undefined

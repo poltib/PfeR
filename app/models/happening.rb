@@ -6,7 +6,7 @@ class Happening < ActiveRecord::Base
 
   has_many :tracks
   
-  has_many :user_statuses
+  has_many :user_statuses, :dependent => :destroy
 
   has_many :users, :through => :user_statuses
 
