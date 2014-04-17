@@ -33,7 +33,7 @@
               <h1 role="heading" aria-level="1">SportFun</h1>
             </a>
           </div>
-          <nav role="navigation">
+          <nav role="navigation" class='header__navigation'>
             <ul><!-- 
               --><li>
                 <span><%= link_to "Evenements", happenings_path %></span>
@@ -45,7 +45,7 @@
                 <span><%= link_to "Forums", forums_path %></span>
               </li><!-- 
               --><li>
-               <span class="actions">
+               <span class="nav__actions">
                 <i class="icon-users"></i>
                 <ul>
                   <li><%= link_to "Groups", groups_path %></li>
@@ -56,7 +56,7 @@
               </li><!--
               --><% if user_signed_in? %><!--
                --><li>
-               <span class="actions">
+               <span class="nav__actions">
                 <i class="icon-plus"></i>
                 <ul>
                   <li><%= link_to "Créer evenement", new_happening_path %></li>
@@ -106,10 +106,10 @@
               --><% end %><!-- 
              --></ul>     
           </nav>
-          <div class="searchForm">
+          <div class="header__search">
             <form action="#" class="search">
-              <input type="text" name="searchField" id="searchField" placeholder="rechercher..."><!-- 
-              --><button class="buttonSearch"><i class="icon-search"></i></button>
+              <input type="text" name="searchField" id="search__input" placeholder="rechercher..."><!-- 
+              --><button class="search__button"><i class="icon-search"></i></button>
             </form>
           </div>
         </div>

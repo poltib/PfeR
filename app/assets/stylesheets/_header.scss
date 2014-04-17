@@ -19,8 +19,8 @@ body>header{
 }
 
 .headingImg{
-    background: image-url('head.jpg') fixed no-repeat;
-    height: 400px;
+    background: image-url('head.png') fixed no-repeat;
+
     border-bottom: 3px solid $orange;
     h2{
         border:none;
@@ -45,56 +45,63 @@ body>header{
         border:none;
     }
     .container{
-        top: 40%;
+        top: 20%;
     }
 }
 
 .header__navbar{
-    background-color: $blue;
+    background-color: $sky;
     position: fixed;
-    box-shadow: 0 0 5px black;
+    box-shadow: 0 0 5px silver;
     z-index: 100;
     width: 100%;
 }
 
 .intro{
-    h2{
-        margin-bottom: 1em;
-    }
-    // position: absolute;
-    padding: 1.5em;
-    background-color: $darkBlueLight; 
+    padding: 5em 0 4em;
     color:$sky;
-    @include span-columns(10);
-    @include shift(1);
-    /*right: 50%;*/
 }
 
-.up{
-    padding:1em;
+.intro__presentation{
+    h2{
+        margin-top: 0.5em;
+        font-size: 2.5em;
+        text-align: left;
+    }
+
+    p{
+        font-size: 1.5em;
+    }
+    @include span-columns(7);
 }
 
-.up:after{
-    content:"";
-    display:block;
-    clear:both;
+.intro__singup{
+    @include span-columns(5);
+    @include omega;
+    [type="text"], [type="email"], [type="password"]{
+        border-color:silver;
+        background-color:$cloud;
+        color:black;
+    }
+    input{
+        @include span-columns(3 of 5);
+        @include shift(1);
+    }
 }
-
 
 .header__logo a{
     border:none;
-    color:$cloud;
+    color:black;
+    text-align:center;
     h1{
-        box-sizing:border-box;
         margin: 0.3em 0 0;
-        padding-left: 0.3em;
         font-size: 1.3em;
-        width: 80%;
+        width: 76%;
         float: right;
     }
     img{
+        margin-left: 0.3em;
         margin-top: 0.15em;
-        box-sizing:border-box;
         width: 20%;
         float: left;
     }
@@ -102,17 +109,38 @@ body>header{
 
 .header__logo{
     @include span-columns(2);
-    box-sizing:border-box;
+    @include media($tablet){
+        @include span-columns(2);
+    }
 }
 
-.searchForm{
+.header__search{
     @include span-columns(3);
     @include omega;
+    @include media($tablet){
+        @include span-columns(2);
+    }
     margin-top: 0.1em;
 }
 
+.header__menu{
+    @include media($tablet){
+        a{display: block;}
+        @include span-columns(1);
+        @include shift(3);
+    }
+    font-size: 1.3em;
+    a{
+        padding:0.5em;
+        text-align: center;
+        border:none;
+        color:$sky;
+    }
+    display: none;
+}
 
-.buttonSearch{
+
+.search__button{
     font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
     font-weight: lighter;
     border:none;
@@ -124,33 +152,27 @@ body>header{
     font-size: 1em;
     left:0;
     width:20%;
-    border-top: 1px solid $sky;
-    border-right: 1px solid $sky;
-    border-bottom: 1px solid $sky;
+    border-top: 1px solid silver;
+    border-right: 1px solid silver;
+    border-bottom: 1px solid silver;
     color:$sky;
     padding: 0.33em 0.1em;
     font-weight: lighter;
+
+    &:hover{
+        cursor:pointer;
+        background-color: $blue;
+    }
+    &:focus{
+        outline: none;
+    }
 }
 
-.buttonSearch:hover{
-    cursor:pointer;
-    background-color: $blue;
-}
-
-.buttonSearch:focus{
-    outline: none;
-}
-
-#searchField:focus{
-    outline: none;
+#search__input:focus + .search__button{
     border-color: $orange;
 }
 
-#searchField:focus + .buttonSearch{
-    border-color: $orange;
-}
-
-#searchField{
+#search__input{
     font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
     font-weight: lighter;
     font-size: 1em;
@@ -160,5 +182,10 @@ body>header{
     padding:0;
     padding: 0.4em;
     border-radius: 0;
-    border-color: $sky;
+    border-color: silver;
+
+    &:focus{
+        outline: none;
+        border-color: $orange;
+    }
 }
