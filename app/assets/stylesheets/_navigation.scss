@@ -5,8 +5,17 @@
 /////////Navigation  ----------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 
+.lower__navigation{
+    display: none;
+    @include media($tablet){
+        display: block;
+    }
+}
 
-nav{
+.header__navigation{
+    @include media($tablet){
+        display: none;
+    }
     @include span-columns(7);
     text-align: right;
     ul li{
@@ -17,38 +26,33 @@ nav{
         }
         .button_to{
             [type="submit"]{
-                background-color: $blue;
-                color:$sky;
+                color:$font;
+                background-color: transparent;
                 border:none;
                 &:hover{
-                    background-color: rgba(84, 102, 120,0.8);
+                    color:black;
                 }
             }
         }
         span{
             display: inline-block;
             &:hover{
-                background-color: rgba(84, 102, 120,0.8);
-                color:white;
             }
         }
-        a, .actions{
+        a{
             display: inline-block;
             border: none;
             padding: 0.5em;
-            color: $sky;
+            color:$font;
             &:hover{
-                color:$sky;
+                color:black;
             }
         }
     }
 }
 
-.actions{
+.nav__actions{
     position: relative;
-    &:hover{
-        cursor: pointer;
-    }
     &:hover, &:focus {
         ul {
         visibility: visible;
@@ -62,7 +66,7 @@ nav{
         visibility: hidden;
         opacity: 0;
         z-index: 1000000;
-        background-color: rgb(79,95,115);
+        background-color: rgb(40,40,40);
         text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
         white-space: nowrap;
         box-shadow: 1px 1px 3px rgba(0, 0, 0, .2);

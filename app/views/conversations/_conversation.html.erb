@@ -1,12 +1,13 @@
 	<%= content_tag_for(:li, conversation, class: "thumbRace") do |conversation| %>
-		<ul>
+		<ul class="thumbRace__list">
 		<li class="date"><span class="day"><%= conversation.receipts_for(current_user).count %></span> <span class="monthName">Réponses</span></li>
 		<li class="name">
       <h4 role="heading" aria-level="4"><%= link_to conversation.subject, conversation %></h4>
     </li>
+    <li><%= conversation.is_read?(current_user) %></li>
     <li class="location">auteur :&nbsp;
     <% if conversation.originator != current_user %>
-   		<%= link_to conversation.originator.username, member_path(conversation.originator.username) %>
+   		<%= link_to conversation.originator.username, user_path(conversation.originator.username) %>
    	<% else %>
 			vous
    	<% end %>

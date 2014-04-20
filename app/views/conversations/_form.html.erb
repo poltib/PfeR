@@ -1,6 +1,6 @@
 <%= form_for :conversation, url: :conversations do |f| %>
 	<% if @user %>
-		<%= f.hidden_field :recipients, :value =>  @user.email %>
+		<%= f.hidden_field :recipients, :value =>  @user.username %>
 	<% else %>
 		<%= f.label :recipients %>
   	<%= f.text_field :recipients %>

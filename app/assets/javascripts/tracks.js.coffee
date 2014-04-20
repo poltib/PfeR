@@ -10,11 +10,9 @@ notice = document.getElementById("notice")
 
 if !alert.innerText
   alert.remove();
-else
 
 if !notice.innerText
   notice.remove();
-else
 
 path = new google.maps.MVCArray()
 gm_service = new google.maps.DirectionsService()
@@ -89,7 +87,8 @@ $(".tracks.new, .happeningtracks.new").ready ->
   reset = document.getElementById "reset"
   close = document.getElementById "close"
   clear = document.getElementById "clear"
-  save = document.getElementById "save"
+  full = document.getElementById "full"
+  divMap = document.getElementById "map_canvas"
   jsInput = document.getElementById("jsRoute").childNodes[0];
   locationInput = document.getElementById("track_location");
   distanceInput = document.getElementById("track_distance");
@@ -132,6 +131,10 @@ $(".tracks.new, .happeningtracks.new").ready ->
   close.addEventListener 'click', (evt) ->
     if path.getLength() != 0
       growPath(path.getAt(path.getLength() - 1),path.getAt(0))
+
+  full.addEventListener 'click', (evt) ->
+    divMap.style.width = '100%'
+    divMap.style.z-index = '100000'
 
   google.maps.LatLng::kmTo = (a) ->
     e = Math 

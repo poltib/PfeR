@@ -114,6 +114,21 @@ input:focus{
     @include shift(3);
 }
 
+.favorite .button_to{
+    button{
+        padding:0;
+        border:none;
+        background-color: transparent;
+        &:hover{
+            color:black;
+            background-color: transparent;
+        }
+        span:hover{
+            @include tooltip(s, rgba(0,0,0,0.8), 2px);
+        }
+    }
+}
+
 .button_to{
     display: inline-block;
     input{

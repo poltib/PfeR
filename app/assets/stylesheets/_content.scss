@@ -16,7 +16,7 @@
 /////////----------------------------------------------------------------------------------
 /////////Gmap  ----------------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
-#save{
+#reset{
     display: inline-block;
     position: absolute;
     right: 10px;
@@ -31,19 +31,14 @@
     }
 }
 
-#reset{
-    @extend #save;
-    right: 90px;
-}
-
 #close{
-    @extend #save;
-    right: 180px;
+    @extend #reset;
+    right: 95px;
 }
 
 #dist{
-    @extend #save;
-    right: 270px;
+    @extend #reset;
+    right: 180px;
     &:hover{
         cursor:default;
         background-color: $sky;
@@ -51,7 +46,7 @@
 }
 
 #full{
-    @extend #save;
+    @extend #reset;
     bottom:0;
 }
 
@@ -97,14 +92,7 @@ table{
     }
 }
 
-.login, .singin{
-    h3{
-        text-align: center;
-    }
-}
-
-
-.container h2{
+h2{
     text-align: center;
     margin: 0 0 0.7em;
 }
@@ -112,31 +100,6 @@ table{
 .primary_content h2{
     padding: 0.3em 0 0.5em;
     border-bottom: 1px solid $sky;
-}
-
-.add:hover{
-    background-color: $blue;
-    color:$sky;
-    cursor:pointer;
-}
-
-.prec, .suiv{
-    border:none;
-    padding:0.6em;
-    background-color: $darkBlueLight;
-    color:white;
-    &:hover{
-        background-color: $darkBlue;
-        color:white;
-    }
-}
-.prec{
-    float: left;
-}
-
-.suiv{
-    float:right;
-    margin-right: 1%;
 }
 
 .page{
@@ -150,81 +113,73 @@ table{
     }
 }
 
-.events{
+.content__events{
     @include span-columns(10);
     @include shift(1);
 }
 
-.events:after{
+.content__events:after{
     content:"";
     display: block;
     clear:both;
 }
 
-.eventTitle{
-    text-align: center;
-}
-li.sameDay{
-    border-top: 1px dotted $sky;
-    padding-left: 5.5em;
-}
-.thumbRace{
+.content__thumbRace{
     border-bottom: 1px solid $sky;
     padding: 0.6em 0;
     box-sizing: border-box;
-
-    ul li{
-        padding:0.3em 1em;
-        display:inline-block;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-    }
 }
 
-.month{
-    @extend .thumbRace;
+.thumbRace__list li{
+    padding:0.3em 1em;
+    display:inline-block;
+}
+
+.thumbRace__month{
+    @extend .content__thumbRace;
     background-color: $sky;
     h3{
         text-align: center;
     }
 }
 
-.date{
+.thumbRace__date{
     color:$blue;
-
 }
 
-.day{
+.thumbRace__day{
     font-size: 2em;
     font-weight: 600;
 }
 
-.location{
+.thumbRace__location{
     color:$orange;
 }
 
-.name{
+.thumbRace__name{
     color:black;
     font-size:1.2em;
     text-align: center;
 }
 
-.distances{
+.thumbRace__distances{
     float: right;
 }
 
-.links, .distances{
+.thumbRace__links, .thumbRace__distances, .delete{
     span{
-        @include tooltip(e, rgba(0,0,0,0.8), 2px);
+        @include tooltip(s, rgba(0,0,0,0.8), 2px);
         padding: 0.3em 0 0;
     }
-    a{
+    a, button{
+        background-color: transparent;
         margin:0;
+        padding:0;
         border:none;
         color: rgba(0,0,0,0.5);
         display:inline-block;
         &:hover{
+            background-color: transparent;
             color:black;
         }
     }
@@ -246,10 +201,10 @@ li.sameDay{
     .presenter__icon{
         margin: 1em 0 3em;
         i{
-            padding: 0.2em;
-            font-size: 6em;
-            background-color: $blue;
-            color: white;
+            padding:0.49em 0.4em;
+            font-size: 3em;
+            border: 1px solid $font;
+            color: $font;
             border-radius: 100%;
         }
     }
@@ -468,7 +423,6 @@ li.sameDay{
     .formTitle span{
         color: $font;
     }
-    overflow-x:hidden;
     width: 100%;
     background-color: $cloud;
     margin-bottom: 1em;
@@ -494,42 +448,28 @@ li.sameDay{
 }
 
 .shareForum{
-    position:absolute;
-    width: 100%;
-    top:1.95em;
-    transition: left 0.5s;
-    left:-16em; 
     li{
         display: block;
         width: 50%;
-        float: left; 
+        float: right; 
         font-size: 1.3em;
-    }
-    li:nth-child(odd){
-        border-right: 1px solid $sky;
-    }
-    li:last-child{
-        border-bottom:none;
-    }
-}
 
-.shareDart{
-    display: inline-block;
-    transition: transform 0.5s;
-}
-
-
-
-.shareButton:hover{ 
-    cursor:pointer;
-    .shareForum{
-        left:0;
-        li{
-            display: block;
+        &:hover{
+            background-color: $orange;
+            color:white;
+            >a{
+                color:white;
+            }
         }
     }
-    .shareDart{
-        transform: rotate(90deg);
+    li:nth-child(even){
+        border-right: 1px solid $sky;
+    }
+
+    &:after{
+        content:"";
+        display: block;
+        clear:both;
     }
 }
 
@@ -541,27 +481,35 @@ li.sameDay{
     text-align: center;
 }
 
+
 .share{
+    .favorite{
+        a{
+            border-bottom: 1px dotted $font;
+        }
+    }
     min-height: 176px;
     li{
-        a{
-            border:none;
+        padding: 0.4em 0.3em;
+        p{
             padding: 0.4em 0.3em;
-            display: block;
+            border-bottom:1px solid $sky;
+        }
+        a{
+            margin: 0 0.3em;
+            border:none;
         }
         text-align: center;
         border-bottom:1px solid $sky;
-        &:hover{
-            background-color: $orange;
-            color:white;
-            >a{
-                color:white;
-            }
-        }
+    }
+
+    >li:last-child{
+        border-bottom:none;
     }
 }
 
-.events>article{
+.events article{
+    padding-bottom: 1em;
     border-bottom: 1px solid $sky;
 }
 
@@ -571,10 +519,6 @@ li.sameDay{
     clear: both;
 }
 
-.comment{
-    overflow-x:hidden;
-}
-
 .comment__header{
     padding:0.5em 0.5em 0;
     margin-bottom: 0.5em;
@@ -582,7 +526,7 @@ li.sameDay{
     border-right: 1px solid $sky;
     h4{
         text-align: center;
-        margin-top: 1em;
+        margin: 0 0 1em;
     }
     height: 100%;
     img{
@@ -596,22 +540,29 @@ li.sameDay{
     padding:0.5em;
     @include span-columns(8 of 10);
     @include omega;
-    header{
-        h3{
-
-        }
-        margin-bottom:0.6em;
-    }
     p{
-        margin: 0.5em 0 0.5em;
+        margin: 0 0 0.5em;
     }
     h2{
         text-align: left;
     }
+    ul, ol{
+        margin-left: 2em;
+    }
+    ul{
+        list-style-type: circle;
+    }
+    ol{
+        list-style-type: decimal;
+    }
+
+    .button_to button{
+        @extend .distance;
+    }
 }
 
-.commentItem{
-    @extend .thumbRace;
+.delete{
+    display: inline-block;
 }
 
 /////////----------------------------------------------------------------------------------

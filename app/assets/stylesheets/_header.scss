@@ -50,11 +50,7 @@ body>header{
 }
 
 .header__navbar{
-    background-color: $sky;
-    position: fixed;
-    box-shadow: 0 0 5px silver;
-    z-index: 100;
-    width: 100%;
+    padding: 1em 0;
 }
 
 .intro{
@@ -91,19 +87,10 @@ body>header{
 
 .header__logo a{
     border:none;
-    color:black;
-    text-align:center;
+    color:silver;
     h1{
-        margin: 0.3em 0 0;
-        font-size: 1.3em;
-        width: 76%;
-        float: right;
-    }
-    img{
-        margin-left: 0.3em;
-        margin-top: 0.15em;
-        width: 20%;
-        float: left;
+        margin: 0;
+        font-size: 1.6em;
     }
 }
 

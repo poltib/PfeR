@@ -19,7 +19,10 @@
 
 <div class="primary_content">
 <h2 role="heading" aria-level="2">Sujet : <%= conversation.subject %></h2>
-
+<h3 role="heading" aria-level="3">Participants</h3>
+<% conversation.participants.each do |participant| %>
+	<%= link_to participant.username, user_path(participant) %>|
+<% end %>
 <ul class="events">
 	<% conversation.receipts_for(current_user).each do |receipt| %>
 	<li class="thumbRace">

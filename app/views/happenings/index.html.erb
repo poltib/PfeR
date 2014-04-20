@@ -39,17 +39,17 @@
       </form>
     </div>
     <div class="primary_content">
-      <h2 role="heading" class="eventTitle" aria-level="2">Les courses à venir</h2>
+      <h2 role="heading" aria-level="2">Les courses à venir</h2>
       <ul>
-        <li class="month">
+        <li class="thumbRace__month">
           <h3 role="heading" aria-level="3">Octobre 2014</h3>
         </li>
         <% for happening in @happenings %>
-          <li class="thumbRace">
-            <ul>
-             <li class="date"><span class="day"><%= happening.date.strftime("%d") %></span> <span class="monthName"><%= happening.date.strftime("%b") %></span></li>
-            <li class="location">Liège</li>
-            <li class="name">
+          <li class="content__thumbRace">
+            <ul class="thumbRace__list">
+             <li class="thumbRace__date"><span class="thumbRace__day"><%= happening.date.strftime("%d") %></span> <span class="thumbRace__monthName"><%= happening.date.strftime("%b") %></span></li>
+            <li class="thumbRace__location">Liège</li>
+            <li class="thumbRace__name">
               <h4 role="heading" aria-level="4">
                 <%= link_to happening.name, happening_path(happening) %>
         			  <% if user_signed_in? && happening.user_id == current_user.id %>
@@ -59,7 +59,7 @@
         			  <% end %>
         			</h4>
     	      </li>
-              <li class="distances">
+              <li class="thumbRace__distances">
                 <% for track in happening.tracks %>
                   <%= track.distance %> km
                 <% end %>

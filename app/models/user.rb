@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
 
 
   has_many :user_statuses, :dependent => :destroy
+  has_many :favorites, :dependent => :destroy
   has_many :happenings, :through => :user_statuses
   has_many :happenings_as_owner, :class_name => "Happening"
 

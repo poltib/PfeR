@@ -9,11 +9,10 @@ class ConversationsController < ApplicationController
   end
 
   def create
-    recipient_emails = conversation_params(:recipients).split(',')
-    recipients = User.where(email: recipient_emails).all
+    recipient_username = conversation_params(:recipients).split(',')
+    recipients = User.where(username: recipient_username).all
 
-    conversation = current_user.
-      send_message(recipients, *conversation_params(:body, :subject)).conversation
+    conversation = current_user.send_message(recipients, *conversation_params(:body, :subject)).conversation
     if conversation 
       redirect_to conversation, :notice => 'Your conversation has been successfully created!'
     else
