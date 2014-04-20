@@ -1,28 +1,43 @@
-== README
+# Sportfun
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Website for runners.
 
-Things you may want to cover:
+This is my last year project 
 
-* Ruby version
+### Features
 
-* System dependencies
+-	Find, create, share races
 
-* Configuration
+-	Find, create, share routes
 
-* Database creation
+-	Find, create, share trainings
 
-* Database initialization
+-	Create your running group
 
-* How to run the test suite
+-	Create your team
 
-* Services (job queues, cache servers, search engines, etc.)
+-	Interact with other users
 
-* Deployment instructions
+####TODO
 
-* ...
+-	Manage your team/group (add trainings, attendances for trainings)
 
+###Installation
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+You need ruby 2.1.~ and rails 4.0.3
+
+-	Download the project
+
+-	Create a postgres table named 'pfe'
+
+-	Run `rails bundle install`
+
+-	Run `rake db:migrate`
+
+-	Run `rake db:seed`
+
+Enjoy!
+
+###Test suite
+
+Soon :)
