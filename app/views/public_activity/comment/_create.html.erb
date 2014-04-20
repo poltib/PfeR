@@ -1,7 +1,7 @@
 à ajouté un commentaire
 
 <% if activity.trackable %>
-  sur <%= link_to activity.trackable.forum.title, activity.trackable.forum %>
+  sur <%= link_to activity.trackable.forum.name, activity.trackable.forum %>
 <% else %>
   qui à été supprimé depuis.
 <% end %>
