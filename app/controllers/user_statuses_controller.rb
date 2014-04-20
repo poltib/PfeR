@@ -5,7 +5,7 @@ class UserStatusesController < ApplicationController
   end
 
   def create
-  	@user_status = @happening.user_statuses.build(params[:user_status])
+  	@user_status = @happening.user_statuses.build(status_params)
     @user_status.user = current_user
     if @user_status.save
       # @user_status.create_activity :create, owner: current_user
@@ -19,5 +19,9 @@ private
 
   def load_happening
     @happening = Happening.find(params[:happening_id])
+  end
+
+  def status_params
+    params.require(:user_status).permit(:user_id, :happening_id)
   end
 end

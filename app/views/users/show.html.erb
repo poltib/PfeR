@@ -2,8 +2,8 @@
 	<div class="container">
 		<h2 role="heading" aria-level="2" class="hidden">Content</h2>
     <div class="left_column">
-        <h3 role="heading" aria-level="3">Profile de <%= @user.username %></h3>
-        <% if user_signed_in? &&  current_user.id != @user.id %>
+      <h3 role="heading" aria-level="3">Profile de <%= @user.username %></h3>
+      <% if user_signed_in? &&  current_user.id != @user.id %>
         <%= link_to 'Envoyer un message', new_user_conversation_path(@user) %>
 				<% for group in current_user.groups_as_owner %>
 					<% if !group.users.include?(@user) %>

@@ -10,9 +10,9 @@
     	</ul>
     </div>
     <div class="primary_content">
-    	<h2 role="heading" aria-level="2">Derniers forums</h2>
+    	<h2 role="heading" aria-level="2"><%= @category.name %> forums</h2>
     	<ul>
-<% for forum in @forums %>
+<% for forum in @category.forums %>
     	<li class="forum">
   			<article>
   				<header>
@@ -24,7 +24,7 @@
 							<% end %><br><span>Posté par <%= link_to forum.user.username, user_path(forum.user) %></span></h3>
               <ul class="forumDetails">
                 <li><i class="icon-bookmarks"></i><% for category in forum.categories do %>
-                  <%= category.name %>
+                  <%= link_to category.name, category %>
                 <% end %></li>
                 <li><i class="icon-clock-1"></i><%= forum.created_at %></li>
                 <li><i class="icon-chat"></i><%= forum.comments.count %> réponses</li>
