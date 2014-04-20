@@ -1,0 +1,22 @@
+<h1>Utilisateurs qui aiment <%= link_to @favoritable.name, @favoritable %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Favoritable</th>
+      <th>Favoritable type</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @favorites.each do |favorite| %>
+      <tr>
+        <td><%= favorite.user.username %></td>
+        <td><%= favorite.favoritable_id %></td>
+        <td><%= favorite.favoritable_type %></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -12,8 +12,29 @@
               <h3 role="heading" aria-level="3"><%= @track.distance %> km</h3>
               <p><%= @track.description %></p>
               <ul class="share">
-              <li><a href="#">&#9829; (89)</a></li>
-              <li class="shareButton"><i class="shareDart">&rarr;</i>&nbsp;share
+              <li><li class="favorite">
+            <% if current_user.favorites.where(favoritable_id: @track.id, favoritable_type: "Track").first %>
+              <%= button_to [@track, current_user.favorites.where(favoritable_id: @track.id, favoritable_type: "Track").first], method: :delete do %>
+                <span data-tooltip="Supprimer des favorits">
+                  <i class="icon-heart"></i>
+                </span>
+              <% end %>
+            <% else %>
+              <%= form_for ([@track, Favorite.new]), :html => {:class => 'button_to' } do |f| %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= f.hidden_field :favoritable_id, :value => @track.id %>
+                <%= f.hidden_field :favoritable_type, :value => "Track" %>
+                <%= button_tag do %>
+                  <span data-tooltip="Ajouter aux favorits">
+                    <i class="icon-heart-empty"></i>
+                  </span>
+                <% end %>
+              <% end %>
+            <% end %>
+            <%= link_to "( "+@track.favorites.count.to_s+" )", track_favorites_path(@track) %>
+          </li>
+          <li class="shareButton"><p>Partager</p>
+            <ul class="shareForum">
                 <ul class="shareForum">
                   <li><a href="http://www.facebook.com/share.php?u=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-facebook-squared"></i></a></li>
                   <li><a href="https://plus.google.com/share?url=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-gplus-squared"></i></a></li>

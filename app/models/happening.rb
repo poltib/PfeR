@@ -13,4 +13,6 @@ class Happening < ActiveRecord::Base
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
 
   belongs_to :event_type
+
+	has_many :favorites, :as => :favoritable, dependent: :destroy
 end

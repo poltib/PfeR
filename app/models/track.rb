@@ -4,6 +4,7 @@ class Track < ActiveRecord::Base
 
   validates :name, :polyline, presence: true
 
+  has_many :favorites, :as => :favoritable, dependent: :destroy
   belongs_to :happening
 	belongs_to :user
 

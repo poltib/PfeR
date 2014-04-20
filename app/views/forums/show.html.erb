@@ -1,46 +1,68 @@
 <section>
-	<div class="container">
-		<div class="events">
-		<article class="comment">
-			<div class="comment__header">
-				<ul class="share">
-					<li><a href="#"><i class="icon-heart-empty"></i> (89)</a></li>
-					<li class="shareButton"><i class="shareDart">&rarr;</i>&nbsp;Share
-						<ul class="shareForum">
-    					<li><a href="http://www.facebook.com/share.php?u=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-facebook-squared"></i></a></li>
+  <div class="container">
+    <div class="events">
+    <article class="comment">
+      <div class="comment__header">
+        <ul class="share">
+          <li class="favorite">
+            <% if current_user.favorites.where(favoritable_id: @forum.id, favoritable_type: "Forum").first %>
+              <%= button_to [@forum, current_user.favorites.where(favoritable_id: @forum.id, favoritable_type: "Forum").first], method: :delete do %>
+                <span data-tooltip="Supprimer des favorits">
+                  <i class="icon-heart"></i>
+                </span>
+              <% end %>
+            <% else %>
+              <%= form_for ([@forum, Favorite.new]), :html => {:class => 'button_to' } do |f| %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= f.hidden_field :favoritable_id, :value => @forum.id %>
+                <%= f.hidden_field :favoritable_type, :value => "Forum" %>
+                <%= button_tag do %>
+                  <span data-tooltip="Ajouter aux favorits">
+                    <i class="icon-heart-empty"></i>
+                  </span>
+                <% end %>
+              <% end %>
+            <% end %>
+            <%= link_to "( "+@forum.favorites.count.to_s+" )", forum_favorites_path(@forum) %>
+          </li>
+          <li class="shareButton"><p>Partager</p>
+            <ul class="shareForum">
+              <li><a href="http://www.facebook.com/share.php?u=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-facebook-squared"></i></a></li>
                 <li><a href="https://plus.google.com/share?url=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-gplus-squared"></i></a></li>
                 <li><a href="http://twitter.com/home?status=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-twitter-squared"></i></a></li>
-                <li><a href="mailto:?subject=Article sur Sportfun&amp;body=Article intéressant <%= @forum.title %> : <%= request.original_url %>" rel="nofollow"><i class="icon-mail"></i></a></li>
-                <li><a href="#"><i class="icon-rss"></i></a></li>
-  					</ul>
-  				</li>
-				</ul>
-			</div>
-			<div class="comment__body">
-			<header>
+                <li><a href="mailto:?subject=Article sur Sportfun&amp;body=Article intéressant <%= @forum.name %> : <%= request.original_url %>" rel="nofollow"><i class="icon-mail"></i></a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="comment__body">
+      <header>
         <h3 class="formTitle" role="heading" aria-level="3">
-        	<%= link_to @forum.title, forum_path(@forum) %>
-					<% if  user_signed_in? && @forum.user_id == current_user.id %>
-					| <%= link_to "Edit", edit_forum_path(@forum) %>
-					| <%= button_to "Delete", @forum, :method => 'DELETE' %>
-					<% end %><br><span>Posté par <%= link_to @forum.user.username, user_path(@forum.user) %></span></h3>
+          <%= link_to @forum.name, forum_path(@forum) %>
+          <% if  user_signed_in? && @forum.user_id == current_user.id %>
+          | <%= link_to "Edit", edit_forum_path(@forum) %>
+          | <%= button_to "Delete", @forum, :method => 'DELETE' %>
+          <% end %><br><span>Posté par <%= link_to @forum.user.username, user_path(@forum.user) %></span></h3>
           <ul class="forumDetails">
-              <li><i class="icon-clock-1"></i><%= @forum.created_at %></li>
-              <li><i class="icon-chat"></i><%= @forum.comments.count %> réponses</li>
+            <li><i class="icon-bookmarks"></i><% for category in @forum.categories do %>
+              <%= category.name %>
+            <% end %></li>
+            <li><i class="icon-clock-1"></i><%= @forum.created_at %></li>
+            <li><i class="icon-chat"></i><%= @forum.comments.count %> réponses</li>
           </ul>
       </header>
-			<p><%= markdown(@forum.post) %></p>
-			</div>
-		</article>
-		<ul>
-			<%= render @forum.comments %>
-		</ul>
-				<h2>Répondre</h2>
-			<% if  user_signed_in? %>
-				<%= render "comments/form" %>
-			<% else %>
-				<p>Vous devez être connecté pour participer à la discussion.</p>
-			<% end %>
-		</div>
-	</div>
+      <p><%= markdown(@forum.post) %></p>
+      </div>
+    </article>
+    <ul>
+      <%= render @forum.comments %>
+    </ul>
+        <h2>Répondre</h2>
+      <% if  user_signed_in? %>
+        <%= render "comments/form" %>
+      <% else %>
+        <p>Vous devez être connecté pour participer à la discussion.</p>
+      <% end %>
+    </div>
+  </div>
 </section>
