@@ -4,10 +4,9 @@
     <div class="left_column">
     	<h3 role="heading" aria-level="3">Catégories</h3>
     	<ul class="cat">
-    		<li class="actif">Conseils</li>
-    		<li>Entrainements</li>
-    		<li>Equipements</li>
-
+        <% for cat in @categories %>
+    		  <li><%= cat.name %></li>
+        <% end %>
     	</ul>
     </div>
     <div class="primary_content">
@@ -18,14 +17,17 @@
   			<article>
   				<header>
             <h3 class="formTitle" role="heading" aria-level="3">
-            	<%= link_to forum.title, forum_path(forum) %>
+            	<%= link_to forum.name, forum_path(forum) %>
 							<% if user_signed_in? && forum.user_id == current_user.id %>
 							| <%= link_to "Edit", edit_forum_path(forum) %>
 							| <%= button_to "Delete", forum, :method => 'DELETE' %>
 							<% end %><br><span>Posté par <%= link_to forum.user.username, user_path(forum.user) %></span></h3>
               <ul class="forumDetails">
-                  <li><i class="icon-clock-1"></i><%= forum.created_at %></li>
-                  <li><i class="icon-chat"></i><%= forum.comments.count %> réponses</li>
+                <li><i class="icon-bookmarks"></i><% for category in forum.categories do %>
+                  <%= category.name %>
+                <% end %></li>
+                <li><i class="icon-clock-1"></i><%= forum.created_at %></li>
+                <li><i class="icon-chat"></i><%= forum.comments.count %> réponses</li>
               </ul>
           </header>
   			</article>

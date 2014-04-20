@@ -1,6 +1,6 @@
-class CreateJoinTableCategoryForm < ActiveRecord::Migration
+class CreateJoinTableCategoryForum < ActiveRecord::Migration
   def change
-    create_join_table :categories, :forms do |t|
+    create_join_table :categories, :forums do |t|
       # t.index [:category_id, :form_id]
       # t.index [:form_id, :category_id]
     end
