@@ -14,12 +14,12 @@ Pfe::Application.routes.draw do
   resources :happenings do
     resources :tracks, :controller => 'happeningtracks', :only => [:new, :create, :destroy]
     resources :user_statuses, :only => [:create, :destroy]
-    resources :favorites, :only => [:create, :destroy]
+    resources :favorites, :only => [:index, :create, :destroy]
     resources :images, :only => [:new, :create, :destroy]
   end
 
   resources :tracks do
-    resources :favorites, :only => [:create, :destroy]
+    resources :favorites, :only => [:index, :create, :destroy]
     resources :images, :only => [:new, :create, :destroy]
   end
 

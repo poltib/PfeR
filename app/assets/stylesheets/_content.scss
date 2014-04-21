@@ -246,15 +246,6 @@ h2{
     position:relative;
 }
 
-.visuels{
-    @include span-columns(12);
-    @include omega;
-    position:relative;
-    img{
-        max-width: 100%;
-    }
-}
-
 .social{
     li{
         display: inline-block;

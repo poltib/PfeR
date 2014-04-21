@@ -1,7 +1,5 @@
 class FixForumTitleName < ActiveRecord::Migration
   def change
-    change_table :forums do |t|
-      t.rename :title, :name
-    end
+    rename_table :categories_forms, :categories_forums
   end
 end
