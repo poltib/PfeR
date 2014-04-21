@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140421121708) do
+ActiveRecord::Schema.define(version: 20140421200440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20140421121708) do
 
   create_table "categories_forums", id: false, force: true do |t|
     t.integer "category_id", null: false
-    t.integer "forum_id",    null: false
+    t.integer "form_id",     null: false
   end
 
   create_table "comments", force: true do |t|
