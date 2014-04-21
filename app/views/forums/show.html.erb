@@ -5,21 +5,23 @@
       <div class="comment__header">
         <ul class="share">
           <li class="favorite">
-            <% if current_user.favorites.where(favoritable_id: @forum.id, favoritable_type: "Forum").first %>
-              <%= button_to [@forum, current_user.favorites.where(favoritable_id: @forum.id, favoritable_type: "Forum").first], method: :delete do %>
-                <span data-tooltip="Supprimer des favorits">
-                  <i class="icon-heart"></i>
-                </span>
-              <% end %>
-            <% else %>
-              <%= form_for ([@forum, Favorite.new]), :html => {:class => 'button_to' } do |f| %>
-                <%= f.hidden_field :user_id, :value => current_user.id %>
-                <%= f.hidden_field :favoritable_id, :value => @forum.id %>
-                <%= f.hidden_field :favoritable_type, :value => "Forum" %>
-                <%= button_tag do %>
-                  <span data-tooltip="Ajouter aux favorits">
-                    <i class="icon-heart-empty"></i>
+            <% if user_signed_in? %>
+              <% if current_user.favorites.where(favoritable_id: @forum.id, favoritable_type: "Forum").first %>
+                <%= button_to [@forum, current_user.favorites.where(favoritable_id: @forum.id, favoritable_type: "Forum").first], method: :delete do %>
+                  <span data-tooltip="Supprimer des favorits">
+                    <i class="icon-heart"></i>
                   </span>
+                <% end %>
+              <% else %>
+                <%= form_for ([@forum, Favorite.new]), :html => {:class => 'button_to' } do |f| %>
+                  <%= f.hidden_field :user_id, :value => current_user.id %>
+                  <%= f.hidden_field :favoritable_id, :value => @forum.id %>
+                  <%= f.hidden_field :favoritable_type, :value => "Forum" %>
+                  <%= button_tag do %>
+                    <span data-tooltip="Ajouter aux favorits">
+                      <i class="icon-heart-empty"></i>
+                    </span>
+                  <% end %>
                 <% end %>
               <% end %>
             <% end %>
