@@ -7,6 +7,7 @@ class Track < ActiveRecord::Base
   has_many :favorites, :as => :favoritable, dependent: :destroy
   belongs_to :happening
 	belongs_to :user
+  has_many :images, :as => :imagable, dependent: :destroy
 
   def parse_file
     if route.path

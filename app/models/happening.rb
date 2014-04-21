@@ -15,4 +15,6 @@ class Happening < ActiveRecord::Base
   belongs_to :event_type
 
 	has_many :favorites, :as => :favoritable, dependent: :destroy
+
+	has_many :images, :as => :imagable, dependent: :destroy
 end

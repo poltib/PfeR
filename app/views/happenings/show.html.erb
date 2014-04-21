@@ -1,80 +1,72 @@
 <section>
   <div class="container">
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
-    <h2 class="raceTitle"><span>Liège | <%= @happening.date %></span><%= @happening.name %></h2>
+    <h2 role="heading" aria-level="2" class="raceTitle"><%= @happening.name %></h2>
+    <h3 role="heading" aria-level="3">Liège | <%= @happening.date.strftime("%d %B, %Y") %></h3>
     <div class="head">
       <div class="visuels">
         <div class="map">
-					<div id="map_canvas"></div>
-        	<div id="elevation_chart"></div>
+          <div id="map_canvas"></div>
+          <div id="elevation_chart"></div>
         </div>
-        <div class="aside">
-          <div class="users">
-            <h3 role="heading" aria-level="3">Participer</h3>
-            <p><%= @happening.users.count %> <%= link_to 'utilisateurs y participent', happening_user_statuses_path(@happening) %></p>
-          </div>
-          <ul class="share">
-            <% if (@happening.tracks.count==0) && user_signed_in? && @happening.user_id == current_user.id %>
-              <li>
-                <%= link_to(new_happening_track_path(@happening)) do %>
-                  <i class="icon-location"></i>Ajouter un parcours
+      </div>
+      <div class="social">
+        <ul>
+          <% if (@happening.tracks.count==0) && user_signed_in? && @happening.user_id == current_user.id %>
+            <li>
+              <%= link_to(new_happening_track_path(@happening)) do %>
+                <i class="icon-location"></i>Ajouter un parcours
+              <% end %>
+            </li>
+          <% end %>
+
+          <li class="favorite">
+            <% if current_user.user_statuses.where(happening_id: @happening.id).first %>
+              <%= button_to [@happening, current_user.user_statuses.where(happening_id: @happening.id).first], method: :delete do %>
+                <span data-tooltip="Ne plus participer">
+                  <i class="icon-cancel"></i>
+                </span>
+              <% end %>
+            <% else %>
+              <%= form_for ([@happening, UserStatus.new]), :html => {:class => 'button_to' } do |f| %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= f.hidden_field :happening_id, :value => @happening.id %>
+                <%= button_tag do %>
+                  <span data-tooltip="Participer">
+                    <i class="icon-check"></i>
+                  </span>
                 <% end %>
-              </li>
+              <% end %>
             <% end %>
+            <%= link_to "( "+@happening.user_statuses.count.to_s+" )", happening_user_statuses_path(@happening) %>
+          </li>
 
-            <li class="favorite">
-              <% if current_user.user_statuses.where(happening_id: @happening.id).first %>
-                <%= button_to [@happening, current_user.user_statuses.where(happening_id: @happening.id).first], method: :delete do %>
-                  <span data-tooltip="Ne plus participer">
-                    <i class="icon-cancel"></i>
+          <li class="favorite">
+            <% if current_user.favorites.where(favoritable_id: @happening.id, favoritable_type: "Happening").first %>
+              <%= button_to [@happening, current_user.favorites.where(favoritable_id: @happening.id, favoritable_type: "Happening").first], method: :delete do %>
+                <span data-tooltip="Supprimer des favorits">
+                  <i class="icon-heart"></i>
+                </span>
+              <% end %>
+            <% else %>
+              <%= form_for ([@happening, Favorite.new]), :html => {:class => 'button_to' } do |f| %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= f.hidden_field :favoritable_id, :value => @happening.id %>
+                <%= f.hidden_field :favoritable_type, :value => "Happening" %>
+                <%= button_tag do %>
+                  <span data-tooltip="Ajouter aux favorits">
+                    <i class="icon-heart-empty"></i>
                   </span>
                 <% end %>
-              <% else %>
-                <%= form_for ([@happening, UserStatus.new]), :html => {:class => 'button_to' } do |f| %>
-                  <%= f.hidden_field :user_id, :value => current_user.id %>
-                  <%= f.hidden_field :happening_id, :value => @happening.id %>
-                  <%= button_tag do %>
-                    <span data-tooltip="Participer">
-                      <i class="icon-check"></i>
-                    </span>
-                  <% end %>
-                <% end %>
               <% end %>
-              <%= link_to "( "+@happening.user_statuses.count.to_s+" )", happening_user_statuses_path(@happening) %>
-            </li>
-
-            <li class="favorite">
-              <% if current_user.favorites.where(favoritable_id: @happening.id, favoritable_type: "Happening").first %>
-                <%= button_to [@happening, current_user.favorites.where(favoritable_id: @happening.id, favoritable_type: "Happening").first], method: :delete do %>
-                  <span data-tooltip="Supprimer des favorits">
-                    <i class="icon-heart"></i>
-                  </span>
-                <% end %>
-              <% else %>
-                <%= form_for ([@happening, Favorite.new]), :html => {:class => 'button_to' } do |f| %>
-                  <%= f.hidden_field :user_id, :value => current_user.id %>
-                  <%= f.hidden_field :favoritable_id, :value => @happening.id %>
-                  <%= f.hidden_field :favoritable_type, :value => "Happening" %>
-                  <%= button_tag do %>
-                    <span data-tooltip="Ajouter aux favorits">
-                      <i class="icon-heart-empty"></i>
-                    </span>
-                  <% end %>
-                <% end %>
-              <% end %>
-              <%= link_to "( "+@happening.favorites.count.to_s+" )", happening_favorites_path(@happening) %>
-            </li>
-            <li class="shareButton"><p>Partager</p>
-            <ul class="shareForum">
-                <li><a href="http://www.facebook.com/share.php?u=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-facebook-squared"></i></a></li>
-                <li><a href="https://plus.google.com/share?url=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-gplus-squared"></i></a></li>
-                <li><a href="http://twitter.com/home?status=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-twitter-squared"></i></a></li>
-                <li><a href="mailto:?subject=Course intéressante sur Sportfun&amp;body=Course intéressante <%= @happening.name %> : <%= request.original_url %>" rel="nofollow"><i class="icon-mail"></i></a></li>
-                <li><a href="#"><i class="icon-rss"></i></a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+            <% end %>
+            <%= link_to "( "+@happening.favorites.count.to_s+" )", happening_favorites_path(@happening) %>
+          </li>
+          <li class="socialNetwork"><a data-tooltip="Partager sur Facebook" href="http://www.facebook.com/share.php?u=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-facebook-squared"></i></a></li>
+          <li class="socialNetwork"><a data-tooltip="Partager sur Google plus" href="https://plus.google.com/share?url=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-gplus-squared"></i></a></li>
+          <li class="socialNetwork"><a data-tooltip="Partager sur Twitter" href="http://twitter.com/home?status=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-twitter-squared"></i></a></li>
+          <li class="socialNetwork"><a data-tooltip="Partager par mail" href="mailto:?subject=Course intéressante sur Sportfun&amp;body=Course intéressante <%= @happening.name %> : <%= request.original_url %>" rel="nofollow"><i class="icon-mail"></i></a></li>
+        </ul>
       </div>
     </div>
     <div class="raceDetails">
@@ -94,8 +86,20 @@
       </div>
       <div class="gallery">
         <h3 role="heading" aria-level="3">Gallerie photo</h3>
+        <% if current_user.id == @happening.owner.id %>
+          <%= form_for ([@happening, Image.new]), :html => { :multipart => true, :id => 'addImage' } do |f| %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+            <%= f.hidden_field :imagable_id, :value => @happening.id %>
+            <%= f.hidden_field :imagable_type, :value => "Happening" %>
+            <%= f.label :image %>
+            <%= f.file_field :image %>
+            <%= f.submit %>
+          <% end %>
+        <% end %>
         <ul class="thumbs">
-          <li></li>
+          <% for image in @happening.images %>
+            <li><%= image_tag image.image.url(:thumb) %></li>
+          <% end %>
         </ul>
       </div>
     </div>

@@ -12,17 +12,15 @@ Pfe::Application.routes.draw do
   end
 
   resources :happenings do
-    resources :users, :controller => 'happeningsuser', :only => [:new, :create, :destroy]
     resources :tracks, :controller => 'happeningtracks', :only => [:new, :create, :destroy]
-  end
-
-  resources :happenings do
-    resources :user_statuses
-    resources :favorites
+    resources :user_statuses, :only => [:create, :destroy]
+    resources :favorites, :only => [:create, :destroy]
+    resources :images, :only => [:new, :create, :destroy]
   end
 
   resources :tracks do
-    resources :favorites
+    resources :favorites, :only => [:create, :destroy]
+    resources :images, :only => [:new, :create, :destroy]
   end
 
   root :to =>  'welcome#index'

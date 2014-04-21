@@ -80,6 +80,10 @@ calc_bounds = (track_path) ->
   b.extend(gm_path.getAt(i[1]))
   b.extend(gm_path.getAt(i[2]))
 
+hide_image_form = () ->
+  image_form.style.display = "none"
+
+
 
 $(".tracks.new, .happeningtracks.new").ready ->
   
@@ -190,5 +194,12 @@ $(".tracks.new, .happeningtracks.new").ready ->
     )
 
 $(".tracks.show, .happenings.show").ready ->
+  image_form = document.getElementById("addImage")
+  show_form_button = document.getElementById("showImageForm")
+
+  show_form_button.addEventListener 'click', (evt) ->
+    image_form.style.display = "block"
+
   map = gm_init()
   load_track(js_track_id,map)
+  hide_image_form()

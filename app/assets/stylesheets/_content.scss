@@ -237,30 +237,40 @@ h2{
     height: 25em;
 }
 
+#showImageForm{
+    @include tooltip(s, rgba(0,0,0,0.8), 2px);
+}
+
 .map{
     border: 3px solid $sky;
     position:relative;
 }
 
 .visuels{
-    @include span-columns(10);
-    @include shift(2);
+    @include span-columns(12);
     @include omega;
     position:relative;
-    box-sizing: border-box;
     img{
         max-width: 100%;
     }
+}
 
-    .aside{
-        width: 21%;
-        left:-21.3%;
+.social{
+    li{
+        display: inline-block;
+        padding: 0.5em 1em;
+        i{font-size: 1.4em;}
+        a{
+            border:none;
+        }
     }
 }
-.head{
-    overflow:hidden;
-}
 
+.socialNetwork{
+    a{
+        @include tooltip(n, rgba(0,0,0,0.8), 2px);
+    }
+}
 
 .users:after{
     content:"";
@@ -270,14 +280,7 @@ h2{
 
 .raceTitle{
     text-align: center;
-    margin-top: 2em;
-    margin-bottom: 1em;
-    padding:0.3em 0.6em;
-    span{
-
-        font-size: 0.8em;
-        color:$orange;
-    }
+    padding:0.3em 0.6em 0;
 }
 
 .informations{
@@ -520,10 +523,10 @@ h2{
 }
 
 .comment__header{
+    text-align: center;
     padding:0.5em 0.5em 0;
     margin-bottom: 0.5em;
     @include span-columns(2 of 10);
-    border-right: 1px solid $sky;
     h4{
         text-align: center;
         margin: 0 0 1em;
@@ -532,17 +535,27 @@ h2{
     img{
         border:3px solid $darkBlue;
         display: block;
-        margin:auto;
+        margin:1em auto;
     }
 }
 
 .comment__body{
-    padding:0.5em;
+    border-left: 1px solid $sky;
+    padding:0.5em 2em;
     @include span-columns(8 of 10);
     @include omega;
-    p{
-        margin: 0 0 0.5em;
+
+    .button_to button{
+        @extend .distance;
     }
+
+    h4{
+        margin-bottom: 1em;
+    }
+}
+
+.markdown{
+    margin: 0 0 0.5em;
     h2{
         text-align: left;
     }
@@ -554,10 +567,6 @@ h2{
     }
     ol{
         list-style-type: decimal;
-    }
-
-    .button_to button{
-        @extend .distance;
     }
 }
 
