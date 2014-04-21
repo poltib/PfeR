@@ -10,7 +10,7 @@
       <% @tracks.each do |track| %>
         <li class="content__thumbRace">
           <ul class="thumbRace__list">
-            <li class="thumbRace__location"><%= track.location %> <%= track.favorites.count %></li>
+            <li class="thumbRace__location"><%= track.location %></li>
             <li class="thumbRace__name">
               <h4 role="heading" aria-level="4">
                 <%= link_to track.name, track_path(track) %>
@@ -20,6 +20,7 @@
                 <% end %>
               </h4>
             </li>
+            <li><%= track.favorites.count %> <i class="icon-heart"></i></li>
             <li class="thumbRace__distances"><%= track.distance %>km</li>
           </ul>
         </li>

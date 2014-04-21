@@ -51,18 +51,31 @@
             <li><i class="icon-chat"></i><%= @forum.comments.count %> réponses</li>
           </ul>
       </header>
-      <p><%= markdown(@forum.post) %></p>
+      <div class="markdown">
+        <%= markdown(@forum.post) %>
+      </div>
       </div>
     </article>
     <ul>
       <%= render @forum.comments %>
-    </ul>
-        <h2>Répondre</h2>
       <% if  user_signed_in? %>
-        <%= render "comments/form" %>
+        <li class="commentItem">
+          <article class="comment">
+            <header class="comment__header">
+              <h3>Répondre</h3>
+              <%= image_tag current_user.avatar.url(:thumb) %>
+            </header>
+            <div class="comment__body">
+              <%= render "comments/form" %>
+            </div>
+          </article>
+        </li>
       <% else %>
         <p>Vous devez être connecté pour participer à la discussion.</p>
       <% end %>
+    </ul>
+
+
     </div>
   </div>
 </section>

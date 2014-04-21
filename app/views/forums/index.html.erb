@@ -2,38 +2,39 @@
   <div class="container">
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
     <div class="left_column">
-    	<h3 role="heading" aria-level="3">Catégories</h3>
-    	<ul class="cat">
+      <h3 role="heading" aria-level="3">Catégories</h3>
+      <ul class="cat">
         <% for cat in @categories %>
-    		  <li><%= link_to cat.name, cat %></li>
+          <li><%= link_to cat.name, cat %></li>
         <% end %>
-    	</ul>
+      </ul>
     </div>
     <div class="primary_content">
-    	<h2 role="heading" aria-level="2">Derniers forums</h2>
-    	<ul>
-<% for forum in @forums %>
-    	<li class="forum">
-  			<article>
-  				<header>
-            <h3 class="formTitle" role="heading" aria-level="3">
-            	<%= link_to forum.name, forum_path(forum) %>
-							<% if user_signed_in? && forum.user_id == current_user.id %>
-							| <%= link_to "Edit", edit_forum_path(forum) %>
-							| <%= button_to "Delete", forum, :method => 'DELETE' %>
-							<% end %><br><span>Posté par <%= link_to forum.user.username, user_path(forum.user) %></span></h3>
-              <ul class="forumDetails">
-                <li><i class="icon-bookmarks"></i><% for category in forum.categories do %>
-                  <%= category.name %>
-                <% end %></li>
-                <li><i class="icon-clock-1"></i><%= forum.created_at %></li>
-                <li><i class="icon-chat"></i><%= forum.comments.count %> réponses</li>
-              </ul>
-          </header>
-  			</article>
-  		</li>
-<% end %>
-			</ul>
-			</div>
-			</div>
-			</section>
+      <h2 role="heading" aria-level="2">Derniers forums</h2>
+      <ul>
+      <% for forum in @forums %>
+        <li class="forum">
+          <article>
+            <header>
+              <h3 class="formTitle" role="heading" aria-level="3">
+                <%= link_to forum.name, forum_path(forum) %>
+                <% if user_signed_in? && forum.user_id == current_user.id %>
+                | <%= link_to "Edit", edit_forum_path(forum) %>
+                | <%= button_to "Delete", forum, :method => 'DELETE' %>
+                <% end %><br><span>Posté par <%= link_to forum.user.username, user_path(forum.user) %></span></h3>
+                <ul class="forumDetails">
+                  <li><i class="icon-bookmarks"></i><% for category in forum.categories do %>
+                    <%= category.name %>
+                  <% end %></li>
+                  <li><i class="icon-clock-1"></i><%= forum.created_at %></li>
+                  <li><i class="icon-chat"></i><%= forum.comments.count %> réponses</li>
+                  <li><i class="icon-heart"></i><%= forum.favorites.count %></li>
+                </ul>
+            </header>
+          </article>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+</section>

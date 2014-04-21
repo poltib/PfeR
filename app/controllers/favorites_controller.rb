@@ -1,16 +1,11 @@
 class FavoritesController < ApplicationController
-  before_action :set_favorite, only: [:show, :edit, :update, :destroy]
+  before_action :set_favorite, only: [:destroy]
 
   # GET /favorites
   # GET /favorites.json
   def index
     @favoritable = find_favoritable
     @favorites = @favoritable.favorites
-  end
-
-  # GET /favorites/1
-  # GET /favorites/1.json
-  def show
   end
 
   # POST /favorites
@@ -26,20 +21,6 @@ class FavoritesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /favorites/1
-  # PATCH/PUT /favorites/1.json
-  def update
-    respond_to do |format|
-      if @favorite.update(favorite_params)
-        format.html { redirect_to @favorite, notice: 'Favorite was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @favorite.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /favorites/1
   # DELETE /favorites/1.json
   def destroy
@@ -48,7 +29,6 @@ class FavoritesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_favorite
       @favorite = Favorite.find(params[:id])
     end

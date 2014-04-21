@@ -1,6 +1,7 @@
 <li class="commentItem">
 	<article class="comment">
 		<header class="comment__header">
+			<%= link_to comment.user.username, user_path(comment.user) %>
 			<%= image_tag comment.user.avatar.url(:thumb) %>
 			<% if user_signed_in? &&  current_user.id != comment.user.id %>
         <%= link_to new_user_conversation_path(comment.user) do %>
@@ -10,7 +11,6 @@
 		</header>
 		<div class="comment__body">
 			<h4>
-				<%= link_to comment.user.username, user_path(comment.user) %>
 				<span>Il y a <%= distance_of_time_in_words_to_now(comment.created_at, include_seconds: true) %></span>
 				<% if  user_signed_in? && comment.user.id == current_user.id %>
 					<div class="delete">
@@ -22,7 +22,7 @@
 					</div>
 				<% end %>
 			</h4>
-			<p><%= markdown(comment.comment) %></p>
+			<div class="markdown"><%= markdown(comment.comment) %></div>
 		</div>
 	</article>
 </li>

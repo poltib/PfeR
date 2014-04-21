@@ -14,10 +14,6 @@ class User < ActiveRecord::Base
   # Validate filename
   validates_attachment_file_name :avatar, :matches => [/png\Z/, /jpe?g\Z/]
 
-  # Explicitly do not validate
-  do_not_validate_attachment_file_type :avatar
-
-
   has_many :user_statuses, :dependent => :destroy
   has_many :favorites, :dependent => :destroy
   has_many :happenings, :through => :user_statuses

@@ -1,4 +1,5 @@
 class UserStatusesController < ApplicationController
+  before_action :set_user_status, only: [:destroy]
   before_filter :load_happening
   def index
   	@user_statuses = @happening.user_statuses
@@ -15,7 +16,15 @@ class UserStatusesController < ApplicationController
     end
   end
 
+  def destroy
+    @user_status.destroy
+    redirect_to :back, :notice => 'Vous ne participez plus à cette course.'
+  end
+
 private
+  def set_user_status
+    @user_status = UserStatus.find(params[:id])
+  end
 
   def load_happening
     @happening = Happening.find(params[:happening_id])

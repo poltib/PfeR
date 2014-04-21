@@ -53,6 +53,16 @@
 
 .nav__actions{
     position: relative;
+    &:hover{
+        cursor: pointer;
+        a{
+        background-color: $sky;
+        color:$font;
+            &:hover{
+                color:$font;
+            }
+        }
+    }
     &:hover, &:focus {
         ul {
         visibility: visible;
@@ -66,8 +76,7 @@
         visibility: hidden;
         opacity: 0;
         z-index: 1000000;
-        background-color: rgb(40,40,40);
-        text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+        background-color: $sky;
         white-space: nowrap;
         box-shadow: 1px 1px 3px rgba(0, 0, 0, .2);
         left: 0;
@@ -80,12 +89,13 @@
             padding: 0 0.3em;
             &:hover{
                 background-color:$blue;
-                a{
+                >a{
+                    background-color: transparent;
                     color:white;
                 }
             }
             a{
-                color:white;
+                color:black;
             }
         }
     }
