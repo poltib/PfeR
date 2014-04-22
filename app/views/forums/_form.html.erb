@@ -13,8 +13,13 @@
   	<ul>
 	<li><%= f.label :name %>
 	<%= f.text_field :name %></li>
-
-  <li><%= f.collection_check_boxes :categories, Category.all, :id, :name %>
+  <li>
+    <% Category.all.each do |category| %>
+   <div>
+     <%= check_box_tag "forum[category_ids][]", category.id, @forum.categories.include?(category) %>
+     <%= category.name %>
+   </div>
+   <% end %>
   </li>
 
 	<li><%= f.label :post %>

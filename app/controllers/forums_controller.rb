@@ -17,12 +17,8 @@ class ForumsController < ApplicationController
 
   def create
   	@forum = Forum.new(forum_params)
+    render text: forum_params.inspect
   	@forum.user_id = current_user.id
-    for category in params[:forum][:categories] do 
-      if category != ""
-        @forum.categories << Category.find(category.to_i)
-      end
-    end
     if @forum.save
       redirect_to forums_path, :notice => 'Votre forum à été ajouté avec succès.'
     else
@@ -36,11 +32,6 @@ class ForumsController < ApplicationController
 
   def update
     @forum = Forum.find params[:id]
-    for category in params[:forum][:categories] do 
-      if category != ""
-        @forum.categories << Category.find(category.to_i)
-      end
-    end
     if @forum.update_attributes forum_params
         redirect_to forums_path, :notice => 'Votre forum à été mis à jour avec succès.'
     else
@@ -56,6 +47,6 @@ class ForumsController < ApplicationController
   private
   
   def forum_params
-    params.require(:forum).permit(:name, :categories, :post)
+    params.require(:forum).permit(:name, :post, :category_ids => [])
   end
 end
