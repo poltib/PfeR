@@ -250,7 +250,9 @@ h2{
     li{
         display: inline-block;
         padding: 0.5em 1em;
-        i{font-size: 1.4em;}
+        i{
+            font-size: 1.4em;
+        }
         a{
             border:none;
         }
@@ -496,10 +498,6 @@ h2{
         text-align: center;
         border-bottom:1px solid $sky;
     }
-
-    >li:last-child{
-        border-bottom:none;
-    }
 }
 
 .events article{
@@ -558,6 +556,9 @@ h2{
     }
     ol{
         list-style-type: decimal;
+    }
+    p, ul, ol{
+        margin-top: 0.8em;
     }
 }
 

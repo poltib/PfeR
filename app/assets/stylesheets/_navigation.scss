@@ -13,6 +13,7 @@
 }
 
 .header__navigation{
+    font-size: 1.1em;
     @include media($tablet){
         display: none;
     }
@@ -54,12 +55,12 @@
 .nav__actions{
     position: relative;
     &:hover{
-        cursor: pointer;
         a{
         background-color: $sky;
         color:$font;
             &:hover{
-                color:$font;
+                background-color: $blue;
+                color:$sky;
             }
         }
     }
@@ -84,9 +85,8 @@
 
         li{
             text-align: left;
-            display: block;
             margin:0;
-            padding: 0 0.3em;
+            display: block;
             &:hover{
                 background-color:$blue;
                 >a{
@@ -95,6 +95,8 @@
                 }
             }
             a{
+                padding: 0.5em;
+                display: block;
                 color:black;
             }
         }
