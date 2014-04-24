@@ -17,7 +17,6 @@ class ForumsController < ApplicationController
 
   def create
   	@forum = Forum.new(forum_params)
-    render text: forum_params.inspect
   	@forum.user_id = current_user.id
     if @forum.save
       redirect_to forums_path, :notice => 'Votre forum à été ajouté avec succès.'
