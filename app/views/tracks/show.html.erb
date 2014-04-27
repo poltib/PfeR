@@ -8,14 +8,15 @@
         <div class="map">
           <div id="map_canvas"></div>
           <div id="elevation_chart"></div>
+          <div id="directions-panel"></div>
         </div>
       </div>
       <div class="social">
         <ul>
           <li class="favorite">
             <% if user_signed_in? %>
-              <% if current_user.favorites.where(favoritable_id: @track.id, favoritable_type: "Happening").first %>
-                <%= button_to [@track, current_user.favorites.where(favoritable_id: @track.id, favoritable_type: "Happening").first], method: :delete do %>
+              <% if current_user.favorites.where(favoritable_id: @track.id, favoritable_type: "Track").first %>
+                <%= button_to [@track, current_user.favorites.where(favoritable_id: @track.id, favoritable_type: "Track").first], method: :delete do %>
                   <span data-tooltip="Supprimer des favorits">
                     <i class="icon-heart"></i>
                   </span>
@@ -24,7 +25,7 @@
                 <%= form_for ([@track, Favorite.new]), :html => {:class => 'button_to' } do |f| %>
                   <%= f.hidden_field :user_id, :value => current_user.id %>
                   <%= f.hidden_field :favoritable_id, :value => @track.id %>
-                  <%= f.hidden_field :favoritable_type, :value => "Happening" %>
+                  <%= f.hidden_field :favoritable_type, :value => "Track" %>
                   <%= button_tag do %>
                     <span data-tooltip="Ajouter aux favorits">
                       <i class="icon-heart-empty"></i>
@@ -32,9 +33,10 @@
                   <% end %>
                 <% end %>
               <% end %>
+            <% else %>
+              <i class="icon-heart"></i>
             <% end %>
-            <i class="icon-heart"></i>
-            <%= link_to "( "+@track.favorites.count.to_s+" )", happening_favorites_path(@track) %>
+            <%= link_to "( "+@track.favorites.count.to_s+" )", track_favorites_path(@track) %>
           </li>
           <li class="socialNetwork"><a data-tooltip="Partager sur Facebook" href="http://www.facebook.com/share.php?u=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-facebook-squared"></i></a></li>
           <li class="socialNetwork"><a data-tooltip="Partager sur Google plus" href="https://plus.google.com/share?url=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-gplus-squared"></i></a></li>
@@ -64,15 +66,26 @@
           <%= form_for ([@track, Image.new]), :html => { :multipart => true, :id => 'addImage' } do |f| %>
             <%= f.hidden_field :user_id, :value => current_user.id %>
             <%= f.hidden_field :imagable_id, :value => @track.id %>
-            <%= f.hidden_field :imagable_type, :value => "Happening" %>
+            <%= f.hidden_field :imagable_type, :value => "Track" %>
             <%= f.label :image %>
             <%= f.file_field :image %>
             <%= f.submit %>
           <% end %>
         <% end %>
-        <ul class="thumbs">
+        <ul id="many" class="thumbs">
           <% for image in @track.images %>
-            <li><%= image_tag image.image.url(:thumb) %></li>
+            <li>
+              <a href="<%= image.image.url(:medium) %>" class="thumbnail">
+                <%= image_tag image.image.url(:thumb) %>
+              </a>
+              <% if user_signed_in? && current_user.id == @track.user.id %>
+                <%= button_to [@track, image], method: :delete, data: { confirm: 'Are you sure?' }, form_class: "delete_image" do %>
+                  <span data-tooltip="Supprimer la photo">
+                    <i class="icon-cancel"></i>
+                  </span>
+                <% end %>
+              <% end %>
+            </li>
           <% end %>
         </ul>
       </div>

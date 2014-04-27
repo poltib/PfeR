@@ -261,6 +261,7 @@ h2{
 
 .socialNetwork{
     a{
+        padding-bottom: 0.3em;
         @include tooltip(n, rgba(0,0,0,0.8), 2px);
     }
 }
@@ -277,25 +278,56 @@ h2{
 }
 
 .informations{
-    width: 49%;
-    float: left;
-    margin-right: 1%;
-    padding:1em;
+    @include span-columns(4);
 }
 
 .gallery{
-    width: 49%;
-    padding:1em;
-    float: right;
-    margin-left: 1%;
+    @include span-columns(8);
+    @include omega;
+}
+
+.thumbs{
     li{
-        width: 23%;
-        margin: 1%;
-        float: left;
+        position:relative;
+        margin-bottom: 1.4em;
+        @include span-columns(2 of 8);
         img{
             max-width: 100%;
+            border: 2px solid silver;
+            transition: border-color 0.3s;
+            &:hover{
+                border-color:$blue;
+            }
+        }
+        a{
+            border:none;
         }
     }
+    li:nth-child(4n){
+        @include omega;
+    }
+}
+.delete_image{
+    position: absolute;
+    top:-0.7em;
+    right: -0.7em;
+    button{
+        padding: 0.2em 0.15em;
+        background-color: black;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+        color:white;
+        border:none;
+        border-radius: 50%;
+        &:hover{
+            opacity: 1;
+            background-color: black;
+        }
+    }
+}
+
+.heplbox-container{
+    box-sizing: content-box;
 }
 
 .sponsors{
@@ -321,10 +353,6 @@ h2{
     content:"";
     display: block;
     clear:both;
-}
-
-.thumbs li img{
-    border: 2px solid silver;
 }
 
 .head{

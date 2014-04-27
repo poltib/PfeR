@@ -14,10 +14,11 @@ if !alert.innerText
 if !notice.innerText
   notice.remove();
 
-path = new google.maps.MVCArray()
-gm_service = new google.maps.DirectionsService()
-elevationService = new google.maps.ElevationService()
-google.load("visualization", "1", {packages: ["columnchart"]})
+if google?
+  path = new google.maps.MVCArray()
+  gm_service = new google.maps.DirectionsService()
+  elevationService = new google.maps.ElevationService()
+  google.load("visualization", "1", {packages: ["columnchart"]})
 
 gm_init = ->
   gm_center = new google.maps.LatLng(50.633333, 5.566667)
@@ -66,7 +67,8 @@ load_track = (id,map) ->
 
 display_on_map = (data,map) ->
   decoded_path = google.maps.geometry.encoding.decodePath(data.polyline)
-  path_options = { path: decoded_path, strokeColor: "#FF0000",strokeOpacity: 0.5, strokeWeight: 5}
+  icon_set = { path: google.maps.SymbolPath.FORWARD_OPEN_ARROW }
+  path_options = { path: decoded_path, strokeColor: "black",strokeOpacity: 0.8, strokeWeight: 5, icons: [{ repeat: '80px', icon: icon_set, offset: '100%' }]}
   track_path = new google.maps.Polyline(path_options)
   track_path.setMap(map)
   map.fitBounds(calc_bounds(track_path));
@@ -80,13 +82,7 @@ calc_bounds = (track_path) ->
   b.extend(gm_path.getAt(i[1]))
   b.extend(gm_path.getAt(i[2]))
 
-hide_image_form = (form) ->
-  form.style.display = "none"
-
-
-
 $(".tracks.new, .happeningtracks.new").ready ->
-  
   dist = document.getElementById "dist"
   reset = document.getElementById "reset"
   close = document.getElementById "close"
@@ -176,7 +172,6 @@ $(".tracks.new, .happeningtracks.new").ready ->
         travelMode: google.maps.DirectionsTravelMode.WALKING
       }, (result, status) ->
         return if status != google.maps.DirectionsStatus.OK
-        
         for i in result.routes[0].overview_path by 1
           path.push(i)
         drawPath(path.j)
@@ -187,15 +182,18 @@ $(".tracks.new, .happeningtracks.new").ready ->
             newRoute += coords.k.toString() + ',' + coords.A.toString()
           else
             newRoute += ',' + coords.k.toString() + ',' + coords.A.toString()
-        console.log(newRoute)
+
         jsInput.value = newRoute
         distanceInput.value = poly.inKm()
         undefined
     )
 
 $(".tracks.show, .happenings.show").ready ->
+  $( '#many a.thumbnail' ).heplbox()
   image_form = document.getElementById("addImage")
   show_form_button = document.getElementById("showImageForm")
+  if image_form? 
+    image_form.style.display = "none"
 
   if show_form_button
     show_form_button.addEventListener 'click', (evt) ->
@@ -205,6 +203,6 @@ $(".tracks.show, .happenings.show").ready ->
         image_form.style.display = "block"
 
 
-  map = gm_init()
-  load_track(js_track_id,map)
-  hide_image_form(image_form)
+  if google?
+    map = gm_init()
+    load_track(js_track_id,map)
