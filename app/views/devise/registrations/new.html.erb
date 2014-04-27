@@ -1,6 +1,6 @@
 <section>
 <div class="container">
-<h2>Sign up</h2>
+<h2>Inscription</h2>
 
 <%= form_for(resource, :html => { :class => 'createForm' }, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
@@ -17,7 +17,7 @@
   <li><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></li>
 
-  <li><%= f.submit "Sign up" %></li>
+  <li><%= f.submit "Inscription" %></li>
 	<%= render "devise/shared/links" %>
  </ul>
 <% end %>

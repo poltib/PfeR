@@ -51,8 +51,7 @@
                 <%= link_to happening.name, happening_path(happening) %>
         			  <% if user_signed_in? && happening.user_id == current_user.id %>
         				| <%= link_to "Edit", edit_happening_path(happening) %>
-        				| <%= button_to "Delete", happening_path(happening),
-                            method: :delete, data: { confirm: 'Are you sure?' }  %>
+        				| <%= button_to "Delete", happening_path(happening), method: :delete, data: { confirm: 'Are you sure?' }  %>
         			  <% end %>
         			</h4>
     	      </li>

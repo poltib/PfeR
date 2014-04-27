@@ -1,6 +1,6 @@
 <section>
 <div class="container">
-<h2>Sign in</h2>
+<h2>Connexion</h2>
 <%= form_for(resource,:html => { :class => 'createForm' }, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 <ul>
   <li><%= f.label :email %><br />
@@ -13,7 +13,7 @@
     <li><%= f.check_box :remember_me %> <%= f.label :remember_me %></li>
   <% end -%>
 
-  <li><%= f.submit "Sign in" %></li>
+  <li><%= f.submit "Connexion" %></li>
 	<%= render "devise/shared/links" %>
 </ul>
 <% end %>

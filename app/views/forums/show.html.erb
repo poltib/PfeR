@@ -49,7 +49,7 @@
             <li><i class="icon-bookmarks"></i><% for category in @forum.categories do %>
               <%= link_to category.name, category %>
             <% end %></li>
-            <li><i class="icon-clock-1"></i><%= @forum.created_at %></li>
+            <li><i class="icon-clock-1"></i><%= I18n.l @forum.created_at %></li>
             <li><i class="icon-chat"></i><%= @forum.comments.count %> réponses</li>
           </ul>
       </header>

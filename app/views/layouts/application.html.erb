@@ -124,6 +124,81 @@
     <div class="<%= controller_name %> <%= action_name %>">
       <%= yield %>
     </div>
+    <div class="container">
+      <nav role="navigation" class='lower__navigation'>
+        <ul><!-- 
+          --><li>
+            <span><%= link_to "Evenements", happenings_path %></span>
+          </li><!-- 
+          --><li>
+            <span><%= link_to "Tracés", tracks_path %></span>
+          </li><!-- 
+          --><li>
+            <span><%= link_to "Forums", forums_path %></span>
+          </li><!-- 
+          --><li>
+           <span class="nav__actions">
+            <a href="#" ><i class="icon-users"></i></a>
+            <ul>
+              <li><%= link_to "Groups", groups_path %></li>
+              <li><%= link_to "Clubs", teams_path %></li>
+              <li><%= link_to "Utilisateurs", users_path %></li>
+            </ul>
+           </span>
+          </li><!--
+          --><% if user_signed_in? %><!--
+           --><li>
+           <span class="nav__actions">
+            <a href="#" ><i class="icon-plus"></i></a>
+            <ul>
+              <li><%= link_to "Créer evenement", new_happening_path %></li>
+              <li><%= link_to "Créer groupe", new_group_path %></li>
+              <li><%= link_to "Créer club", new_team_path %></li>
+              <li><%= link_to "Créer forum", new_forum_path %></li>
+              <li><%= link_to "Créer tracé", new_track_path %></li>
+            </ul>
+           </span>
+          </li><!--
+             --><li>
+              <span class="tooltip" data-tooltip="<%= current_user.username %>">
+                <%= link_to user_path(current_user) do %>
+                  <i class="icon-user"></i>
+                <% end %>
+              </span>
+            </li><!-- 
+            --><li>
+              <span class="tooltip" data-tooltip="Messages">
+                <%= link_to conversations_path do %>
+                  <i class="icon-chat"></i>
+                <% end %>
+              </span>
+            </li><!-- 
+            --><li>
+              <span class="tooltip" data-tooltip="Modifier profil">
+                <%= link_to edit_user_registration_path do %>
+                  <i class="icon-tools"></i>
+                <% end %>
+              </span>
+            </li><!--
+             --><li>
+              <span class="tooltip" data-tooltip="Déconnexion">
+                <%= button_to destroy_user_session_path, :method => :delete do %>
+                  <i class="icon-logout"></i>
+                <% end %>
+              </span>
+            </li><!--
+          --><% else %><!-- 
+             --><li>
+              <span class="tooltip"  data-tooltip="Connexion">
+                <%= link_to new_user_session_path do %>
+                  <i class="icon-login"></i>
+                <% end %>
+              </span>
+            </li><!--
+          --><% end %><!-- 
+         --></ul>     
+      </nav>
+    </div>
   </div>
   <footer role="footer">
     <div class="container">
