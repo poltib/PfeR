@@ -5,11 +5,16 @@ class HappeningsController < ApplicationController
   end
 
   def new
-  	@happening = Happening.new
+    @happening = Happening.new
   end
 
   def show
-  	@happening = Happening.find params[:id]
+    @happening = Happening.find params[:id]
+    tracks = @happening.tracks
+    @tracksJs = Array.new
+    for track in tracks do
+      @tracksJs.push([track.latitude.to_f, track.longitude.to_f, track.id, track.distance])
+    end
     respond_to do |format|
       format.html # show.html.erb
       for track in @happening.tracks do
@@ -21,8 +26,8 @@ class HappeningsController < ApplicationController
   end
 
   def create
-  	@happening = Happening.new(happening_params)
-  	@happening.user_id = current_user.id
+    @happening = Happening.new(happening_params)
+    @happening.user_id = current_user.id
     if @happening.save
       redirect_to happenings_path, :notice => 'Votre évènement à été ajouté avec succès.'
     else
@@ -60,11 +65,15 @@ class HappeningsController < ApplicationController
   end
 
   def confirm_destroy
-  	@happening = Happening.find(params[:id])
+    @happening = Happening.find(params[:id])
   end
 
   private
     def happening_params
       params.require(:happening).permit(:name, :event_type, :description, :address, :link, :date, :route, :city, :postalCode, :country)
+    end
+
+    def happening_search_params
+      params.require(:search).permit()
     end
 end

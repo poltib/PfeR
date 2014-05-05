@@ -20,7 +20,7 @@ class HappeningtracksController < ApplicationController
     @track.user_id = current_user.id
     @happening.tracks << @track
     if @track.save
-      redirect_to happening_path(@happening), :notice => 'Your track has been successfully created!'
+      redirect_to happening_path(@happening), :notice => 'Le tracé à été ajouté avec succès.'
     else
       render 'new'
     end
@@ -30,7 +30,7 @@ class HappeningtracksController < ApplicationController
     @forum = Forum.find(params[:forum_id])
     @comment = @forum.comments.find(params[:id])
     @comment.destroy
-    redirect_to forum_path(@forum), :notice => 'Your comment has been successfully deleted!'
+    redirect_to forum_path(@forum), :notice => 'Le tracé à été supprimé avec succès.'
   end
 
   private

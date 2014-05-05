@@ -12,10 +12,10 @@
       </div>
       <div class="social">
         <ul>
-          <% if (@happening.tracks.count==0) && user_signed_in? && @happening.user_id == current_user.id %>
+          <% if user_signed_in? && @happening.user_id == current_user.id %>
             <li class="socialNetwork">
-              <%= link_to(new_happening_track_path(@happening)) do %>
-                  <i class="icon-location"></i>
+              <%= link_to new_happening_track_path(@happening), :'data-tooltip' => 'Ajouter un tracé' do %>
+                <i class="icon-location"></i>
               <% end %>
             </li>
           <% end %>
@@ -134,8 +134,7 @@
   </div>
 </section>
 <% content_for :script do %>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <%= google_maps_api %>
-  <% for track in @happening.tracks %>
-    <%= track_id_to_js(track.id) if track %>
-  <% end %>
+  <%= tracks_to_js(@tracksJs) if @tracksJs %>
 <% end %>
