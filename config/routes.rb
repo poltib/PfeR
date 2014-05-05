@@ -23,6 +23,10 @@ Pfe::Application.routes.draw do
     resources :images, :only => [:new, :create, :destroy]
   end
 
+  authenticated :user do
+    root :to => "users#dashboard", as: :user_root
+  end
+
   root :to =>  'welcome#index'
 
   get 'conversations/new/:id' => 'conversations#new', as: :new_user_conversation
