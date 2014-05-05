@@ -59,38 +59,80 @@ h2 span{
     }
 }
 
+
+/////////----------------------------------------------------------------------------------
+/////////Calendar -------------------------------------------------------------------------
+/////////----------------------------------------------------------------------------------
+.calendar__header{
+    h3{
+        text-align: center;
+        margin: 1em 0;
+    }
+}
+
+.previous__month{
+    margin-right: 1em;
+}
+
+.next__month{
+    margin-left: 1em;
+}
+
+.previous__month, .next__month{
+    font-size: 0.8em;
+}
+
+.calendar .not-month{
+    background-color: transparent;
+}
+
+.calendar .today{
+    background-color: $blue;
+    color:white;
+}
+
+
+.calendar__events {
+    background-color: $greenOk;
+    height: 80px;
+    text-align: left;
+}
+
+.calendar td{
+    // &:hover{
+    //     background-color: white;    
+    // }
+    position:relative;
+    p{
+        position: absolute;
+        top:0.6em;
+        right: 0.6em;
+    }
+    border: 1px solid white;
+    height: 80px;
+}
+
 table{
-    width: 80%;
-    margin: 0 10%;
+    width: 100%;
 
     th{
         font-weight: bolder;
     }
 
     th, td{
-        width: 10%;
-        padding:1em;
-        text-align: center;
-        img{
-            max-width: 60%;
-        }
+        background-color: $sky;
+        width: 14.28571428571429%;
+        text-align: right;
     }
 
     tfoot tr{
         border:none;
     }
-
-    tr{
-        border-bottom: 1px solid $sky;
-    }
-
-    th:nth-child(1), td:nth-child(1), th:nth-child(3), td:nth-child(3){
-        width:20%;
-    }
-    th:nth-child(2), td:nth-child(2){
-        width:30%;
-    }
 }
+
+/////////----------------------------------------------------------------------------------
+/////////page division  -------------------------------------------------------------------
+/////////----------------------------------------------------------------------------------
 
 h2{
     text-align: center;
@@ -235,6 +277,15 @@ h2{
 
 #happening-map, #map_canvas{
     height: 25em;
+}
+
+#elevation_chart{
+    border-top: 3px solid $sky;
+}
+
+#elevation_chart svg g g g g rect { 
+    stroke-width:0px; 
+    fill:black; 
 }
 
 #showImageForm{

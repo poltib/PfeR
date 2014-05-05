@@ -1,0 +1,50 @@
+<nav role="navigation" class='lower__navigation'>
+  <h3 id="nav">Navigation</h3>
+  <ul>
+    <li>
+      <span><%= link_to "Evenements", happenings_path %></span>
+    </li>
+    <li>
+      <span><%= link_to "Tracés", tracks_path %></span>
+    </li>
+    <li>
+      <span><%= link_to "Forums", forums_path %></span>
+    </li>
+    <li>
+      <ul>
+        <li><%= link_to "Groups", groups_path %></li>
+        <li><%= link_to "Clubs", teams_path %></li>
+        <li><%= link_to "Utilisateurs", users_path %></li>
+      </ul>
+    </li>
+    <% if user_signed_in? %>
+      <li>
+        <ul>
+          <li><%= link_to "Créer evenement", new_happening_path %></li>
+          <li><%= link_to "Créer groupe", new_group_path %></li>
+          <li><%= link_to "Créer club", new_team_path %></li>
+          <li><%= link_to "Créer forum", new_forum_path %></li>
+          <li><%= link_to "Créer tracé", new_track_path %></li>
+        </ul>
+      </li>
+      <li>
+        <%= link_to current_user.username, user_path(current_user) %>
+      </li>
+      <li>
+        <%= link_to "Messages", conversations_path %>
+      </li>
+      <li>
+        <%= link_to "Modifier profil", edit_user_registration_path %>
+      </li>
+      <li>
+        <%= button_to destroy_user_session_path, :method => :delete do %>
+          Déconnexion
+        <% end %>
+      </li>
+    <% else %>
+      <li>
+        <%= link_to "Connexion", new_user_session_path %>
+      </li>
+    <% end %>
+  </ul>     
+</nav>
