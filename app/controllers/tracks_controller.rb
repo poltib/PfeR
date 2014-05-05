@@ -6,6 +6,11 @@ class TracksController < ApplicationController
   # GET /tracks.json
   def index
     @tracks = Track.all
+    @tracksJs = Array.new
+    @location = Array.new(request.location.latitude, request.location.longitude)
+    for track in @tracks do
+      @tracksJs.push([track.latitude.to_f, track.longitude.to_f, track.id, track.distance])
+    end
   end
 
   # GET /tracks/1

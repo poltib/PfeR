@@ -21,4 +21,16 @@ module TracksHelper
 			"var js_track_id = "+id.to_s;
 		end
 	end
+
+	def tracks_to_js(tracks)
+		content_tag(:script, :type => "text/javascript") do
+			"var js_tracks = "+tracks.to_s;
+		end
+	end
+
+	def location_to_js(location)
+		content_tag(:script, :type => "text/javascript") do
+			"var js_location = "+location.to_s;
+		end
+	end
 end
