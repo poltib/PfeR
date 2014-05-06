@@ -2,13 +2,13 @@
 	<% if @user %>
 		<%= f.hidden_field :recipients, :value =>  @user.username %>
 	<% else %>
-		<%= f.label :recipients %>
+		<%= f.label :recipients, "Destinataires" %>
   	<%= f.text_field :recipients %>
   <% end %>
-  <%= f.label :subject %>
+  <%= f.label :subject, "Sujet" %>
   <%= f.text_field :subject %>
-  <%= f.label :body %>
+  <%= f.label :body, "Message" %>
   <%= f.text_area :body %>
-  <%= f.button :envoyer %>
+  <%= f.button :Envoyer %>
 
 <% end %>

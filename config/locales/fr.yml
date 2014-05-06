@@ -219,3 +219,63 @@ fr:
   activerecord:
     errors:
       <<: *errors
+  activerecord:
+    models:
+      user:
+        one: Utilisateur
+        other: Utilisateurs
+      happening:
+        one: Évènement
+        other: Évènements
+      group:
+        one: Groupe
+        other: Groupes
+      track:
+        one: Tracé
+        other: Tracés
+      team:
+        one: Club
+        other: Clubs
+      comment:
+        one: Commentaire
+        other: Commentaires
+      event_type:
+        one: Type d'évènement
+        other: Types d'évènement
+      conversation:
+        one: Conversation
+        other: Conversations
+
+    attributes:
+      user:
+        email: "Adresse mail"
+        username: "Pseudo"
+        lastname: "Nom"
+        firstname: "Prénom"
+        description: "Description"
+        password: "Mot de passe"
+        password_confirmation: "Mot de passe confirmation"
+        current_password: "Mot de passe actuel"
+      happening:
+        name: "Nom"
+        description: "Description"
+        address: "Adresse"
+        city: "Ville"
+        postalCode: "Code postal"
+        country: "Pays"
+        link: "Lien"
+        date: "Date"
+      group:
+        name: "Nom"
+        description: "Description"
+      forum:
+        name: "Titre"
+        post: "forum"
+      track:
+        name: "Nom"
+        description: "Description"
+      conversation:
+        recipients: "Destinataires"
+        subject: "Sujet"
+        body: "Message"
+
