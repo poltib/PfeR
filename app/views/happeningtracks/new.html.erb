@@ -1,18 +1,31 @@
 <section>
-<div class="container">
-<h2>Create track</h2>
-<div class="map">
-	<div id="close">Close</div>
-	<div id="reset">Reset</div>
-	<div id="dist">dist</div>
-	<div id="full">full</div>
-	<div id="map_canvas"></div>
-	<div id="elevation_chart"></div>
-</div>
-<%= render 'form' %>
-</div>
+	<div class="container">
+		<h2 role="heading" aria-level="2" class="hidden">Content</h2>
+		<h2 role="heading" aria-level="2">Créer un tracer</h2>
+    <div class="left_column">
+    	<h3 role="heading" aria-level="3">Informations</h3>
+      <div id="mapErrors">
+		  	<p></p>
+			</div>
+			<%= render 'form' %>
+    </div>
+    <div class="primary_content">
+			<div class="map">
+				<div id="close">Close</div>
+				<div id="reset">Reset</div>
+				<div id="dist">dist</div>
+				<div id="full">full</div>
+				<div id="map_canvas"></div>
+				<div id="elevation_chart"></div>
+				<div id="directions-panel"></div>
+			</div>
+			<%= link_to 'Retour', tracks_path %>
+		</div>
+	</div>
+	<% content_for :script do %>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<%= google_maps_api %>
+		<%= location_to_js(@location) if @location %>
+	<% end %>
 </section>
-<% content_for :script do %>
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<%= google_maps_api %>
-<% end %>
+
