@@ -93,7 +93,7 @@ class TracksController < ApplicationController
       if user_location.latitude === 0.0 && user_location.longitude === 0.0
         @location = [50.633333, 5.566667]
       else
-        @location = Array.new(request.location.latitude, request.location.longitude)
+        @location = [user_location.latitude, user_location.longitude]
       end
     end
 
