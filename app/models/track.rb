@@ -1,6 +1,12 @@
 class Track < ActiveRecord::Base
 	before_save :parse_file
 	mount_uploader :route, RouteUploader
+  reverse_geocoded_by :latitude, :longitude do |obj,results|
+    if geo = results.first
+      obj.location = geo.postal_code
+    end
+  end
+  after_validation :reverse_geocode
 
   validates :name, :polyline, presence: true
 

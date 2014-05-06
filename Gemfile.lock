@@ -67,6 +67,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     foreigner (1.6.1)
       activerecord (>= 3.0.0)
+    geocoder (1.2.0)
     hashie (2.1.0)
     hike (1.2.3)
     i18n (0.6.9)
@@ -206,6 +207,7 @@ DEPENDENCIES
   dalli
   devise
   dotenv-rails
+  geocoder
   jbuilder (~> 1.2)
   jquery-rails
   mailboxer

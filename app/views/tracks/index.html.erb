@@ -1,15 +1,15 @@
 <section>
   <div class="container">
+    <h2 role="heading" aria-level="2">Tracés à proximité</h2>
+    <div class="map">
+      <div id="map_canvas"></div>
+      <div id="elevation_chart"></div>
+    </div>
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
     <div class="left_column">
       <h3 role="heading" aria-level="3">Rechercher un tracé</h3>
     </div>
     <div class="primary_content">
-      <h2 role="heading" class="eventTitle" aria-level="2">Tous les tracés</h2>
-      <div class="map">
-        <div id="map_canvas"></div>
-        <div id="elevation_chart"></div>
-      </div>
       <ul>
       <% @tracks.each do |track| %>
         <li class="content__thumbRace">
@@ -25,20 +25,24 @@
               </h4>
             </li>
             <li><%= track.favorites.count %> <i class="icon-heart"></i></li>
-            <li class="thumbRace__distances"><%= track.distance %>km</li>
+            <% if track.happening %>
+              <li><%= link_to track.happening.name, track.happening %></li>
+            <% end %>
+            <li class="thumbRace__distances"><%= track.distance.to_s.gsub(/^(\d+.)(\d{0,2})(\d+)/, '\1\2') %>km</li>
+            <li class="thumbRace__distances"><%= track.length %>km</li>
           </ul>
         </li>
       <% end %>
       </ul>
     </div>
   </div>
-  <%= @location %>
+  <%= @location.inspect %>
 </section>
 
 <% content_for :script do %>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <%= google_maps_api %>
   <%= tracks_to_js(@tracksJs) if @tracksJs %>
-
+  <%= location_to_js(@location) if @location %>
 <% end %>
 

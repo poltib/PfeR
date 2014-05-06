@@ -82,8 +82,7 @@
         <h3 role="heading" aria-level="3">Informations</h3>
         <ul>
           <li>Description : <%= @happening.description %></li>
-          <li>Adresse : <%= @happening.address %>, <%= @happening.postalCode %> <%= @happening.city %></li>
-          <li>Pays : <%= @happening.country %></li>
+          <li>Adresse : <%= @happening.address %></li>
           <li>lien : <a href"<%= @happening.link %>"><%= @happening.link %></a></li>
         </ul>
         <ul>
@@ -137,4 +136,5 @@
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <%= google_maps_api %>
   <%= tracks_to_js(@tracksJs) if @tracksJs %>
+  <%= location_to_js(@location) if @location %>
 <% end %>

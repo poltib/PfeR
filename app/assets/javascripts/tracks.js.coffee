@@ -1,8 +1,9 @@
 NUMBER_DOT_TWONUMBERS = /^(\d+.)(\d{0,2})(\d+)/
+COORD = /^(\d+.)(\d{0,13})(\d+)/
 poly = 1
 chart = 1
 elevations = 1
-SAMPLES = 200
+SAMPLES = 100
 mousemarker = null
 track_path = null
 newRoute = []
@@ -22,8 +23,7 @@ if google?
   elevationService = new google.maps.ElevationService()
   google.load("visualization", "1", {packages: ["corechart"]})
 
-gm_init = ->
-  gm_center = new google.maps.LatLng(50.633333, 5.566667)
+gm_init = (gm_center) ->
   gm_map_type = google.maps.MapTypeId.ROADMAP
   map_options = {zoom: 14, center: gm_center, panControl: false, backgroundColor: "rgba(0,0,0,0)", mapTypeControl: false, disableDoubleClickZoom: true, scrollwheel: false, draggableCursor: "crosshair"}
   new google.maps.Map(@map_canvas,map_options);
@@ -103,6 +103,14 @@ calc_bounds = (track_path) ->
   b.extend(gm_path.getAt(i[1]))
   b.extend(gm_path.getAt(i[2]))
 
+set_markers_zoom = (map, markers, center) ->
+  boundbox = new google.maps.LatLngBounds()
+  boundbox.extend(new google.maps.LatLng(center.position.lat(), center.position.lng()))
+  for marker in markers
+    boundbox.extend(new google.maps.LatLng(marker.position.lat(), marker.position.lng()))
+  map.setCenter(center.position)
+  map.fitBounds(boundbox)
+
 if google?
   google.maps.LatLng::kmTo = (a) ->
     e = Math 
@@ -138,6 +146,7 @@ add_chart_listener = (map) ->
         infowindow.setContent(this.contentStr)
         infowindow.open(map,mousemarker)
     else
+      mousemarker.setMap(map)
       contentStr = "elevation="+elevations[e.row].elevation+"m"
       mousemarker.contentStr = contentStr
       infowindow.setContent(contentStr)
@@ -151,16 +160,16 @@ $(".tracks.new, .happeningtracks.new").ready ->
   full = document.getElementById "full"
   divMap = document.getElementById "map_canvas"
   jsInput = document.getElementById("jsRoute").childNodes[0];
-  locationInput = document.getElementById("track_location");
-  distanceInput = document.getElementById("track_distance");
+  distanceInput = document.getElementById("track_length");
   longitudeInput = document.getElementById("track_longitude");
   latitudeInput = document.getElementById("track_latitude");
   mapErrors = document.getElementById("mapErrors");
   elevation_chart = document.getElementById('elevation_chart')
   upLi = document.getElementById("upRoute");
   chart = new google.visualization.ColumnChart(elevation_chart);
+  gm_center = new google.maps.LatLng(js_location[0], js_location[1])
   
-  map = gm_init()
+  map = gm_init(gm_center)
   upLi.remove();
   poly = poly_init(map)
   add_chart_listener(map)
@@ -177,9 +186,8 @@ $(".tracks.new, .happeningtracks.new").ready ->
     if path.getLength() == 0
       path.push(evt.latLng)
       poly.setPath(path)
-      getZipCode(evt.latLng)
-      latitudeInput.value = path.j[0].k
-      longitudeInput.value = path.j[0].A
+      latitudeInput.value = path.j[0].lat()
+      longitudeInput.value = path.j[0].lng()
     else
       growPath(path.getAt(path.getLength() - 1), evt.latLng)
 
@@ -197,17 +205,6 @@ $(".tracks.new, .happeningtracks.new").ready ->
   full.addEventListener 'click', (evt) ->
     divMap.style.width = '100%'
     divMap.style.z-index = '100000'
-
-  getZipCode = (latLng) ->
-    url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{ latLng.k },#{ latLng.A }&sensor=true&callback=zipmap"
-    $.ajax({
-      url: url,
-      dataType: 'json',
-      cache: true,
-    }).success (data) ->
-      for c in data.results[0].address_components
-        if c.types[0] == 'postal_code'
-          locationInput.value = c.short_name
 
   growPath = (origin, destination) ->
     gm_service.route({
@@ -233,13 +230,6 @@ $(".tracks.new, .happeningtracks.new").ready ->
     )
 
 $(".tracks.show").ready ->
-  if google?
-    chart = new google.visualization.ColumnChart(elevation_chart)
-    map = gm_init()
-    load_track(js_track_id,map)
-    add_chart_listener(map)
-
-$(".tracks.index, .happenings.show").ready ->
   $( '#many a.thumbnail' ).heplbox()
   image_form = document.getElementById("addImage")
   show_form_button = document.getElementById("showImageForm")
@@ -252,13 +242,36 @@ $(".tracks.index, .happenings.show").ready ->
         image_form.style.display = "none"
       else
         image_form.style.display = "block"
+  if google?
+    chart = new google.visualization.ColumnChart(elevation_chart)
+    map = gm_init()
+    load_track(js_track_id,map)
+    add_chart_listener(map)
 
+$(".tracks.index, .happenings.show").ready ->
+  $( '#many a.thumbnail' ).heplbox()
+  image_form = document.getElementById("addImage")
+  show_form_button = document.getElementById("showImageForm")
   tracks_markers = []
+  marker_center = null
+  gm_center = new google.maps.LatLng(js_location[0], js_location[1])
+
+  if image_form? 
+    image_form.style.display = "none"
+
+  if show_form_button
+    show_form_button.addEventListener 'click', (evt) ->
+      if image_form.style.display == "block"
+        image_form.style.display = "none"
+      else
+        image_form.style.display = "block"
+
   elevation_chart = document.getElementById('elevation_chart')
   # console.log(js_location)
   load_track_on_click = (evt) ->
     for track in js_tracks by 1
-      if track[0] == evt.latLng.k && track[1] == evt.latLng.A
+      # replace take the 13 decimals of a coord because creating a marker with coords change them
+      if track[0].toString().replace(COORD, '$1$2') == evt.latLng.lat().toString().replace(COORD, '$1$2') && track[1].toString().replace(COORD, '$1$2') == evt.latLng.lng().toString().replace(COORD, '$1$2')
         callback = (data) -> display_on_map(data,map)
         $.get '/tracks/'+track[2]+'.json', {}, callback, 'json'
         for track_marker in tracks_markers
@@ -266,7 +279,10 @@ $(".tracks.index, .happenings.show").ready ->
         # document.getElementById(track[2]).style.backgroundColor = 'silver'
         
         google.maps.event.addListener map, 'click', (evt) ->
+          set_markers_zoom(map, tracks_markers, marker_center)
           track_path.setMap(null)
+          if mousemarker? 
+            mousemarker.setMap(null)
           elevation_chart.style.display = 'none'
           # for li in document.getElementsByClassName('content__thumbRace')
           #   li.style.backgroundColor = 'transparent'
@@ -286,8 +302,14 @@ $(".tracks.index, .happenings.show").ready ->
   
   if google?
     chart = new google.visualization.ColumnChart(elevation_chart)
-    map = gm_init()
+    map = gm_init(gm_center)
     load_tracks_markers(js_tracks, map)
+    marker_center = new google.maps.Marker({
+      position: gm_center,
+      map: map,
+      icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+    })
+    set_markers_zoom(map, tracks_markers, marker_center)
     add_chart_listener(map)
 
 

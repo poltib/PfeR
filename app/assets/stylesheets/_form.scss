@@ -114,6 +114,12 @@ input:focus{
     @include shift(3);
 }
 
+.left_column .createForm{
+    margin:0;
+    float:none;
+    width: 100%;
+}
+
 .favorite .button_to{
     button{
         padding:0;

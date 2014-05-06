@@ -1,8 +1,10 @@
 class Happening < ActiveRecord::Base
 	include PublicActivity::Model
 	tracked
+  geocoded_by :address  
+  after_validation :geocode, :if => :address_changed? 
 
-  validates :name, :description, :address, :link, :date, :city, :postalCode, :country, presence: true
+  validates :name, :description, :address, :link, :date, presence: true
 
   has_many :tracks
   
