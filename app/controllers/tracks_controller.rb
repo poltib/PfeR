@@ -1,22 +1,21 @@
 class TracksController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
   before_action :set_track, only: [:show, :edit, :update, :destroy]
+  before_action :set_location, only: [:index, :new]
 
   # GET /tracks
   # GET /tracks.json
   def index
-    @tracks = Track.all
+    @tracks = Track.near(@location, 10, :units => :km)
     @tracksJs = Array.new
-    @location = Array.new(request.location.latitude, request.location.longitude)
     for track in @tracks do
-      @tracksJs.push([track.latitude.to_f, track.longitude.to_f, track.id, track.distance])
+      @tracksJs.push([track.latitude, track.longitude, track.id, track.length])
     end
   end
 
   # GET /tracks/1
   # GET /tracks/1.json
   def show
-    @track = Track.find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json {
@@ -46,7 +45,6 @@ class TracksController < ApplicationController
       end
       @track.polyline = Polylines::Encoder.encode_points(tmp_segment)
     end
-    @track.distance = track_params[:distance].to_f
     @track.user_id = current_user.id
     respond_to do |format|
       if @track.save
@@ -89,8 +87,17 @@ class TracksController < ApplicationController
       @track = Track.find(params[:id])
     end
 
+    def set_location
+      user_location = request.location
+      if user_location.latitude === 0.0 && user_location.longitude === 0.0
+        @location = [50.633333, 5.566667]
+      else
+        @location = Array.new(request.location.latitude, request.location.longitude)
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def track_params
-      params.require(:track).permit(:name, :longitude, :latitude, :description, :polyline, :location, :distance, :route)
+      params.require(:track).permit(:name, :longitude, :latitude, :description, :polyline, :location, :length, :route)
     end
 end

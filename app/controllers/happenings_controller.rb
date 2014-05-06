@@ -10,10 +10,11 @@ class HappeningsController < ApplicationController
 
   def show
     @happening = Happening.find params[:id]
+    @location = [@happening.latitude, @happening.longitude]
     tracks = @happening.tracks
     @tracksJs = Array.new
     for track in tracks do
-      @tracksJs.push([track.latitude.to_f, track.longitude.to_f, track.id, track.distance])
+      @tracksJs.push([track.latitude, track.longitude, track.id, track.length])
     end
     respond_to do |format|
       format.html # show.html.erb
@@ -70,7 +71,7 @@ class HappeningsController < ApplicationController
 
   private
     def happening_params
-      params.require(:happening).permit(:name, :event_type, :description, :address, :link, :date, :route, :city, :postalCode, :country)
+      params.require(:happening).permit(:name, :event_type, :description, :address, :link, :date, :route)
     end
 
     def happening_search_params

@@ -1,8 +1,11 @@
 class HappeningtracksController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_track, only: [:destroy]
+  before_action :set_location, only: [:index, :new]
 
   def new
     @happening = Happening.find(params[:happening_id])
+    @location = [@happening.latitude, @happening.longitude]
     @track = Track.new
   end
 
@@ -27,14 +30,29 @@ class HappeningtracksController < ApplicationController
   end
 
   def destroy
-    @forum = Forum.find(params[:forum_id])
-    @comment = @forum.comments.find(params[:id])
-    @comment.destroy
-    redirect_to forum_path(@forum), :notice => 'Le tracé à été supprimé avec succès.'
+    @track.destroy
+    respond_to do |format|
+      format.html { redirect_to tracks_url, notice: 'Le tracé à été supprimé avec succès.' }
+      format.json { head :no_content }
+    end
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_track
+      @track = Track.find(params[:id])
+    end
+
+    def set_location
+      user_location = request.location
+      if user_location.latitude === 0.0 && user_location.longitude === 0.0
+        @location = [50.633333, 5.566667]
+      else
+        @location = Array.new(request.location.latitude, request.location.longitude)
+      end
+    end
+
     def track_params
-      params.require(:track).permit(:name, :polyline, :description, :longitude, :latitude, :location, :distance, :route)
+      params.require(:track).permit(:name, :polyline, :description, :longitude, :latitude, :location, :length, :route)
     end
 end
