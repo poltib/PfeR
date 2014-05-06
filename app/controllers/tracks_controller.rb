@@ -6,6 +6,7 @@ class TracksController < ApplicationController
   # GET /tracks
   # GET /tracks.json
   def index
+    @user = request.location
     @tracks = Track.near(@location, 10, :units => :km)
     @tracksJs = Array.new
     for track in @tracks do
