@@ -260,9 +260,6 @@ fr:
         name: "Nom"
         description: "Description"
         address: "Adresse"
-        city: "Ville"
-        postalCode: "Code postal"
-        country: "Pays"
         link: "Lien"
         date: "Date"
       group:
