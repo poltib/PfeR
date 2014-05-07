@@ -8,6 +8,11 @@
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
     <div class="left_column">
       <h3 role="heading" aria-level="3">Rechercher un tracé</h3>
+      <%= form_tag(tracks_path, :method => "get", id: "search-form") do %>
+        <%= label_tag :search, "Adresse" %>
+        <%= text_field_tag :search, params[:search], placeholder: "ex: Liège, Belgique" %>
+        <%= submit_tag "Rechercher", :name => nil %>
+      <% end %>
     </div>
     <div class="primary_content">
       <ul>

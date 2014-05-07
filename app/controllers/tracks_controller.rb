@@ -89,11 +89,15 @@ class TracksController < ApplicationController
     end
 
     def set_location
-      user_location = request.location
-      if user_location.latitude === 0.0 && user_location.longitude === 0.0
-        @location = [50.633333, 5.566667]
+      if params[:search]
+        @location = Geocoder.coordinates(params[:search])
       else
-        @location = [user_location.latitude, user_location.longitude]
+        user_location = request.location
+        if user_location.latitude === 0.0 && user_location.longitude === 0.0
+          @location = [50.633333, 5.566667]
+        else
+          @location = [user_location.latitude, user_location.longitude]
+        end
       end
     end
 
