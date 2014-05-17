@@ -1,9 +1,14 @@
 <section>
 	<div class="container">
 		<h2 role="heading" aria-level="2" class="hidden">Content</h2>
-		<h2 role="heading" aria-level="2">Créer un tracer</h2>
+		<h2 role="heading" aria-level="2">Créer un tracer
+		<% if @happening %>
+			sur <%= link_to @happening.name, @happening %>
+		<% end %>
+		</h2>
     <div class="left_column">
     	<h3 role="heading" aria-level="3">Informations</h3>
+    	<button id="hideMap">Créer avec un fichier</button>
       <div id="mapErrors">
 		  	<p></p>
 			</div>
@@ -11,12 +16,14 @@
     </div>
     <div class="primary_content">
 			<div class="map">
-				<div id="close">Close</div>
-				<div id="reset">Reset</div>
-				<div id="dist">dist</div>
-				<div id="full">full</div>
 				<div id="map_canvas"></div>
-				<div id="elevation_chart"></div>
+				<div id="aside">
+					<div id="dist">dist</div>
+					<div id="close">Close</div>
+					<div id="reset">Reset</div>
+					<div id="full">full</div>
+					<div id="elevation_chart"></div>
+				</div>
 				<div id="directions-panel"></div>
 			</div>
 			<%= link_to 'Retour', tracks_path %>

@@ -26,6 +26,7 @@ html, body{
 }
 
 .container{
+    padding: 0 0.5em;
     @include outer-container;
     position:relative;
     font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;

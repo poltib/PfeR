@@ -16,12 +16,46 @@
 /////////----------------------------------------------------------------------------------
 /////////Gmap  ----------------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
+.tracks.index{
+    @include media($mobile){
+        .map{
+            display: none;
+        }
+        .left_column{
+            display: block;
+        }   
+    }
+
+    .left_column{
+        display: none;
+    }
+}
+
+.map{
+    border: 3px solid $sky;
+    position:relative;
+    overflow:hidden;
+}
+
+#map_canvas{
+    height: 30em;
+}
+
+#aside{
+    background-color: rgba(255, 255, 255,0.8);
+    position:absolute;
+    top:0;
+    right:0;
+}
+
+#elevation_chart svg g g g g rect { 
+    stroke-width:0px; 
+    fill:white; 
+}
+
 #reset{
     display: inline-block;
-    position: absolute;
-    right: 10px;
     background-color: $sky;
-    z-index: 10;
     padding: 0.4em;
     margin-right: 0.5em;
     font-size: 1.3em;
@@ -33,12 +67,10 @@
 
 #close{
     @extend #reset;
-    right: 95px;
 }
 
 #dist{
     @extend #reset;
-    right: 180px;
     &:hover{
         cursor:default;
         background-color: $sky;
@@ -47,7 +79,7 @@
 
 #full{
     @extend #reset;
-    bottom:0;
+    margin-right: 0;
 }
 
 
@@ -93,14 +125,14 @@ h2 span{
 
 
 .calendar__events {
-    background-color: $greenOk;
+    padding:0.6em;
+    background-color: $beige;
     height: 80px;
-    text-align: left;
 }
 
 .calendar td{
     // &:hover{
-    //     background-color: white;    
+    //     background-color: $blueLight;    
     // }
     position:relative;
     p{
@@ -122,7 +154,6 @@ table{
     th, td{
         background-color: $sky;
         width: 14.28571428571429%;
-        text-align: right;
     }
 
     tfoot tr{
@@ -264,10 +295,10 @@ h2{
 
     @include media($mobile){
         @include span-columns(4);
-        p{
-            @include span-columns(2);
-            @include shift(1);
-        }
+        // p{
+        //     @include span-columns(2);
+        //     @include shift(1);
+        // }
     }
 }
 
@@ -275,32 +306,52 @@ h2{
 /////////Show race  -----------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 
-#happening-map, #map_canvas{
-    height: 25em;
-}
-
-#elevation_chart{
-    border-top: 3px solid $sky;
-}
-
-#elevation_chart svg g g g g rect { 
-    stroke-width:0px; 
-    fill:black; 
-}
-
 #showImageForm{
-    @include tooltip(s, rgba(0,0,0,0.8), 2px);
+    padding: 0.5em;
+    display: inline-block;
+    &:hover{
+        cursor: pointer;
+        color: black;
+    }
 }
 
-.map{
-    border: 3px solid $sky;
-    position:relative;
+.primary_content h3{
+    margin: 1em 0 0.5em;
+}
+
+.happening__info{
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.raceTitle{
+    margin-bottom: 0.7em;
+    border-bottom: 1px solid $sky;
+    ul{
+        float: right;
+        text-align: left;
+        li{
+            display: inline-block;
+        }
+    }
+    h2{
+        border: none;
+        padding:0;
+        margin:0;
+        text-align: left;
+        float: left;
+    }
+    &:after{
+        content: "";
+        display: block;
+        clear: both;
+    }
 }
 
 .social{
+    padding-bottom: 0.15em;
     li{
         display: inline-block;
-        padding: 0.5em 1em;
         i{
             font-size: 1.4em;
         }
@@ -312,8 +363,8 @@ h2{
 
 .socialNetwork{
     a{
-        padding-bottom: 0.3em;
-        @include tooltip(n, rgba(0,0,0,0.8), 2px);
+        padding: 0.3em;
+        @include tooltip(s, rgba(0,0,0,0.8), 2px);
     }
 }
 
@@ -325,7 +376,7 @@ h2{
 
 .raceTitle{
     text-align: center;
-    padding:0.3em 0.6em 0;
+    padding:0.3em 0 0.6em;
 }
 
 .informations{
@@ -441,11 +492,23 @@ h2{
 
 
 /////////----------------------------------------------------------------------------------
+/////////Show group  ----------------------------------------------------------------------
+/////////----------------------------------------------------------------------------------
+
+.group__header{
+    border-bottom: 1px solid $sky;
+    padding-bottom: 0.9em;
+    margin-bottom: 0.5em;
+    h3{
+        border:none;
+    }
+}
+
+/////////----------------------------------------------------------------------------------
 /////////Forums  --------------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 
 .left_column{
-    border-right: 1px solid $sky;
     @include span-columns(3);
 }
 
@@ -478,7 +541,7 @@ h2{
     }
 }
 
-.actif{
+.active{
     margin-left: -3px;
     border-left: 3px solid $sky;
 }
@@ -524,6 +587,7 @@ h2{
 
 .shareForum{
     li{
+        border-bottom:1px solid $sky;
         display: block;
         width: 50%;
         float: right; 
@@ -575,7 +639,6 @@ h2{
             border:none;
         }
         text-align: center;
-        border-bottom:1px solid $sky;
     }
 }
 
@@ -607,6 +670,16 @@ h2{
     }
 }
 
+.distances{
+    background-color: transparent;
+    border:none;
+    padding:0;
+    .tooltip{
+        padding-top: 0.3em;
+        @include tooltip(s, rgba(0,0,0,0.8), 2px);
+    }
+}
+
 .comment__body{
     border-left: 1px solid $sky;
     padding:0.5em 2em;
@@ -614,7 +687,7 @@ h2{
     @include omega;
 
     .button_to button{
-        @extend .distance;
+        @extend .distances;
     }
 
     h4{
@@ -644,213 +717,3 @@ h2{
 .delete{
     display: inline-block;
 }
-
-/////////----------------------------------------------------------------------------------
-/////////Media    -------------------------------------------------------------------------
-/////////----------------------------------------------------------------------------------
-
-// @media screen and (min-width: 20em){
-
-
-//     aside{
-//         padding:1em;
-//     }
-
-//     .contact{
-//         margin:0;
-//     }
-//     .product{
-//         padding:1em;
-//         .item{
-//             width:74%;
-//             margin:0 auto 3em;
-//             float:none;
-//             padding:4%;
-//         }
-//         section{
-//             padding-bottom: 0.1em;
-//         }
-//     }
-
-//     .swipe{
-//         display:none;
-//     }
-
-
-//     .header__logo, .user, .utils{
-//         width:100%;
-//         float:none;
-//     }
-
-//     div.user form{
-//         width:100%;
-//         padding:0;
-//         left:0;
-//         position:relative;
-//         z-index: 100;
-//     }
-
-//     nav{
-//         display:none;
-//     }
-//     .minWidth{
-//         display:block;
-//     }
-// }
-
-// @media screen and (min-width: 25em){
-
-//     .header__logo, .user{
-//         width:49%;
-//         float:left;
-//     }
-
-//     .user{
-//         margin-left:2%;
-//         h3{
-//         }
-//     }
-
-//     .product{
-//         .item{
-//             width:47%;
-//             padding:1%;
-//             float:left;
-//         }
-//         .item:nth-child(odd){
-//             margin-right: 2%;
-//         }
-//     }
-
-// }
-
-
-// @media screen and (min-width: 30em){
-//     .utils{
-//         width:49%;
-//         float:left; 
-//     }
-
-//     .header__logo{
-//         width:100%;
-//     }
-
-//     .user{
-//         margin-left:0;
-//         margin-right:2%;
-//     }
-        
-//     .minWidth{
-//         .cat{
-//             width:49%;
-//             float:left;
-//         }
-//         .cat:nth-child(odd){
-//             margin-right: 2%;
-//         }
-//     }
-//     .minWidth:after{
-//         content:"";
-//         display:block;
-//         clear:both;
-//     }
-// }
-
-
-
-
-// @media screen and (min-width: 43em){
-
-//     .contact{
-//         margin:0 10%;
-//     }
-
-//     .footDiv{
-//         width:33.3333333%;
-//         float:left;
-//     }
-
-
-//     aside{
-//         padding:0;
-//     }
-
-//     .product{
-//         .item{
-//             width:22%;
-//             margin-right: 1%;
-//             padding:1%;
-//             float:left;
-//         }
-//         .item:nth-child(odd){
-//             margin-right: 1%;
-//         }
-//     }
-    
-// }
-
-
-// @media screen and (min-width: 52.5em){
-//     nav{
-//         display:block;
-//     }
-
-//     .login, .singin{
-//         width:50%;
-//         float:left;
-//         margin-bottom: 1em;
-//     }
-
-//     .user h3{
-//         width: 50%;
-//         float:left;
-//     }
-
-//     .swipe{
-//         display:block;
-//     }
-//     .minWidth{
-//         display:none;
-//     }
-
-//     aside{
-//         width:27%;
-//         margin: 1.5%;
-//         float:right;
-//     }
-
-//     .product{
-//         float:left;
-//         width:67%;
-//         padding:1.5%;  
-//     }
-    
-// }
-
-// @media screen and (min-width:60em){
-//     .header__logo{
-//         width:20%;
-//         float:left;
-//     }
-
-//     .utils{
-//         width:30%;
-//         float:left;
-//         margin-top: 0.5em;
-//     }
-
-//     .user{
-//         width: 35%;
-//         float: left;
-//         margin-left:0;
-//         margin-right: 2%;
-//         h3{
-//             padding-top:0.5em;
-//         }
-//     }
-// }
-// @media screen and (min-width: 80em){
-//     div.container{
-//         width:75em;
-//     }
-// }

@@ -18,6 +18,10 @@
     display: none;
 }
 
+#actuRadius{
+    font-size: 1.6em;
+}
+
 form{
     fieldset{
         padding:0;
@@ -37,6 +41,15 @@ form{
             width: auto;
             margin-right: 0.4em;
         }
+    }
+
+    [type="range"]{
+        width: auto;
+        margin: 0.7em 1em 0;
+        display: inline-block;
+    }
+
+    [type="range"]:focus{
     }
 
 
@@ -74,7 +87,6 @@ form{
     width: 100%;
     font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
     font-weight: lighter;
-    border-radius: 3px;
 }
 
 
@@ -101,6 +113,14 @@ input:focus{
     border: 1px solid #FF7C00;
 }
 
+
+select{
+    width:100%;
+    border-radius: 0;
+    padding: 0.4em;
+    margin-bottom: 0.3em;
+}
+
 .field_with_errors{
     width: 100%;
     input, textarea{
@@ -121,6 +141,8 @@ input:focus{
 }
 
 .favorite .button_to{
+    margin:0;
+    padding:0;
     button{
         padding:0;
         border:none;
@@ -129,9 +151,12 @@ input:focus{
             color:black;
             background-color: transparent;
         }
+        span{
+            padding:0.5em;
+            display: inline-block;
+        }
         span:hover{
-            padding-bottom: 0.3em;
-            @include tooltip(n, rgba(0,0,0,0.8), 2px);
+            @include tooltip(s, rgba(0,0,0,0.8), 2px);
         }
     }
 }
@@ -162,5 +187,4 @@ input:focus{
             border-color: $blue;
         }
     }
-
 }

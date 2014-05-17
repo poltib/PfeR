@@ -1,44 +1,30 @@
 <section>
   <div class="container">
-    <h2 role="heading" aria-level="2">Tracés à proximité</h2>
+    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
+    <h2 role="heading" aria-level="2"><%= @tracks.count %> tracés à proximité</h2>
+    <span><%= link_to "Ajouter nouveau tracé", new_track_path %></span>
     <div class="map">
       <div id="map_canvas"></div>
-      <div id="elevation_chart"></div>
+      <div id="aside">
+        <div id="tracks">
+          <%= render 'tracks' %>
+        </div>
+        <div id="elevation_chart"></div>
+      </div>
     </div>
-    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
     <div class="left_column">
       <h3 role="heading" aria-level="3">Rechercher un tracé</h3>
       <%= form_tag(tracks_path, :method => "get", id: "search-form") do %>
         <%= label_tag :search, "Adresse" %>
         <%= text_field_tag :search, params[:search], placeholder: "ex: Liège, Belgique" %>
+        <div class="radiusRange">
+          <%= label_tag :radius, "Rayon" %>
+          <input type="range" name="radius" id="radius" min="1" max="50" value="20"><output for="radius" id="actuRadius">20</output><span>km</span></div>
         <%= submit_tag "Rechercher", :name => nil %>
       <% end %>
     </div>
     <div class="primary_content">
-      <ul>
-      <% @tracks.each do |track| %>
-        <li class="content__thumbRace">
-          <ul class="thumbRace__list">
-            <li class="thumbRace__location"><%= track.location %></li>
-            <li class="thumbRace__name">
-              <h4 role="heading" aria-level="4">
-                <%= link_to track.name, track_path(track) %>
-                <% if user_signed_in? && track.user_id == current_user.id %>
-                | <%= link_to "Edit", edit_track_path(track) %>
-                | <%= button_to "Delete", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
-                <% end %>
-              </h4>
-            </li>
-            <li><%= track.favorites.count %> <i class="icon-heart"></i></li>
-            <% if track.happening %>
-              <li><%= link_to track.happening.name, track.happening %></li>
-            <% end %>
-            <li class="thumbRace__distances"><%= track.distance.to_s.gsub(/^(\d+.)(\d{0,2})(\d+)/, '\1\2') %>km</li>
-            <li class="thumbRace__distances"><%= track.length %>km</li>
-          </ul>
-        </li>
-      <% end %>
-      </ul>
+
     </div>
   </div>
 </section>
@@ -46,7 +32,5 @@
 <% content_for :script do %>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <%= google_maps_api %>
-  <%= tracks_to_js(@tracksJs) if @tracksJs %>
-  <%= location_to_js(@location) if @location %>
 <% end %>
 
