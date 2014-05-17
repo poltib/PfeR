@@ -13,14 +13,24 @@
   	<ul>
 	<li><%= f.label :name %>
 	<%= f.text_field :name %></li>
-  <li>
-    <% Category.all.each do |category| %>
-   <div>
-     <%= check_box_tag "forum[category_ids][]", category.id, @forum.categories.include?(category) %>
-     <%= category.name %>
-   </div>
-   <% end %>
-  </li>
+  <% if params[:track_id] %>
+    <%= f.hidden_field :forumable_id, :value => params[:track_id] %>
+    <%= hidden_field_tag "forum[category_ids][]", 4 %>
+    <%= f.hidden_field :forumable_type, :value => "Track" %>
+  <% elsif params[:happening_id] %>
+    <%= f.hidden_field :forumable_id, :value => params[:happening_id] %>
+    <%= hidden_field_tag "forum[category_ids][]", 2 %>
+    <%= f.hidden_field :forumable_type, :value => "Happening" %>
+  <% else %>
+    <li>
+      <% Category.all.each do |category| %>
+     <div>
+       <%= check_box_tag "forum[category_ids][]", category.id, @forum.categories.include?(category) %>
+       <%= category.name %>
+     </div>
+     <% end %>
+    </li>
+  <% end %>
 
 	<li><%= f.label :post %>
 	<%= f.text_area :post %></li>

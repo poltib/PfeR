@@ -1,8 +1,17 @@
 class ForumsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
   def index
-    @forums = Forum.all.order("created_at desc")
     @categories = Category.all
+    if params[:category_id]
+      if Category.exists?(:id => params[:category_id])
+        @forums = Category.find(params[:category_id]).forums.order('updated_at')
+        @active = params[:category_id].to_i
+      else
+        redirect_to forums_path, :notice => 'Cette catégorie n\'existe pas.'
+      end
+    else
+      @forums = Forum.all.order('created_at desc')
+    end
   end
 
   def new
@@ -40,12 +49,12 @@ class ForumsController < ApplicationController
 
   def destroy
     Forum.destroy params[:id]
-    redirect_to :back, :notice => 'Votre forum à été supprimé avec succès.'
+    redirect_to forums_path, :notice => 'Votre forum à été supprimé avec succès.'
   end
 
   private
   
-  def forum_params
-    params.require(:forum).permit(:name, :post, :category_ids => [])
-  end
+    def forum_params
+      params.require(:forum).permit(:name, :post, :forumable_id, :forumable_type, :category_ids => [])
+    end
 end
