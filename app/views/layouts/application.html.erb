@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,17 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Site sur la course à pied">
-  <title>Pfe</title>
-  <!-- <link rel="stylesheet" href="/assets/fontello.css?body=1 "> -->
-  <!-- <link rel="stylesheet" href="/assets/animation.css?body=1 "> -->
+  <title><%= yield :title %></title>
   <!--[if IE 7]>
-    <link rel="stylesheet" href="/assets/fontello-ie7.css?body=1 ">
+    <link rel="stylesheet" href="/stylesheets/fontello-ie7.css">
   <![endif]-->
-  <!-- <link rel="stylesheet" href="/assets/screen.css?body=1 "> -->
+
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-    <script src="/assets/html5shiv.min.js?body=1"></script>
-    <script src="/assets/hespond.min.js?body=1 "></script>
+    <script src="/javascripts/html5shiv.min.js"></script>
+    <script src="/javascripts/hespond.min.js "></script>
   <![endif]-->
   <%= stylesheet_link_tag "fontello", media: "all" %>
   <%= stylesheet_link_tag "animation", media: "all" %>
@@ -47,8 +44,12 @@
       <%= yield :head %>
     </header>
     <div class="container">
-      <p id="notice"><%= notice %></p>
-      <p id="alert"><%= alert %></p>
+      <% if notice %>
+        <p id="notice"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p id="alert"><%= alert %></p>
+      <% end %>
     </div>
     <div class="<%= controller_name %> <%= action_name %>">
       <%= yield %>

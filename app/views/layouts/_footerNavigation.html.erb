@@ -1,5 +1,5 @@
 <nav role="navigation" class='lower__navigation'>
-  <h3 id="nav">Navigation</h3>
+  <h2 role="header" aria-level="2" id="nav">Navigation</h2>
   <ul>
     <li>
       <span><%= link_to "Évènements", happenings_path %></span>
@@ -12,7 +12,7 @@
     </li>
     <li>
       <ul>
-        <li><%= link_to "Groups", groups_path %></li>
+        <li><%= link_to "Groupes", groups_path %></li>
         <li><%= link_to "Clubs", teams_path %></li>
         <li><%= link_to "Utilisateurs", users_path %></li>
       </ul>
@@ -20,7 +20,7 @@
     <% if user_signed_in? %>
       <li>
         <ul>
-          <li><%= link_to "Créer evenement", new_happening_path %></li>
+          <li><%= link_to "Créer évènement", new_happening_path %></li>
           <li><%= link_to "Créer groupe", new_group_path %></li>
           <li><%= link_to "Créer club", new_team_path %></li>
           <li><%= link_to "Créer forum", new_forum_path %></li>

@@ -5,10 +5,58 @@
 /////////Navigation  ----------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 
+.subNav{
+    .button_to{
+        [type="submit"]{
+            padding:0;
+            color:$font;
+            background-color: transparent;
+            border:none;
+            &:hover{
+                color:black;
+            }
+        }
+    }
+    a{
+        display: inline-block;
+        border: none;
+        padding: 0.5em;
+        color:$font;
+        &:hover{
+            color:black;
+        }
+    }
+}
+
+
 .lower__navigation{
     display: none;
     @include media($tablet){
         display: block;
+        a, form{
+            button{
+                width: 100%;
+            }
+            @include span-columns(4);
+            @include shift(2);
+            margin-bottom: 0.6em;
+        }
+    }
+    @include media($mobile){
+        a, form{
+            @include span-columns(4 of 4);
+            @include shift(0);
+        }
+    }
+    ul li{
+        margin-bottom: 0.5em;
+    }
+    a{
+        padding: 0.5em;
+        background-color: $sky;
+        display: inline-block;
+        border:none;
+        text-align: center;
     }
 }
 
@@ -102,30 +150,3 @@
         }
     }
 }
-
-select{
-        width:100%;
-        font-size: 1.3em;
-        font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
-        font-weight: lighter;
-        background-color: $blue;
-        color:$sky;
-        border-radius: 0;
-        border:none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        text-indent: 0.01px;
-        text-overflow: '';
-        padding: 0.4em;
-        margin-bottom: 0.3em;
-        background: url(../img/arrow-down3.png) no-repeat right $blue;
-    }
-
-    select:hover{
-        cursor:pointer;
-        background-color: $orange;
-    }
-
-    select:focus{
-        outline-color: $orange;
-    }
