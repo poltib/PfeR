@@ -8,14 +8,6 @@ mousemarker = null
 track_path = null
 newRoute = []
 elevationReqActive = false
-alert = document.getElementById("alert")
-notice = document.getElementById("notice")
-
-if !alert.innerText
-  alert.remove();
-
-if !notice.innerText
-  notice.remove();
 
 if google?
   path = new google.maps.MVCArray()
@@ -25,7 +17,14 @@ if google?
 
 gm_init = (gm_center) ->
   gm_map_type = google.maps.MapTypeId.ROADMAP
-  map_options = {zoom: 14, center: gm_center, panControl: false, backgroundColor: "rgba(0,0,0,0)", mapTypeControl: false, disableDoubleClickZoom: true, scrollwheel: false, draggableCursor: "crosshair"}
+  map_options = {
+    zoom: 14,
+    center: gm_center,
+    panControl: false,
+    backgroundColor: "rgba(0,0,0,0)",
+    mapTypeControl: false,
+    scrollwheel: false
+  }
   new google.maps.Map(@map_canvas,map_options);
 
 poly_init = (map) ->
@@ -68,16 +67,18 @@ plotElevation = (results, status) ->
   # Draw the chart using the data within its DIV.
   elevation_chart.style.display = 'block'
   options = {
-    width: '100%',
-    height: 150,
-    bar: {groupWidth: "95%"},
+    height: 100,
+    width: 300,
+    dataOpacity: 0.8,
+    bar: {groupWidth: "100%"},
     legend: { position: "none" },
     titleY: 'Elevation (m)',
+    fill: '#00AA00',
     vAxis: {minValue: 0},
-    colors: ["#C9CFF5"],
+    colors: ["#3498db"],
+    backgroundColor: 'transparent',
     focusBorderColor: '#00AA00',
     tooltip: { trigger: 'none' },
-    bar: { groupWidth: '100%' }
   }
   chart.draw(data, options)
   undefined
@@ -91,7 +92,9 @@ display_on_map = (data,map) ->
   # icon_set = { path: google.maps.SymbolPath.FORWARD_OPEN_ARROW }
   path_options = { path: decoded_path, strokeColor: "black",strokeOpacity: 0.8,map: map, strokeWeight: 5}
   track_path = new google.maps.Polyline(path_options)
+  # document.getElementById('map_canvas').style.height = '80%'
   drawPath(decoded_path)
+  console.log(track_path.inKm())
   map.fitBounds(calc_bounds(track_path));
 
 calc_bounds = (track_path) ->
@@ -152,7 +155,7 @@ add_chart_listener = (map) ->
       infowindow.setContent(contentStr)
       mousemarker.setPosition(elevations[e.row].location)
 
-$(".tracks.new, .happeningtracks.new").ready ->
+$(".tracks.new").ready ->
   dist = document.getElementById "dist"
   reset = document.getElementById "reset"
   close = document.getElementById "close"
@@ -168,14 +171,19 @@ $(".tracks.new, .happeningtracks.new").ready ->
   upLi = document.getElementById("upRoute");
   chart = new google.visualization.ColumnChart(elevation_chart);
   gm_center = new google.maps.LatLng(js_location[0], js_location[1])
+  hide_button = document.getElementById('hideMap')
   
   map = gm_init(gm_center)
-  upLi.remove();
+  upLi.style.display = 'none'
   poly = poly_init(map)
   add_chart_listener(map)
 
+  hide_button.addEventListener 'click', (evt)->
+    upLi.style.display = 'block'
+    document.getElementsByClassName('map')[0].style.display = 'none'
+
   $('.createForm').submit ->
-    if !!jsInput.value
+    if !!jsInput.value || upLi.style.display == 'block'
       true
     else
       mapErrors.style.display = 'block'
@@ -194,7 +202,9 @@ $(".tracks.new, .happeningtracks.new").ready ->
   reset.addEventListener 'click', (evt) ->
     path.clear();
     elevation_chart.style.display = 'none'
-    dist.childNodes[0].nodeValue = 'dist'
+    dist.childNodes[0].nodeValue = '0km'
+    distanceInput.value = ''
+    jsInput.value = ''
     if mousemarker != null
       mousemarker.setMap(null)
 
@@ -255,6 +265,7 @@ $(".tracks.index, .happenings.show").ready ->
   tracks_markers = []
   marker_center = null
   gm_center = new google.maps.LatLng(js_location[0], js_location[1])
+  radius = document.getElementById("radius")
 
   if image_form? 
     image_form.style.display = "none"
@@ -276,7 +287,8 @@ $(".tracks.index, .happenings.show").ready ->
         $.get '/tracks/'+track[2]+'.json', {}, callback, 'json'
         for track_marker in tracks_markers
           track_marker.setMap(null)
-        # document.getElementById(track[2]).style.backgroundColor = 'silver'
+        track_li = document.getElementById(track[2])
+        track_li.style.display = 'block' if track_li
         
         google.maps.event.addListener map, 'click', (evt) ->
           set_markers_zoom(map, tracks_markers, marker_center)
@@ -284,10 +296,20 @@ $(".tracks.index, .happenings.show").ready ->
           if mousemarker? 
             mousemarker.setMap(null)
           elevation_chart.style.display = 'none'
-          # for li in document.getElementsByClassName('content__thumbRace')
-          #   li.style.backgroundColor = 'transparent'
+          track_li.style.display = 'none' if track_li
           for track_marker in tracks_markers
             track_marker.setMap(map)
+
+  $("#search-form").submit ->
+    $.get(this.action, $(this).serialize(), (data) ->
+      gm_center = new google.maps.LatLng(js_location[0], js_location[1])
+      load_map()
+    , "script")
+    return false
+
+  if radius?
+    radius.onchange = ()->
+      document.getElementById('actuRadius').innerHTML = radius.value
 
   load_tracks_markers = (tracks, map) ->
     for track in tracks by 1
@@ -300,16 +322,57 @@ $(".tracks.index, .happenings.show").ready ->
     for track_marker in tracks_markers
       google.maps.event.addListener(track_marker, 'click', load_track_on_click)
   
+  load_map = () ->
+    $('#tracks .content__thumbRace').css({
+      display: 'none',
+    })
+    for track_marker in tracks_markers
+      track_marker.setMap(null)
+    tracks_markers = []
+    load_tracks_markers(js_tracks, map)
+    marker_center.setPosition(gm_center)
+    set_markers_zoom(map, tracks_markers, marker_center)
+
+  init_search_bar = () ->
+    $('#search').css({
+      border: 'none',
+      backgroundColor: '#fff',
+      padding: 8,
+      marginTop: 5,
+      width: 200,
+      fontFamily: 'Roboto',
+      fontSize: 15,
+      fontWeight: 300,
+      textOverflow: 'ellipsis',
+    })
+    $('.radiusRange').css({ 
+      marginTop: 5,
+      backgroundColor: 'white',
+      padding:'0.3em 0.5em',
+
+    })
+    $('.radiusRange label').css({ 
+      display: 'inline-block',
+      width: 'auto',
+      fontSize: '1.6em',
+      margin:0,
+      padding:0,
+    })
+    $('#search-form input[type=submit], #search-form label[for="search"]').css({
+      display:'none'
+    })
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('search-form'))
+    searchBox = new google.maps.places.SearchBox(document.getElementById('search'))
+
   if google?
     chart = new google.visualization.ColumnChart(elevation_chart)
     map = gm_init(gm_center)
-    load_tracks_markers(js_tracks, map)
+    search = document.getElementById('search-form')
+    init_search_bar() if search?
     marker_center = new google.maps.Marker({
-      position: gm_center,
       map: map,
       icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
     })
-    set_markers_zoom(map, tracks_markers, marker_center)
+    load_map()
     add_chart_listener(map)
-
-
+    

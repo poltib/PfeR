@@ -2,15 +2,15 @@ class TracksController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
   before_action :set_track, only: [:show, :edit, :update, :destroy]
   before_action :set_location, only: [:index, :new]
+  before_action :set_radius, only: [:index]
 
   # GET /tracks
   # GET /tracks.json
   def index
-    radius = 30
-    @tracks = Track.near(@location, radius, :units => :km)
+    @tracks = Track.near(@location, @radius, :units => :km)
     @tracksJs = Array.new
-    for track in @tracks do
-      @tracksJs.push([track.latitude, track.longitude, track.id, track.length])
+    @tracks.each do |track|
+      @tracksJs.push([track.latitude, track.longitude, track.id])
     end
   end
 
@@ -28,6 +28,10 @@ class TracksController < ApplicationController
   # GET /tracks/new
   def new
     @track = Track.new
+    if params[:happening_id]
+      @happening = Happening.find(params[:happening_id])
+      @location = [@happening.latitude, @happening.longitude]
+    end
   end
 
   # GET /tracks/1/edit
@@ -40,17 +44,26 @@ class TracksController < ApplicationController
     @track = Track.new(track_params)
     if !track_params[:route]
       tmp_segment = track_params[:polyline].scan(/(\d+.\d+),(\d+.\d+)/).to_a
-      for coords in tmp_segment do
+      tmp_segment.each do |coords|
         coords[0] = coords[0].to_f
         coords[1] = coords[1].to_f
       end
       @track.polyline = Polylines::Encoder.encode_points(tmp_segment)
     end
     @track.user_id = current_user.id
+    if params[:happening_id]
+      @happening = Happening.find params[:happening_id]
+      @happening.tracks << @track
+    end
     respond_to do |format|
       if @track.save
-        format.html { redirect_to @track, notice: 'Le tracé à été ajouté avec succès.' }
-        format.json { render action: 'show', status: :created, location: @track }
+        if params[:happening_id]
+          format.html { redirect_to @happening, notice: 'Le tracé à été ajouté avec succès.' }
+          format.json { render action: 'show', status: :created, location: @happening }
+        else  
+          format.html { redirect_to @track, notice: 'Le tracé à été ajouté avec succès.' }
+          format.json { render action: 'show', status: :created, location: @track }
+        end
       else
         format.html { render action: 'new' }
         format.json { render json: @track.errors, status: :unprocessable_entity }
@@ -89,7 +102,7 @@ class TracksController < ApplicationController
     end
 
     def set_location
-      if params[:search]
+      if params[:search] && params[:search] != ""
         @location = Geocoder.coordinates(params[:search])
       else
         user_location = request.location
@@ -98,6 +111,14 @@ class TracksController < ApplicationController
         else
           @location = [user_location.latitude, user_location.longitude]
         end
+      end
+    end
+
+    def set_radius
+      if params[:radius]
+        @radius = params[:radius]
+      else
+        @radius = 30
       end
     end
 
