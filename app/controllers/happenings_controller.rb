@@ -1,11 +1,14 @@
 class HappeningsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
   def index
-    @happenings = Happening.all
+    @happenings = Happening.search(params[:event_type], params[:date], params[:location])
+    @previousHap = Happening.all.where('date <= ?', Date.today)
+    @event_types = EventType.all
   end
 
   def new
     @happening = Happening.new
+    @eventTypes = EventType.all
   end
 
   def show
@@ -13,7 +16,7 @@ class HappeningsController < ApplicationController
     @location = [@happening.latitude, @happening.longitude]
     tracks = @happening.tracks
     @tracksJs = Array.new
-    for track in tracks do
+    tracks.each do |track|
       @tracksJs.push([track.latitude, track.longitude, track.id, track.length])
     end
     respond_to do |format|
@@ -50,28 +53,14 @@ class HappeningsController < ApplicationController
     end
   end
 
-  def newusers
-    @happening = Happening.find params[:id]
-  end
-
-  def addusers
-    @happening = Happening.find params[:id]
-    @users = param
-    
-  end
-
   def destroy
     Happening.destroy params[:id]
-    redirect_to :back, :notice => 'Votre évènement à été supprimé avec succès'
-  end
-
-  def confirm_destroy
-    @happening = Happening.find(params[:id])
+    redirect_to happenings_path, :notice => 'Votre évènement à été supprimé avec succès'
   end
 
   private
     def happening_params
-      params.require(:happening).permit(:name, :event_type, :description, :address, :link, :date, :route)
+      params.require(:happening).permit(:name, :event_type_id, :description, :address, :link, :date, :route)
     end
 
     def happening_search_params
