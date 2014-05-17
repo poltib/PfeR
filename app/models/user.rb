@@ -19,8 +19,8 @@ class User < ActiveRecord::Base
   has_many :happenings, :through => :user_statuses
   has_many :happenings_as_owner, :class_name => "Happening"
 
-  has_many :grouper, :dependent => :destroy
-  has_many :groups, :through => :grouper
+  has_many :groupers, :conditions => 'accepted_on IS NOT NULL', :dependent => :destroy
+  has_many :groups, :through => :groupers
   has_many :groups_as_owner, :class_name => "Group"
 
   has_many :teamer, :dependent => :destroy

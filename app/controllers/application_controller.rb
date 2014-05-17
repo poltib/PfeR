@@ -4,9 +4,4 @@ class ApplicationController < ActionController::Base
   include PublicActivity::StoreController
   
   protect_from_forgery with: :exception
-
-  # def current_user
-  #   @current_user ||= User.find(current_user.id) if session[:user_id]
-  # end
-
 end

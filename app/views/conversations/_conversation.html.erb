@@ -1,35 +1,35 @@
-	<%= content_tag_for(:li, conversation, class: "thumbRace") do |conversation| %>
-		<ul class="thumbRace__list">
-		<li class="date"><span class="day"><%= conversation.receipts_for(current_user).count %></span> <span class="monthName">Réponses</span></li>
-		<li class="name">
-      <h4 role="heading" aria-level="4"><%= link_to conversation.subject, conversation %></h4>
+<%= content_tag_for(:li, conversation, class: "thumbRace") do |conversation| %>
+    <ul class="thumbRace__list">
+    <li class="date"><span class="day"><%= conversation.receipts_for(current_user).count %></span> <span class="monthName">Réponses</span></li>
+    <li class="name">
+        <h4 role="heading" aria-level="4"><%= link_to conversation.subject, conversation %></h4>
     </li>
     <li><%= conversation.is_read?(current_user) %></li>
     <li class="location">auteur :&nbsp;
     <% if conversation.originator != current_user %>
-   		<%= link_to conversation.originator.username, user_path(conversation.originator.username) %>
-   	<% else %>
-			vous
-   	<% end %>
-   		<%= conversation.participants.count %>
-   	</li>
-		<% if conversation.is_completely_trashed?(current_user) %>
-			<li class="distances">
-				<span class="tooltip" data-tooltip="Corbeille">
-					<%= link_to [:delete, conversation], method: :delete do %>
-          	<i class="icon-trash"></i>
-        	<% end %>
-        </span>
-			</li>
-			<li class="distances"><%= link_to 'Untrash', [:untrash, conversation], method: :post %></li>
-		<% else %>
-			<li class="distances">
-				<span class="tooltip" data-tooltip="Corbeille">
-					<%= link_to [:trash, conversation], method: :post do %>
-          	<i class="icon-trash"></i>
-        	<% end %>
-        </span>
-			</li>
-		<% end %>
-		</ul>
-	<% end %>
+        <%= link_to conversation.originator.username, user_path(conversation.originator.username) %>
+    <% else %>
+        vous
+    <% end %>
+        <%= conversation.participants.count %>
+    </li>
+    <% if conversation.is_completely_trashed?(current_user) %>
+        <li class="distances">
+            <span class="tooltip" data-tooltip="Corbeille">
+                <%= link_to [:delete, conversation], method: :delete do %>
+        <i class="icon-trash"></i>
+        <% end %>
+    </span>
+        </li>
+        <li class="distances"><%= link_to 'Untrash', [:untrash, conversation], method: :post %></li>
+    <% else %>
+        <li class="distances">
+            <span class="tooltip" data-tooltip="Corbeille">
+                <%= link_to [:trash, conversation], method: :post do %>
+        <i class="icon-trash"></i>
+        <% end %>
+    </span>
+        </li>
+    <% end %>
+    </ul>
+<% end %>

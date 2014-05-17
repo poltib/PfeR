@@ -259,6 +259,7 @@ fr:
       happening:
         name: "Nom"
         description: "Description"
+        event_type: "Type d'évènement"
         address: "Adresse"
         link: "Lien"
         date: "Date"
@@ -267,7 +268,8 @@ fr:
         description: "Description"
       forum:
         name: "Titre"
-        post: "forum"
+        post: "Forum"
+        category_ids: "Categories"
       track:
         name: "Nom"
         description: "Description"

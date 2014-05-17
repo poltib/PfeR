@@ -11,7 +11,7 @@ class ImagesController < ApplicationController
     @image = @imagable.images.build(image_params)
     if @image.save
       # @image.create_activity :create, owner: current_user
-      flash[:notice] = "Image ajoutée."
+      flash[:notice] = 'Image ajoutée.'
       redirect_to @imagable
     else
       render :action => :new
