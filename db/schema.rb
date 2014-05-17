@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140506134946) do
+ActiveRecord::Schema.define(version: 20140512172541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,8 @@ ActiveRecord::Schema.define(version: 20140506134946) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "forumable_id"
+    t.string   "forumable_type"
   end
 
   create_table "groupers", force: true do |t|
@@ -93,6 +95,7 @@ ActiveRecord::Schema.define(version: 20140506134946) do
     t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "accepted_on"
   end
 
   create_table "groups", force: true do |t|

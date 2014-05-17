@@ -10,6 +10,8 @@ class GroupsController < ApplicationController
 
   def show
   	@group = Group.find params[:id]
+    @groupers = Grouper.all.where('group_id =?', params[:id])
+    @date = params[:date] ? Date.parse(params[:date]) : Date.today
   end
 
   def create
@@ -17,7 +19,10 @@ class GroupsController < ApplicationController
   	@group = Group.new(group_params)
   	@group.user_id = current_user.id
     if @group.save
-      @group.users << @user
+      grouper = @group.groupers.new
+      grouper.user_id = @user.id
+      grouper.accepted_on = Time.now
+      grouper.save
       redirect_to groups_path, :notice => 'Votre groupe à été ajouté avec succès.'
     else
       render 'new'
@@ -31,21 +36,10 @@ class GroupsController < ApplicationController
   def update
     @group = Group.find params[:id]
     group = params[:group].dup
-    if group[:user_id]
-      @user = User.find group[:user_id]
-      if @group.users.include?(@user)
-        @group.users.delete(@user)
-        redirect_to group_path(@group), :notice => @user.username << ' ne fait plus partie du groupe'
-      else  
-        @group.users << @user
-        redirect_to user_path(@user), :notice => @user.username << '  à bien été ajouté au groupe!'
-      end
+    if @group.update_attributes group_params
+        redirect_to groups_path, :notice => 'Votre groupe à été mis à jour avec succès.'
     else
-      if @group.update_attributes group_params
-          redirect_to groups_path, :notice => 'Votre groupe à été mis à jour avec succès.'
-      else
-          render 'edit'
-      end
+        render 'edit'
     end
   end
 

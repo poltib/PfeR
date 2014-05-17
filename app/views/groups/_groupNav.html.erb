@@ -1,0 +1,26 @@
+<div class="group__header">
+  <%= image_tag @group.avatar.url(:thumb) %>
+  <h3 role="heading" aria-level="3">
+    <%= @group.name %>
+    <span><%= link_to @group.owner.username, @group.owner %></span>
+  </h3>
+  <p><%= @group.description %></p>
+</div>
+<ul>
+  <% if user_signed_in? &&  !@groupers.collect(&:user_id).include?(current_user.id) %>
+    <li><%= form_for ([@group, Grouper.new]), :html => {:class => 'button_to' } do |f| %>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
+      <%= f.hidden_field :group_id, :value => @group.id %>
+      <%= button_tag do %>
+        Faire partie du groupe
+      <% end %>
+    <% end %></li>
+  <% end %>
+  <li><%= link_to "Activités", @group %></li>
+  <li><%= link_to "Membres", group_groupers_path(@group) %></li>
+  <% if user_signed_in? &&  @group.owner.id == current_user.id %>
+
+    <li><%= link_to "Modifier", edit_group_path(@group) %></li>
+    <li><%= link_to "Supprimer", @group, :method => 'delete' %></li>
+  <% end %>
+</ul>

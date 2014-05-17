@@ -1,0 +1,26 @@
+<ul>
+<% @tracks.each do |track| %>
+  <li class="content__thumbRace" id="<%= track.id %>">
+    <ul class="thumbRace__list">
+      <li class="thumbRace__location"><%= track.location %></li>
+      <li class="thumbRace__name">
+        <h4 role="heading" aria-level="4">
+          <%= link_to track.name, track_path(track) %>
+          <% if user_signed_in? && track.user_id == current_user.id %>
+          | <%= link_to "Edit", edit_track_path(track) %>
+          | <%= button_to "Delete", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
+          <% end %>
+        </h4>
+      </li>
+      <li><%= track.favorites.count %> <i class="icon-heart"></i></li>
+      <% if track.happening %>
+        <li><%= link_to track.happening.name, track.happening %></li>
+      <% end %>
+      <li class="thumbRace__distances"><%= track.distance.to_s.gsub(/^(\d+.)(\d{0,2})(\d+)/, '\1\2') %>km</li>
+      <li class="thumbRace__length"><span id="length"></span>km</li>
+    </ul>
+  </li>
+<% end %>
+</ul>
+<%= tracks_to_js(@tracksJs) if @tracksJs %>
+<%= location_to_js(@location) if @location %>

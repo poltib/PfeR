@@ -1,26 +1,26 @@
+<% content_for :title do %>
+  <%= @group.name %> | Sportfun
+<% end %>
 <section>
   <div class="container">
-  <%= image_tag @group.avatar.url(:medium) %>
-	<%= image_tag @group.avatar.url(:thumb) %>
-    <h2><%= @group.name %> <span><%= @group.owner.username %></span></h2>
-    <% if user_signed_in? &&  @group.owner.id == current_user.id %>
-    | <%= link_to "Edit", edit_group_path(@group) %>
-    | <%= link_to "Delete", @group, :method => 'delete' %>
-    <% end %>
-    <p><%= @group.description %></p>
-    <h3>Users</h3>
-    <% for user in @group.users %>
-      <li class="thumbRace">
-        <h4 role="heading" aria-level="4">
-            <%= link_to user.username, user_path(user) %>
-            <% if user_signed_in? &&  @group.owner.id == current_user.id || user.id == current_user.id  %>
-					    | <%= form_for @group , :html => { :class => 'button_to' } do |f| %>
-							  	<%= f.hidden_field :user_id, :value => user.id %>
-							  	<%= f.submit %>
-							  <% end %>
-				    <% end %>
-				</h4>
-		  </li>
-		<% end %>
+    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
+    <div class="left_column">
+      <%= render 'groupNav' %>
+    </div>
+    <div class="primary_content">
+      <h2 role="heading" aria-level="2">Activités du groupe</h2>
+      <div class="calendar__header">
+        <h3 role="heading" aria-level="3">
+          <span class="previous__month"><%= link_to "#{'< '+l(@date - 1.month, :format => "%B")}", group_path(@group, date: @date - 1.month) %></span>
+          <%= "#{l(@date, :format => "%B")} #{@date.year}" %>
+          <span class="next__month"><%= link_to "#{l(@date + 1.month, :format => "%B")+' >'}", group_path(@group, date: @date + 1.month) %></span>
+        </h3>
+      </div>
+      <div>
+        <%= calendar @date do |date| %>
+          <%= date.day  %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </section>

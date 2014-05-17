@@ -1,0 +1,47 @@
+<section>
+  <div class="container">
+    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
+    <div class="left_column">
+      <%= render 'groups/groupNav' %>
+    </div>
+    <div class="primary_content">
+      <h2 role="heading" aria-level="2">Membres du groupe <%= link_to @group.name, @group %></h2>
+      <ul>
+        <% for grouper in @groupers %>
+          <% if !grouper.accepted_on && @group.owner.id == current_user.id %>
+            <li>
+              <h4 role="heading" aria-level="4">
+              <%= link_to grouper.user.username, user_path(grouper.user) %>
+              </h4>
+              <% if user_signed_in? &&  @group.owner.id == current_user.id || grouper.user.id == current_user.id  %>
+                <%= form_for ([@group, grouper]), :html => {:class => 'button_to' } do |f| %>
+                  <%= f.hidden_field :grouper_id, :value => grouper.id %>
+                  <%= button_tag do %>
+                    <span data-tooltip="Participer">
+                      <i class="icon-check"></i>
+                    </span>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </li>
+          <% elsif grouper.accepted_on %>
+            <li>
+              <h4 role="heading" aria-level="4">
+                  <%= link_to grouper.user.username, user_path(grouper.user) %>
+                  <% if user_signed_in? &&  @group.owner.id == current_user.id || grouper.user.id == current_user.id  %>
+                    <%= form_for ([@group, grouper]), method: :delete , :html => { :class => 'button_to' } do |f| %>
+                        <%= button_tag :class => 'distances' do %>
+                        <span class="tooltip" data-tooltip="Supprimer du groupe">
+                          <i class="icon-cancel"></i>
+                        </span>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+              </h4>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</section>

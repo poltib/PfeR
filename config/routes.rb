@@ -2,24 +2,35 @@ Pfe::Application.routes.draw do
 
   devise_for :users, :controllers => {:registrations => "users/registrations"}
 
-  resources :categories, :tracks, :forums, :teams, :groups, :happenings, :users
+  resources :categories, :teams
 
   get 'users/:id/activities' => 'activities#index'
+
+  resources :users do
+    resources :groups, :only => [:index]
+    resources :tracks, :only => [:index]
+  end
 
   resources :forums do
     resources :comments
     resources :favorites
   end
 
+  resources :groups do
+    resources :groupers, :only => [:index, :update, :create, :destroy]
+  end
+
   resources :happenings do
-    resources :tracks, :controller => 'happeningtracks', :only => [:new, :create, :destroy]
+    resources :tracks, :only => [:new, :create, :destroy]
     resources :user_statuses, :only => [:index, :create, :destroy]
     resources :favorites, :only => [:index, :create, :destroy]
+    resources :forums, :only => [:new, :create, :destroy]
     resources :images, :only => [:new, :create, :destroy]
   end
 
   resources :tracks do
     resources :favorites, :only => [:index, :create, :destroy]
+    resources :forums, :only => [:new, :create, :destroy]
     resources :images, :only => [:new, :create, :destroy]
   end
 

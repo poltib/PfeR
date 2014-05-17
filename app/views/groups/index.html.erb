@@ -1,17 +1,24 @@
 <section>
-	<div class="container">
-		<ul>
-		<% for group in @groups %>
-      <li class="thumbRace">
-        <h4 role="heading" aria-level="4">
-                <%= link_to group.name, group_path(group) %>
-			  <% if user_signed_in? &&  group.owner.id == current_user.id %>
-				| <%= link_to "Edit", edit_group_path(group) %>
-				| <%= link_to "Delete", group, :method => 'delete' %>
-			  <% end %>
-				</h4>
-		  </li>
-		<% end %>
-		</ul>
-	</div>
+  <div class="container">
+    <div class="left_column">
+      <h3 role="heading" aria-level="3">Rechercher un groupe</h3>
+    </div>
+    <div class="primary_content">
+      <h2 role="heading" aria-level="2">Groupes à proximité</h2>
+      <ul>
+      <% @groups.each do |group| %>
+        <li class="content__thumbRace">
+          <h4 role="heading" aria-level="4">
+            <%= link_to group.name, group_path(group) %>
+            <% if user_signed_in? &&  group.owner.id == current_user.id %>
+            | <%= link_to "Edit", edit_group_path(group) %>
+            | <%= link_to "Delete", group, :method => 'delete' %>
+          <% end %>
+          </h4>
+          <span><%= group.users.count %> membres</span>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
 </section>
