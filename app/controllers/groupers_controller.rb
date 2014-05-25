@@ -1,5 +1,5 @@
 class GroupersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :except => [:show, :index]
   before_filter :load_group
   before_filter :load_grouper, only: [:destroy, :update]
 

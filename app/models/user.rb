@@ -5,8 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   acts_as_messageable
+  validates :username, uniqueness: true
   
-  has_attached_file :avatar, :styles => { :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
+  has_attached_file :avatar, :styles => { :thumb => "100x100#" }, :default_url => "/images/:style/missing.png"
 
   # Validate content type
   validates_attachment_content_type :avatar, :content_type => /\Aimage/
@@ -16,8 +17,9 @@ class User < ActiveRecord::Base
 
   has_many :user_statuses, :dependent => :destroy
   has_many :favorites, :dependent => :destroy
-  has_many :happenings, :through => :user_statuses
-  has_many :happenings_as_owner, :class_name => "Happening"
+  has_many :happenings, :through => :user_statuses, :dependent  => :destroy
+  has_many :happenings_as_owner, :class_name => "Happening", :dependent  => :destroy
+  has_many :tracks, :dependent  => :destroy
 
   has_many :groupers, :conditions => 'accepted_on IS NOT NULL', :dependent => :destroy
   has_many :groups, :through => :groupers
@@ -32,8 +34,11 @@ class User < ActiveRecord::Base
   # has_many :messages_as_owner, :class_name => "Message"
 
   has_many :forums, :dependent => :destroy
-  has_many :tracks, :dependent => :destroy
   has_many :announces, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   belongs_to :role
+
+  def to_param
+    username
+  end
 end

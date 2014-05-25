@@ -1,5 +1,7 @@
 class GroupsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
+  before_action :set_group, only: [:show, :destroy]
+
   def index
     @groups = Group.all
   end
@@ -9,9 +11,9 @@ class GroupsController < ApplicationController
   end
 
   def show
-  	@group = Group.find params[:id]
     @groupers = Grouper.all.where('group_id =?', params[:id])
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
+    @events_by_date = @group.happenings.group_by{ |happening| happening.date.to_date }
   end
 
   def create
@@ -44,11 +46,15 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    Group.destroy params[:id]
+    @group.destroy
     redirect_to :back, :notice => 'Votre groupe à été supprimé avec succès.'
   end
 
   private
+    def set_group
+      @group = Group.find(params[:id])
+    end
+
     def group_params
       params.require(:group).permit(:name, :description, :avatar, :user_id)
     end

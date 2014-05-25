@@ -12,7 +12,9 @@ class Happening < ActiveRecord::Base
 
   has_many :users, :through => :user_statuses
 
-  belongs_to :owner, :class_name => "User", :foreign_key => :user_id
+  belongs_to :user
+
+  belongs_to :group
 
   belongs_to :event_type
 
@@ -21,6 +23,16 @@ class Happening < ActiveRecord::Base
   has_many :images, :as => :imagable, dependent: :destroy
 
   has_many :forums, :as => :forumable, dependent: :destroy
+
+  before_create :create_slug
+
+  def to_param
+    slug
+  end
+
+  def create_slug
+    self.slug = self.date.strftime("%d %m %Y").parameterize+"_"+self.name.parameterize
+  end
 
   def self.search(event_type, date, location)
     query_obj = all

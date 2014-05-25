@@ -1,5 +1,6 @@
 class ForumsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
+  before_action :set_forum, only: [:show, :destroy, :update, :edit]
   def index
     @categories = Category.all
     if params[:category_id]
@@ -17,10 +18,12 @@ class ForumsController < ApplicationController
   def new
     @forum = Forum.new
     @categories = Category.all
+    if params[:happening_id]
+      @happening = Happening.find_by_slug(params[:happening_id])
+    end
   end
 
   def show
-  	@forum = Forum.find params[:id]
   	@comment = Comment.new
   end
 
@@ -35,11 +38,9 @@ class ForumsController < ApplicationController
   end
 
   def edit
-    @forum = Forum.find params[:id]
   end
 
   def update
-    @forum = Forum.find params[:id]
     if @forum.update_attributes forum_params
         redirect_to forums_path, :notice => 'Votre forum à été mis à jour avec succès.'
     else
@@ -48,12 +49,14 @@ class ForumsController < ApplicationController
   end
 
   def destroy
-    Forum.destroy params[:id]
+    @forum.destroy
     redirect_to forums_path, :notice => 'Votre forum à été supprimé avec succès.'
   end
 
   private
-  
+    def set_forum
+      @forum = Forum.find_by_slug(params[:id])
+    end
     def forum_params
       params.require(:forum).permit(:name, :post, :forumable_id, :forumable_type, :category_ids => [])
     end

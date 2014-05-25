@@ -28,7 +28,7 @@ private
   end
 
   def load_happening
-    @happening = Happening.find(params[:happening_id])
+    @happening = Happening.find_by_slug(params[:happening_id])
   end
 
   def status_params

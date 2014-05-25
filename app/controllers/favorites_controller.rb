@@ -41,7 +41,7 @@ class FavoritesController < ApplicationController
     def find_favoritable
       params.each do |name, value|
         if name =~ /(.+)_id$/
-          return $1.classify.constantize.find(value)
+          return $1.classify.constantize.find_by_slug(value)
         end
       end
       nil
