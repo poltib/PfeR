@@ -63,7 +63,7 @@ gem 'nokogiri', '~> 1.6.1'
 gem 'awesome_print'
 
 # css & grid
-gem "autoprefixer-rails"
+gem 'autoprefixer-rails'
 gem 'bourbon'
 gem 'neat'
 
@@ -73,13 +73,18 @@ gem 'public_activity'
 # private messages
 gem 'mailboxer'
 
+# map and geocoding
 gem 'polylines'
+gem "geocoder"
+gem 'rubyzip'
 
 gem 'dotenv-rails'
 
+# Markdown parser
 gem 'redcarpet'
 
-gem "geocoder"
+# Turbolink with jQuery
+gem 'jquery-turbolinks'
 
 group :production do
   gem 'dalli'                   # memcached
