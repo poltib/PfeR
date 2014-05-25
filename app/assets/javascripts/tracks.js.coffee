@@ -1,4 +1,5 @@
-NUMBER_DOT_TWONUMBERS = /^(\d+.)(\d{0,2})(\d+)/
+NUMBERS_DOT_THREENUMBERS = /^(\d+)(\d{3})(.\d+)/
+THREENUMBERS_DOT_NUMBERS = /^(\d{3})(.\d+)/
 COORD = /^(\d+.)(\d{0,13})(\d+)/
 poly = 1
 chart = 1
@@ -7,7 +8,19 @@ SAMPLES = 100
 mousemarker = null
 track_path = null
 newRoute = []
+dist_markers = []
+jsInput = null
 elevationReqActive = false
+end_marker = null
+start_marker = null
+
+# Spiner
+$(document).on('page:fetch', ( =>
+  $(".loading-indicator").show()
+))
+$(document).on('page:change', ( =>
+  $(".loading-indicator").hide()
+))
 
 if google?
   path = new google.maps.MVCArray()
@@ -16,21 +29,42 @@ if google?
   google.load("visualization", "1", {packages: ["corechart"]})
 
 gm_init = (gm_center) ->
-  gm_map_type = google.maps.MapTypeId.ROADMAP
+  mapTypeIds = []
+  mapTypeIds.push(google.maps.MapTypeId.ROADMAP)
+  mapTypeIds.push(google.maps.MapTypeId.TERRAIN)
+  mapTypeIds.push(google.maps.MapTypeId.SATELLITE)
+  mapTypeIds.push(google.maps.MapTypeId.HYBRID)
+  mapTypeIds.push("OSM")
+  mapTypeIds.push("TFL")
   map_options = {
     zoom: 14,
     center: gm_center,
-    panControl: false,
     backgroundColor: "rgba(0,0,0,0)",
-    mapTypeControl: false,
-    scrollwheel: false
+    scrollwheel: false,
+    mapTypeControlOptions: {
+      mapTypeIds: mapTypeIds,
+      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+    }
   }
-  new google.maps.Map(@map_canvas,map_options);
+  map = new google.maps.Map(@map_canvas,map_options)
+  map.mapTypes.set("OSM", new google.maps.ImageMapType({
+    getTileUrl: (coord, zoom) ->
+        return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png"
+    tileSize: new google.maps.Size(256, 256),
+    name: "OSM",
+    maxZoom: 18
+  }))
+  map.mapTypes.set("TFL", new google.maps.ImageMapType({
+    getTileUrl: (coord, zoom) ->
+        return "http://tile.thunderforest.com/landscape/" + zoom + "/" + coord.x + "/" + coord.y + ".png"
+    tileSize: new google.maps.Size(256, 256),
+    name: "TF Landscape",
+    maxZoom: 18
+  }))
+  map
 
 poly_init = (map) ->
-  poly_options = { 
-    draggable: true, 
-    editable:true, 
+  poly_options = {
     geodesic:true, 
     map: map, 
     strokeColor: 'rgba(0,0,0,0.6)'
@@ -60,15 +94,19 @@ plotElevation = (results, status) ->
   data = new google.visualization.DataTable()
   data.addColumn('string', 'Distance')
   data.addColumn('number', 'Elevation')
-  dist = 0
-  for i in elevations by 1
-    data.addRow(['',elevations[_i].elevation])
+  newRoute = ''
+  if jsInput?
+    for coords in elevations by 1
+      newRoute += '(' + coords.location.lat() + '|' + coords.location.lng() + '|' + coords.elevation + ')'
+      jsInput.value = newRoute
+
+  for elevation in elevations by 1
+    data.addRow(['',elevation.elevation])
 
   # Draw the chart using the data within its DIV.
   elevation_chart.style.display = 'block'
   options = {
     height: 100,
-    width: 300,
     dataOpacity: 0.8,
     bar: {groupWidth: "100%"},
     legend: { position: "none" },
@@ -87,15 +125,39 @@ load_track = (id,map) ->
   callback = (data) -> display_on_map(data,map)
   $.get '/tracks/'+id+'.json', {}, callback, 'json'
 
+createMarker = (map, latlng, dist) ->
+  marker = new google.maps.Marker({
+    position:latlng,
+    map:map,
+    icon: image_path(dist+'.svg')
+  })
+
 display_on_map = (data,map) ->
   decoded_path = google.maps.geometry.encoding.decodePath(data.polyline)
   # icon_set = { path: google.maps.SymbolPath.FORWARD_OPEN_ARROW }
   path_options = { path: decoded_path, strokeColor: "black",strokeOpacity: 0.8,map: map, strokeWeight: 5}
   track_path = new google.maps.Polyline(path_options)
-  # document.getElementById('map_canvas').style.height = '80%'
   drawPath(decoded_path)
-  console.log(track_path.inKm())
-  map.fitBounds(calc_bounds(track_path));
+  map.fitBounds(calc_bounds(track_path))
+  start_marker = new google.maps.Marker({
+    map: map,
+    position: new google.maps.LatLng(decoded_path[0].lat(), decoded_path[0].lng()),
+    icon: "http://maps.google.com/mapfiles/dd-start.png"
+  })
+  end_marker = new google.maps.Marker({
+    map: map,
+    position: new google.maps.LatLng(decoded_path[decoded_path.length - 1].lat(), decoded_path[decoded_path.length - 1].lng()),
+    icon: "http://maps.google.com/mapfiles/dd-end.png"
+  })
+  km_number=1
+  length = google.maps.geometry.spherical.computeLength(track_path.getPath())
+  remainingDist = length
+  while remainingDist > 0
+    dist_markers.push(createMarker(map, track_path.GetPointAtDistance(1000*km_number),km_number))
+    remainingDist -= 1000
+    km_number++
+
+  # document.getElementById('map_canvas').style.height = '80%'
 
 calc_bounds = (track_path) ->
   b = new google.maps.LatLngBounds()
@@ -113,25 +175,6 @@ set_markers_zoom = (map, markers, center) ->
     boundbox.extend(new google.maps.LatLng(marker.position.lat(), marker.position.lng()))
   map.setCenter(center.position)
   map.fitBounds(boundbox)
-
-if google?
-  google.maps.LatLng::kmTo = (a) ->
-    e = Math 
-    ra = e.PI/180
-    b = this.lat() * ra
-    c = a.lat() * ra
-    d = b - c
-    g = this.lng() * ra - a.lng() * ra
-    f = 2 * e.asin(e.sqrt(e.pow(e.sin(d/2), 2) + e.cos(b) * e.cos(c) * e.pow(e.sin(g/2), 2)))
-    return f * 6378.137
-
-  google.maps.Polyline::inKm = (n) ->
-    a = this.getPath(n)
-    len = a.getLength()-1
-    pathLenght = 0
-    for i in [0...len] by 1
-      pathLenght += a.getAt(i).kmTo(a.getAt(i+1))
-    pathLenght.toString().replace(NUMBER_DOT_TWONUMBERS, '$1$2')
 
 add_chart_listener = (map) ->
   infowindow = new google.maps.InfoWindow({})
@@ -155,89 +198,175 @@ add_chart_listener = (map) ->
       infowindow.setContent(contentStr)
       mousemarker.setPosition(elevations[e.row].location)
 
+$(".users.show").ready ->
+  type_buttons = document.getElementsByClassName("type")
+  for type_button in type_buttons
+    type_button.addEventListener 'click', (evt)->
+
+
+
 $(".tracks.new").ready ->
+  # Controls
   dist = document.getElementById "dist"
   reset = document.getElementById "reset"
   close = document.getElementById "close"
   clear = document.getElementById "clear"
   full = document.getElementById "full"
+  hide_button = document.getElementById('hideMap')
+  back_button = document.getElementById('back')
+  tiny_button = document.getElementById('tiny')
+  # map
   divMap = document.getElementById "map_canvas"
+  # form inputs
   jsInput = document.getElementById("jsRoute").childNodes[0];
   distanceInput = document.getElementById("track_length");
-  longitudeInput = document.getElementById("track_longitude");
-  latitudeInput = document.getElementById("track_latitude");
-  mapErrors = document.getElementById("mapErrors");
-  elevation_chart = document.getElementById('elevation_chart')
+  longitude_input = document.getElementById("track_longitude");
+  latitude_input = document.getElementById("track_latitude");
   upLi = document.getElementById("upRoute");
+  # form errors
+  mapErrors = document.getElementById("mapErrors");
+  # chart
+  elevation_chart = document.getElementById('elevation_chart')
   chart = new google.visualization.ColumnChart(elevation_chart);
-  gm_center = new google.maps.LatLng(js_location[0], js_location[1])
-  hide_button = document.getElementById('hideMap')
-  
-  map = gm_init(gm_center)
-  upLi.style.display = 'none'
-  poly = poly_init(map)
-  add_chart_listener(map)
+  # global variables
+  previous_point = []
+  map = null
 
-  hide_button.addEventListener 'click', (evt)->
-    upLi.style.display = 'block'
-    document.getElementsByClassName('map')[0].style.display = 'none'
+  create_track = (latLng, map) ->
+    path.push(latLng)
+    poly.setPath(path)
+    latitude_input.value = latLng.lat()
+    longitude_input.value = latLng.lng()
+    start_marker = new google.maps.Marker({
+      map: map,
+      position: latLng,
+      icon: "http://maps.google.com/mapfiles/dd-start.png"
+    })
 
-  $('.createForm').submit ->
-    if !!jsInput.value || upLi.style.display == 'block'
-      true
+  extend_track = (origin, destination) ->
+    gm_service.route({
+      origin: origin,
+      destination: destination,
+      travelMode: google.maps.DirectionsTravelMode.WALKING
+    }, (result, status) ->
+      return if status != google.maps.DirectionsStatus.OK
+      for i in result.routes[0].overview_path by 1
+        path.push(i)
+      drawPath(path.j)
+      update_dist()
+      end_marker.setMap(map)
+      end_marker.setPosition(destination)
+      undefined
+    )
+
+  update_dist = () ->
+    track_dist = google.maps.geometry.spherical.computeLength(poly.getPath()).toString()
+    if track_dist.match(THREENUMBERS_DOT_NUMBERS)?
+      track_dist = track_dist.replace(THREENUMBERS_DOT_NUMBERS, '0.$1')
     else
-      mapErrors.style.display = 'block'
-      mapErrors.childNodes[1].innerText = 'Vous devez créer un tracé'
-      false
+      track_dist = track_dist.replace(NUMBERS_DOT_THREENUMBERS, '$1.$2')
+    dist.childNodes[0].textContent = track_dist + 'km'
+    distanceInput.value = track_dist
 
-  google.maps.event.addListener map, 'click', (evt) ->
-    if path.getLength() == 0
-      path.push(evt.latLng)
+  truncate_track = () ->
+    if path.j.length <= 2
+      clear_all()
+    else
+      path.j.pop()
       poly.setPath(path)
-      latitudeInput.value = path.j[0].lat()
-      longitudeInput.value = path.j[0].lng()
-    else
-      growPath(path.getAt(path.getLength() - 1), evt.latLng)
+      drawPath(path.j)
+      new_pos = gm_center = new google.maps.LatLng(path.j[path.j.length - 1].lat(), path.j[path.j.length - 1].lng())
+      end_marker.setPosition(new_pos)
+      update_dist()
 
-  reset.addEventListener 'click', (evt) ->
-    path.clear();
+  undo_action = () ->
+    if previous_point.length >= 2
+      tmp_previous_point = path.j.length - previous_point[previous_point.length - 1]
+      tmp_path = path.j.slice(0).reverse()
+      for number in path.j.slice(0).reverse() when _i < tmp_previous_point
+        tmp_path.shift()
+      path.j = tmp_path.slice(0).reverse()
+      poly.setPath(path)
+      drawPath(path.j)
+      new_pos = gm_center = new google.maps.LatLng(path.j[path.j.length - 1].lat(), path.j[path.j.length - 1].lng())
+      end_marker.setPosition(new_pos)
+      previous_point.pop()
+      update_dist()
+    else
+      clear_all()
+
+  clear_all = () ->
+    path.clear()
+    previous_point = []
     elevation_chart.style.display = 'none'
     dist.childNodes[0].nodeValue = '0km'
+    latitude_input.value = ''
+    longitude_input.value = ''
     distanceInput.value = ''
     jsInput.value = ''
-    if mousemarker != null
+    if start_marker?
+      start_marker.setMap(null)
+    if end_marker?
+      end_marker.setMap(null)
+    if mousemarker?
       mousemarker.setMap(null)
 
-  close.addEventListener 'click', (evt) ->
-    if path.getLength() != 0
-      growPath(path.getAt(path.getLength() - 1),path.getAt(0))
+  init = () ->
+    clear_all()
+    gm_center = new google.maps.LatLng(js_location[0], js_location[1])
+    map = gm_init(gm_center)
+    map.setOptions({draggableCursor:"crosshair"})
+    upLi.style.display = 'none'
+    poly = poly_init(map)
+    add_chart_listener(map)
+    marker_center = new google.maps.Marker({
+      map: map,
+      position: gm_center,
+      icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+    })
+    end_marker = new google.maps.Marker({
+      map: map,
+      icon: "http://maps.google.com/mapfiles/dd-end.png"
+    })
+    reset.addEventListener 'click', (evt) ->
+      clear_all()
 
-  full.addEventListener 'click', (evt) ->
-    divMap.style.width = '100%'
-    divMap.style.z-index = '100000'
+    tiny_button.addEventListener 'click', (evt) ->
+      truncate_track()
 
-  growPath = (origin, destination) ->
-    gm_service.route({
-        origin: origin,
-        destination: destination,
-        travelMode: google.maps.DirectionsTravelMode.WALKING
-      }, (result, status) ->
-        return if status != google.maps.DirectionsStatus.OK
-        for i in result.routes[0].overview_path by 1
-          path.push(i)
-        drawPath(path.j)
-        dist.childNodes[0].textContent = poly.inKm() + 'km'
-        newRoute = ''
-        for coords in path.j by 1
-          if _j == 0
-            newRoute += coords.k.toString() + ',' + coords.A.toString()
-          else
-            newRoute += ',' + coords.k.toString() + ',' + coords.A.toString()
+    back_button.addEventListener 'click', (evt) ->
+      undo_action()
 
-        jsInput.value = newRoute
-        distanceInput.value = poly.inKm()
-        undefined
-    )
+    close.addEventListener 'click', (evt) ->
+      if path.getLength() != 0
+        extend_track(path.getAt(path.j.length - 1),path.getAt(0))
+
+    hide_button.addEventListener 'click', (evt)->
+      upLi.style.display = 'block'
+      document.getElementsByClassName('map')[0].style.display = 'none'
+
+    $('.createForm').submit ->
+      if jsInput.value == ''
+        mapErrors.style.display = 'block'
+        mapErrors.childNodes[1].innerText = 'Vous devez créer un tracé'
+        false
+      if jsInput.value != jsInput.value.match(/\((\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\)/).input
+        mapErrors.style.display = 'block'
+        mapErrors.childNodes[1].innerText = 'Il y a un problème dans votre tracé. Rechargez la page svp.'
+        false
+
+    full.addEventListener 'click', (evt) ->
+      divMap.style.width = '100%'
+      divMap.style.z-index = '100000'
+
+    google.maps.event.addListener map, 'click', (evt) ->
+      if path.getLength() == 0
+        create_track(evt.latLng, map)
+      else
+        previous_point.push(path.j.length - 1)
+        extend_track(path.getAt(path.j.length - 1), evt.latLng)
+  init()
+  
 
 $(".tracks.show").ready ->
   $( '#many a.thumbnail' ).heplbox()
@@ -252,6 +381,7 @@ $(".tracks.show").ready ->
         image_form.style.display = "none"
       else
         image_form.style.display = "block"
+
   if google?
     chart = new google.visualization.ColumnChart(elevation_chart)
     map = gm_init()
@@ -266,6 +396,7 @@ $(".tracks.index, .happenings.show").ready ->
   marker_center = null
   gm_center = new google.maps.LatLng(js_location[0], js_location[1])
   radius = document.getElementById("radius")
+  elevation_chart = document.getElementById('elevation_chart')
 
   if image_form? 
     image_form.style.display = "none"
@@ -277,8 +408,6 @@ $(".tracks.index, .happenings.show").ready ->
       else
         image_form.style.display = "block"
 
-  elevation_chart = document.getElementById('elevation_chart')
-  # console.log(js_location)
   load_track_on_click = (evt) ->
     for track in js_tracks by 1
       # replace take the 13 decimals of a coord because creating a marker with coords change them
@@ -291,12 +420,15 @@ $(".tracks.index, .happenings.show").ready ->
         track_li.style.display = 'block' if track_li
         
         google.maps.event.addListener map, 'click', (evt) ->
-          set_markers_zoom(map, tracks_markers, marker_center)
           track_path.setMap(null)
+          start_marker.setMap(null)
+          end_marker.setMap(null)
           if mousemarker? 
             mousemarker.setMap(null)
           elevation_chart.style.display = 'none'
           track_li.style.display = 'none' if track_li
+          for dist_marker in dist_markers
+            dist_marker.setMap(null)
           for track_marker in tracks_markers
             track_marker.setMap(map)
 
@@ -313,15 +445,15 @@ $(".tracks.index, .happenings.show").ready ->
 
   load_tracks_markers = (tracks, map) ->
     for track in tracks by 1
-      tracks_markers[_i] = new google.maps.Marker({
-          position: new google.maps.LatLng(track[0], track[1]),
-          map: map,
-          id: track[2],
-          icon: image_path(track[3]+'.svg')
-        })
+      tracks_markers.push(new google.maps.Marker({
+        position: new google.maps.LatLng(track[0], track[1]),
+        map: map,
+        id: track[2],
+        icon: image_path(track[3]+'.svg')
+      }))
     for track_marker in tracks_markers
       google.maps.event.addListener(track_marker, 'click', load_track_on_click)
-  
+
   load_map = () ->
     $('#tracks .content__thumbRace').css({
       display: 'none',
@@ -358,9 +490,6 @@ $(".tracks.index, .happenings.show").ready ->
       margin:0,
       padding:0,
     })
-    $('#search-form input[type=submit], #search-form label[for="search"]').css({
-      display:'none'
-    })
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('search-form'))
     searchBox = new google.maps.places.SearchBox(document.getElementById('search'))
 
@@ -375,4 +504,3 @@ $(".tracks.index, .happenings.show").ready ->
     })
     load_map()
     add_chart_listener(map)
-    

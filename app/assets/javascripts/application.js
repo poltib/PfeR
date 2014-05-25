@@ -11,7 +11,11 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery-readyselector
 //= require jquery-heplbox
+//= require d3.min
+//= require eloys
+//= require turbolinks
 //= require_tree .
