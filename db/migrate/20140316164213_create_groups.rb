@@ -4,6 +4,8 @@ class CreateGroups < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.belongs_to :user
+      t.boolean :team
+      t.attachment :avatar
 
       t.timestamps
     end

@@ -4,6 +4,7 @@ class CreateSponsors < ActiveRecord::Migration
       t.string :name
       t.string :addresse
       t.belongs_to :happening
+      t.attachment :avatar
 
       t.timestamps
     end

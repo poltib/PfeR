@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140512172541) do
+ActiveRecord::Schema.define(version: 20140419080525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(version: 20140512172541) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
-    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -51,6 +50,9 @@ ActiveRecord::Schema.define(version: 20140512172541) do
     t.integer "category_id", null: false
     t.integer "forum_id",    null: false
   end
+
+  add_index "categories_forums", ["category_id", "forum_id"], name: "index_categories_forums_on_category_id_and_forum_id", using: :btree
+  add_index "categories_forums", ["forum_id", "category_id"], name: "index_categories_forums_on_forum_id_and_category_id", using: :btree
 
   create_table "comments", force: true do |t|
     t.text     "comment"
@@ -83,57 +85,52 @@ ActiveRecord::Schema.define(version: 20140512172541) do
   create_table "forums", force: true do |t|
     t.text     "post"
     t.string   "name"
+    t.string   "slug"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "forumable_id"
     t.string   "forumable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "groupers", force: true do |t|
     t.integer  "user_id"
     t.integer  "group_id"
+    t.datetime "accepted_on"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "accepted_on"
   end
 
   create_table "groups", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.boolean  "team"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-  end
-
-  create_table "groups_users", id: false, force: true do |t|
-    t.integer "group_id", null: false
-    t.integer "user_id",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "happenings", force: true do |t|
     t.string   "name"
     t.text     "description"
+    t.string   "slug"
     t.string   "address"
     t.string   "link"
     t.datetime "date"
-    t.integer  "user_id"
-    t.integer  "event_type_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "route"
     t.float    "latitude"
     t.float    "longitude"
+    t.integer  "user_id"
+    t.integer  "event_type_id"
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "images", force: true do |t|
-    t.string   "image"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -141,6 +138,8 @@ ActiveRecord::Schema.define(version: 20140512172541) do
     t.integer  "user_id"
     t.integer  "imagable_id"
     t.string   "imagable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "notifications", force: true do |t|
@@ -187,12 +186,12 @@ ActiveRecord::Schema.define(version: 20140512172541) do
     t.string   "name"
     t.string   "addresse"
     t.integer  "happening_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "statuses", force: true do |t|
@@ -201,38 +200,21 @@ ActiveRecord::Schema.define(version: 20140512172541) do
     t.datetime "updated_at"
   end
 
-  create_table "teamers", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "team_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "teams", force: true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
-  end
-
   create_table "tracks", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
     t.string   "name"
+    t.string   "slug"
+    t.text     "description"
+    t.text     "polyline"
+    t.integer  "location"
     t.integer  "happening_id"
+    t.string   "route"
+    t.string   "length"
+    t.float    "latitude"
+    t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "route"
-    t.integer  "user_id"
-    t.integer  "length"
-    t.integer  "location"
-    t.text     "polyline"
-    t.float    "longitude"
-    t.float    "latitude"
-    t.text     "description"
   end
 
   create_table "user_statuses", force: true do |t|
@@ -248,6 +230,10 @@ ActiveRecord::Schema.define(version: 20140512172541) do
     t.string   "firstname"
     t.string   "lastname"
     t.text     "description"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.integer  "role_id"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -262,10 +248,6 @@ ActiveRecord::Schema.define(version: 20140512172541) do
     t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
