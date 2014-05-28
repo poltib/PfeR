@@ -1,14 +1,17 @@
 Pfe::Application.routes.draw do
 
-  devise_for :users, :controllers => {:registrations => "users/registrations"}
+  devise_for :users, :controllers => {:registrations => "users/registrations", :omniauth_callbacks => "users/omniauth_callbacks"}
 
   resources :categories, :teams
 
   get 'users/:id/activities' => 'activities#index'
 
+  get 'tracks/:id/download' => 'tracks#download', as: :download_track
+
   resources :users do
     resources :groups, :only => [:index]
     resources :tracks, :only => [:index]
+    resources :happenings, :only => [:index]
   end
 
   resources :forums do
@@ -18,6 +21,8 @@ Pfe::Application.routes.draw do
 
   resources :groups do
     resources :groupers, :only => [:index, :update, :create, :destroy]
+    resources :happenings
+    resources :tracks
   end
 
   resources :happenings do
@@ -28,15 +33,13 @@ Pfe::Application.routes.draw do
     resources :images, :only => [:new, :create, :destroy]
   end
 
-  resources :tracks do
+  resources :tracks, only: [:index, :show, :new, :create, :destroy] do
     resources :favorites, :only => [:index, :create, :destroy]
     resources :forums, :only => [:new, :create, :destroy]
     resources :images, :only => [:new, :create, :destroy]
   end
 
-  authenticated :user do
-    root :to => "users#dashboard", as: :user_root
-  end
+  get 'dashboard' => 'users#dashboard', as: :user_dashboard
 
   root :to =>  'welcome#index'
 
