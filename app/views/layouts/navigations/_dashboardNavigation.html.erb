@@ -1,0 +1,8 @@
+<nav role="navigation" class="secondary__navigation">
+	<ul>
+		<li><%= link_to "Mes activités", user_dashboard_path, class: (controller?("users") && action?("dashboard") ? 'actif' : nil) %></li>
+		<li><%= link_to "Mes évènements", user_happenings_path(current_user), class: (controller?("happenings") && action?("index") ? 'actif' : nil) %></li>
+		<li><%= link_to "Mes tracés", user_tracks_path(current_user), class: (controller?("tracks") && action?("index") ? 'actif' : nil) %></li>
+		<li><%= link_to "Mes groupes", user_groups_path(current_user), class: (controller?("groups") && action?("index") ? 'actif' : nil) %></li>
+	</ul>
+</nav>

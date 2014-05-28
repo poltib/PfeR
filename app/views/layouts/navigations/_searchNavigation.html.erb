@@ -1,0 +1,7 @@
+<nav role="navigation" class="secondary__navigation">
+	<ul>
+		<li><%= link_to "Évènements", happenings_path, class: (controller?("happenings") && action?("index") ? 'actif' : nil) %></li>
+		<li><%= link_to "Tracés", tracks_path, class: (controller?("tracks") && action?("index") ? 'actif' : nil) %></li>
+		<li><%= link_to "Groupes", groups_path, class: (controller?("groups") && action?("index") ? 'actif' : nil) %></li>
+	</ul>
+</nav>

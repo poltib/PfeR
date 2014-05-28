@@ -1,0 +1,6 @@
+<nav role="navigation" class="secondary__navigation">
+	<ul>
+		<li><%= link_to "Forums", forums_path, class: (controller?("forums") && action?("index") ? 'actif' : nil) %></li>
+		<li><%= link_to "Utilisateurs", users_path, class: (controller?("users") && action?("index") ? 'actif' : nil) %></li>
+	</ul>
+</nav>
