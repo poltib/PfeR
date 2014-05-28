@@ -1,6 +1,6 @@
-NUMBERS_DOT_THREENUMBERS = /^(\d+)(\d{3})(.\d+)/
-THREENUMBERS_DOT_NUMBERS = /^(\d{3})(.\d+)/
-COORD = /^(\d+.)(\d{0,13})(\d+)/
+NUMBERS_DOT_THREENUMBERS = /^(\d+)(\d{3})(\.\d+)/
+THREENUMBERS_DOT_NUMBERS = /^(\d{3})(\.\d+)/
+COORD = /^(\d+\.)(\d{0,13})(\d+)/
 poly = 1
 chart = 1
 elevations = 1
@@ -129,7 +129,9 @@ createMarker = (map, latlng, dist) ->
   marker = new google.maps.Marker({
     position:latlng,
     map:map,
-    icon: image_path(dist+'.svg')
+    size: new google.maps.Size(20, 20),
+    icon: image_path(dist+'.svg'),
+    anchor: new google.maps.Point(-10,-10)
   })
 
 display_on_map = (data,map) ->
@@ -218,7 +220,7 @@ $(".tracks.new").ready ->
   # map
   divMap = document.getElementById "map_canvas"
   # form inputs
-  jsInput = document.getElementById("jsRoute").childNodes[0];
+  jsInput = document.getElementById("jsRoute");
   distanceInput = document.getElementById("track_length");
   longitude_input = document.getElementById("track_longitude");
   latitude_input = document.getElementById("track_latitude");
@@ -342,14 +344,22 @@ $(".tracks.new").ready ->
         extend_track(path.getAt(path.j.length - 1),path.getAt(0))
 
     hide_button.addEventListener 'click', (evt)->
-      upLi.style.display = 'block'
-      document.getElementsByClassName('map')[0].style.display = 'none'
+      if upLi.style.display == "block"
+        hide_button.childNodes[0].textContent = "Créer avec un fichier"
+        upLi.style.display = 'none'
+        document.getElementsByClassName('map')[0].style.display = 'block'
+      else
+        upLi.style.display = 'block'
+        document.getElementsByClassName('map')[0].style.display = 'none'
+        hide_button.childNodes[0].textContent = "Créer sur la carte"
 
     $('.createForm').submit ->
       if jsInput.value == ''
         mapErrors.style.display = 'block'
         mapErrors.childNodes[1].innerText = 'Vous devez créer un tracé'
         false
+
+    $('.createForm').submit ->
       if jsInput.value != jsInput.value.match(/\((\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\)/).input
         mapErrors.style.display = 'block'
         mapErrors.childNodes[1].innerText = 'Il y a un problème dans votre tracé. Rechargez la page svp.'
@@ -388,6 +398,19 @@ $(".tracks.show").ready ->
     load_track(js_track_id,map)
     add_chart_listener(map)
 
+$(".registrations.edit").ready ->
+  password_form = document.getElementById("edit__password")
+  show_form_button = document.getElementById("showPasswordForm")
+  if password_form? 
+    password_form.style.display = "none"
+
+  if show_form_button
+    show_form_button.addEventListener 'click', (evt) ->
+      if password_form.style.display == "block"
+        password_form.style.display = "none"
+      else
+        password_form.style.display = "block"
+
 $(".tracks.index, .happenings.show").ready ->
   $( '#many a.thumbnail' ).heplbox()
   image_form = document.getElementById("addImage")
@@ -416,8 +439,6 @@ $(".tracks.index, .happenings.show").ready ->
         $.get '/tracks/'+track[2]+'.json', {}, callback, 'json'
         for track_marker in tracks_markers
           track_marker.setMap(null)
-        track_li = document.getElementById(track[2])
-        track_li.style.display = 'block' if track_li
         
         google.maps.event.addListener map, 'click', (evt) ->
           track_path.setMap(null)
@@ -426,7 +447,6 @@ $(".tracks.index, .happenings.show").ready ->
           if mousemarker? 
             mousemarker.setMap(null)
           elevation_chart.style.display = 'none'
-          track_li.style.display = 'none' if track_li
           for dist_marker in dist_markers
             dist_marker.setMap(null)
           for track_marker in tracks_markers
@@ -455,9 +475,6 @@ $(".tracks.index, .happenings.show").ready ->
       google.maps.event.addListener(track_marker, 'click', load_track_on_click)
 
   load_map = () ->
-    $('#tracks .content__thumbRace').css({
-      display: 'none',
-    })
     for track_marker in tracks_markers
       track_marker.setMap(null)
     tracks_markers = []
@@ -465,39 +482,11 @@ $(".tracks.index, .happenings.show").ready ->
     marker_center.setPosition(gm_center)
     set_markers_zoom(map, tracks_markers, marker_center)
 
-  init_search_bar = () ->
-    $('#search').css({
-      border: 'none',
-      backgroundColor: '#fff',
-      padding: 8,
-      marginTop: 5,
-      width: 200,
-      fontFamily: 'Roboto',
-      fontSize: 15,
-      fontWeight: 300,
-      textOverflow: 'ellipsis',
-    })
-    $('.radiusRange').css({ 
-      marginTop: 5,
-      backgroundColor: 'white',
-      padding:'0.3em 0.5em',
-
-    })
-    $('.radiusRange label').css({ 
-      display: 'inline-block',
-      width: 'auto',
-      fontSize: '1.6em',
-      margin:0,
-      padding:0,
-    })
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('search-form'))
-    searchBox = new google.maps.places.SearchBox(document.getElementById('search'))
-
-  if google?
+  if document.getElementById("map_canvas")?
     chart = new google.visualization.ColumnChart(elevation_chart)
     map = gm_init(gm_center)
     search = document.getElementById('search-form')
-    init_search_bar() if search?
+    searchBox = new google.maps.places.SearchBox(document.getElementById('search')) if search?
     marker_center = new google.maps.Marker({
       map: map,
       icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
