@@ -17,6 +17,7 @@
 
 # Ignore users avatars and routes
 /public/system
+/public/tracks
 /public/uploads
 .env
 pfe.sublime-workspace
