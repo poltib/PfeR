@@ -1,6 +1,10 @@
 <section>
 <div class="container">
-<h2>Create happening</h2>
+<h2 role="heading" aria-level="2">Ajouter évènement</h2>
+<% if @group %>
+	<h3>Sur le groupe <%= link_to @group.name, @group %></h3>
+<% end %>
+
 <%= render 'form' %>
 </div>
 </section>

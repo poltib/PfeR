@@ -1,8 +1,19 @@
+<% content_for :title do %>
+  Tous les évènements | Sportfun
+<% end %>
 <section>
-  <div class="container">
+  <div class="container" role="main">
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
-    <div class="left_column">
-      <h3 role="heading" aria-level="3">Rechercher une course</h3>
+    <% if params[:user_id] %>
+      <%= render "layouts/navigations/dashboardNavigation" %>
+    <% else %>
+      <%= render "layouts/navigations/searchNavigation" %>
+    <% end %>
+    <div class="entity__title">
+      <h2 role="heading" aria-level="2">Évènements</h2>
+      <%= link_to "Ajouter un évènement", new_happening_path %>
+    </div>
+    <div class="entity__searchform">
       <%= form_tag(happenings_path, :method => "get", id: "search-form") do %>
         <fieldset>
           <ul>
@@ -11,12 +22,14 @@
             <%= date_field_tag :date, params[:date] %>
           </li>
           <li>
-            <%= label_tag :event_type, "Type" %>
-            <%= select_tag "event_type", options_from_collection_for_select(@event_types, "id", "name") %>
-          </li>
-          <li>
             <%= label_tag :location, "Lieu" %>
             <%= text_field_tag  :location, params[:location] %>
+          </li>
+          <li>
+            <% @event_types.each do |type| %>
+              <%= radio_button_tag :event_type, type.id %>
+              <%= label_tag :event_type, type.name, :value => type.id %>
+            <% end %>
           </li>
           <!-- <li>
             <label>Adresse</label>
@@ -42,58 +55,34 @@
         </fieldset>
       <% end %>
     </div>
-    <div class="primary_content">
-      <span><%= link_to "Ajouter nouveau tracé", new_track_path %></span>
-      <h2 role="heading" aria-level="2">Les évènements à venir</h2>
-      <ul>
-        <% @happenings.each do |happening| %>
-          <li class="content__thumbRace">
-            <ul class="thumbRace__list">
-             <li class="thumbRace__date"><span class="thumbRace__day"><%= happening.date.strftime("%d") %></span> <span class="thumbRace__monthName"><%= l(happening.date , :format => "%b") %></span></li>
-            <li class="thumbRace__location">Liège</li>
-            <li class="thumbRace__name">
-              <h4 role="heading" aria-level="4">
-                <%= link_to happening.name, happening_path(happening) %>
-                <% if user_signed_in? && happening.user_id == current_user.id %>
-                | <%= link_to "Edit", edit_happening_path(happening) %>
-                | <%= button_to "Delete", happening_path(happening), method: :delete, data: { confirm: 'Are you sure?' }  %>
-                <% end %>
-              </h4>
-            </li>
-              <li class="thumbRace__distances">
-                <% happening.tracks.each do |track| %>
-                  <%= track.length %> km
-                <% end %>
+    <div class="entity__results">
+      <% if @happenings.count != 0 %>
+        <ul>
+          <% @happenings.each do |happening| %>
+            <li class="entity__result">
+              <ul class="result__list">
+               <li class="result__date"><span class="result__day"><%= happening.date.strftime("%d") %></span> <span class="result__monthName"><%= l(happening.date , :format => "%b") %></span></li>
+              <li class="result__name">
+                <h4 role="heading" aria-level="4">
+                  <%= link_to happening.name, happening_path(happening) %>
+                  <% if user_signed_in? && happening.user == current_user %>
+                  | <%= link_to "Edit", edit_happening_path(happening) %>
+                  | <%= button_to "Delete", happening_path(happening), method: :delete, data: { confirm: 'Are you sure?' }  %>
+                  <% end %>
+                </h4>
               </li>
-            </ul>
-          </li>
-        <% end %>
-      </ul>
-    <h2 role="heading" aria-level="2">Les évènements passé</h2>
-      <ul>
-        <% @previousHap.each do |happening| %>
-          <li class="content__thumbRace">
-            <ul class="thumbRace__list">
-             <li class="thumbRace__date"><span class="thumbRace__day"><%= happening.date.strftime("%d") %></span> <span class="thumbRace__monthName"><%= l(happening.date , :format => "%b") %></span></li>
-            <li class="thumbRace__location">Liège</li>
-            <li class="thumbRace__name">
-              <h4 role="heading" aria-level="4">
-                <%= link_to happening.name, happening_path(happening) %>
-                <% if user_signed_in? && happening.user_id == current_user.id %>
-                | <%= link_to "Edit", edit_happening_path(happening) %>
-                | <%= button_to "Delete", happening_path(happening), method: :delete, data: { confirm: 'Are you sure?' }  %>
-                <% end %>
-              </h4>
+                <li class="result__distances">
+                  <% happening.tracks.each do |track| %>
+                    <%= track.length %> km
+                  <% end %>
+                </li>
+              </ul>
             </li>
-              <li class="thumbRace__distances">
-                <% happening.tracks.each do |track| %>
-                  <%= track.length %> km
-                <% end %>
-              </li>
-            </ul>
-          </li>
-        <% end %>
-      </ul>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="results__none">Pas d'évènements</p>
+      <% end %>
     </div>
   </div>
 </section>

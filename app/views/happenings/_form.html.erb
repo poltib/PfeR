@@ -10,6 +10,10 @@
     </div>
   <% end %>
   <fieldset>
+  	<% if params[:group_id] %>
+      <%= f.hidden_field :group_id , :value => params[:group_id] %>
+    <% end %>
+    
 	  	<ul>
 		<li><%= f.label :name %>
 		<%= f.text_field :name %></li>

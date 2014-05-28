@@ -1,114 +1,123 @@
+<% content_for :title do %>
+  Évènement «<%= @happening.name %>» | Sportfun
+<% end %>
 <section>
-  <div class="container">
-    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
-    <div class="raceTitle">
-      <h2 role="heading" aria-level="2"><%= @happening.name %></h2>
-      <ul class="social">
-        <li class="socialNetwork"><a data-tooltip="Partager sur Facebook" href="http://www.facebook.com/share.php?u=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-facebook-squared"></i></a></li>
-        <li class="socialNetwork"><a data-tooltip="Partager sur Google plus" href="https://plus.google.com/share?url=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-gplus-squared"></i></a></li>
-        <li class="socialNetwork"><a data-tooltip="Partager sur Twitter" href="http://twitter.com/home?status=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-twitter-squared"></i></a></li>
-        <li class="socialNetwork"><a data-tooltip="Partager par mail" href="mailto:?subject=Course intéressante sur Sportfun&amp;body=Course intéressante <%= @happening.name %> : <%= request.original_url %>" rel="nofollow"><i class="icon-mail"></i></a></li>
-      </ul>
-    </div>
-    <div class="left_column">
-      <h3 role="heading" aria-level="3">Informations</h3>
-      <ul class="happening__info">
-        <li><%= link_to @happening.owner.username, @happening.owner %></li>
-        <li><%= @happening.event_type.name %></li>
-        <li><%= I18n.l @happening.date %></li>
-        <li>Description : <%= @happening.description %></li>
-        <li>Adresse : <%= @happening.address %></li>
-        <li>lien : <a href"<%= @happening.link %>"><%= @happening.link %></a></li>
-        <li><i class="icon-heart"></i> Favorits <%= link_to "( "+@happening.favorites.count.to_s+" )", happening_favorites_path(@happening) %></li>
-        <li><i class="icon-users"></i> Participants <%= link_to "( "+@happening.user_statuses.count.to_s+" )", happening_user_statuses_path(@happening) %></li>
-      </ul>
-      <h3 role="heading" aria-level="3">Actions</h3>
-      <ul class="subNav">
-        <% if user_signed_in? && current_user.id == @happening.user_id %>
+  <div class="container" role="main">
+    <h2 role="heading" aria-level="2" class="hidden"><%= @happening.event_type.name %> <%= @happening.name %></h2>
+    <%= render "layouts/navigations/happeningNavigation" %>
+    <div class="entity__title happening">
+      <h2 role="heading" aria-level="2">
+        <%= link_to @happening.event_type.name, happenings_path(params.slice(:sort).merge(event_type: @happening.event_type.id)), :class => "type #{@happening.event_type.name}" %>
+        <%= @happening.name %>
+        <span>Posté par: <%= link_to @happening.user.username, @happening.user %></span>
+      </h2>
+      <div class="entity__informations">
+        <ul>
+          <div class="first__info">
+            <li><i class="icon-clock"></i> <%= l(@happening.date , :format => "%d %b %Y") %></li>
+            <li><i class="icon-location"></i> <%= @happening.address %></li>
+            <% if @happening.group %>
+              <li>Posté sur le groupe <%= link_to @happening.group.name, @happening.group %></li>
+            <% end %>
+            <li><i class="icon-link"></i> <a href="http://<%= @happening.link %>"><%= @happening.link %></a></li>
+          </div>
           <li>
-            <%= link_to new_happening_track_path(@happening) do %>
+            <span><i class="icon-vcard"></i> Description</span>
+            <%= @happening.description %>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="happening map">
+      <div id="map_canvas"></div>
+      <div class="entity__tracks">
+        <h3 role="heading" aria-level="3">
+          Tracés
+          <% if current_user == @happening.user %>
+            <%= link_to new_happening_track_path(@happening), :class=> "type add" do %>
               <i class="icon-location"></i> Ajouter un tracé
             <% end %>
-          </li>
-          <li>
-            <span id="showImageForm"><i class="icon-picture"></i> Ajouter une image</span>
-            <%= form_for ([@happening, Image.new]), :html => { :multipart => true, :id => 'addImage' } do |f| %>
-              <%= f.hidden_field :user_id, :value => current_user.id %>
-              <%= f.hidden_field :imagable_id, :value => @happening.id %>
-              <%= f.hidden_field :imagable_type, :value => "Happening" %>
-              <%= f.label :image %>
-              <%= f.file_field :image %>
-              <%= f.submit %>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to edit_happening_path(@happening) do %>
-              <i class="icon-cog"></i> Modifier
-            <% end %>
-          </li>
-          <li>
-            <%= button_to happening_path(@happening), method: :delete, data: { confirm: 'Are you sure?' } do %>
-              <i class="icon-trash"></i> Supprimer
-            <% end %>
-          </li>
-        <% end %>
-
-        <% if user_signed_in? %>
-          <li>
-            <% if current_user.user_statuses.where(happening_id: @happening.id).first %>
-              <%= button_to [@happening, current_user.user_statuses.where(happening_id: @happening.id).first], method: :delete do %>
-                <i class="icon-cancel"></i> Ne plus participer
-              <% end %>
-            <% else %>
-              <%= form_for ([@happening, UserStatus.new]), :html => {:class => 'button_to' } do |f| %>
-                <%= f.hidden_field :user_id, :value => current_user.id %>
-                <%= f.hidden_field :happening_id, :value => @happening.id %>
-                <%= button_tag do %>
-                  <i class="icon-check"></i> Participer
-                <% end %>
-              <% end %>
-            <% end %>
-          </li>
-
-          <li>
-            <% if current_user.favorites.where(favoritable_id: @happening.id, favoritable_type: "Happening").first %>
-              <%= button_to [@happening, current_user.favorites.where(favoritable_id: @happening.id, favoritable_type: "Happening").first], method: :delete do %>
-                <i class="icon-heart"></i> Supprimer des favorits
-              <% end %>
-            <% else %>
-              <%= form_for ([@happening, Favorite.new]), :html => {:class => 'button_to' } do |f| %>
-                <%= f.hidden_field :user_id, :value => current_user.id %>
-                <%= f.hidden_field :favoritable_id, :value => @happening.id %>
-                <%= f.hidden_field :favoritable_type, :value => "Happening" %>
-                <%= button_tag do %>
-                  <i class="icon-heart-empty"></i> Ajouter aux favorits
-                <% end %>
-              <% end %>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to new_happening_forum_path(@happening) do %>
-              <i class="icon-pencil"></i> Poster forum
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-    <div class="primary_content">
-      <div class="map">
-        <div id="map_canvas"></div>
+          <% end %>
+        </h3>
         <div id="aside">
           <div id="elevation_chart"></div>
+          <ul>
+            <% @happening.tracks.each do |track| %>
+              <li class="entity__result" id="<%= track.slug %>">
+                <ul class="result__list">
+                  <li class="result__name">
+                    <%= link_to track.name, track_path(track) %>
+                    <% if user_signed_in? && track.user == current_user %>
+                    | <%= button_to "Delete", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
+                    <% end %>
+                  </li>
+                  <li><%= track.favorites.count %> <i class="icon-heart"></i></li>
+                  <li class="result__length"><span id="length"><%= track.length %></span>km</li>
+                </ul>
+              </li>
+            <% end %>
+          </ul>
         </div>
       </div>
-      <h3 role="heading" aria-level="3">Gallerie photo</h3>
+    </div>
+    <div class="entity__forums">
+      <h3 role="heading" arie-level="3">
+        <%= link_to new_happening_forum_path(@happening), :class=> "type add" do %>
+          <i class="icon-pencil"></i> Poster forum
+        <% end %>
+        Forums
+      </h3>
+      <% if @happening.forums.count == 0 %>
+        <p>Pas de forums</p>
+      <% else %>
+        <ul>
+          <% @happening.forums.each do |forum| %>
+            <li class="forum">
+            <article>
+            <header>
+              <h4 class="formTitle" role="heading" aria-level="4">
+                <%= link_to forum.name, forum_path(forum) %><br>
+                <span>
+                  Posté par <%= link_to forum.user.username, user_path(forum.user) %>
+                </span></h4>
+                <ul class="forumDetails">
+                  <li><i class="icon-clock-1"></i><%= I18n.l forum.created_at %></li>
+                  <li><i class="icon-chat"></i><%= forum.comments.count %></li>
+                </ul>
+            </header>
+            </article>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+    <div class="entity__gallery">
+      <h3 role="heading" aria-level="3">
+        <% if current_user == @happening.user %>
+          <span id="showImageForm" class="type add"><i class="icon-picture"></i> Ajouter une image</span>
+        <% end %>
+        Photos
+      </h3>
+      <% if current_user == @happening.user %>
+      <div class="entity__addimageform">
+        <%= form_for ([@happening, Image.new]), :html => { :multipart => true, :id => 'addImage' } do |f| %>
+          <%= f.hidden_field :user_id, :value => current_user.id %>
+          <%= f.hidden_field :imagable_id, :value => @happening.id %>
+          <%= f.hidden_field :imagable_type, :value => "Happening" %>
+          <ul>
+            <li><%= f.label :image %><%= f.file_field :image %></li>
+            <li><%= f.submit :Ajouter %></li>
+          </ul>
+        <% end %>
+      </div>
+      <% end %>
       <ul id="many" class="thumbs">
         <% @happening.images.each do |image| %>
           <li>
             <a href="<%= image.image.url(:medium) %>" class="thumbnail">
               <%= image_tag image.image.url(:thumb) %>
             </a>
-            <% if user_signed_in? && current_user.id == @happening.owner.id %>
+            <% if user_signed_in? && current_user == @happening.user %>
               <%= button_to [@happening, image], method: :delete, data: { confirm: 'Are you sure?' }, form_class: "delete_image" do %>
                 <span data-tooltip="Supprimer la photo">
                   <i class="icon-cancel"></i>
@@ -118,42 +127,14 @@
           </li>
         <% end %>
       </ul>
-      <ul>
-        <% @happening.forums.each do |forum| %>
-          <li class="forum">
-          <article>
-          <header>
-            <h3 class="formTitle" role="heading" aria-level="3">
-              <%= link_to forum.name, forum_path(forum) %>
-              <% if user_signed_in? && forum.user_id == current_user.id %>
-              | <%= link_to "Edit", edit_forum_path(forum) %>
-              | <%= button_to "Delete", forum, :method => 'DELETE' %>
-              <% end %><br>
-              <span>
-                Posté par <%= link_to forum.user.username, user_path(forum.user) %>
-                <% if forum.forumable %> 
-                  sur <%= link_to forum.forumable.name, forum.forumable %>
-                <% end %>
-              </span></h3>
-              <ul class="forumDetails">
-                <li><i class="icon-bookmarks"></i><% for category in forum.categories do %>
-                  <%= link_to category.name, forums_path(params.slice(:sort).merge(category_id: category.id)) %>
-                <% end %></li>
-                <li><i class="icon-clock-1"></i><%= I18n.l forum.created_at %></li>
-                <li><i class="icon-chat"></i><%= forum.comments.count %> réponses</li>
-                <li><i class="icon-heart"></i><%= forum.favorites.count %></li>
-              </ul>
-          </header>
-          </article>
-          </li>
-        <% end %>
-      </ul>
     </div>
   </div>
 </section>
 <% content_for :script do %>
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <%= google_maps_api %>
-  <%= tracks_to_js(@tracksJs) if @tracksJs %>
+  <% if @tracksJs %>
+    <%= javascript_tag do %>
+      var js_tracks = <%= raw(@tracksJs.to_json) %>;
+    <% end %>
+  <% end %>
   <%= location_to_js(@location) if @location %>
 <% end %>
