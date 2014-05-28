@@ -1,52 +1,61 @@
 <section>
-	<div class="container">
-		<h2 role="heading" aria-level="2" class="hidden">Content</h2>
+  <div class="container">
+    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
     <div class="left_column">
       <h3 role="heading" aria-level="3">Profile de <%= @user.username %></h3>
       <% if user_signed_in? &&  current_user.id != @user.id %>
         <%= link_to 'Envoyer un message', new_user_conversation_path(@user) %>
-				<% for group in current_user.groups_as_owner %>
-					<% if !group.users.include?(@user) %>
-					<p><%= group.name %></p>
-					<%= form_for group , :html => { :class => 'button_to' } do |f| %>
-				  	<%= f.hidden_field :user_id, :value => @user.id %>
-				  	<%= f.submit %>
-				  <% end %>
-				  <% end %>
-				<% end %>
-			 	<p>adduser to team</p>
-			<% end %>
-    	<%= image_tag @user.avatar.url(:thumb) %>
-    	<p><%= @user.description %></p>
-    	<ul>
-    		<li>Localisation</li>
-    		<li>Groupes :
-					<ul>
-						<% for group in @user.groups %>
-							<li><%= link_to group.name, group_path(group) %></li>
-						<% end %>
-					</ul>
-    		</li>
-    		<li>Clubs :
-					<ul>
-						<% for group in @user.teams %>
-							<li><%= link_to team.name, team_path(team) %></li>
-						<% end %>
-					</ul>
-    		</li>
-
-    	</ul>
+      <% end %>
+      <%= image_tag @user.avatar.url(:thumb) %>
+      <p><%= @user.description %></p>
+      <%= link_to "edit", edit_user_registration_path(@user) %>
+      <ul>
+        <li>Localisation</li>
+        <li>Groupes :
+          <ul>
+            <% for group in @user.groups %>
+              <li><%= link_to group.name, group_path(group) %></li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
     </div>
     <div class="primary_content">
-    	<h2 role="heading" aria-level="2">Activitées (feed)</h2>
-    	<ul class="events">
-        <% @activities.each do |activity| %>
-            <li class="thumbRace">
-						<%= @user.username %>
-            <%= render_activity activity %>
-          </li>
+      <h2 role="heading" aria-level="2">Vos activités</h2>
+      <div class="calendar__header">
+        <h3 role="heading" aria-level="3">
+          <span class="previous__month"><%= link_to "#{'< '+l(@date - 1.month, :format => "%B")}", user_path(@user, date: @date - 1.month) %></span>
+          <%= "#{l(@date, :format => "%B")} #{@date.year}" %>
+          <span class="next__month"><%= link_to "#{l(@date + 1.month, :format => "%B")+' >'}", user_path(@user, date: @date + 1.month) %></span>
+        </h3>
+      </div>
+      <div>
+        <%= calendar @date do |date| %>
+          <%= date.day  %>
+          <% if @events_by_date[date] %>
+            <ul class="calendar__events">
+              <% @events_by_date[date].each do |event| %>
+                <li><%= link_to event.happening.name, event.happening %></li>
+              <% end %>
+            </ul>
+          <% end %>
         <% end %>
-        </ul>
-		</div>
-	</div>
+      </div>
+      <h2 role="heading" aria-level="2">Vos tacés</h2>
+      <% @user.tracks.each do |track| %>
+        <p><%= link_to track.name, track %>
+          <% if user_signed_in? && track.user == current_user %>
+          | <%= button_to "Delete", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
+          <% end %>
+        </p>
+      <% end %>
+      <h2 role="heading" aria-level="2">Vos évènements</h2>
+      <% @event_types.each do |type| %>
+        <button class="type"><%= type.name %></button>
+      <% end %>
+      <% @user.happenings_as_owner.each do |happening| %>
+        <p><%= link_to happening.name, happening %></p>
+      <% end %>
+    </div>
+  </div>
 </section>

@@ -1,23 +1,58 @@
+<% content_for :title do %>
+  Tous les utilisateurs | Sportfun
+<% end %>
 <section>
-  <div class="container">
-    <div class="left_column">
-      <h3 role="heading" aria-level="3">Rechercher un utilisateur</h3>
-    </div>
-    <div class="primary_content">
+  <div class="container" role="main">
+    <h2 role="heading" aria-level="2" class="hidden">Tous les utilisateurs</h2>
+    <%= render "layouts/navigations/commNavigation" %>
+    <div class="entity__title">
       <h2 role="heading" aria-level="2">Utilisateurs</h2>
-      <ul>
-      <% @users.each do |user| %>
-        <li class="thumbRace">
-          <%= image_tag user.avatar.url(:thumb) %>
-          <h4 role="heading" aria-level="4">
-            <%= link_to user.username, user_path(user) %>
-            <% if user_signed_in? &&  user.id == current_user.id %>
-            | <%= link_to "Edit", edit_user_registration_path(user) %>
-            <% end %>
-          </h4>
-        </li>
+      <% if !user_signed_in? %>
+        <%= link_to "Inscription", new_user_registration_path %>
       <% end %>
-      </ul>
+    </div>
+    <div class="entity__searchform">
+      <%= form_tag(users_path, :method => "get", id: "search-form") do %>
+        <fieldset>
+          <ul>
+          <li>
+            <%= label_tag :username, "Pseudo" %>
+            <%= text_field_tag  :username, params[:username] %>
+          </li>
+          <li>
+            <%= label_tag :location, "Lieu" %>
+            <%= text_field_tag  :location, params[:location] %>
+          </li>
+          <li>
+            <%= submit_tag "Rechercher", :name => nil %>
+          </li>
+          </ul>
+        </fieldset>
+      <% end %>
+    </div>
+    <div class="entity__results">
+      <% if @users.count != 0 %>
+        <ul>
+          <% @users.each do |user| %>
+            <li class="entity__result">
+              <ul class="result__list">
+                <li class="result__avatar"><%= image_tag user.avatar.url(:thumb) %></li>
+                <li>
+                  <h4 role="heading" aria-level="4">
+                    <%= link_to user.username, user_path(user) %>
+                    <% if user_signed_in? &&  user.id == current_user.id %>
+                      | <%= link_to "Edit", edit_user_registration_path(user) %>
+                    <% end %>
+                  </h4>
+                </li>
+                <li>Liège</li>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="results__none">Pas d'utilisateurs</p>
+      <% end %>
     </div>
   </div>
 </section>

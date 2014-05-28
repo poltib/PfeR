@@ -1,36 +1,30 @@
 <section>
-  <div class="container">
+  <div class="container index">
+    <%= render "layouts/navigations/dashboardNavigation" %>
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
-    <div class="left_column">
-      <h2 role="heading" aria-level="2">Salut, <%= @user.username %>!</h2>
-      <h3 role="heading" aria-level="3">Favorits</h3>
-      <ul>
-        <% for favorite in @user.favorites do %>
-          <li><%= favorite.favoritable_type %> <%= link_to favorite.favoritable.name, favorite.favoritable %></li>
+    <h2 role="heading" aria-level="2">Les courses à venir</h2>
+      <ul class="content__events">
+        <% @happenings.each do |happening| %>
+          <li class="content__thumbRace">
+            <ul class="thumbRace__list">
+             <li class="thumbRace__date"><span class="thumbRace__day"><%= happening.date.strftime("%d") %></span> <span class="thumbRace__monthName"><%= l(happening.date , :format => "%b") %></span></li>
+            <li class="thumbRace__name">
+              <h4 role="heading" aria-level="4">
+                <%= link_to happening.name, happening_path(happening) %>
+                <% if user_signed_in? && happening.user == current_user %>
+                | <%= link_to "Edit", edit_happening_path(happening) %>
+                | <%= button_to "Delete", happening_path(happening), method: :delete, data: { confirm: 'Etes vous certain?' }  %>
+                <% end %>
+              </h4>
+            </li>
+              <li class="thumbRace__distances">
+                <% happening.tracks.each do |track| %>
+                  <%= track.length %> km
+                <% end %>
+              </li>
+            </ul>
+          </li>
         <% end %>
       </ul>
-    </div>
-    <div class="primary_content">
-      <h2 role="heading" aria-level="2">Vos activitées</h2>
-      <div class="calendar__header">
-        <h3 role="heading" aria-level="3">
-          <span class="previous__month"><%= link_to "#{'< '+l(@date - 1.month, :format => "%B")}", user_root_path(date: @date - 1.month) %></span>
-          <%= "#{l(@date, :format => "%B")} #{@date.year}" %>
-          <span class="next__month"><%= link_to "#{l(@date + 1.month, :format => "%B")+' >'}", user_root_path(date: @date + 1.month) %></span>
-        </h3>
-      </div>
-      <div>
-        <%= calendar @date do |date| %>
-          <%= date.day  %>
-          <% if @events_by_date[date] %>
-            <ul class="calendar__events">
-              <% @events_by_date[date].each do |event| %>
-                <li><%= link_to event.happening.name, event.happening %></li>
-              <% end %>
-            </ul>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
   </div>
 </section>
