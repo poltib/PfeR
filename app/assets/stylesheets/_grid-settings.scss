@@ -3,11 +3,21 @@
 // Change the grid settings
 
 $grid-columns: 12;
-$max-width: em(1088);
+$max-width: em(1080);
 // $visual-grid: true;
 $visual-grid-color: blue;
 $border-box-sizing:true;
 
 // Define your breakpoints
-$tablet: new-breakpoint(max-width 910px 8);
+$large-screen:  new-breakpoint(max-width 1080px 12);
+$tablet: new-breakpoint(max-width 935px 8);
+$phablet: new-breakpoint(max-width 700px 8);
 $mobile: new-breakpoint(max-width 480px 4);
+
+@mixin responsive-container {
+    @include outer-container;
+    @include media($large-screen)  { max-width: 935px; }
+    @include media($tablet) { max-width:  700px; }
+    @include media($phablet) { max-width:  480px; }
+    @include media($mobile)  { max-width:  300px; }
+}

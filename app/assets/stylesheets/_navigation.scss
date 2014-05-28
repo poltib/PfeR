@@ -5,45 +5,104 @@
 /////////Navigation  ----------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 
-.subNav{
-    .button_to{
-        [type="submit"]{
-            padding:0;
-            color:$font;
-            background-color: transparent;
-            border:none;
-            &:hover{
-                color:black;
-            }
+nav [type="submit"]{
+    margin:0;
+    padding-right:0;
+}
+
+.map .event__actions{
+    border: none;
+    li{
+        width: 20%;
+        &:last-child button{
+            border-right:none;
         }
     }
-    a{
-        display: inline-block;
-        border: none;
-        padding: 0.5em;
-        color:$font;
-        &:hover{
-            color:black;
+    ul{
+        width: 100%;
+    }
+    button{
+        text-align: center;
+        border-bottom: none;
+        border-top: 1px solid $sky;
+        border-left: none;
+        width: 100%;
+        &:focus{
+            outline:none;
         }
+    }
+}
+
+.left_column .event__actions{
+    li{
+        float: none;
+        display: block;
+    }
+    form{
+        display: block;
+    }
+}
+
+.event__actions{
+    h3{
+        text-align: center;
+        background-color: $sky;
+        padding: 0.45em;
+        border-right: 1px solid $sky;
+        border-left: 1px solid $sky;
+        border-top: 1px solid $sky;
+    }
+    input:focus, textarea:focus{
+        background-color: $sky;
+    }
+    a, .button_to [type="submit"], #showImageForm, button, input, textarea{
+        border:none;
+        border-right: 1px solid $sky;
+        border-left: 1px solid $sky;
+        border-bottom: 1px solid $sky;
+        background-color: white;
+        margin:0;
+        width: 100%;
+        text-align: left;
+        display: block;
+        padding: 0.8em;
+        font-size: 0.9em;
+        color: black;
+        &:focus{
+            outline: none;
+        }
+        &:hover{
+            background-color: $cloud;
+            color:$blue;
+        }
+    }
+    div#elevation_chart:hover{
+        background-color: white;
+    }
+    li{
+        float: left;
+        &:first-child a,&:first-child .button_to [type="submit"]{
+            border-top: 1px solid $sky;
+        }
+    }
+
+    ul:after{
+        content:"";
+        display: block;
+        clear:both;
     }
 }
 
 
 .lower__navigation{
     display: none;
-    @include media($tablet){
+    @include media($phablet){
         display: block;
         a, form{
             button{
                 width: 100%;
             }
-            @include span-columns(4);
-            @include shift(2);
             margin-bottom: 0.6em;
-        }
-    }
-    @include media($mobile){
-        a, form{
             @include span-columns(4 of 4);
             @include shift(0);
         }
@@ -60,59 +119,61 @@
     }
 }
 
+nav.header__navigation{
+    @include media($phablet){
+        display: none;
+    }
+}
+
 .header__navigation{
     font-size: 1.1em;
     @include media($tablet){
-        display: none;
+        @include span-columns(6);
+        @include omega;
     }
-    @include span-columns(7);
-    text-align: right;
+    @include span-columns(10);
+    @include omega;
     ul li{
         display: inline-block;
-        margin-left: 0.3em;
-        .tooltip{
-            @include tooltip(n, rgba(0,0,0,0.8), 2px);
+    }
+    a, .button_to [type="submit"]{
+        display: inline-block;
+        border: none;
+        color:black;
+        padding: 1em 1.38em;
+        font-size: 0.8em;
+        &:hover{
+            color:$blue;
+            background-color: $cloud;
         }
-        .button_to{
-            [type="submit"]{
-                color:$font;
-                background-color: transparent;
-                border:none;
-                &:hover{
-                    color:black;
-                }
-            }
-        }
-        span{
-            display: inline-block;
-            &:hover{
-            }
-        }
-        a{
-            display: inline-block;
-            border: none;
-            padding: 0.5em;
-            color:$font;
-            &:hover{
-                color:black;
-            }
-        }
+    }
+    .selected{
+        padding-bottom: 0.7em;
+        border-bottom: 0.3em solid $blue;
+    }
+}
+
+
+.nav__user{
+    float: right;
+    a{
+        padding-left: 3.5em;
+    }
+    img{
+        display: block;
+        width: 2.3em;
+        height: 2.3em;
+        position: absolute;
+        left: 0.6em;
+        top: 0.4em;
+        border: 2px solid $sky;
     }
 }
 
 .nav__actions{
     position: relative;
-    &:hover{
-        a{
-        background-color: $sky;
-        color:$font;
-            &:hover{
-                background-color: $blue;
-                color:$sky;
-            }
-        }
-    }
     &:hover, &:focus {
+        background-color: $cloud;
         ul {
         visibility: visible;
         opacity: 1;
@@ -120,6 +181,7 @@
     }
 
     ul {
+        width: 100%;
         transform: translate3d(0, 0, 0);
         position: absolute;
         visibility: hidden;
@@ -128,25 +190,134 @@
         background-color: $sky;
         white-space: nowrap;
         box-shadow: 1px 1px 3px rgba(0, 0, 0, .2);
-        left: 0;
+        right: 0;
         top: 100%;
 
         li{
-            text-align: left;
+            text-align: center;
             margin:0;
             display: block;
+            border-left:none;
+            border-top: 1px solid silver;
             &:hover{
-                background-color:$blue;
+                background-color:$cloud;
                 >a{
                     background-color: transparent;
-                    color:white;
                 }
             }
             a{
-                padding: 0.5em;
+                border-left: 1px solid $sky;
+                border-right: 1px solid $sky;
+                padding: 1em;
                 display: block;
                 color:black;
+                &:hover{
+                    padding-bottom: 0.7em;
+                    border-bottom: 0.3em solid $blue;
+                }
             }
+        }
+    }
+}
+
+.secondary__navigation{
+    >ul{
+        width: 100%;
+        border-bottom: 1px solid $sky;
+        &:after{
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+    li{
+        float:left;
+    }
+    a, button, .share__button{
+        display: inline-block;
+        color:black;
+        border: none;
+        padding: 0.6em;
+        border-right: 1px solid $sky;
+        margin-bottom: -1px;
+        &:hover{
+            background-color: $cloud;
+            color: $blue;
+        }
+    }
+    .actif{
+        border-bottom: 1px solid white;
+        color: $blue;
+    }
+}
+
+.social{
+    &:hover{
+        ul {
+            visibility: visible;
+           opacity: 1;
+        }
+    }
+    a{
+        color: $cloud;
+        border: none;
+        &:hover{
+            color: $cloud;
+        }
+    }
+    ul{
+        transform: translate3d(0, 0, 0);
+        visibility: hidden;
+        opacity: 0;
+        position:absolute;
+        z-index: 1000;
+    }
+    li{
+        display: block;
+    }
+}
+
+.entity{
+    width: auto;
+    >ul{
+        border-bottom: none;
+        width: auto;
+        float: right;
+    }
+    &:after{
+        content:"";
+        display: block;
+        clear:both;
+    }
+    a, button, .share__button{
+        z-index: 1000;
+        border-left: 1px solid $sky;
+        border-bottom: 1px solid $sky;
+        border-right: none;
+        margin:0;
+    }
+    .fb__button{
+        background-color:$facebook;
+        &:hover{
+            background-color: $facebookHover;
+        }
+    }
+    .gg__button{
+        background-color:$googleplus;
+        &:hover{
+            background-color: $googleplusHover;
+        }
+    }
+    .tw__button{
+        background-color:$twitter;
+        &:hover{
+            background-color: $twitterHover;
+        }
+    }
+    .mail__button{
+        background-color:$blueLight;
+        &:hover{
+            background-color: $blue;
         }
     }
 }

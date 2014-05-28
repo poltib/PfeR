@@ -5,15 +5,20 @@
 /////////Header  --------------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 
-body>header{
-    position: relative;
-    margin-bottom: 0.5em;
+.header{
     width: 100%;
+    margin:0;
+    padding:0;
+}
+
+.header__navbar{
+    width: 100%;
+    background-color: white;
 }
 
 .headingImg{
     background: image-url('head.png') fixed no-repeat;
-    border-bottom: 3px solid $orange;
+    border-bottom: 3px solid $sky;
     h2{
         border:none;
         margin-bottom: 0;
@@ -21,11 +26,14 @@ body>header{
     h3{
         display: inline-block;
         margin-right: 1.5em;
+        span{
+            display: block;
+            padding-top: 0.3em;
+        }
+        a{
+            color: white;
+        }
     }
-}
-
-.header__navbar{
-    padding: 1em 0;
 }
 
 .intro{
@@ -35,8 +43,12 @@ body>header{
 
 .intro__presentation{
     h2{ 
+        color: $sky;
         font-size: 2.5em;
         text-align: left;
+    }
+    h3{
+        color: $sky;
     }
 
     p{
@@ -51,7 +63,8 @@ body>header{
 
 .intro__singup{
     h2{
-        margin-bottom: 0.5em;
+        color: $sky;
+        line-height: 2.5;
     }
     @include span-columns(5);
     @include omega;
@@ -61,10 +74,16 @@ body>header{
         color:black;
     }
 
+    [type="submit"]{
+        color:white;
+        border-color: white;
+    }
+
     @include media($mobile){
         margin-top: 1em;
         @include span-columns(4 of 4);
     }
+    label{@extend %visuallyhidden;}
     input{
         @include span-columns(3 of 5);
         @include shift(1);
@@ -81,95 +100,43 @@ body>header{
     }
 }
 
-.header__logo a{
-    border:none;
-    color:black;
-
-    h1{
-        margin: 0;
-        font-size: 1.6em;
-    }
-}
-
 .header__logo{
+    h1{
+        a{
+            display: inline-block;
+            width: 100%;
+            border:none;
+            background-color: $blue;
+            padding: 0.37em 0;
+            text-align: center;
+            color:$cloud;
+        }
+        margin: 0;
+        font-size: 1.4em;
+    }
     @include span-columns(2);
     @include media($tablet){
         @include span-columns(2);
     }
 }
-
-.header__search{
-    @include span-columns(3);
-    @include omega;
-    @include media($tablet){
-        @include span-columns(2);
-    }
-    margin-top: 0.1em;
-}
-
 .header__menu{
-    @include media($tablet){
-        a{display: block;}
-        @include span-columns(1);
-        @include shift(3);
+    @include media($phablet){
+        a{
+            display: block;
+        }
+        @include span-columns(4);
     }
-    font-size: 1.3em;
     a{
-        padding:0.5em;
-        text-align: center;
-        border:none;
-        color:$sky;
+        display: inline-block;
+        border: none;
+        padding: 1.1em 1.55em;
+        font-size: 0.8em;
+        color: black;
+        &:hover{
+            background-color: $cloud;
+            padding-bottom: 0.8em;
+            border-bottom: 0.3em solid $blue;
+        }
     }
     display: none;
-}
-
-
-.search__button{
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
-    font-weight: lighter;
-    border:none;
-    background-color: $blueLight;
-    -webkit-transition: background-color 0.3s;
-    transition: background-color 0.3s;
-    margin:0;
-    -moz-appearance: none;
-    font-size: 1em;
-    left:0;
-    width:20%;
-    border-top: 1px solid silver;
-    border-right: 1px solid silver;
-    border-bottom: 1px solid silver;
-    color:$sky;
-    padding: 0.33em 0.1em;
-    font-weight: lighter;
-
-    &:hover{
-        cursor:pointer;
-        background-color: $blue;
-    }
-    &:focus{
-        outline: none;
-    }
-}
-
-#search__input:focus + .search__button{
-    border-color: $orange;
-}
-
-#search__input{
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
-    font-weight: lighter;
-    font-size: 1em;
-    width:80%;
-    color:$sky;
-    margin:0;
-    padding:0;
-    padding: 0.4em;
-    border-radius: 0;
-    border-color: silver;
-
-    &:focus{
-        outline: none;
-        border-color: $orange;
-    }
 }
