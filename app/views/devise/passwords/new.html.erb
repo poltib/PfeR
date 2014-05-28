@@ -1,12 +1,24 @@
-<h2>Forgot your password?</h2>
-
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
-
-  <div><%= f.submit "Send me reset password instructions" %></div>
+<% content_for :title do %>
+  Mot de passe oublié? | Sportfun
 <% end %>
+<section>
+  <div class="container">
+    <div class="entity__title">
+      <h2 role="heading" aria-level="2">Mot de passe oublié?</h2>
+      <div class="shared__links"><%= render "devise/shared/links" %></div>
+    </div>
+    <div class="entity__form">
+      <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+        <%= devise_error_messages! %>
+        <fieldset>
+          <ul>
+            <li><%= f.label :email %>
+            <%= f.email_field :email, :autofocus => true %></li>
 
-<%= render "devise/shared/links" %>
+            <li><%= f.submit "Réinitialiser le mot de passe" %></li>
+          </ul>
+        </fieldset>
+      <% end %>
+    </div>
+  </div>
+</section>

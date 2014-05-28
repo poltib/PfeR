@@ -1,16 +1,28 @@
-<h2>Change your password</h2>
-
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
-
-  <div><%= f.label :password, "New password" %><br />
-  <%= f.password_field :password, :autofocus => true %></div>
-
-  <div><%= f.label :password_confirmation, "Confirm new password" %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.submit "Change my password" %></div>
+<% content_for :title do %>
+  Changez votre mot de passe | Sportfun
 <% end %>
+<section>
+  <div class="container">
+    <div class="entity__title">
+      <h2 role="heading" aria-level="2">Changez votre mot de passe</h2>
+    </div>
+    <div class="entity__form">
+      <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
+        <%= devise_error_messages! %>
+        <%= f.hidden_field :reset_password_token %>
+        <fieldset>
+          <ul>
+            <li><%= f.label :password, "Nouveau mot de passe" %>
+            <%= f.password_field :password, :autofocus => true %></li>
 
-<%= render "devise/shared/links" %>
+            <li><%= f.label :password_confirmation, "Confirmer nouveau mot de passe" %>
+            <%= f.password_field :password_confirmation %></li>
+
+            <li><%= f.submit "Changer mon mot de passe" %></li>
+          </ul>
+        </fieldset>
+      <% end %>
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</section>
