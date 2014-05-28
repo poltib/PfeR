@@ -19,43 +19,38 @@
   <%= stylesheet_link_tag "animation", media: "all" %>
   <%= stylesheet_link_tag "application", media: "all" %>
   <%= csrf_meta_tags %>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <%= google_maps_api %>
+  <%= javascript_include_tag "application" %>
 </head>
 <body>
+  
   <div class="wrapper">
     <header class="header">
       <div class="header__navbar">
         <div class="container">
           <div class="header__logo">
-            <a href="/" title="Sportfun accueil">
-              <h1 role="heading" aria-level="1">SportFun</h1>
-            </a>
+            <h1 role="heading" aria-level="1"><a href="/" title="Sportfun accueil">SportFun</a></h1>
           </div>
-          <%= render "layouts/headerNavigation" %>
-          <div class="header__menu"><a class="" href="#nav"><i class="icon-menu"></i></a></div>
-          <div class="header__search">
-            <form action="#" class="search">
-              <input type="text" name="searchField" id="search__input" placeholder="rechercher..."><!-- 
-              --><button class="search__button"><i class="icon-search"></i></button>
-            </form>
-          </div>
+          <%= render "layouts/navigations/headerNavigation" %>
+          <div class="header__menu"><a href="#nav" title="navigation"><i class="icon-menu"></i> Navigation</a></div>
         </div>
       </div>
-      <br>
       <%= yield :head %>
     </header>
-    <div class="container">
-      <% if notice %>
-        <p id="notice"><%= notice %></p>
-      <% end %>
-      <% if alert %>
-        <p id="alert"><%= alert %></p>
-      <% end %>
-    </div>
     <div class="<%= controller_name %> <%= action_name %>">
+      <div class="container">
+        <% if notice %>
+          <p id="notice"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p id="alert"><%= alert %></p>
+        <% end %>
+      </div>
       <%= yield %>
     </div>
     <div class="container">
-      <%= render "layouts/footerNavigation" %>
+      <%= render "layouts/navigations/footerNavigation" %>
     </div>
   </div>
   <footer role="footer">
@@ -64,6 +59,5 @@
     </div>
   </footer>
   <%= yield :script %>
-  <%= javascript_include_tag "application" %>
 </body>
 </html>

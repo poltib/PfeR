@@ -1,61 +1,81 @@
+<% content_for :title do %>
+  Tous les forums | Sportfun
+<% end %>
 <section>
-  <div class="container">
-    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
-    <div class="left_column">
-      <h3 role="heading" aria-level="3">Catégories</h3>
-      <ul class="cat">
+  <div class="container" role="main">
+    <h2 role="heading" aria-level="2" class="hidden">Tous les forums</h2>
+    <%= render "layouts/navigations/commNavigation" %>
+    <div class="entity__title">
+      <h2 role="heading" aria-level="2">
+        Derniers forums
+      </h2>
+      <%= link_to "Ajouter un forum", new_forum_path %>
+    </div>
+    <div class="entity__categories">
+      <ul>
+        <li><i class="icon-bookmarks"></i>Catégories</li>
+        <% if @active %>
+          <li>
+        <% else %>
+          <li class="active">
+        <% end %>
+          <%= link_to "Tous les forums", forums_path() %>
+        </li>
         <% for cat in @categories %>
-          <% if @active && @active == cat.id %>
+          <% if @active && @active[0] == cat.id %>
             <li class="active">
           <% else %>
             <li>
           <% end %>
-          <%= link_to cat.name, forums_path(params.slice(:sort).merge(category_id: cat.id)) %></li>
+          <%= link_to cat.name, forums_path(params.slice(:sort).merge(category_id: cat.id)) %>
+          </li>
         <% end %>
       </ul>
     </div>
-    <div class="primary_content">
-      <h2 role="heading" aria-level="2">Derniers forums</h2>
-      <span><%= link_to "Ajouter nouveau forum", new_forum_path %></span>
-      <ul>
-      <% @forums.each do |forum| %>
-        <li class="forum">
-          <article>
-            <header>
-              <h3 class="formTitle" role="heading" aria-level="3">
-                <%= link_to forum.name, forum_path(forum) %>
-                <% if user_signed_in? && forum.user_id == current_user.id %>
-                | <%= link_to "Edit", edit_forum_path(forum) %>
-                | <%= button_to "Delete", forum_path(forum), method: :delete, data: { confirm: 'Are you sure?' }  %>
-                <% end %><br>
-                <span>
-                  Posté par <%= link_to forum.user.username, user_path(forum.user) %>
-                  <% if forum.forumable %> 
-                    sur <%= link_to forum.forumable.name, forum.forumable %>
-                  <% end %>
-                </span></h3>
-                <ul class="forumDetails">
-                  <li><i class="icon-bookmarks"></i><% for category in forum.categories do %>
-                    <%= link_to category.name, forums_path(params.slice(:sort).merge(category_id: category.id)) %>
-                  <% end %></li>
-                  <li><i class="icon-clock-1"></i><%= I18n.l forum.created_at %></li>
-                  <li>
-                    <i class="icon-chat"></i>
-                    <%= forum.comments.count %> 
-                    <% if forum.comments.count <= 1 %>
-                      réponse
-                    <% else %>
-                      réponses
+    <div class="entity__results">
+      <% if @forums.count != 0 %>
+        <% @forums.each do |forum| %>
+          <ul>
+          <li class="forum">
+            <article>
+              <header>
+                <h3 class="formTitle" role="heading" aria-level="3">
+                  <%= link_to forum.name, forum_path(forum) %>
+                  <% if user_signed_in? && forum.user_id == current_user.id %>
+                  | <%= link_to "Edit", edit_forum_path(forum) %>
+                  | <%= button_to "Delete", forum_path(forum), method: :delete, data: { confirm: 'Are you sure?' }  %>
+                  <% end %><br>
+                  <span>
+                    Posté par <%= link_to forum.user.username, user_path(forum.user) %>
+                    <% if forum.forumable %> 
+                      sur <%= link_to forum.forumable.name, forum.forumable %>
                     <% end %>
+                  </span></h3>
+                  <ul class="forumDetails">
+                    <li><i class="icon-bookmarks"></i><% for category in forum.categories do %>
+                      <%= link_to category.name, forums_path(params.slice(:sort).merge(category_id: category.id)) %>
+                    <% end %></li>
+                    <li><i class="icon-clock-1"></i><%= I18n.l forum.created_at %></li>
+                    <li>
+                      <i class="icon-chat"></i>
+                      <%= forum.comments.count %> 
+                      <% if forum.comments.count <= 1 %>
+                        réponse
+                      <% else %>
+                        réponses
+                      <% end %>
 
-                  </li>
-                  <li><i class="icon-heart"></i><%= forum.favorites.count %></li>
-                </ul>
-            </header>
-          </article>
-        </li>
+                    </li>
+                    <li><i class="icon-heart"></i><%= forum.favorites.count %></li>
+                  </ul>
+              </header>
+            </article>
+          </li>
+        <% end %>
+        </ul>
+      <% else %>
+        <p class="results__none">Pas de forums</p>
       <% end %>
-      </ul>
     </div>
   </div>
 </section>

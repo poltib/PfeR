@@ -1,24 +1,66 @@
+<% content_for :title do %>
+  Tous les groupes | Sportfun
+<% end %>
 <section>
-  <div class="container">
-    <div class="left_column">
-      <h3 role="heading" aria-level="3">Rechercher un groupe</h3>
+  <div class="container" role="main">
+    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
+    <% if params[:user_id] %>
+      <%= render "layouts/navigations/dashboardNavigation" %>
+    <% else %>
+      <%= render "layouts/navigations/searchNavigation" %>
+    <% end %>
+    <div class="entity__title">
+      <h2 role="heading" aria-level="2">Groupes</h2>
+      <%= link_to "Ajouter un groupe", new_group_path %>
     </div>
-    <div class="primary_content">
-      <h2 role="heading" aria-level="2">Groupes à proximité</h2>
-      <ul>
-      <% @groups.each do |group| %>
-        <li class="content__thumbRace">
-          <h4 role="heading" aria-level="4">
-            <%= link_to group.name, group_path(group) %>
-            <% if user_signed_in? &&  group.owner.id == current_user.id %>
-            | <%= link_to "Edit", edit_group_path(group) %>
-            | <%= link_to "Delete", group, :method => 'delete' %>
-          <% end %>
-          </h4>
-          <span><%= group.users.count %> membres</span>
-        </li>
+    <div class="entity__searchform">
+      <%= form_tag(groups_path, :method => "get", id: "search-form") do %>
+        <fieldset>
+          <ul>
+          <li>
+            <%= label_tag :location, "Lieu" %>
+            <%= text_field_tag  :location, params[:location] %>
+          </li>
+          <li>
+            <%= submit_tag "Rechercher", :name => nil %>
+          </li>
+          </ul>
+        </fieldset>
       <% end %>
-      </ul>
+    </div>
+    <div class="entity__results">
+      <% if @groups.count != 0 %>
+        <ul>
+          <% @groups.each do |group| %>
+            <li class="entity__result">
+              <ul class="result__list">
+                <li class="result__avatar"><%= image_tag group.avatar.url(:thumb) %></li>
+                <li>
+                  <h4 role="heading" aria-level="4">
+                    <%= link_to group.name, group_path(group) %>
+                    <% if user_signed_in? &&  group.owner.id == current_user.id %>
+                    | <%= link_to "Edit", edit_group_path(group) %>
+                    | <%= link_to "Delete", group, :method => 'delete' %>
+                    <% end %>
+                  </h4>
+                </li>
+                <li>
+                  <span>
+                    <%= group.users.count %>
+                    <% if group.users.count <= 1 %>
+                      membre
+                    <% else %>
+                      membres
+                    <% end %>
+                  </span>
+                </li>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="results__none">Pas de groupes</p>
+      <% end %>
     </div>
   </div>
 </section>

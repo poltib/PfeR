@@ -13,7 +13,7 @@
               <h4 role="heading" aria-level="4">
               <%= link_to grouper.user.username, user_path(grouper.user) %>
               </h4>
-              <% if user_signed_in? &&  @group.owner.id == current_user.id || grouper.user.id == current_user.id  %>
+              <% if user_signed_in? &&  @group.owner.id == current_user.id || user_signed_in? && grouper.user.id == current_user.id  %>
                 <%= form_for ([@group, grouper]), :html => {:class => 'button_to' } do |f| %>
                   <%= f.hidden_field :grouper_id, :value => grouper.id %>
                   <%= button_tag do %>
@@ -28,7 +28,7 @@
             <li>
               <h4 role="heading" aria-level="4">
                   <%= link_to grouper.user.username, user_path(grouper.user) %>
-                  <% if user_signed_in? &&  @group.owner.id == current_user.id || grouper.user.id == current_user.id  %>
+                  <% if user_signed_in? &&  @group.owner.id == current_user.id || user_signed_in? && grouper.user.id == current_user.id  %>
                     <%= form_for ([@group, grouper]), method: :delete , :html => { :class => 'button_to' } do |f| %>
                         <%= button_tag :class => 'distances' do %>
                         <span class="tooltip" data-tooltip="Supprimer du groupe">

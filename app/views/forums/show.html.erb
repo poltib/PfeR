@@ -43,7 +43,7 @@
           <%= link_to @forum.name, forum_path(@forum) %>
           <% if  user_signed_in? && @forum.user_id == current_user.id %>
           | <%= link_to "Edit", edit_forum_path(@forum) %>
-          | <%= button_to "Delete", @forum, :method => 'DELETE' %>
+          | <%= button_to "Supprimer", @forum, method: :delete, data: { confirm: 'Are you sure?' } %>
           <% end %><br><span>Posté par <%= link_to @forum.user.username, user_path(@forum.user) %>
           <% if @forum.forumable %> 
             sur <%= link_to @forum.forumable.name, @forum.forumable %>
@@ -51,7 +51,7 @@
           </span></h3>
           <ul class="forumDetails">
             <li><i class="icon-bookmarks"></i><% for category in @forum.categories do %>
-              <%= link_to category.name, category %>
+              <%= link_to category.name, forums_path(params.slice(:sort).merge(category_id: category.id)) %>
             <% end %></li>
             <li><i class="icon-clock-1"></i><%= I18n.l @forum.created_at %></li>
             <li>
@@ -89,8 +89,6 @@
         <p>Vous devez être connecté pour participer à la discussion.</p>
       <% end %>
     </ul>
-
-
     </div>
   </div>
 </section>

@@ -8,6 +8,7 @@
       <%= render 'groupNav' %>
     </div>
     <div class="primary_content">
+      <%= link_to "Ajouter activité", new_group_happening_path(@group) %>
       <h2 role="heading" aria-level="2">Activités du groupe</h2>
       <div class="calendar__header">
         <h3 role="heading" aria-level="3">
@@ -19,6 +20,13 @@
       <div>
         <%= calendar @date do |date| %>
           <%= date.day  %>
+          <% if @events_by_date[date] %>
+            <ul class="calendar__events">
+              <% @events_by_date[date].each do |event| %>
+                <li><%= link_to event.name, event %></li>
+              <% end %>
+            </ul>
+          <% end %>
         <% end %>
       </div>
     </div>

@@ -18,7 +18,7 @@
     <%= hidden_field_tag "forum[category_ids][]", 4 %>
     <%= f.hidden_field :forumable_type, :value => "Track" %>
   <% elsif params[:happening_id] %>
-    <%= f.hidden_field :forumable_id, :value => params[:happening_id] %>
+    <%= f.hidden_field :forumable_id, :value => @happening.id %>
     <%= hidden_field_tag "forum[category_ids][]", 2 %>
     <%= f.hidden_field :forumable_type, :value => "Happening" %>
   <% else %>
