@@ -74,7 +74,7 @@ Pfe::Application.configure do
   port: 587,
   authentication: 'plain',
   enable_starttls_auto: true,
-  user_name: ENV['GMAIL_USERNAME']
+  user_name: ENV['GMAIL_USERNAME'],
   password: ENV['GMAIL_PASSWORD']
   }
   # config.action_mailer.raise_delivery_errors = true
