@@ -1,111 +1,115 @@
+<% content_for :title do %>
+  Tracé «<%= @track.name %>» | Sportfun
+<% end %>
 <section>
   <div class="container">
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
-    <div class="left_column">
-      <h3 role="heading" aria-level="3">Informations</h3>
-      <ul class="happening__info">
-        <li><%= @track.location %></li>
-        <li><%= @track.length %> km</li>
-        <li>Description : <%= @track.description %></li>
-      </ul>
-      <h3 role="heading" aria-level="3">Actions</h3>
-      <ul class="subNav">
-        <% if user_signed_in? && current_user.id == @track.user_id %>
-          <li>
-            <span id="showImageForm"><i class="icon-picture"></i> Ajouter une image</span>
-            <%= form_for ([@track, Image.new]), :html => { :multipart => true, :id => 'addImage' } do |f| %>
-              <%= f.hidden_field :user_id, :value => current_user.id %>
-              <%= f.hidden_field :imagable_id, :value => @track.id %>
-              <%= f.hidden_field :imagable_type, :value => "Track" %>
-              <%= f.label :image %>
-              <%= f.file_field :image %>
-              <%= f.submit %>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to edit_track_path(@track) do %>
-              <i class="icon-cog"></i> Modifier
-            <% end %>
-          </li>
-          <li>
-            <%= button_to track_path(@track), method: :delete, data: { confirm: 'Are you sure?' } do %>
-              <i class="icon-trash"></i> Supprimer
-            <% end %>
-          </li>
+    <%= render "layouts/navigations/trackNavigation" %>
+    <div class="entity__title happening">
+      <h2 role="heading" aria-level="2">
+        <%= @track.name %>
+        <span>Posté par: <%= link_to @track.user.username, @track.user %></span><br>
+        <% if @track.happening %>
+          <span>
+            Sur l'évènement <%= link_to @track.happening.name, @track.happening %>
+          </span>
         <% end %>
-        <% if user_signed_in? %>
-          <li>
-            <% if current_user.favorites.where(favoritable_id: @track.id, favoritable_type: "Track").first %>
-              <%= button_to [@track, current_user.favorites.where(favoritable_id: @track.id, favoritable_type: "Track").first], method: :delete do %>
-                  <i class="icon-heart"></i> Supprimer des favorits
-              <% end %>
-            <% else %>
-              <%= form_for ([@track, Favorite.new]), :html => {:class => 'button_to' } do |f| %>
-                <%= f.hidden_field :user_id, :value => current_user.id %>
-                <%= f.hidden_field :favoritable_id, :value => @track.id %>
-                <%= f.hidden_field :favoritable_type, :value => "Track" %>
-                <%= button_tag do %>
-                  <i class="icon-heart-empty"></i> Ajouter aux favorits
-                <% end %>
-              <% end %>
+      </h2>
+      <div class="entity__informations">
+        <ul>
+          <div class="first__info">
+            <li><i class="icon-direction"></i> <%= @track.length %>km</li>
+            <li><i class="icon-location"></i> <%= @track.location %></li>
+            <li><i class="icon-clock"></i> Posté <%= I18n.l @track.created_at %></li>
+            <% if @track.group %>
+              <li>Posté sur le groupe <%= link_to @track.group.name, @track.group %></li>
             <% end %>
-          </li>
+          </div>
           <li>
-            <%= link_to new_track_forum_path(@track) do %>
-              <i class="icon-pencil"></i> Poster forum
-            <% end %>
+            <span><i class="icon-vcard"></i> Description</span>
+            <%= @track.description %>
           </li>
-        <% end %>
-      </ul>
-    </div>
-    <div class="primary_content">
-      <div class="raceTitle">
-        <h2 role="heading" aria-level="2"><%= @track.name %></h2>
-        <ul class="social">
-          <li class="socialNetwork"><a data-tooltip="Partager sur Facebook" href="http://www.facebook.com/share.php?u=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-facebook-squared"></i></a></li>
-          <li class="socialNetwork"><a data-tooltip="Partager sur Google plus" href="https://plus.google.com/share?url=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-gplus-squared"></i></a></li>
-          <li class="socialNetwork"><a data-tooltip="Partager sur Twitter" href="http://twitter.com/home?status=<%= request.original_url %>" target="blank" rel="nofollow"><i class="icon-twitter-squared"></i></a></li>
-          <li class="socialNetwork"><a data-tooltip="Partager par mail" href="mailto:?subject=Course intéressante sur Sportfun&amp;body=Course intéressante <%= @track.name %> : <%= request.original_url %>" rel="nofollow"><i class="icon-mail"></i></a></li>
         </ul>
       </div>
-      <div class="map">
-        <div id="map_canvas"></div>
-        <div id="aside">
-          <div id="elevation_chart"></div>
-        </div>
-        <div id="directions-panel"></div>
+    </div>
+    <div class="track map">
+      <div id="map_canvas"></div>
+      <div id="aside">
+        <div id="elevation_chart"></div>
       </div>
-      <div class="gallery">
-        <h3 role="heading" aria-level="3">
-          Gallerie photo 
-        </h3>
-        <ul id="many" class="thumbs">
-          <% for image in @track.images %>
-            <li>
-              <a href="<%= image.image.url(:medium) %>" class="thumbnail">
-                <%= image_tag image.image.url(:thumb) %>
-              </a>
-              <% if user_signed_in? && current_user.id == @track.user.id %>
-                <%= button_to [@track, image], method: :delete, data: { confirm: 'Are you sure?' }, form_class: "delete_image" do %>
-                  <span data-tooltip="Supprimer la photo">
-                    <i class="icon-cancel"></i>
-                  </span>
-                <% end %>
-              <% end %>
+    </div>
+    <div class="entity__forums">
+      <h3 role="heading" arie-level="3">
+        <%= link_to new_track_forum_path(@track), :class=> "type add" do %>
+          <i class="icon-pencil"></i> Poster forum
+        <% end %>
+        Forums
+      </h3>
+      <% if @track.forums.count == 0 %>
+        <p>Pas de forums</p>
+      <% else %>
+        <ul>
+          <% @track.forums.each do |forum| %>
+            <li class="forum">
+            <article>
+            <header>
+              <h4 class="formTitle" role="heading" aria-level="4">
+                <%= link_to forum.name, forum_path(forum) %><br>
+                <span>
+                  Posté par <%= link_to forum.user.username, user_path(forum.user) %>
+                </span></h4>
+                <ul class="forumDetails">
+                  <li><i class="icon-clock-1"></i><%= I18n.l forum.created_at %></li>
+                  <li><i class="icon-chat"></i><%= forum.comments.count %></li>
+                </ul>
+            </header>
+            </article>
             </li>
           <% end %>
-          <ul>
-          <% for forum in @track.forums %>
-            <li><%= link_to forum.name, forum %></li>
-          <% end %>
-          </ul>
         </ul>
+      <% end %>
+    </div>
+    <div class="entity__gallery">
+      <h3 role="heading" aria-level="3">
+        <% if current_user == @track.user %>
+          <span id="showImageForm" class="type add"><i class="icon-picture"></i> Ajouter une image</span>
+        <% end %>
+        Photos
+      </h3>
+      <% if current_user == @track.user %>
+      <div class="entity__addimageform">
+        <%= form_for ([@track, Image.new]), :html => { :multipart => true, :id => 'addImage' } do |f| %>
+          <%= f.hidden_field :user_id, :value => current_user.id %>
+          <%= f.hidden_field :imagable_id, :value => @track.id %>
+          <%= f.hidden_field :imagable_type, :value => "Track" %>
+          <ul>
+            <li><%= f.label :image %><%= f.file_field :image %></li>
+            <li><%= f.submit :Ajouter %></li>
+          </ul>
+        <% end %>
       </div>
+      <% end %>
+      <ul id="many" class="thumbs">
+        <% @track.images.each do |image| %>
+          <li>
+            <a href="<%= image.image.url(:medium) %>" class="thumbnail">
+              <%= image_tag image.image.url(:thumb) %>
+            </a>
+            <% if user_signed_in? && current_user == @track.user %>
+              <%= button_to [@track, image], method: :delete, data: { confirm: 'Are you sure?' }, form_class: "delete_image" do %>
+                <span data-tooltip="Supprimer la photo">
+                  <i class="icon-cancel"></i>
+                </span>
+              <% end %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div>
 <% content_for :script do %>
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<%= google_maps_api %>
-	<%= track_id_to_js(@track.id) if @track %>
+  <%= javascript_tag do %>
+    var js_track_id = "<%=j @track.slug.to_s.html_safe %>";
+  <% end %>
 <% end %>
 </section>

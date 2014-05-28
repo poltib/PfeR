@@ -1,38 +1,41 @@
 <section>
-	<div class="container">
-		<h2 role="heading" aria-level="2" class="hidden">Content</h2>
-		<h2 role="heading" aria-level="2">Créer un tracer
-		<% if @happening %>
-			sur <%= link_to @happening.name, @happening %>
-		<% end %>
-		</h2>
+  <div class="container">
+    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
     <div class="left_column">
-    	<h3 role="heading" aria-level="3">Informations</h3>
-    	<button id="hideMap">Créer avec un fichier</button>
-      <div id="mapErrors">
-		  	<p></p>
-			</div>
-			<%= render 'form' %>
+      <div class="event__actions">
+        <h3 role="heading" aria-level="3">Informations</h3>
+        <div id="elevation_chart"></div>
+        <button id="hideMap">Créer avec un fichier</button>
+        <div id="mapErrors">
+          <p></p>
+        </div>
+        <%= render 'form' %>
+      </div>
     </div>
     <div class="primary_content">
-			<div class="map">
-				<div id="map_canvas"></div>
-				<div id="aside">
-					<div id="dist">dist</div>
-					<div id="close">Close</div>
-					<div id="reset">Reset</div>
-					<div id="full">full</div>
-					<div id="elevation_chart"></div>
-				</div>
-				<div id="directions-panel"></div>
-			</div>
-			<%= link_to 'Retour', tracks_path %>
-		</div>
-	</div>
-	<% content_for :script do %>
-		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-		<%= google_maps_api %>
-		<%= location_to_js(@location) if @location %>
-	<% end %>
+      <div class="map module">
+        <h2 role="heading" aria-level="2">
+          Créer un tracé
+          <% if @happening %>
+            sur <%= link_to @happening.name, @happening %>
+          <% end %>
+          <span class="type dist">Distance : <span id="dist">dist</span></span>
+        </h2>
+        <div id="map_canvas"></div>
+        <div id="aside" class="event__actions">
+          <ul>
+            <li><button id="close">Fermer le tracer</button></li>
+            <li><button id="reset">Effacer tout</button></li>
+            <li><button id="full">Plein écran</button></li>
+            <li><button id="back">Annuler action</button></li>
+            <li><button id="tiny">Effacer un point</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% content_for :script do %>
+    <%= location_to_js(@location) if @location %>
+  <% end %>
 </section>
 

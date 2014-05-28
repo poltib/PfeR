@@ -1,36 +1,44 @@
+<% content_for :title do %>
+  Tous les tracés | Sportfun
+<% end %>
 <section>
-  <div class="container">
+  <div class="container" role="main">
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
-    <h2 role="heading" aria-level="2"><%= @tracks.count %> tracés à proximité</h2>
-    <span><%= link_to "Ajouter nouveau tracé", new_track_path %></span>
-    <div class="map">
-      <div id="map_canvas"></div>
-      <div id="aside">
-        <div id="tracks">
-          <%= render 'tracks' %>
-        </div>
-        <div id="elevation_chart"></div>
-      </div>
+    <% if params[:user_id] %>
+      <%= render "layouts/navigations/dashboardNavigation" %>
+    <% else %>
+      <%= render "layouts/navigations/searchNavigation" %>
+    <% end %>
+    <div class="entity__title">
+      <h2 role="heading" aria-level="2">Tracés <span>(<%= @tracks.count %> à proximité)</span></h2>
+      <%= link_to "Ajouter un tracé", new_track_path %>
     </div>
-    <div class="left_column">
-      <h3 role="heading" aria-level="3">Rechercher un tracé</h3>
+    <div class="entity__searchform">
       <%= form_tag(tracks_path, :method => "get", id: "search-form") do %>
-        <%= label_tag :search, "Adresse" %>
-        <%= text_field_tag :search, params[:search], placeholder: "ex: Liège, Belgique" %>
-        <div class="radiusRange">
-          <%= label_tag :radius, "Rayon" %>
-          <input type="range" name="radius" id="radius" min="1" max="50" value="20"><output for="radius" id="actuRadius">20</output><span>km</span></div>
-        <%= submit_tag "Rechercher", :name => nil %>
+        <fieldset>
+          <ul>
+            <li><%= label_tag :search, "Adresse" %>
+            <%= text_field_tag :search, params[:search], placeholder: "ex: Liège, Belgique" %></li>
+            <li class="radiusRange">
+              <%= label_tag :radius, "Rayon" %>
+              <input type="range" name="radius" id="radius" min="1" max="50" value="20"><output for="radius" id="actuRadius">20</output><span>km</span></li>
+            <li><%= submit_tag "Rechercher", :name => nil %></li>
+          </ul>
+        </fieldset>
       <% end %>
     </div>
-    <div class="primary_content">
-
+    <div class="entity__results">
+      <div class="map">
+        <% if params[:user_id].blank? %>
+          <div id="map_canvas"></div>
+        <% end %>
+        <div id="aside">
+          <div id="tracks">
+            <%= render 'tracks' %>
+          </div>
+          <div id="elevation_chart"></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-
-<% content_for :script do %>
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <%= google_maps_api %>
-<% end %>
-
