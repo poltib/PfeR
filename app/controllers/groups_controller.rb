@@ -3,7 +3,12 @@ class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :destroy]
 
   def index
-    @groups = Group.all
+    if params[:user_id]
+      user = User.find_by_username params[:user_id]
+      @groups = user.groups
+    else
+      @groups = Group.all
+    end
   end
 
   def new
@@ -25,7 +30,7 @@ class GroupsController < ApplicationController
       grouper.user_id = @user.id
       grouper.accepted_on = Time.now
       grouper.save
-      redirect_to groups_path, :notice => 'Votre groupe à été ajouté avec succès.'
+      redirect_to group_path(@group), :notice => 'Votre groupe à été ajouté avec succès.'
     else
       render 'new'
     end
@@ -39,7 +44,7 @@ class GroupsController < ApplicationController
     @group = Group.find params[:id]
     group = params[:group].dup
     if @group.update_attributes group_params
-        redirect_to groups_path, :notice => 'Votre groupe à été mis à jour avec succès.'
+        redirect_to group_path(@group), :notice => 'Votre groupe à été mis à jour avec succès.'
     else
         render 'edit'
     end

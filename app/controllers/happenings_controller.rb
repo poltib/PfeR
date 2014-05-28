@@ -47,7 +47,7 @@ class HappeningsController < ApplicationController
 
   def update
     if @happening.update_attributes happening_params
-        redirect_to happenings_path, :notice => 'Votre évènement à été mis à jour avec succès.'
+        redirect_to happening_path(@happening), :notice => 'Votre évènement à été mis à jour avec succès.'
     else
         render 'edit'
     end

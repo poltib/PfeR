@@ -7,7 +7,12 @@ class TracksController < ApplicationController
   # GET /tracks
   # GET /tracks.json
   def index
-    @tracks = Track.near(@location, @radius, :units => :km)
+    if params[:user_id]
+      user = User.find_by_username params[:user_id]
+      @tracks = user.tracks
+    else
+      @tracks = Track.near(@location, @radius, :units => :km)
+    end
     @tracksJs = Array.new
     @tracks.each do |track|
       @tracksJs.push([track.latitude, track.longitude, track.slug])

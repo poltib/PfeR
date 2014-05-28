@@ -6,7 +6,7 @@ class ForumsController < ApplicationController
     if params[:category_id]
       if Category.exists?(:id => params[:category_id])
         @forums = Category.find(params[:category_id]).forums.order('updated_at')
-        @active = params[:category_id].to_i
+        @active = [params[:category_id].to_i,Category.find(params[:category_id]).name]
       else
         redirect_to forums_path, :notice => 'Cette catégorie n\'existe pas.'
       end
@@ -31,7 +31,7 @@ class ForumsController < ApplicationController
   	@forum = Forum.new(forum_params)
   	@forum.user_id = current_user.id
     if @forum.save
-      redirect_to forums_path, :notice => 'Votre forum à été ajouté avec succès.'
+      redirect_to forum_path(@forum), :notice => 'Votre forum à été ajouté avec succès.'
     else
       render 'new'
     end
@@ -42,7 +42,7 @@ class ForumsController < ApplicationController
 
   def update
     if @forum.update_attributes forum_params
-        redirect_to forums_path, :notice => 'Votre forum à été mis à jour avec succès.'
+        redirect_to forum_path(@forum), :notice => 'Votre forum à été mis à jour avec succès.'
     else
         render 'edit'
     end
