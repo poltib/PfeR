@@ -7,7 +7,7 @@
 
 
 .footDiv{
-    margin-bottom: 1.5em;
+    padding-bottom: 1.5em;
     @include span-columns(3);
     @include omega(4n);
     h4{
@@ -27,7 +27,6 @@
 }
 
 footer{
-    margin-top: 2em;
     .container{border-top: 1px solid silver;}
     width: 100%;
     p{

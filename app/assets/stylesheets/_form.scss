@@ -59,9 +59,6 @@ form{
         margin-top: 0.3em;
         padding:0.3em 0;
     }
-    input{
-        width: 80%;
-    }
     div:last-child{
         margin:0;
     }
@@ -77,6 +74,7 @@ form{
 }
 
 [type="text"],[type="password"],[type="date"],[type="email"], textarea{
+    max-width: 100%;
     background-color: transparent;
     border: 1px solid $font;
     margin-top: 0.1em;
@@ -96,31 +94,18 @@ form{
 
 [type="submit"]:hover{
     cursor:pointer;
-    background-color: $font;
-    border-color: $font;
-    color: $sky;
+    background-color: rgba(230,230,230,0.3);
+    color: white;
 }
 
 [type="submit"]{
-    background-color: $sky;
-    border:1px solid $sky;
+    margin-top: 0.5em;
+    background-color: transparent;
+    border:2px solid $font;
     padding:0.4em;
     font-size: 1em;
     color:$font;
 }
-
-input:focus{
-    border: 1px solid #FF7C00;
-}
-
-
-select{
-    width:100%;
-    border-radius: 0;
-    padding: 0.4em;
-    margin-bottom: 0.3em;
-}
-
 .field_with_errors{
     width: 100%;
     input, textarea{
@@ -129,9 +114,17 @@ select{
     }
 }
 
-.createForm{
+.createForm, .new_user{
     @include span-columns(6);
     @include shift(3);
+    @include media($tablet){
+        @include shift(1.55);
+        @include span-columns(6)
+    }
+    @include media($mobile){
+        @include shift(0);
+        @include span-columns(4)
+    }
 }
 
 .left_column .createForm{
@@ -187,4 +180,7 @@ select{
             border-color: $blue;
         }
     }
+}
+
+.entity__creationform{
 }
