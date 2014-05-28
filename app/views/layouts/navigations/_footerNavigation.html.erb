@@ -1,0 +1,41 @@
+<nav role="navigation" class='lower__navigation'>
+  <h2 role="header" aria-level="2" id="nav">Navigation</h2>
+  <ul> 
+    <% if user_signed_in? %>
+    <li>
+      <%= link_to "Tableau de bord", user_dashboard_path, class: (controller?("users") && action?("dashboard") || controller?("happenings") && action?("index") && params[:user_id] || controller?("tracks") && action?("index") && params[:user_id] || controller?("groups") && action?("index") && params[:user_id] ? 'selected' : nil) %>
+    </li> 
+    <% end %>
+    <li>
+      <%= link_to "Rechercher", happenings_path, class: (controller?("happenings") && action?("index") && !params[:user_id] || controller?("tracks") && action?("index") && !params[:user_id] || controller?("groups") && action?("index") && !params[:user_id] ? 'selected' : nil) %>
+    </li> 
+    <li>
+      <%= link_to "Communauté", forums_path, class: (controller?("forums") && action?("index") || controller?("users") && action?("index") ? 'selected' : nil) %>
+    </li> 
+    <% if user_signed_in? %>
+       <li class="nav__user nav__actions">
+          <%= link_to user_path(current_user), class: (controller?("users") && action?("show") ? 'selected' : nil) do %>
+            <%= image_tag current_user.avatar.url(:thumb) %><%= current_user.username %> <i class="icon-down-open-big"></i>
+          <% end %>
+          <ul>
+            <li><%= link_to "Profil", user_path(current_user) %></li>
+            <li><%= link_to "Paramètres", edit_user_registration_path %></li>
+            <li>
+              <%= button_to destroy_user_session_path, :method => :delete do %>
+                Déconnexion
+              <% end %>
+            </li>
+          </ul>
+      </li>
+    <% else %> 
+       <li>
+          <%= link_to new_user_session_path, class: (controller?("devise/sessions") && action?("new") ? 'selected' : nil) do %>
+            Connexion
+          <% end %>
+      </li>
+      <li>
+          <%= link_to "Inscription", new_registration_path(User), class: (controller?("users/registrations") && action?("new") ? 'selected' : nil) %>
+      </li>
+    <% end %>
+   </ul>
+</nav>
