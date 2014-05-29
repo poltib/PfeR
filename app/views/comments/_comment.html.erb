@@ -1,25 +1,17 @@
-<li class="commentItem">
-	<article class="comment">
+<li class="forum__comment">
+	<article>
 		<header class="comment__header">
-			<%= link_to comment.user.username, user_path(comment.user) %>
 			<%= image_tag comment.user.avatar.url(:thumb) %>
-			<% if user_signed_in? &&  current_user.id != comment.user.id %>
-        <%= link_to new_user_conversation_path(comment.user) do %>
-					<i class="icon-comment-1"></i>
-				<% end %>
-       <% end %>
 		</header>
 		<div class="comment__body">
 			<h4>
-				<span>Il y a <%= distance_of_time_in_words_to_now(comment.created_at, include_seconds: true) %></span>
+				<%= link_to comment.user.username, user_path(comment.user) %> Il y a <%= distance_of_time_in_words_to_now(comment.created_at, include_seconds: true) %>
 				<% if  user_signed_in? && comment.user.id == current_user.id %>
-					<div class="delete">
-						<span  class="tooltip" data-tooltip="Supprimer">
-							<%= button_to [@forum, comment], method: :delete do %>
-								<i class="icon-cancel"></i>
-							<% end %>
-						</span>
-					</div>
+					<span>
+						<%= button_to [@forum, comment], method: :delete do %>
+							<i class="icon-cancel"></i> supprimer
+						<% end %>
+					</span>
 				<% end %>
 			</h4>
 			<div class="markdown"><%= markdown(comment.comment) %></div>

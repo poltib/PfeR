@@ -1,21 +1,19 @@
-<%= form_for ([@forum, @forum.comments.build]) , :html => { :class => 'comment' } do |f| %>
+<%= form_for ([@forum, @forum.comments.build]) do |f| %>
   <fieldset>
-  <% if @comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited
-        this comment from being saved:</h2>
-      <ul>
-      <% @comment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  	<ul>
-
-	<li><%= f.text_area :comment, :placeholder => "votre commentaire...", :rows =>"5" %></li>
-
-	<%= f.submit %>
-	</ul>
-	</fieldset>
+    <% if @comment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited
+          this comment from being saved:</h2>
+        <ul>
+        <% @comment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <ul>
+     <li><%= f.text_area :comment, :placeholder => "votre commentaire...", :rows =>"5" %></li>
+     <li><%= f.submit %></li>
+    </ul>
+  </fieldset>
 <% end %>
