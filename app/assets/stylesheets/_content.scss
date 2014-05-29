@@ -294,27 +294,12 @@ table{
 /////////Show user  -----------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 
-.left_column{
-    img{
-        border:3px solid $darkBlue;
-        display: block;
-        margin:0.5em auto;
-    }
-}
 
 
 /////////----------------------------------------------------------------------------------
 /////////Show group  ----------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 
-.group__header{
-    border-bottom: 1px solid $sky;
-    padding-bottom: 0.9em;
-    margin-bottom: 0.5em;
-    h3{
-        border:none;
-    }
-}
 
 /////////----------------------------------------------------------------------------------
 /////////Forums  --------------------------------------------------------------------------
@@ -336,8 +321,13 @@ table{
     }
 }
 
-.formTitle{ 
-    padding:0.3em 0;
+.forum{
+    h2{
+        margin-left: 20%;
+        @include media($tablet){
+            margin-left: 0;
+        }
+    }
     margin-bottom: 0.5em;
     span{
         margin-top: 0.4em;
@@ -348,10 +338,10 @@ table{
     }
 }
 
-.forumDetails{
+.forums__details{
     li{
         display: inline-block;
-        margin-right: 2em;
+        margin-right: 1em;
     }
 
     li:last-child{
@@ -359,137 +349,82 @@ table{
     }
 }
 
-.forum{
-    .formTitle span{
-        color: $font;
+.forum__details{
+    @extend .forums__details;
+    position: absolute;
+    top:-1.6em;
+    left: 0.6em;
+}
+
+.forum__post{
+    width: 60%;
+    margin: 0 auto;
+    @include media($tablet){
+        width: 100%;
     }
-    width: 100%;
-    background-color: $cloud;
+}
+
+// Comments
+////////////////////////////////////////////////////////////////////////////////
+
+.forum__comments{
+    width: 60%;
+    margin-left: 20%;
+    @include media($tablet){
+        width: 80%;
+    }
+    h3{
+        padding: 1em 0.6em;
+    }
     margin-bottom: 1em;
-    article{
-        position:relative;
-        @include span-columns(9 of 9);
-        @include shift(0);
-        @include omega;
-        padding:0.5em;
-        header{
-            margin-bottom: 1em;
-        }
-        span{
-            display: inline-block;
-        }
-
-    }
 }
 
-.shareButton{
-    position:relative;
-    // padding: 0.3em;
+.forum__comment{
+    margin-bottom: 2em;
 }
 
-.shareForum{
-    li{
-        border-bottom:1px solid $sky;
-        display: block;
-        width: 50%;
-        float: right; 
-        font-size: 1.3em;
-        a{
-            display: block;
-            padding: 0.4em 0.3em;
-            border:none;
-        }
-        &:hover{
-            background-color: black;
-            >a{
-                color:white;
-            }
-        }
-    }
-    li:nth-child(even){
-        border-right: 1px solid $sky;
-    }
-
-    &:after{
-        content:"";
-        display: block;
-        clear:both;
-    }
+.forum__comment, .comment__form{
+    position: relative;
 }
 
-
-
-.share{
-    .favorite{
-        a{
-            border-bottom: 1px dotted $font;
-        }
-    }
-    min-height: 176px;
-    li{
-        p{
-            padding: 0.4em 0.3em;
-            border-bottom:1px solid $sky;
-        }
-        text-align: center;
-    }
-}
-
-.events article{
-    padding-bottom: 1em;
-    border-bottom: 1px solid $sky;
-}
-
-.comment:after{
-    content:"";
-    display: block;
-    clear: both;
+.comment__form .comment__body{
+    padding: 0.6em;
 }
 
 .comment__header{
-    text-align: center;
-    padding:0.5em 0.5em 0;
-    margin-bottom: 0.5em;
-    @include span-columns(2 of 10);
-    h4{
-        text-align: center;
-        margin: 0 0 1em;
-    }
-    height: 100%;
+    position: absolute;
+    top: 0.6em;
+    left: -4.6em;
     img{
-        border:3px solid $darkBlue;
-        display: block;
-        margin:1em auto;
-    }
-}
-
-.distances{
-    background-color: transparent;
-    border:none;
-    padding:0;
-    .tooltip{
-        padding-top: 0.3em;
-        @include tooltip(s, rgba(0,0,0,0.8), 2px);
+        width: 4em;
+        border: 2px solid $sky;
     }
 }
 
 .comment__body{
     border-left: 1px solid $sky;
-    padding:0.5em 2em;
-    @include span-columns(8 of 10);
-    @include omega;
-
-    .button_to button{
-        @extend .distances;
-    }
-
     h4{
-        margin-bottom: 1em;
+        padding-left: 0.6em;
+    }
+    button{
+        background-color: transparent;
+        color: black;
+        margin-left: 0.3em;
+        border-bottom: 1px dotted silver;
+        padding: 0;
+        &:hover{
+            color: $blue;
+            background-color: transparent;
+        }
+    }
+    .markdown{
+        padding-top: 0;
     }
 }
 
+
 .markdown{
-    margin: 0 0 0.5em;
+    padding: 0.6em;
     h2{
         text-align: left;
     }
@@ -507,10 +442,6 @@ table{
     }
 }
 
-.delete{
-    display: inline-block;
-}
-
 /////////----------------------------------------------------------------------------------
 /////////Index  ---------------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
@@ -518,6 +449,13 @@ table{
 .entity__title{
     border-bottom: 1px solid $sky;
     position: relative;
+    img{
+        position: absolute;
+        width: 4.8em;
+        border: 2px solid $sky;
+        left: 0.6em;
+        top: 0.6em;
+    }
     h2{
         font-size: 2em;
         padding: 0.8em 0.3em;
@@ -525,7 +463,7 @@ table{
             font-size: 0.6em;
         }
     }
-    >a{
+    >a, button{
         position: absolute;
         right: 1.7em;
         top: 1.7em;
@@ -533,11 +471,83 @@ table{
         background-color: $font;
         color: white;
         border: none;
+        &:hover{
+            background-color: $carrot;
+        }
     }
     &:after{
         content:"";
         display: block;
         clear:both;
+    }
+}
+
+.user{
+    h2{
+        padding-left: 3em;
+    }
+    p{
+        padding: 0 0.6em 0.6em;
+        width: 65%;
+        &:first-of-type{
+            padding-top: 0.6em;
+        }
+    }
+}
+
+.entity__data{
+    display: table-row;
+    h3{
+        padding: 0.6em;
+    }
+    &:after{
+        content:"";
+        display:block;
+        clear:both;
+    }
+}
+
+.entity__activity{
+    display: table-cell;
+    width: 70%;
+    border-right: 1px solid $sky;
+    ul{
+        padding: 0.6em;
+    }
+
+}
+
+.user__actions{
+    padding: 0 0.6em 0.6em;
+    border-bottom: 1ps colid $sky;
+    a{
+        @extend .add;
+    }
+}
+
+.entity__relations{
+    width: 30%;
+    display: table-cell;
+    
+    button{
+        padding: 0.2em;
+        border: 1px solid white;
+        color: black;
+        i{
+            background-color: $greenOk;
+            color: white;
+            border-radius: 50%;
+            padding: 0.1em 0;
+            display: inline-block;
+        }
+        &:hover{
+            color: black;
+            background-color: $sky;
+            border: 1px solid silver;
+            i{
+
+            }
+        }
     }
 }
 
@@ -547,7 +557,10 @@ table{
 }
 
 .entity__informations{
-    padding: 0.8em 0;
+    h3{
+        padding: 0.6em;
+    }
+    ul{padding: 0.8em 0;}
     li{
         padding:0 0.6em 0.5em;
         &:last-child{
@@ -745,5 +758,43 @@ table{
             background-color: transparent;
             color:black;
         }
+    }
+}
+
+
+.signin{
+    border: none;
+    display: inline-block;
+    padding: 0.6em;
+    color: $cloud;
+    text-align: center;
+    margin-top: 0.6em;
+    &:hover{
+        color: $cloud;
+    }
+}
+
+.fb__button{
+    background-color:$facebook;
+    &:hover{
+        background-color: $facebookHover;
+    }
+}
+.gg__button{
+    background-color:$googleplus;
+    &:hover{
+        background-color: $googleplusHover;
+    }
+}
+.tw__button{
+    background-color:$twitter;
+    &:hover{
+        background-color: $twitterHover;
+    }
+}
+.mail__button{
+    background-color:$blueLight;
+    &:hover{
+        background-color: $blue;
     }
 }
