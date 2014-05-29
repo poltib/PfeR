@@ -200,13 +200,6 @@ add_chart_listener = (map) ->
       infowindow.setContent(contentStr)
       mousemarker.setPosition(elevations[e.row].location)
 
-$(".users.show").ready ->
-  type_buttons = document.getElementsByClassName("type")
-  for type_button in type_buttons
-    type_button.addEventListener 'click', (evt)->
-
-
-
 $(".tracks.new").ready ->
   # Controls
   dist = document.getElementById "dist"
@@ -354,16 +347,11 @@ $(".tracks.new").ready ->
         hide_button.childNodes[0].textContent = "Créer sur la carte"
 
     $('.createForm').submit ->
-      if jsInput.value == ''
+      if jsInput.value == '' || jsInput.value != jsInput.value.match(/\((\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\)/).input
         mapErrors.style.display = 'block'
         mapErrors.childNodes[1].innerText = 'Vous devez créer un tracé'
         false
 
-    $('.createForm').submit ->
-      if jsInput.value != jsInput.value.match(/\((\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\)/).input
-        mapErrors.style.display = 'block'
-        mapErrors.childNodes[1].innerText = 'Il y a un problème dans votre tracé. Rechargez la page svp.'
-        false
 
     full.addEventListener 'click', (evt) ->
       divMap.style.width = '100%'

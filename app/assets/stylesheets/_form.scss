@@ -19,7 +19,8 @@
 }
 
 #actuRadius{
-    font-size: 1.6em;
+    margin-left: 0.4em;
+    font-size: 1.2em;
 }
 
 form{
@@ -93,18 +94,16 @@ form{
 }
 
 [type="submit"]:hover{
-    cursor:pointer;
-    background-color: rgba(230,230,230,0.3);
-    color: white;
+    background-color: $carrot;
 }
 
 [type="submit"]{
-    margin-top: 0.5em;
-    background-color: transparent;
-    border:2px solid $font;
-    padding:0.4em;
+    border: none;
+    margin-top: 0.4em;
+    background-color: $blue;
+    color: $cloud;
+    padding:0.6em;
     font-size: 1em;
-    color:$font;
 }
 .field_with_errors{
     width: 100%;

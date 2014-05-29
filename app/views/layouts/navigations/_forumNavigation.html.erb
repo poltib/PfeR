@@ -1,0 +1,67 @@
+<nav role="navigation" class="secondary__navigation entity">
+  <ul>
+    <% if user_signed_in? %>
+      <li>
+        <% if current_user.favorites.where(favoritable_id: @forum.id, favoritable_type: "Forum").first %>
+          <%= button_to [@forum, current_user.favorites.where(favoritable_id: @forum.id, favoritable_type: "Forum").first], method: :delete do %>
+            Supprimer des favorits
+          <% end %>
+        <% else %>
+          <%= form_for ([@forum, Favorite.new]), :html => {:class => 'button_to' } do |f| %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+            <%= f.hidden_field :favoritable_id, :value => @forum.id %>
+            <%= f.hidden_field :favoritable_type, :value => "Forum" %>
+            <%= button_tag do %>
+              Ajouter aux favorits
+            <% end %>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>
+    <li class="item__relations">
+      <%= link_to forum_favorites_path(@forum), :title => 'Afficher les utilisateurs qui aiment cette évènement' do %>
+        <%= @forum.favorites.count.to_s %> <span class="hidden">Favoris</span><i class="icon-star"></i>
+      <% end %>
+    </li>
+    <% if user_signed_in? && current_user == @forum.user %>
+      <li>
+        <%= link_to edit_forum_path(@forum) do %>
+          <i class="icon-cog"></i> Modifier
+        <% end %>
+      </li>
+      <li>
+        <%= button_to forum_path(@forum), method: :delete, data: { confirm: 'Are you sure?' } do %>
+          <i class="icon-trash"></i> Supprimer
+        <% end %>
+      </li>
+    <% end %>
+    <li class="social">
+      <div class="share__button">
+        <i class="icon-share"></i>
+        <span class="hidden">Partager</span>
+      </div>
+      <ul>
+        <li>
+          <a title="Partager sur Facebook" class="fb__button" href="http://www.facebook.com/share.php?u=<%= request.original_url %>" target="blank" rel="nofollow">
+            <i class="icon-facebook-squared"></i><span class="hidden">Partager sur Facebook</span>
+          </a>
+        </li>
+        <li>
+          <a title="Partager sur Google plus" class="gg__button" href="https://plus.google.com/share?url=<%= request.original_url %>" target="blank" rel="nofollow">
+            <i class="icon-gplus-squared"></i><span class="hidden">Partager sur Google +</span>
+          </a>
+        </li>
+        <li>
+          <a title="Partager sur Twitter" class="tw__button" href="http://twitter.com/home?status=<%= request.original_url %>" target="blank" rel="nofollow">
+            <i class="icon-twitter-squared"></i><span class="hidden">Partager sur Twitter</span>
+          </a>
+        </li>
+        <li>
+          <a title="Partager par mail" class="mail__button" href="mailto:?subject=Course intéressante sur Sportfun&amp;body=Course intéressante <%= @forum.name %> : <%= request.original_url %>" rel="nofollow">
+            <i class="icon-mail"></i><span class="hidden">Partager par mail</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
