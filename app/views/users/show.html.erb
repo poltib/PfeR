@@ -17,7 +17,7 @@
     </div>
     <div class="entity__data">
       <div class="entity__activity">
-        <% if current_user.id == @user.id %>
+        <% if user_signed_in? && current_user.id == @user.id %>
           <h3 role="heading" aria-level="3">Vos activités</h3>
           <div class="user__actions">
             <%= link_to "Ajouter activité", new_happening_path %>
@@ -41,7 +41,7 @@
         
       </div>
       <div class="entity__relations">
-        <% if current_user.id == @user.id %>
+        <% if user_signed_in? &&  current_user.id == @user.id %>
           <h3 role="heading" aria-level="3">Vos groupes</h3>
           <div class="user__actions">
             <%= link_to "Ajouter groupe", new_group_path %>
