@@ -7,10 +7,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @date = params[:date] ? Date.parse(params[:date]) : Date.today
-    happenings = @user.user_statuses
-    @event_types = EventType.all
-    @events_by_date = happenings.group_by{ |happening| happening.happening.date.to_date }
+    @happenings = @user.happenings.order('date desc')
     @activities = PublicActivity::Activity.order('created_at desc').where(owner_id: params[:id], owner_type: 'User')
   end
 

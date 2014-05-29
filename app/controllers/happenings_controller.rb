@@ -2,7 +2,12 @@ class HappeningsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
   before_action :set_happening, only: [:show, :edit, :update, :destroy]
   def index
-    @happenings = Happening.search(params[:event_type], params[:date], params[:location])
+    if params[:user_id]
+      @user = User.find_by_username params[:user_id]
+      @happenings = @user.happenings_as_owner
+    else
+      @happenings = Happening.search(params[:event_type], params[:date], params[:location])
+    end
     @previousHap = Happening.all.where('date <= ?', Date.today)
     @event_types = EventType.all
   end

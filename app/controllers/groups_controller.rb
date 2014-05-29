@@ -4,8 +4,8 @@ class GroupsController < ApplicationController
 
   def index
     if params[:user_id]
-      user = User.find_by_username params[:user_id]
-      @groups = user.groups
+      @user = User.find_by_username params[:user_id]
+      @groups = @user.groups_as_owner
     else
       @groups = Group.all
     end
@@ -17,8 +17,9 @@ class GroupsController < ApplicationController
 
   def show
     @groupers = Grouper.all.where('group_id =?', params[:id])
-    @date = params[:date] ? Date.parse(params[:date]) : Date.today
-    @events_by_date = @group.happenings.group_by{ |happening| happening.date.to_date }
+    @members = Grouper.all.where('group_id =?', params[:id]).where('accepted_on  IS NOT NULL')
+    @waiting_users = Grouper.all.where('group_id =?', params[:id]).where('accepted_on  IS NULL')
+    @happenings = @group.happenings.order('date desc')
   end
 
   def create

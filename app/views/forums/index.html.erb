@@ -39,7 +39,7 @@
           <li class="forum">
             <article>
               <header>
-                <h3 class="formTitle" role="heading" aria-level="3">
+                <h3 class="forum__title" role="heading" aria-level="3">
                   <%= link_to forum.name, forum_path(forum) %>
                   <% if user_signed_in? && forum.user_id == current_user.id %>
                   | <%= link_to "Edit", edit_forum_path(forum) %>
@@ -51,7 +51,7 @@
                       sur <%= link_to forum.forumable.name, forum.forumable %>
                     <% end %>
                   </span></h3>
-                  <ul class="forumDetails">
+                  <ul class="forums__details">
                     <li><i class="icon-bookmarks"></i><% for category in forum.categories do %>
                       <%= link_to category.name, forums_path(params.slice(:sort).merge(category_id: category.id)) %>
                     <% end %></li>

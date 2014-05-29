@@ -5,12 +5,16 @@
   <div class="container" role="main">
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
     <% if params[:user_id] %>
-      <%= render "layouts/navigations/dashboardNavigation" %>
+      <%= render "layouts/navigations/userNavigation" %>
     <% else %>
       <%= render "layouts/navigations/searchNavigation" %>
     <% end %>
     <div class="entity__title">
-      <h2 role="heading" aria-level="2">Évènements</h2>
+      <% if params[:user_id] %>
+        <h2 role="heading" aria-level="2">Évènements créés par <%= @user.username %></h2>
+      <% else %>
+        <h2 role="heading" aria-level="2">Évènements</h2>
+      <% end %>
       <%= link_to "Ajouter un évènement", new_happening_path %>
     </div>
     <div class="entity__searchform">

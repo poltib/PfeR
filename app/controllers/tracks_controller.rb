@@ -8,8 +8,8 @@ class TracksController < ApplicationController
   # GET /tracks.json
   def index
     if params[:user_id]
-      user = User.find_by_username params[:user_id]
-      @tracks = user.tracks
+      @user = User.find_by_username params[:user_id]
+      @tracks = @user.tracks
     else
       @tracks = Track.near(@location, @radius, :units => :km)
     end

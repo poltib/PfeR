@@ -1,7 +1,8 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
+  before_action :load_forum
+
   def create
-  	@forum = Forum.find(params[:forum_id])
     @comment = @forum.comments.create(comment_params)
   	@comment.user_id = current_user.id
     if @comment.save
@@ -12,7 +13,6 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @forum = Forum.find(params[:forum_id])
     @comment = @forum.comments.find(params[:id])
     @comment.destroy
     redirect_to forum_path(@forum), :notice => 'Votre commentaire à été supprimé avec succès.'
@@ -21,5 +21,9 @@ class CommentsController < ApplicationController
   private
     def comment_params
       params.require(:comment).permit(:comment)
+    end
+
+    def load_forum
+      @forum = Forum.find_by_slug(params[:forum_id])
     end
 end

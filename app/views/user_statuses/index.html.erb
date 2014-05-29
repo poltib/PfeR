@@ -1,8 +1,55 @@
+<% content_for :title do %>
+  Tous les utilisateurs de l'évènement <%= @happening.name %> | Sportfun
+<% end %>
 <section>
-  <div class="container">
-		<% for user_status in @user_statuses %>
-			<%= user_status.user.username %>
-			<%= user_status.user.id %>
-		<% end %>
+  <div class="container" role="main">
+    <h2 role="heading" aria-level="2" class="hidden">Tous les utilisateurs</h2>
+    <div class="entity__title">
+      <h2 role="heading" aria-level="2">Utilisateurs
+      <span>qui participent à <%= link_to @happening.name, happening_path(@happening) %></span></h2>
+      <%= link_to "Retour", :back %>
+    </div>
+    <div class="entity__searchform">
+      <%= form_tag(users_path, :method => "get", id: "search-form") do %>
+        <fieldset>
+          <ul>
+          <li>
+            <%= label_tag :username, "Pseudo" %>
+            <%= text_field_tag  :username, params[:username] %>
+          </li>
+          <li>
+            <%= label_tag :location, "Lieu" %>
+            <%= text_field_tag  :location, params[:location] %>
+          </li>
+          <li>
+            <%= submit_tag "Rechercher", :name => nil %>
+          </li>
+          </ul>
+        </fieldset>
+      <% end %>
+    </div>
+    <div class="entity__results">
+      <% if @user_statuses.count != 0 %>
+        <ul>
+          <% @user_statuses.each do |status| %>
+            <li class="entity__result">
+              <ul class="result__list">
+                <li class="result__avatar"><%= image_tag status.user.avatar.url(:thumb) %></li>
+                <li>
+                  <h4 role="heading" aria-level="4">
+                    <%= link_to status.user.username, user_path(status.user) %>
+                    <% if user_signed_in? &&  status.user.id == current_user.id %>
+                      | <%= link_to "Edit", edit_user_registration_path(status.user) %>
+                    <% end %>
+                  </h4>
+                </li>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="results__none">Pas d'utilisateurs</p>
+      <% end %>
+    </div>
   </div>
 </section>
