@@ -1,14 +1,83 @@
+<% content_for :title do %>
+  <% if params[:user_id] %>
+    Favoris de <%= @favoritable.username %>
+  <% else %>
+    Tous les utilisateurs qui ont en favoris <%= @favoritable.name %> | Sportfun
+  <% end %>
+<% end %>
 <section>
-  <div class="container">
-  <h2>Utilisateurs qui aiment <%= link_to @favoritable.name, @favoritable %></h1>
-
-  <ul>
-    <% @favorites.each do |favorite| %>
-      <li>
-        <%= link_to favorite.user.username, favorite.user %>
-      </li>
+  <div class="container" role="main">
+    <% if params[:user_id] %>
+      <%= render "layouts/navigations/userNavigation" %>
     <% end %>
-  </ul>
-
+    <h2 role="heading" aria-level="2" class="hidden">Tous les favoris</h2>
+    <div class="entity__title">
+      <% if params[:user_id] %>
+        <h2 role="heading" aria-level="2">Favoris de <%= @favoritable.username %></h2>
+      <% else %>
+        <h2 role="heading" aria-level="2">Utilisateurs
+        <span>qui ont en favoris <%= link_to @favoritable.name, @favoritable %></span></h2>
+      <% end %>
+      <%= link_to "Retour", :back %>
+    </div>
+    <% if !params[:user_id] %>
+      <div class="entity__searchform">
+        <%= form_tag(users_path, :method => "get", id: "search-form") do %>
+          <fieldset>
+            <ul>
+            <li>
+              <%= label_tag :username, "Pseudo" %>
+              <%= text_field_tag  :username, params[:username] %>
+            </li>
+            <li>
+              <%= label_tag :location, "Lieu" %>
+              <%= text_field_tag  :location, params[:location] %>
+            </li>
+            <li>
+              <%= submit_tag "Rechercher", :name => nil %>
+            </li>
+            </ul>
+          </fieldset>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="entity__results">
+      <% if @favorites.count != 0 %>
+        <ul>
+          <% if params[:user_id] %>
+            <% @favorites.each do |favorite| %>
+                <li class="entity__result">
+                  <ul class="result__list">
+                    <li>
+                      <h4 role="heading" aria-level="4">
+                        <span><%= favorite.favoritable_type %></span>
+                        <%= link_to favorite.favoritable.name, favorite.favoritable %>
+                      </h4>
+                    </li>
+                  </ul>
+                </li>
+            <% end %>
+          <% else %>
+            <% @favorites.each do |favorite| %>
+              <li class="entity__result">
+                <ul class="result__list">
+                  <li class="result__avatar"><%= image_tag favorite.user.avatar.url(:thumb) %></li>
+                  <li>
+                    <h4 role="heading" aria-level="4">
+                      <%= link_to favorite.user.username, user_path(favorite.user) %>
+                      <% if user_signed_in? &&  favorite.user.id == current_user.id %>
+                        | <%= link_to "Edit", edit_user_registration_path(favorite.user) %>
+                      <% end %>
+                    </h4>
+                  </li>
+                </ul>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="results__none">Pas de favoris</p>
+      <% end %>
+    </div>
   </div>
 </section>

@@ -12,6 +12,7 @@ Pfe::Application.routes.draw do
     resources :groups, :only => [:index]
     resources :tracks, :only => [:index]
     resources :happenings, :only => [:index]
+    resources :favorites, :only => [:index]
   end
 
   resources :forums do

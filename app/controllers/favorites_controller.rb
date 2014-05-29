@@ -4,8 +4,17 @@ class FavoritesController < ApplicationController
   # GET /favorites
   # GET /favorites.json
   def index
-    @favoritable = find_favoritable
-    @favorites = @favoritable.favorites
+    if params[:user_id]
+      @favoritable = User.find_by_username(params[:user_id])
+      @user = @favoritable
+    else
+      @favoritable = find_favoritable
+    end
+    if params[:favoritable_type]
+      @favorites = @favoritable.favorites.where('favoritable_type = ?', params[:favoritable_type])
+    else
+      @favorites = @favoritable.favorites
+    end
   end
 
   # POST /favorites
