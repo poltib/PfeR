@@ -52,6 +52,7 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
+gem 'open_uri_redirections'
 
 # files managment
 gem 'carrierwave'

@@ -26,10 +26,6 @@ class User < ActiveRecord::Base
   has_many :groups, :through => :groupers
   has_many :groups_as_owner, :class_name => "Group"
 
-  has_many :teamer, :dependent => :destroy
-  has_many :teams, :through => :teamer
-  has_many :teams_as_owner, :class_name => "Team"
-
   # has_many :conversation, :dependent => :destroy
   # has_many :messages, :through => :conversation
   # has_many :messages_as_owner, :class_name => "Message"
@@ -45,12 +41,27 @@ class User < ActiveRecord::Base
       user.uid = auth.uid
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
-      user.username = auth.info.name
-      user.avatar = auth.info.image
+      user.username = auth.info.first_name+'_'+auth.info.last_name
+      user.firstname = auth.info.first_name
+      user.lastname = auth.info.last_name
+      user.description = auth.info.about
+      if auth.info.image.present?
+         avatar_url = process_uri(auth.info.image)
+         user.update_attribute(:avatar, URI.parse(avatar_url))
+      end
     end
   end
 
   def to_param
     username
   end
+
+  private
+    def self.process_uri(uri)
+      require 'open-uri'
+      require 'open_uri_redirections'
+      open(uri, :allow_redirections => :safe) do |r|
+        r.base_uri.to_s
+      end
+    end
 end
