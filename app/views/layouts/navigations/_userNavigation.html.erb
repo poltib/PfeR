@@ -1,11 +1,17 @@
 <nav role="navigation" class="secondary__navigation">
-	<ul>
-		<li><%= link_to "Profil #{@user.username}", user_path(@user), class: (controller?("users") && action?("show") ? 'actif' : nil) %></li>
-		<% if user_signed_in? && @user.id == current_user.id %>
-			<li><%= link_to "Paramètres", edit_user_registration_path, class: (controller?("users/registrations") && action?("edit") ? 'actif' : nil) %></li>
-      <li>
-        <%= button_to "Déconnexion", destroy_user_session_path, :method => :delete %>
-      </li>
-		<% end %>
-	</ul>
+  <ul>
+    <% if user_signed_in? && @user.id == current_user.id %>
+      <li><%= link_to "Mes activités", user_path(@user), class: (controller?("users") && action?("show") ? 'actif' : nil) %></li>
+      <li><%= link_to "Mes évènements", user_happenings_path(@user), class: (controller?("happenings") && action?("index") ? 'actif' : nil) %></li>
+      <li><%= link_to "Mes tracés", user_tracks_path(@user), class: (controller?("tracks") && action?("index") ? 'actif' : nil) %></li>
+      <li><%= link_to "Mes groupes", user_groups_path(@user), class: (controller?("groups") && action?("index") ? 'actif' : nil) %></li>
+      <li><%= link_to "Mes favoris", user_favorites_path(@user), class: (controller?("favorites") && action?("index") ? 'actif' : nil) %></li>
+    <% else %>
+      <li><%= link_to "Profil #{@user.username}", user_path(@user), class: (controller?("users") && action?("show") ? 'actif' : nil) %></li>
+      <li><%= link_to "Évènements", user_happenings_path(@user), class: (controller?("happenings") && action?("index") ? 'actif' : nil) %></li>
+      <li><%= link_to "Tracés", user_tracks_path(@user), class: (controller?("tracks") && action?("index") ? 'actif' : nil) %></li>
+      <li><%= link_to "Groupes", user_groups_path(@user), class: (controller?("groups") && action?("index") ? 'actif' : nil) %></li>
+      <li><%= link_to "Favoris", user_favorites_path(@user), class: (controller?("favorites") && action?("index") ? 'actif' : nil) %></li>
+    <% end %>
+  </ul>
 </nav>

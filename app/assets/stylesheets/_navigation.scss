@@ -10,6 +10,33 @@ nav [type="submit"]{
     padding-right:0;
 }
 
+div.header__menu{
+    @include media($mobile){
+        @include span-columns(2);
+        @include omega;
+    }
+}
+.header__menu{
+    @include media($phablet){
+        a{
+            display: block;
+        }
+        @include span-columns(4);
+    }
+    a{
+        display: inline-block;
+        border: none;
+        padding: 1.1em 1.55em;
+        font-size: 0.8em;
+        color: black;
+        &:hover{
+            background-color: $cloud;
+            color: $blue;
+        }
+    }
+    display: none;
+}
+
 .map .event__actions{
     border: none;
     li{
@@ -98,24 +125,24 @@ nav [type="submit"]{
     display: none;
     @include media($phablet){
         display: block;
-        a, form{
-            button{
-                width: 100%;
-            }
-            margin-bottom: 0.6em;
-            @include span-columns(4 of 4);
-            @include shift(0);
-        }
+    }
+    h2{
+        margin-bottom: 0.6em;
     }
     ul li{
         margin-bottom: 0.5em;
+        display: block;
+        form{
+            width: 100%; 
+        }
     }
-    a{
-        padding: 0.5em;
-        background-color: $sky;
-        display: inline-block;
-        border:none;
+    a, button{
+        @extend .add;
         text-align: center;
+        width: 50%;
+        @include media($mobile){
+            width: 100%;
+        }
     }
 }
 
@@ -137,6 +164,7 @@ nav.header__navigation{
         display: inline-block;
     }
     a, .button_to [type="submit"]{
+        background-color: transparent;
         display: inline-block;
         border: none;
         color:black;
@@ -179,7 +207,7 @@ nav.header__navigation{
         opacity: 1;
         }
     }
-
+    
     ul {
         width: 100%;
         transform: translate3d(0, 0, 0);
@@ -211,10 +239,6 @@ nav.header__navigation{
                 padding: 1em;
                 display: block;
                 color:black;
-                &:hover{
-                    padding-bottom: 0.7em;
-                    border-bottom: 0.3em solid $blue;
-                }
             }
         }
     }
@@ -234,6 +258,7 @@ nav.header__navigation{
         float:left;
     }
     a, button, .share__button{
+        background-color: transparent;
         display: inline-block;
         color:black;
         border: none;
@@ -296,28 +321,16 @@ nav.header__navigation{
         border-right: none;
         margin:0;
     }
-    .fb__button{
-        background-color:$facebook;
-        &:hover{
-            background-color: $facebookHover;
-        }
+    .fb__button:hover{
+        background-color: $facebookHover;
     }
-    .gg__button{
-        background-color:$googleplus;
-        &:hover{
-            background-color: $googleplusHover;
-        }
+    .gg__button:hover{
+        background-color: $googleplusHover;
     }
-    .tw__button{
-        background-color:$twitter;
-        &:hover{
-            background-color: $twitterHover;
-        }
+    .tw__button:hover{
+        background-color: $twitterHover;
     }
-    .mail__button{
-        background-color:$blueLight;
-        &:hover{
-            background-color: $blue;
-        }
+    .mail__button:hover{
+        background-color: $blue;
     }
 }

@@ -1,11 +1,11 @@
 <nav role="navigation" class="secondary__navigation entity">
   <ul>
+    <li>
+      <%= link_to download_track_path(@track), :title => 'Télécharger le tracé' do %>
+        <i class="icon-download"></i> Télécharger
+      <% end %>
+    </li>
     <% if user_signed_in? %>
-      <li>
-        <%= link_to download_track_path(@track), :title => 'Télécharger le tracé' do %>
-          <i class="icon-download"></i> Télacharger
-        <% end %>
-      </li>
       <li>
         <% if current_user.favorites.where(favoritable_id: @track.id, favoritable_type: "Track").first %>
           <%= button_to [@track, current_user.favorites.where(favoritable_id: @track.id, favoritable_type: "Track").first], method: :delete do %>
