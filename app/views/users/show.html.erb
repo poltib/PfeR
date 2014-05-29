@@ -1,6 +1,7 @@
 <section>
   <div class="container">
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
+    <%= render "layouts/navigations/userNavigation" %>
     <div class="left_column">
       <h3 role="heading" aria-level="3">Profile de <%= @user.username %></h3>
       <% if user_signed_in? &&  current_user.id != @user.id %>
@@ -8,7 +9,6 @@
       <% end %>
       <%= image_tag @user.avatar.url(:thumb) %>
       <p><%= @user.description %></p>
-      <%= link_to "edit", edit_user_registration_path(@user) %>
       <ul>
         <li>Localisation</li>
         <li>Groupes :

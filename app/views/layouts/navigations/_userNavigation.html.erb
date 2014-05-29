@@ -1,7 +1,7 @@
 <nav role="navigation" class="secondary__navigation">
 	<ul>
 		<li><%= link_to "Profil #{@user.username}", user_path(@user), class: (controller?("users") && action?("show") ? 'actif' : nil) %></li>
-		<% if user_signed_in? %>
+		<% if user_signed_in? && @user.id == current_user.id %>
 			<li><%= link_to "Paramètres", edit_user_registration_path, class: (controller?("users/registrations") && action?("edit") ? 'actif' : nil) %></li>
       <li>
         <%= button_to "Déconnexion", destroy_user_session_path, :method => :delete %>
