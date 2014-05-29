@@ -3,7 +3,6 @@
 <% end %>
 <section>
   <div class="container">
-    <%= render "layouts/navigations/userNavigation" %>
     <div class="entity__title">
       <h2 role="heading" aria-level="2">Modifier le compte «<%= @user.username %>»</h2>
       <h3>Pas satisfait?</h3>
@@ -32,7 +31,7 @@
         <%= f.text_area :description %></li>
         <li>
           <p>Votre avatar actuel</p>
-          <%= image_tag @user.avatar.url(:medium) %>
+          <%= image_tag @user.avatar.url(:thumb) %>
         </li>
         <li><%= f.label :avatar %><br />
         <%= f.file_field :avatar %></li>
