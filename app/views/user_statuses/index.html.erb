@@ -39,7 +39,7 @@
                   <h4 role="heading" aria-level="4">
                     <%= link_to status.user.username, user_path(status.user) %>
                     <% if user_signed_in? &&  status.user.id == current_user.id %>
-                      | <%= link_to "Edit", edit_user_registration_path(status.user) %>
+                      | <%= link_to "Paramètres", edit_user_registration_path(status.user) %>
                     <% end %>
                   </h4>
                 </li>
