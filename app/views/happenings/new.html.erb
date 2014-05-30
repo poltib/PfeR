@@ -1,10 +1,16 @@
-<section>
-<div class="container">
-<h2 role="heading" aria-level="2">Ajouter évènement</h2>
-<% if @group %>
-	<h3>Sur le groupe <%= link_to @group.name, @group %></h3>
+<% content_for :title do %>
+  Ajouter un évènement | Sportfun
 <% end %>
-
-<%= render 'form' %>
-</div>
+<section>
+  <div class="container">
+    <div class="entity__title">
+      <h2 role="heading" aria-level="2">Ajouter évènement</h2>
+      <% if @group %>
+        <h3 role="heading" aria-level="3">Sur le groupe <%= link_to @group.name, @group %></h3>
+      <% end %>
+    </div>
+    <div class="entity__form">
+      <%= render 'form' %>
+    </div>
+  </div>
 </section>
