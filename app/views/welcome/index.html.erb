@@ -1,30 +1,36 @@
 <% content_for :head do %>
   <div class="headingImg">
     <div class="container intro">
-      <div class="intro__presentation">
-        <h2 role="heading" aria-level="2">Courir pour le fun</h2>
-        <h3>Trouvez les meilleurs courses et tracés près de chez vous.</h3>
-        <h3>Courrez en groupe, planifiez vos entrainements et gérez votre club.</h3>
-        <%= link_to "Connexion avec Facebook", user_omniauth_authorize_path(:facebook), :class => "fb__button signin" %>
-      </div>
-      <div class="intro__singup">
-        <h2>Inscription</h2>
-        <%= form_for(@user, :as => @user, :url => registration_path(@user)) do |f| %>
-          <%= f.label :username %>
-          <%= f.text_field :username, :placeholder => 'pseudo' %>
+      <% if !user_signed_in? %>
+        <div class="intro__presentation">
+          <h2 role="heading" aria-level="2">Courir pour le fun</h2>
+          <h3 role="heading" aria-level="3">Trouvez les meilleurs courses et tracés près de chez vous.</h3>
+          <h3 role="heading" aria-level="3">Courrez en groupe, planifiez vos entrainements et gérez votre club.</h3>
+          <%= link_to "Connexion avec Facebook", user_omniauth_authorize_path(:facebook), :class => "fb__button signin" %>
+        </div>
+        <div class="intro__singup">
+          <h2>Inscription</h2>
+          <%= form_for(@user, :as => @user, :url => registration_path(@user)) do |f| %>
+            <%= f.label :username %>
+            <%= f.text_field :username, :placeholder => 'pseudo' %>
 
-          <%= f.label :email %>
-          <%= f.email_field :email, :placeholder => 'email' %>
+            <%= f.label :email %>
+            <%= f.email_field :email, :placeholder => 'email' %>
 
-          <%= f.label :password %>
-          <%= f.password_field :password, :placeholder => 'mot de passe' %>
+            <%= f.label :password %>
+            <%= f.password_field :password, :placeholder => 'mot de passe' %>
 
-          <%= f.label :password_confirmation %>
-          <%= f.password_field :password_confirmation, :placeholder => 'mot de passe confirmation' %>
+            <%= f.label :password_confirmation %>
+            <%= f.password_field :password_confirmation, :placeholder => 'mot de passe confirmation' %>
 
-          <%= f.submit "Inscription" %>
-        <% end %>
-      </div>
+            <%= f.submit "Inscription" %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="intro__presentation">
+          <h2 role="heading" aria-level="2">Salut <%= current_user.username %>!</h2>
+        </div>
+      <% end %>
     </div>
   </div>
 <% end %>
