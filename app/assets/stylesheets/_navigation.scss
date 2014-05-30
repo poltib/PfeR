@@ -67,9 +67,15 @@ div.header__menu{
     }
     form{
         display: block;
+        textarea{
+            max-width: 100%;
+        }
     }
 }
 
+#hideMap:hover{
+    cursor: pointer;
+}
 .event__actions{
     h3{
         text-align: center;
@@ -82,10 +88,18 @@ div.header__menu{
     input:focus, textarea:focus{
         background-color: $sky;
     }
-    a, .button_to [type="submit"], #showImageForm, button, input, textarea{
+    [type="submit"]{
+        background-color: $blue;
+        color: $cloud;
+        text-align: center;
+        &:hover{
+            background-color: $carrot;
+            color: $cloud;
+        }
+    }
+    a, .button_to, #hideMap, button, input, textarea, #elevation_chart, .info__dist{
         border:none;
         border-right: 1px solid $sky;
-        border-left: 1px solid $sky;
         border-bottom: 1px solid $sky;
         background-color: white;
         margin:0;

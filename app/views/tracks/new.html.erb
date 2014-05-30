@@ -4,8 +4,8 @@
     <div class="left_column">
       <div class="event__actions">
         <h3 role="heading" aria-level="3">Informations</h3>
+        <span class="info__dist">Distance : <span id="dist">dist</span></span>
         <div id="elevation_chart"></div>
-        <button id="hideMap">Créer avec un fichier</button>
         <div id="mapErrors">
           <p></p>
         </div>
@@ -19,7 +19,6 @@
           <% if @happening %>
             sur <%= link_to @happening.name, @happening %>
           <% end %>
-          <span class="type dist">Distance : <span id="dist">dist</span></span>
         </h2>
         <div id="map_canvas"></div>
         <div id="aside" class="event__actions">

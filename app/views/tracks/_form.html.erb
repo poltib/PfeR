@@ -18,10 +18,6 @@
     <% if params[:group_id] %>
       <%= f.hidden_field :group_id , :value => params[:group_id] %>
     <% end %>
-
-
-    <li id="upRoute"><%= f.label :route, :class => "hidden" %>
-    <%= f.file_field :route %></li>
     <li><%= f.label :name, :class => "hidden" %>
     <%= f.text_field :name, :placeHolder => "Nom du tracé..." %></li>
     <li><%= f.label :description, :class => "hidden" %>
@@ -31,6 +27,9 @@
     <%= f.hidden_field :longitude %>
     <%= f.hidden_field :latitude %>
     <%= f.hidden_field :polyline, :id => "jsRoute" %>
+    <span id="hideMap">Créer avec un fichier</span>
+    <li id="upRoute"><%= f.label :route, :class => "hidden" %>
+    <%= f.file_field :route %></li>
     <li><%= f.submit %></li>
   </ul>
   </fieldset>
