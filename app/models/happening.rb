@@ -4,7 +4,7 @@ class Happening < ActiveRecord::Base
   geocoded_by :address  
   after_validation :geocode, :if => :address_changed? 
 
-  validates :name, :description, :address, :link, :date, presence: true
+  validates :name, :description, :address, :date, presence: true
 
   has_many :tracks
   
