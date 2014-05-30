@@ -15,55 +15,87 @@
         <%= link_to "Paramètres", edit_user_registration_path %>
       <% end %>
     </div>
-    <div class="entity__data">
-      <div class="entity__activity">
-        <% if user_signed_in? && current_user.id == @user.id %>
-          <h3 role="heading" aria-level="3">Vos activités</h3>
-          <div class="user__actions">
-            <%= link_to "Ajouter activité", new_happening_path %>
-            <%= link_to "Chercher activité", happenings_path %>
-          </div>
-        <% else %>
-          <h3 role="heading" aria-level="3">Activités</h3>
-        <% end %>
-        <ul>
-          <% @happenings.each do |happening| %>
-            <% if happening.date.to_date < Date.today %>
-              <li class="passed">
-            <% else %>
+    <div class="table">
+      <div class="entity__data">
+        <div class="entity__activity">
+          <% if user_signed_in? && current_user.id == @user.id %>
+            <h3 role="heading" aria-level="3">Vos activités</h3>
+          <% else %>
+            <h3 role="heading" aria-level="3">Activités</h3>
+          <% end %>
+          <ul class="activity__timeline">
+            <% if user_signed_in? &&  current_user.id == @user.id %>
               <li>
+                <div class="activity__relative">
+                  <span class="activity__circle"></span>
+                </div>
+                <div class="activity__content">
+                  <h3>Ajouter des activités</h3>
+                    <p>
+                      <%= link_to "Recherchez", happenings_path %> , ou <%= link_to "créez", new_happening_path %> en une!
+                    </p>
+                </div>
+              </li>
             <% end %>
-              <%= l(happening.date , :format => "%d %b %Y") %>
-              <%= happening.name %>
-            </li>
-          <% end %>
-        </ul>
-        
-      </div>
-      <div class="entity__relations">
-        <% if user_signed_in? &&  current_user.id == @user.id %>
-          <h3 role="heading" aria-level="3">Vos groupes</h3>
-          <div class="user__actions">
-            <%= link_to "Ajouter groupe", new_group_path %>
-            <%= link_to "Chercher groupe", groups_path %>
-          </div>
-        <% else %>
-          <h3 role="heading" aria-level="3">Groupes</h3>
-        <% end %>
-        <ul>
-          <% @user.groups.each do |group| %>
-            <li class="entity__result">
-              <ul class="result__list">
-                <li class="result__avatar"><%= image_tag group.avatar.url(:thumb) %></li>
-                <li>
-                  <h4 role="heading" aria-level="4">
-                    <%= link_to group.name, group %>
-                  </h4>
+            <% if @happenings.count < 1 && user_signed_in? &&  current_user.id != @user.id %>
+              <li>
+                <div class="activity__relative">
+                  <span class="activity__date"><%= l(Date.today , :format => "%d %b %Y") %></span>
+                  <span class="activity__circle"></span>
+                </div>
+                <div class="activity__content">
+                  <h3>Pas d'activités</h3>
+                    <p>Cet utilisateur n'a pas d'activités</p>
+                </div>
+              </li>
+            <% else %>
+              <% @happenings.each do |happening| %>
+                <% if happening.date.to_date < Date.today %>
+                  <li class="passed">
+                <% else %>
+                  <li>
+                <% end %>
+                  <div class="activity__relative">
+                    <span class="activity__date"><%= l(happening.date , :format => "%d %b %Y") %></span>
+                    <span class="activity__circle"></span>
+                  </div>
+                  <div class="activity__content">
+                    <h3><%= link_to happening.event_type.name, happenings_path(params.slice(:sort).merge(event_type: happening.event_type.id)), :class => "type #{happening.event_type.name}" %><%= link_to happening.name, happening %></h3>
+                    <p>
+                      <%= happening.description %>
+                    </p>
+                  </div>
                 </li>
-              </ul>
-            </li>
+              <% end %>
+            <% end %>
+          </ul>
+          
+        </div>
+        <div class="entity__relations">
+          <% if user_signed_in? &&  current_user.id == @user.id %>
+            <h3 role="heading" aria-level="3">Vos groupes</h3>
+            <div class="user__actions">
+              <%= link_to "Ajouter groupe", new_group_path %>
+              <%= link_to "Chercher groupe", groups_path %>
+            </div>
+          <% else %>
+            <h3 role="heading" aria-level="3">Groupes</h3>
           <% end %>
-        </ul>
+          <ul>
+            <% @user.groups.each do |group| %>
+              <li class="entity__result">
+                <ul class="result__list">
+                  <li class="result__avatar"><%= image_tag group.avatar.url(:thumb) %></li>
+                  <li>
+                    <h4 role="heading" aria-level="4">
+                      <%= link_to group.name, group %>
+                    </h4>
+                  </li>
+                </ul>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

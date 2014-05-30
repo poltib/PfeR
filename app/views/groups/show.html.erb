@@ -24,91 +24,92 @@
         <%= link_to "Paramètres", edit_group_path %>
       <% end %>
     </div>
-    <div class="entity__data">
-      <div class="entity__activity">
-        <h3 role="heading" aria-level="3">Activités</h3>
-        <% if current_user.id == @group.owner.id %>
-          <div class="user__actions">
-            <%= link_to "Ajouter activité", new_group_happening_path(@group) %>
-          </div>
-        <% end %>
-        <ul>
-          <% if @happenings.count != 0 %>
-            <% @happenings.each do |happening| %>
-              <% if happening.date.to_date < Date.today %>
-                <li class="passed">
-              <% else %>
-                <li>
-              <% end %>
-                <%= l(happening.date , :format => "%d %b %Y") %>
-                <%= happening.name %>
+    <div class="table">
+      <div class="entity__data">
+        <div class="entity__activity">
+          <h3 role="heading" aria-level="3">Activités du groupe</h3>
+          <ul class="activity__timeline">
+            <% if user_signed_in? &&  current_user.id == @group.owner.id %>
+              <li>
+                <div class="activity__relative">
+                  <span class="activity__date"><%= l(Date.today , :format => "%d %b %Y") %></span>
+                  <span class="activity__circle"></span>
+                </div>
+                <div class="activity__content">
+                  <h3>Pas d'activités</h3>
+                  <% if user_signed_in? && current_user.id == @group.owner.id %>
+                    <p>
+                      <%= link_to "Créez", new_happening_path %> en une!
+                    </p>
+                  <% else %>
+                    <p>Cet groupe n'a pas d'activités</p>
+                  <% end %>
+                </div>
               </li>
             <% end %>
-          <% else %>
-            <li>Pas d'activités</li>
-          <% end %>
-        </ul>
-        
-      </div>
-      <div class="entity__relations">
-        <h3 role="heading" aria-level="3">
-            <%= @members.count %> 
-            <% if @members.count <= 1 %>
-              Membre
+            <% if @group.happenings.count < 1 && user_signed_in? &&  current_user.id != @group.owner.id %>
+              <li>
+                <div class="activity__relative">
+                  <span class="activity__date"><%= l(Date.today , :format => "%d %b %Y") %></span>
+                  <span class="activity__circle"></span>
+                </div>
+                <div class="activity__content">
+                  <h3>Pas d'activités</h3>
+                  <p>Cet groupe n'a pas d'activités</p>
+                </div>
+              </li>
             <% else %>
-              Membres
-            <% end %>
-        </h3>
-        <ul>
-          <% @members.each do |grouper| %>
-            <li class="entity__result">
-              <ul class="result__list">
-                <li class="result__avatar"><%= image_tag grouper.user.avatar.url(:thumb) %></li>
-                <li>
-                  <h4 role="heading" aria-level="4">
-                    <%= link_to grouper.user.username, grouper.user %>
-                    <% if user_signed_in? &&  @group.owner.id == current_user.id && grouper.user.id != current_user.id  %>
-                      <%= form_for ([@group, grouper]), method: :delete do |f| %>
-                        <%= button_tag do %>
-                            <i class="icon-cancel"></i> Supprimer du groupe
-                        <% end %>
-                      <% end %>
-                    <% end %>
-                    <% if user_signed_in? && grouper.user.id == current_user.id && @group.owner.id != current_user.id  %>
-                      <%= form_for ([@group, grouper]), method: :delete do |f| %>
-                        <%= button_tag do %>
-                            <i class="icon-cancel"></i> Quitter le groupe
-                        <% end %>
-                      <% end %>
-                    <% end %>
-                  </h4>
+              <% @group.happenings.each do |happening| %>
+                <% if happening.date.to_date < Date.today %>
+                  <li class="passed">
+                <% else %>
+                  <li>
+                <% end %>
+                  <div class="activity__relative">
+                    <span class="activity__date"><%= l(happening.date , :format => "%d %b %Y") %></span>
+                    <span class="activity__circle"></span>
+                  </div>
+                  <div class="activity__content">
+                    <h3><%= link_to happening.event_type.name, happenings_path(params.slice(:sort).merge(event_type: happening.event_type.id)), :class => "type #{happening.event_type.name}" %><%= link_to happening.name, happening %></h3>
+                    <p>
+                      <%= happening.description %>
+                    </p>
+                  </div>
                 </li>
-              </ul>
-            </li>
-          <% end %>
-        </ul>
-        <% if @waiting_users.count > 0 && @group.owner.id == current_user.id %>
-          <h3 role="heading" aria-level="3">
-            <%= @waiting_users.count %> 
-            <% if @waiting_users.count <= 1 %>
-              Utilisateur
-            <% else %>
-              Utilisateurs
+              <% end %>
             <% end %>
-            en attente
+          </ul>
+          
+        </div>
+        <div class="entity__relations">
+          <h3 role="heading" aria-level="3">
+              <% if @members.count <= 1 %>
+                Membre
+              <% else %>
+                Membres
+              <% end %>
+               (<%= @members.count %>)
           </h3>
           <ul>
-            <% @waiting_users.each do |grouper| %>
+            <% @members.each do |grouper| %>
               <li class="entity__result">
                 <ul class="result__list">
                   <li class="result__avatar"><%= image_tag grouper.user.avatar.url(:thumb) %></li>
                   <li>
                     <h4 role="heading" aria-level="4">
                       <%= link_to grouper.user.username, grouper.user %>
-                      <%= form_for ([@group, grouper]), :html => {:class => 'button_to' } do |f| %>
-                        <%= f.hidden_field :grouper_id, :value => grouper.id %>
-                        <%= button_tag do %>
-                            <i class="icon-check"></i> Accepter
+                      <% if user_signed_in? &&  @group.owner.id == current_user.id && grouper.user.id != current_user.id  %>
+                        <%= form_for ([@group, grouper]), method: :delete do |f| %>
+                          <%= button_tag do %>
+                              <i class="icon-cancel"></i> Supprimer du groupe
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                      <% if user_signed_in? && grouper.user.id == current_user.id && @group.owner.id != current_user.id  %>
+                        <%= form_for ([@group, grouper]), method: :delete do |f| %>
+                          <%= button_tag do %>
+                              <i class="icon-cancel"></i> Quitter le groupe
+                          <% end %>
                         <% end %>
                       <% end %>
                     </h4>
@@ -117,7 +118,38 @@
               </li>
             <% end %>
           </ul>
-        <% end %>
+          <% if @waiting_users.count > 0 && @group.owner.id == current_user.id %>
+            <h3 role="heading" aria-level="3">
+              <%= @waiting_users.count %> 
+              <% if @waiting_users.count <= 1 %>
+                Utilisateur
+              <% else %>
+                Utilisateurs
+              <% end %>
+              en attente
+            </h3>
+            <ul>
+              <% @waiting_users.each do |grouper| %>
+                <li class="entity__result">
+                  <ul class="result__list">
+                    <li class="result__avatar"><%= image_tag grouper.user.avatar.url(:thumb) %></li>
+                    <li>
+                      <h4 role="heading" aria-level="4">
+                        <%= link_to grouper.user.username, grouper.user %>
+                        <%= form_for ([@group, grouper]), :html => {:class => 'button_to' } do |f| %>
+                          <%= f.hidden_field :grouper_id, :value => grouper.id %>
+                          <%= button_tag do %>
+                              <i class="icon-check"></i> Accepter
+                          <% end %>
+                        <% end %>
+                      </h4>
+                    </li>
+                  </ul>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

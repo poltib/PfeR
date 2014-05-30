@@ -118,38 +118,6 @@ table{
 }
 
 /////////----------------------------------------------------------------------------------
-/////////page division  -------------------------------------------------------------------
-/////////----------------------------------------------------------------------------------
-
-.primary_content h2{
-    padding: 0.3em 0 0.5em;
-    border-bottom: 1px solid $sky;
-}
-
-.page{
-    p{
-        margin-bottom: 0.5em;
-    }
-    ul{
-        list-style-type: circle;
-        margin-left:1.5em;
-        margin-bottom: 0.5em;
-    }
-}
-
-.content__events{
-    @include span-columns(10);
-    @include shift(1);
-}
-
-.content__events:after{
-    content:"";
-    display: block;
-    clear:both;
-}
-
-
-/////////----------------------------------------------------------------------------------
 /////////Presentation  --------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 
@@ -202,6 +170,9 @@ table{
     margin-right: 0.3em;
     padding: 0.6em;
     border: none;
+    &:hover{
+        color: black;
+    }
 }
 .dist{
     background-color: $blue;
@@ -321,6 +292,13 @@ table{
     }
 }
 
+.forums__index{
+    padding: 0.6em;
+    span{
+        margin-bottom: 1em;
+    }
+}
+
 .forum{
     h2{
         margin-left: 20%;
@@ -380,7 +358,7 @@ table{
 }
 
 .forum__comment{
-    margin-bottom: 2em;
+    margin-bottom: 3em;
 }
 
 .forum__comment, .comment__form{
@@ -495,11 +473,13 @@ table{
     }
 }
 
+.table{
+    display: table;
+    width: 100%;
+}
+
 .entity__data{
     display: table-row;
-    h3{
-        padding: 0.6em;
-    }
     &:after{
         content:"";
         display:block;
@@ -507,25 +487,136 @@ table{
     }
 }
 
+.activity__timeline{
+    list-style: none;
+    margin: 10px 0 0 120px;
+    padding: 10px 0 20px 30px;
+    border-left: 8px solid $sky;
+    position:relative;
+    .type{
+        padding: 0.3em;
+    }
+    li{
+        margin: 20px 0 0;
+        position: relative;
+        p{
+            margin: 0 0 0.6em;
+        }
+    }
+    h3{
+        padding: 0;
+        margin:0;
+        margin-bottom: 0.3em;
+        font-size: 1.2em;
+    }
+    &:before, &:after{
+        content: "";
+        width: 0;
+        height: 0;
+        border: solid transparent;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    &:before{
+        border-bottom-color: $sky;
+        border-width: 15px;
+        left: -19px;
+        top: 0;
+        margin-top: -19px;
+    }
+}
+
+.passed{
+    .activity__content{
+        background-color: $sky;
+        &:after{
+            border-right-color: $sky;
+        }
+        border-color: silver;
+    }
+    .activity__circle{
+        background: $carrot;
+    }
+}
+
+.activity__date{
+    margin-top: -10px;
+    top: 50%;
+    left: -24%;
+    position: absolute;
+}
+.activity__circle{
+    margin-top: -10px;
+    top: 50%;
+    left: -44px;
+    width: 20px;
+    height: 20px;
+    background: $blue;
+    border: 5px solid $sky;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+}
+
+.activity__content{
+    padding: 0.6em 0.6em 0;
+    border-width: 1px;
+    border-style: solid;
+    position: relative;
+    border-color: $sky;
+    margin-right: 20px;
+    p{
+        border-color: $sky;
+        margin-right: 20px;
+    }
+    &:before, &:after{
+        content: "";
+        width: 0;
+        height: 0;
+        border: solid transparent;
+        position: absolute;
+        right: 100%;
+    }
+    &:before{
+        border-right-color: inherit;
+        border-width: 20px;
+        top: 50%;
+        margin-top: -20px;
+    }
+    &:after{
+        border-right-color: white;
+        border-width: 18px;
+        top: 50%;
+        margin-top: -18px;
+    }
+}
+
 .entity__activity{
     display: table-cell;
     width: 70%;
     border-right: 1px solid $sky;
-    ul{
+    >h3{
         padding: 0.6em;
+        font-size: 1.5em;
     }
-
 }
+
 
 .user__actions{
     padding: 0 0.6em 0.6em;
-    border-bottom: 1ps colid $sky;
+    margin-bottom: 1em;
     a{
-        @extend .add;
+        color: $blue;
+        margin-right: 0.5em;
     }
 }
 
 .entity__relations{
+    >h3{
+        padding: 0.6em;
+        font-size: 1.5em;
+    }
     width: 30%;
     display: table-cell;
     
@@ -533,6 +624,7 @@ table{
         padding: 0.2em;
         border: 1px solid white;
         color: black;
+        background-color: transparent;
         i{
             background-color: $greenOk;
             color: white;
@@ -560,6 +652,7 @@ table{
     h3{
         padding: 0.6em;
     }
+    padding-bottom: 0.6em;
     ul{padding: 0.8em 0;}
     li{
         padding:0 0.6em 0.5em;
@@ -567,8 +660,8 @@ table{
             @include span-columns(8);
         }
         span{
-            font-size: 1.3em;
             display: block;
+            margin-bottom: 0.3em;
         }
     }
     &:after{
@@ -580,19 +673,28 @@ table{
 
 .first__info{
     li{
-        font-size: 1.3em;
         padding:0 0.3em 0.3em;
     }
     @include span-columns(4);
 }
 
 .happening #map_canvas{
-    @include span-columns(9);
+    width: 70%;
+    float: left;
+    border-right: 1px solid $sky;
 }
 
 .entity__tracks{
-    @include span-columns(3);
-    @include omega;
+    width: 30%;
+    float: right;
+    >h3{
+        font-size: 1.5em;
+        padding: 0.4em;
+    }
+    .type{
+        display: inline;
+        padding: 0.3em;
+    }
 }
 
 .entity__categories{
@@ -628,18 +730,23 @@ table{
 }
 
 .entity__forums, .entity__gallery{
-    float: left;
+    display: table-cell;
     width: 50%;
     margin-top: 2em;
-    h3{
-        border-top: 1px solid $sky;
-        border-bottom: 1px solid $sky;
+    border-top: 1px solid $sky;
+    >h3{
+        font-size: 1.5em;
+        margin-bottom: 0.5em;
+        padding: 0.4em;
+    }
+    .type{
+        display: inline;
+        padding: 0.3em;
     }
 }
 
 .entity__gallery{
     border-left: 1px solid $sky;
-
 }
 
 
@@ -684,9 +791,6 @@ table{
         clear: both;
     }
 }
-.entity__results{
-
-}
 
 .results__none{
     padding:0.6em;
@@ -729,7 +833,7 @@ table{
 }
 
 .result__day{
-    font-size: 2em;
+    font-size: 1.844em;
     font-weight: 600;
 }
 
@@ -739,12 +843,14 @@ table{
 
 .result__name{
     color:black;
-    h4{padding-top: 0.55em;font-size:1.2em;}
+    h4{
+        padding-top: 0.75em;
+        .type{
+            display: inline;
+        }
+    }
 }
 
-.result__distances{
-    float: right;
-}
 
 .result__links, .result__distances, .delete{
     a, button{
@@ -759,6 +865,16 @@ table{
             color:black;
         }
     }
+}
+
+.result__happening{
+    padding-top: 0.8em;
+}
+
+.result__distances{
+    font-size: 1.3em;
+    padding-top: 0.4em;
+    color: $blue;
 }
 
 
