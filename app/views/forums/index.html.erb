@@ -36,14 +36,14 @@
       <% if @forums.count != 0 %>
         <% @forums.each do |forum| %>
           <ul>
-          <li class="forum">
+          <li class="forum forums__index">
             <article>
               <header>
                 <h3 class="forum__title" role="heading" aria-level="3">
                   <%= link_to forum.name, forum_path(forum) %>
                   <% if user_signed_in? && forum.user_id == current_user.id %>
-                  | <%= link_to "Edit", edit_forum_path(forum) %>
-                  | <%= button_to "Delete", forum_path(forum), method: :delete, data: { confirm: 'Are you sure?' }  %>
+                  | <%= link_to "Modifier", edit_forum_path(forum) %>
+                  | <%= button_to "Supprimer", forum_path(forum), method: :delete, data: { confirm: 'Are you sure?' }  %>
                   <% end %><br>
                   <span>
                     Posté par <%= link_to forum.user.username, user_path(forum.user) %>

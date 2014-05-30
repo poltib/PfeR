@@ -3,7 +3,7 @@
   <ul><!-- 
     --><% if user_signed_in? %><!--
     --><li>
-      <%= link_to "Tableau de bord", user_path(current_user), class: (controller?("users") && action?("show") && params[:id] == current_user.username || controller?("happenings") && action?("index") && params[:user_id] == current_user.username || controller?("tracks") && action?("index") && params[:user_id] == current_user.username || controller?("groups") && action?("index") && params[:user_id] == current_user.username ? 'selected' : nil) %>
+      <%= link_to "Tableau de bord", user_path(current_user), class: (controller?("users") && action?("show") && params[:id] == current_user.username || controller?("happenings") && action?("index") && params[:user_id] == current_user.username || controller?("tracks") && action?("index") && params[:user_id] == current_user.username || controller?("groups") && action?("index") && params[:user_id] == current_user.username || controller?("favorites") && action?("index") && params[:user_id] == current_user.username ? 'selected' : nil) %>
     </li><!-- 
     --><% end %><!--
     --><li>

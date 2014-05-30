@@ -17,7 +17,7 @@
             <li><i class="icon-clock"></i> <%= l(@happening.date , :format => "%d %b %Y") %></li>
             <li><i class="icon-location"></i> <%= @happening.address %></li>
             <% if @happening.group %>
-              <li>Posté sur le groupe <%= link_to @happening.group.name, @happening.group %></li>
+              <li><i class="icon-globe"></i> Posté sur le groupe <%= link_to @happening.group.name, @happening.group %></li>
             <% end %>
             <li><i class="icon-link"></i> <a href="http://<%= @happening.link %>"><%= @happening.link %></a></li>
           </div>
@@ -32,12 +32,12 @@
       <div id="map_canvas"></div>
       <div class="entity__tracks">
         <h3 role="heading" aria-level="3">
-          Tracés
           <% if current_user == @happening.user %>
             <%= link_to new_happening_track_path(@happening), :class=> "type add" do %>
               <i class="icon-location"></i> Ajouter un tracé
             <% end %>
           <% end %>
+          Tracés
         </h3>
         <div id="aside">
           <div id="elevation_chart"></div>
@@ -48,7 +48,7 @@
                   <li class="result__name">
                     <%= link_to track.name, track_path(track) %>
                     <% if user_signed_in? && track.user == current_user %>
-                    | <%= button_to "Delete", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
+                    | <%= button_to "Supprimer", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
                     <% end %>
                   </li>
                   <li><%= track.favorites.count %> <i class="icon-heart"></i></li>
@@ -60,73 +60,97 @@
         </div>
       </div>
     </div>
-    <div class="entity__forums">
-      <h3 role="heading" arie-level="3">
-        <%= link_to new_happening_forum_path(@happening), :class=> "type add" do %>
-          <i class="icon-pencil"></i> Poster forum
-        <% end %>
-        Forums
-      </h3>
-      <% if @happening.forums.count == 0 %>
-        <p>Pas de forums</p>
-      <% else %>
-        <ul>
-          <% @happening.forums.each do |forum| %>
-            <li class="forum">
-            <article>
-            <header>
-              <h4 class="formTitle" role="heading" aria-level="4">
-                <%= link_to forum.name, forum_path(forum) %><br>
-                <span>
-                  Posté par <%= link_to forum.user.username, user_path(forum.user) %>
-                </span></h4>
-                <ul class="forumDetails">
-                  <li><i class="icon-clock-1"></i><%= I18n.l forum.created_at %></li>
-                  <li><i class="icon-chat"></i><%= forum.comments.count %></li>
-                </ul>
-            </header>
-            </article>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-    </div>
-    <div class="entity__gallery">
-      <h3 role="heading" aria-level="3">
-        <% if current_user == @happening.user %>
-          <span id="showImageForm" class="type add"><i class="icon-picture"></i> Ajouter une image</span>
-        <% end %>
-        Photos
-      </h3>
-      <% if current_user == @happening.user %>
-      <div class="entity__addimageform">
-        <%= form_for ([@happening, Image.new]), :html => { :multipart => true, :id => 'addImage' } do |f| %>
-          <%= f.hidden_field :user_id, :value => current_user.id %>
-          <%= f.hidden_field :imagable_id, :value => @happening.id %>
-          <%= f.hidden_field :imagable_type, :value => "Happening" %>
-          <ul>
-            <li><%= f.label :image %><%= f.file_field :image %></li>
-            <li><%= f.submit :Ajouter %></li>
-          </ul>
-        <% end %>
-      </div>
-      <% end %>
-      <ul id="many" class="thumbs">
-        <% @happening.images.each do |image| %>
-          <li>
-            <a href="<%= image.image.url(:medium) %>" class="thumbnail">
-              <%= image_tag image.image.url(:thumb) %>
-            </a>
-            <% if user_signed_in? && current_user == @happening.user %>
-              <%= button_to [@happening, image], method: :delete, data: { confirm: 'Are you sure?' }, form_class: "delete_image" do %>
-                <span data-tooltip="Supprimer la photo">
-                  <i class="icon-cancel"></i>
-                </span>
-              <% end %>
+    <div class="table">
+      <div class="entity__data">
+        <div class="entity__forums">
+          <h3 role="heading" arie-level="3">
+            <%= link_to new_happening_forum_path(@happening), :class=> "type add" do %>
+              <i class="icon-pencil"></i> Poster forum
             <% end %>
-          </li>
-        <% end %>
-      </ul>
+            Forums
+          </h3>
+          <% if @happening.forums.count != 0 %>
+            <% @happening.forums.each do |forum| %>
+              <ul>
+              <li class="forum forums__index">
+                <article>
+                  <header>
+                    <h3 class="forum__title" role="heading" aria-level="3">
+                      <%= link_to forum.name, forum_path(forum) %>
+                      <% if user_signed_in? && forum.user_id == current_user.id %>
+                      | <%= link_to "Modifier", edit_forum_path(forum) %>
+                      | <%= button_to "Supprimer", forum_path(forum), method: :delete, data: { confirm: 'Are you sure?' }  %>
+                      <% end %><br>
+                      <span>
+                        Posté par <%= link_to forum.user.username, user_path(forum.user) %>
+                        <% if forum.forumable %> 
+                          sur <%= link_to forum.forumable.name, forum.forumable %>
+                        <% end %>
+                      </span></h3>
+                      <ul class="forums__details">
+                        <li><i class="icon-bookmarks"></i><% for category in forum.categories do %>
+                          <%= link_to category.name, forums_path(params.slice(:sort).merge(category_id: category.id)) %>
+                        <% end %></li>
+                        <li><i class="icon-clock-1"></i><%= I18n.l forum.created_at %></li>
+                        <li>
+                          <i class="icon-chat"></i>
+                          <%= forum.comments.count %> 
+                          <% if forum.comments.count <= 1 %>
+                            réponse
+                          <% else %>
+                            réponses
+                          <% end %>
+
+                        </li>
+                        <li><i class="icon-heart"></i><%= forum.favorites.count %></li>
+                      </ul>
+                  </header>
+                </article>
+              </li>
+            <% end %>
+            </ul>
+          <% else %>
+            <p class="results__none">Pas de forums</p>
+          <% end %>
+        </div>
+        <div class="entity__gallery">
+          <h3 role="heading" aria-level="3">
+            <% if current_user == @happening.user %>
+              <span id="showImageForm" class="type add"><i class="icon-picture"></i> Ajouter une image</span>
+            <% end %>
+            Photos
+          </h3>
+          <% if current_user == @happening.user %>
+          <div class="entity__addimageform">
+            <%= form_for ([@happening, Image.new]), :html => { :multipart => true, :id => 'addImage' } do |f| %>
+              <%= f.hidden_field :user_id, :value => current_user.id %>
+              <%= f.hidden_field :imagable_id, :value => @happening.id %>
+              <%= f.hidden_field :imagable_type, :value => "Happening" %>
+              <ul>
+                <li><%= f.label :image %><%= f.file_field :image %></li>
+                <li><%= f.submit :Ajouter %></li>
+              </ul>
+            <% end %>
+          </div>
+          <% end %>
+          <ul id="many" class="thumbs">
+            <% @happening.images.each do |image| %>
+              <li>
+                <a href="<%= image.image.url(:medium) %>" class="thumbnail">
+                  <%= image_tag image.image.url(:thumb) %>
+                </a>
+                <% if user_signed_in? && current_user == @happening.user %>
+                  <%= button_to [@happening, image], method: :delete, data: { confirm: 'Are you sure?' }, form_class: "delete_image" do %>
+                    <span data-tooltip="Supprimer la photo">
+                      <i class="icon-cancel"></i>
+                    </span>
+                  <% end %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </section>

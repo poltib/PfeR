@@ -36,9 +36,13 @@
     </article>
     <div class="forum__comments">
       <h3 role="heading" aria-level="3">Commentaires</h3>
-      <ul>
-        <%= render @forum.comments %>
-      </ul>
+      <% if @forum.comments.count > 0 %>
+        <ul>
+          <%= render @forum.comments %>
+        </ul>
+      <% else %>
+        <p>Pas de commentaire...</p>
+      <% end %>
       <% if  user_signed_in? %>
           <h3>Répondre</h3>
         <div class="comment__form">

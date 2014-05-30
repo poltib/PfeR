@@ -2,7 +2,7 @@
 <% @tracks.each do |track| %>
   <li class="entity__result" id="<%= track.slug %>">
     <ul class="result__list">
-      <li class="result__location"><%= track.location %></li>
+      <li class="result__distances"><span id="length"><%= track.length %></span>km</li>
       <li class="result__name">
         <h4 role="heading" aria-level="4">
           <%= link_to track.name, track_path(track) %>
@@ -11,14 +11,13 @@
           <% end %>
         </h4>
       </li>
-      <li><%= track.favorites.count %> <i class="icon-heart"></i></li>
+      <li class="result__happening"><%= track.favorites.count %> <i class="icon-heart"></i></li>
       <% if track.happening %>
-        <li><%= link_to track.happening.name, track.happening %></li>
+        <li class="result__happening"><%= link_to track.happening.name, track.happening %></li>
       <% end %>
       <% if params[:user_id].blank? %>
         <li class="result__distances"><%= track.distance.to_s.gsub(/^(\d+.)(\d{0,2})(\d+)/, '\1\2') %>km</li>
       <% end %>
-      <li class="result__length"><span id="length"><%= track.length %></span>km</li>
     </ul>
   </li>
 <% end %>

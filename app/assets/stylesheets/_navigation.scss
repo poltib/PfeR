@@ -321,16 +321,28 @@ nav.header__navigation{
         border-right: none;
         margin:0;
     }
-    .fb__button:hover{
-        background-color: $facebookHover;
+    .fb__button{
+        background-color:$facebook;
+        &:hover{
+            background-color: $facebookHover;
+        }
     }
-    .gg__button:hover{
-        background-color: $googleplusHover;
+    .gg__button{
+        background-color:$googleplus;
+        &:hover{
+            background-color: $googleplusHover;
+        }
     }
-    .tw__button:hover{
-        background-color: $twitterHover;
+    .tw__button{
+        background-color:$twitter;
+        &:hover{
+            background-color: $twitterHover;
+        }
     }
-    .mail__button:hover{
-        background-color: $blue;
+    .mail__button{
+        background-color:$blueLight;
+        &:hover{
+            background-color: $blue;
+        }
     }
 }
