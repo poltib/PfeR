@@ -311,7 +311,7 @@ $(".tracks.new").ready ->
     gm_center = new google.maps.LatLng(js_location[0], js_location[1])
     map = gm_init(gm_center)
     map.setOptions({draggableCursor:"crosshair"})
-    upLi.style.display = 'none'
+    # upLi.style.display = 'none'
     poly = poly_init(map)
     add_chart_listener(map)
     marker_center = new google.maps.Marker({
@@ -336,15 +336,15 @@ $(".tracks.new").ready ->
       if path.getLength() != 0
         extend_track(path.getAt(path.j.length - 1),path.getAt(0))
 
-    hide_button.addEventListener 'click', (evt)->
-      if upLi.style.display == "block"
-        hide_button.childNodes[0].textContent = "Créer avec un fichier"
-        upLi.style.display = 'none'
-        document.getElementsByClassName('map')[0].style.display = 'block'
-      else
-        upLi.style.display = 'block'
-        document.getElementsByClassName('map')[0].style.display = 'none'
-        hide_button.childNodes[0].textContent = "Créer sur la carte"
+    # hide_button.addEventListener 'click', (evt)->
+    #   if upLi.style.display == "block"
+    #     hide_button.childNodes[0].textContent = "Créer avec un fichier"
+    #     upLi.style.display = 'none'
+    #     document.getElementsByClassName('map')[0].style.display = 'block'
+    #   else
+    #     upLi.style.display = 'block'
+    #     document.getElementsByClassName('map')[0].style.display = 'none'
+    #     hide_button.childNodes[0].textContent = "Créer sur la carte"
 
     $('.createForm').submit ->
       if jsInput.value == '' || jsInput.value != jsInput.value.match(/\((\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\)/).input

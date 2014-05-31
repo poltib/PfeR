@@ -136,6 +136,6 @@ class TracksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def track_params
-      params.require(:track).permit(:happening_id, :name, :longitude, :latitude, :description, :polyline, :location, :length, :route, :group_id)
+      params.require(:track).permit(:happening_id, :name, :longitude, :latitude, :description, :polyline, :location, :length, :group_id)
     end
 end

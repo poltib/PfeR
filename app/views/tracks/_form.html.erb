@@ -1,4 +1,4 @@
-<%= form_for @track, :html => { :multipart => true, :class => 'createForm' } do |f| %>
+<%= form_for @track, :html => { :class => 'createForm' } do |f| %>
   <% if @track.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@track.errors.count, "erreur") %> empêchent le tracé d'être enregistré:</h2>
@@ -27,9 +27,6 @@
     <%= f.hidden_field :longitude %>
     <%= f.hidden_field :latitude %>
     <%= f.hidden_field :polyline, :id => "jsRoute" %>
-    <span id="hideMap">Créer avec un fichier</span>
-    <li id="upRoute"><%= f.label :route, :class => "hidden" %>
-    <%= f.file_field :route %></li>
     <li><%= f.submit %></li>
   </ul>
   </fieldset>
