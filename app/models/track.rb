@@ -34,9 +34,6 @@ class Track < ActiveRecord::Base
     gpx_file = XmlAttachement.new
     gpx_file.create_gpx_file(name, tmp_segment, id.to_s)
     self.xml_attachements << gpx_file
-    kml_file = XmlAttachement.new
-    # kml_file.create_kml_file(track_params[:name], tmp_segment, @track.id.to_s)
-    # @track.xml_attachements << kml_file
     tmp_segment.each do |coords|
       coords[0] = coords[0].to_f
       coords[1] = coords[1].to_f

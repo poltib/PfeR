@@ -44,22 +44,24 @@ class TracksController < ApplicationController
   def create
     @track = Track.new(track_params)
     @track.user = current_user
-    if track_params[:happening_id]
-      @happening = Happening.find_by_slug(track_params[:happening_id])
-      @happening.tracks << @track
-    end
     respond_to do |format|
-      if @track.save
-        if track_params[:happening_id]
+      if track_params[:happening_id]
+        @happening = Happening.find_by_slug(track_params[:happening_id])
+        if @happening.tracks << @track
           format.html { redirect_to @happening, notice: 'Le tracé à été ajouté avec succès.' }
           format.json { render action: 'show', status: :created, location: @happening }
-        else  
-          format.html { redirect_to @track, notice: 'Le tracé à été ajouté avec succès.' }
-          format.json { render action: 'show', status: :created, location: @track }
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @track.errors, status: :unprocessable_entity }
         end
       else
-        format.html { render action: 'new' }
-        format.json { render json: @track.errors, status: :unprocessable_entity }
+        if @track.save  
+          format.html { redirect_to @track, notice: 'Le tracé à été ajouté avec succès.' }
+          format.json { render action: 'show', status: :created, location: @track }
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @track.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
