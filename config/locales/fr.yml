@@ -7,6 +7,10 @@
 # Emended by Benjamin des Gachons and Patrick Chew : <http://www.fitima.org/docs/fiche.pdf>
 
 fr:
+  will_paginate:
+    previous_label: "&#8592; Précédant"
+    next_label: "Suivant &#8594;"
+    page_gap: "&hellip;"
   date:
     abbr_day_names:
       - dim
@@ -277,4 +281,6 @@ fr:
         recipients: "Destinataires"
         subject: "Sujet"
         body: "Message"
+      xml_attachement:
+        uploaded_file: "fichier importé"
 

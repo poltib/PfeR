@@ -49,6 +49,7 @@
             </li>
           <% end %>
         </ul>
+        <%= will_paginate @users %>
       <% else %>
         <p class="results__none">Pas d'utilisateurs</p>
       <% end %>

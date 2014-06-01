@@ -9,9 +9,9 @@ class TracksController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find_by_username params[:user_id]
-      @tracks = @user.tracks
+      @tracks = @user.tracks.paginate(:page => params[:page], :per_page => 3)
     else
-      @tracks = Track.near(@location, @radius, :units => :km)
+      @tracks = Track.near(@location, @radius, :units => :km).paginate(:page => params[:page], :per_page => 3)
     end
     @tracksJs = Array.new
     @tracks.each do |track|

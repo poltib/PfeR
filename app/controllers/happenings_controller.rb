@@ -4,9 +4,9 @@ class HappeningsController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find_by_username params[:user_id]
-      @happenings = @user.happenings_as_owner
+      @happenings = @user.happenings_as_owner.paginate(:page => params[:page], :per_page => 3)
     else
-      @happenings = Happening.search(params[:event_type], params[:date], params[:location])
+      @happenings = Happening.search(params[:event_type], params[:date], params[:location]).paginate(:page => params[:page], :per_page => 3)
     end
     @previousHap = Happening.all.where('date <= ?', Date.today)
     @event_types = EventType.all
