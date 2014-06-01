@@ -75,23 +75,11 @@ class TracksController < ApplicationController
     end
   end
 
-  require 'zip'
   def download
-    exts = ['.gpx', '.kml']
     if !@track.name.blank?
-      file_name = @track.name+".zip"
-      t = Tempfile.new(@track.name+"-#{Time.now}")
-      Zip::OutputStream.open(t.path) do |z|
-        exts.each do |ext|
-          title = @track.name + ext
-          z.put_next_entry(title)
-          z.print IO.read(Rails.root.join('public/tracks/'+@track.id.to_s+'/', title))
-        end
+      @track.xml_attachements.each do |xml|
+        send_file xml.uploaded_file.url, :type => 'application', :disposition => 'attachment'
       end
-      send_file t.path, :type => 'application/zip',
-                        :disposition => 'attachment',
-                        :filename => file_name
-      t.close
     end
   end
 
