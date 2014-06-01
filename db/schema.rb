@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140526062251) do
+ActiveRecord::Schema.define(version: 20140531155813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,10 +106,7 @@ ActiveRecord::Schema.define(version: 20140526062251) do
     t.text     "description"
     t.integer  "user_id"
     t.boolean  "team"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
+    t.string   "avatar"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -131,10 +128,7 @@ ActiveRecord::Schema.define(version: 20140526062251) do
   end
 
   create_table "images", force: true do |t|
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
+    t.string   "image"
     t.integer  "user_id"
     t.integer  "imagable_id"
     t.string   "imagable_type"
@@ -186,10 +180,7 @@ ActiveRecord::Schema.define(version: 20140526062251) do
     t.string   "name"
     t.string   "addresse"
     t.integer  "happening_id"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
+    t.string   "avatar"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -209,7 +200,6 @@ ActiveRecord::Schema.define(version: 20140526062251) do
     t.text     "polyline"
     t.integer  "location"
     t.integer  "happening_id"
-    t.string   "route"
     t.string   "length"
     t.float    "latitude"
     t.float    "longitude"
@@ -230,10 +220,7 @@ ActiveRecord::Schema.define(version: 20140526062251) do
     t.string   "firstname"
     t.string   "lastname"
     t.text     "description"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
+    t.string   "avatar"
     t.integer  "role_id"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -254,6 +241,13 @@ ActiveRecord::Schema.define(version: 20140526062251) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "xml_attachements", force: true do |t|
+    t.string   "uploaded_file"
+    t.integer  "track_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   add_foreign_key "notifications", "conversations", name: "notifications_on_conversation_id"
 

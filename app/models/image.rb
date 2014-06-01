@@ -1,12 +1,6 @@
 class Image < ActiveRecord::Base
-	has_attached_file :image, :styles => { :thumb => "200x200#", :medium => "700x700>" } 
-
-  # Validate content type
-  validates_attachment_content_type :image, :content_type => /\Aimage/
-
-  # Validate filename
-  validates_attachment_file_name :image, :matches => [/png\Z/, /jpe?g\Z/]
-
+	mount_uploader :image, ImageUploader, :delayed=> true 
+	
 	belongs_to :imagable, :polymorphic => true
 	belongs_to :user
 end

@@ -6,7 +6,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :firstname
       t.string :lastname
       t.text :description
-      t.attachment :avatar
+      t.string :avatar
       t.belongs_to :role
 
       t.string :email,              :null => false, :default => ""

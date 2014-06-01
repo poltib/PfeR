@@ -1,4 +1,8 @@
 class Track < ActiveRecord::Base
+  # before_save :parse_file
+  before_save :create_polyline
+  # mount_uploader :route, RouteUploader
+  before_save :create_slug
   reverse_geocoded_by :latitude, :longitude do |obj,results|
     if geo = results.first
       obj.location = geo.postal_code
@@ -13,10 +17,9 @@ class Track < ActiveRecord::Base
   belongs_to :happening
   belongs_to :user
   belongs_to :group
+  has_many :xml_attachements, dependent: :destroy
   has_many :images, :as => :imagable, dependent: :destroy
   has_many :forums, :as => :forumable, dependent: :destroy
-
-  before_create :create_slug
 
   def to_param
     slug
@@ -24,6 +27,22 @@ class Track < ActiveRecord::Base
 
   def create_slug
     self.slug = self.name.parameterize
+  end
+
+  def create_polyline
+    tmp_segment = polyline.scan(/\((\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\)/).to_a
+    gpx_file = XmlAttachement.new
+    gpx_file.create_gpx_file(name, tmp_segment, id.to_s)
+    self.xml_attachements << gpx_file
+    kml_file = XmlAttachement.new
+    # kml_file.create_kml_file(track_params[:name], tmp_segment, @track.id.to_s)
+    # @track.xml_attachements << kml_file
+    tmp_segment.each do |coords|
+      coords[0] = coords[0].to_f
+      coords[1] = coords[1].to_f
+      coords.delete(coords[2])
+    end
+    self.polyline = Polylines::Encoder.encode_points(tmp_segment)
   end
 
   def parse_file

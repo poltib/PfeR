@@ -8,13 +8,7 @@ class User < ActiveRecord::Base
   acts_as_messageable
   validates :username, uniqueness: true
   
-  has_attached_file :avatar, :styles => { :thumb => "100x100#" }, :default_url => "/images/:style/missing.png"
-
-  # Validate content type
-  validates_attachment_content_type :avatar, :content_type => /\Aimage/
-
-  # Validate filename
-  validates_attachment_file_name :avatar, :matches => [/png\Z/, /jpe?g\Z/]
+  mount_uploader :avatar, ImageUploader, :delayed=> true 
 
   has_many :user_statuses, :dependent => :destroy
   has_many :favorites, :dependent => :destroy

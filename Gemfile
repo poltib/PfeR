@@ -56,7 +56,8 @@ gem 'open_uri_redirections'
 
 # files managment
 gem 'carrierwave'
-gem "paperclip", "~> 4.1"
+gem 'fog'
+gem "mini_magick"
 
 # Xml parser
 gem 'nokogiri', '~> 1.6.1'
@@ -86,6 +87,8 @@ gem 'redcarpet'
 
 # Turbolink with jQuery
 gem 'jquery-turbolinks'
+
+gem 'will_paginate'
 
 group :production do
   gem 'dalli'                   # memcached
