@@ -76,10 +76,16 @@ class TracksController < ApplicationController
   end
 
   def download
-    if !@track.name.blank?
-      @track.xml_attachements.each do |xml|
-        send_file xml.uploaded_file.url, :type => 'application', :disposition => 'attachment'
-      end
+    @track.xml_attachements.each do |xml|
+      send_data( 
+        xml.uploaded_file.file.read, {
+          filename: xml.uploaded_file.file.filename, 
+          type: "application", 
+          disposition: 'attachment', 
+          stream: 'true', 
+          buffer_size: '4096'
+        }
+      )
     end
   end
 
