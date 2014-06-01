@@ -6,7 +6,7 @@
     <div class="entity__title">
       <h2 role="heading" aria-level="2">Ajouter évènement</h2>
       <% if @group %>
-        <h3 role="heading" aria-level="3">Sur le groupe <%= link_to @group.name, @group %></h3>
+        <h3 class="shared__links" role="heading" aria-level="3">Sur le groupe «<%= link_to @group.name, @group %>»</h3>
       <% end %>
     </div>
     <div class="entity__form">

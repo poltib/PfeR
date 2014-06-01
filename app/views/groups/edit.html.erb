@@ -1,7 +1,13 @@
+<% content_for :title do %>
+  Modifier le groupe «<%= @group.name %>» | Sportfun
+<% end %>
 <section>
-<div class="container">
-<h2 role="heading" aria-level="2">Edit <%= @group.name %></h2>
-
-<%= render 'form' %>
-</div>
+  <div class="container">
+    <div class="entity__title">
+      <h2 role="heading" aria-level="2">Modifier le groupe «<%= link_to @group.name, @group %>»</h2>
+    </div>
+    <div class="entity__form">
+      <%= render 'form' %>
+    </div>
+  </div>
 </section>

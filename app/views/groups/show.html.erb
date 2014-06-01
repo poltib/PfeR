@@ -39,7 +39,7 @@
                   <h3>Pas d'activités</h3>
                   <% if user_signed_in? && current_user.id == @group.owner.id %>
                     <p>
-                      <%= link_to "Créez", new_happening_path %> en une!
+                      <%= link_to "Créez", new_group_happening_path(@group) %> en une!
                     </p>
                   <% else %>
                     <p>Cet groupe n'a pas d'activités</p>

@@ -76,49 +76,103 @@
     <div class="entity__data">
       <div class="news">
         <h2 role="heading" aria-level="2">Les dernièrs évènements</h2>
-        <ul class="entity__results">
-          <% @happenings.each do |happening| %>
-            <li class="entity__result">
-              <ul class="result__list">
-               <li class="result__date"><span class="result__day"><%= happening.date.strftime("%d") %></span> <span class="result__monthName"><%= l(happening.date , :format => "%b") %></span></li>
-              <li class="result__name">
-                <h4 role="heading" aria-level="4">
-                  <%= link_to happening.event_type.name, happenings_path(params.slice(:sort).merge(event_type: happening.event_type.id)), :class => "type #{happening.event_type.name}" %>
-                  <%= link_to happening.name, happening_path(happening) %>
-                </h4>
-              </li>
-                <li class="result__distances">
-                  <% happening.tracks.each do |track| %>
-                    <%= track.length %> km
-                  <% end %>
-                </li>
-              </ul>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-      <div class="news">
-        <h2 role="heading" aria-level="2">Les dernièrs tracés</h2>
+        <% if @happenings.count > 0 %>
           <ul class="entity__results">
-            <% @tracks.each do |track| %>
-              <li class="entity__result" id="<%= track.slug %>">
+            <% @happenings.each do |happening| %>
+              <li class="entity__result">
                 <ul class="result__list">
-                  <li class="result__date"><span class="result__day"><%= track.length %></span> <span class="result__monthName"> km</span></li>
-                  <li class="result__name">
-                    <h4 role="heading" aria-level="4">
-                      <%= link_to track.name, track_path(track) %>
-                      <% if user_signed_in? && track.user == current_user %>
-                      | <%= button_to "Supprimer", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
-                      <% end %>
-                    </h4>
+                 <li class="result__date"><span class="result__day"><%= happening.date.strftime("%d") %></span> <span class="result__monthName"><%= l(happening.date , :format => "%b") %></span></li>
+                <li class="result__name">
+                  <h4 role="heading" aria-level="4">
+                    <%= link_to happening.event_type.name, happenings_path(params.slice(:sort).merge(event_type: happening.event_type.id)), :class => "type #{happening.event_type.name}" %>
+                    <%= link_to happening.name, happening_path(happening) %>
+                  </h4>
+                </li>
+                  <li class="result__distances">
+                    <% happening.tracks.each do |track| %>
+                      <%= track.length %> km
+                    <% end %>
                   </li>
-                  <% if track.happening %>
-                    <li class="result__happening"><%= link_to track.happening.name, track.happening %></li>
-                  <% end %>
                 </ul>
               </li>
             <% end %>
           </ul>
+        <% else %>
+          <p class="results__none">Pas de nouveaux évènements.</p>
+        <% end %>
+      </div>
+      <div class="news">
+        <h2 role="heading" aria-level="2">Les dernièrs tracés</h2>
+          <% if @tracks.count > 0 %>
+            <ul class="entity__results">
+              <% @tracks.each do |track| %>
+                <li class="entity__result" id="<%= track.slug %>">
+                  <ul class="result__list">
+                    <li class="result__date"><span class="result__day"><%= track.length %></span> <span class="result__monthName"> km</span></li>
+                    <li class="result__name">
+                      <h4 role="heading" aria-level="4">
+                        <%= link_to track.name, track_path(track) %>
+                        <% if user_signed_in? && track.user == current_user %>
+                        | <%= button_to "Supprimer", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
+                        <% end %>
+                      </h4>
+                    </li>
+                    <% if track.happening %>
+                      <li class="result__happening"><%= link_to track.happening.name, track.happening %></li>
+                    <% end %>
+                  </ul>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="results__none">Pas de nouveaux tracés.</p>
+          <% end %>
+      </div>
+    </div>
+    <div class="entity__data">
+      <div class="news">
+        <h2 role="heading" aria-level="2">Les dernièrs groupes</h2>
+        <% if @groups.count > 0 %>
+          <ul class="entity__results">
+            <% @groups.each do |group| %>
+              <li class="entity__result">
+                <ul class="result__list">
+                <li class="result__name">
+                  <h4 role="heading" aria-level="4">
+                    <%= link_to group.name, group_path(group) %>
+                  </h4>
+                </li>
+                  <li class="result__distances">
+                    <%= group.users.count %>
+                  </li>
+                </ul>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="results__none">Pas de nouveaux groupes.</p>
+        <% end %>
+      </div>
+      <div class="news">
+        <h2 role="heading" aria-level="2">Les dernièrs forums</h2>
+          <% if @forums.count > 0 %>
+            <ul class="entity__results">
+              <% @forums.each do |forum| %>
+                <li class="entity__result">
+                  <ul class="result__list">
+                    <li class="result__date"><span class="result__day"><%= forum.created_at.strftime("%d") %></span> <span class="result__monthName"><%= l(forum.created_at , :format => "%b") %></span></li>
+                    <li class="result__name">
+                      <h4 role="heading" aria-level="4">
+                        <%= link_to forum.name, forum_path(forum) %>
+                      </h4>
+                    </li>
+                  </ul>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="results__none">Pas de nouveaux forums.</p>
+          <% end %>
       </div>
     </div>
   </div>

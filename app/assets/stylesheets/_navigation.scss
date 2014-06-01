@@ -37,7 +37,7 @@ div.header__menu{
     display: none;
 }
 
-.map .event__actions{
+.map_canvas .event__actions{
     border: none;
     li{
         width: 20%;
@@ -50,9 +50,8 @@ div.header__menu{
     }
     button{
         text-align: center;
-        border-bottom: none;
-        border-top: 1px solid $sky;
         border-left: none;
+        border-right: 1px solid $sky;
         width: 100%;
         &:focus{
             outline:none;
@@ -60,7 +59,7 @@ div.header__menu{
     }
 }
 
-.left_column .event__actions{
+.entity__tracks .event__actions{
     li{
         float: none;
         display: block;
@@ -81,8 +80,6 @@ div.header__menu{
         text-align: center;
         background-color: $sky;
         padding: 0.45em;
-        border-right: 1px solid $sky;
-        border-left: 1px solid $sky;
         border-top: 1px solid $sky;
     }
     input:focus, textarea:focus{
@@ -99,7 +96,6 @@ div.header__menu{
     }
     a, .button_to, #hideMap, button, input, textarea, #elevation_chart, .info__dist{
         border:none;
-        border-right: 1px solid $sky;
         border-bottom: 1px solid $sky;
         background-color: white;
         margin:0;
@@ -259,9 +255,6 @@ nav.header__navigation{
 }
 
 .secondary__navigation{
-    border-top: 1px solid $sky;
-    border-left: 1px solid $sky;
-    border-right: 1px solid $sky;
     >ul{
         width: 100%;
         border-bottom: 1px solid $sky;

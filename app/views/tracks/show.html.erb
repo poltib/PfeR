@@ -2,11 +2,11 @@
   Tracé «<%= @track.name %>» | Sportfun
 <% end %>
 <section>
-  <div class="container">
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
-    <%= render "layouts/navigations/trackNavigation" %>
-    <div class="entity__title">
+    <div class="container entity__title happening track">
+      <%= render "layouts/navigations/trackNavigation" %>
       <h2 role="heading" aria-level="2">
+        <span>Tracé</span>
         <%= @track.name %>
         <span>Posté par: <%= link_to @track.user.username, @track.user %></span><br>
         <% if @track.happening %>
@@ -16,35 +16,33 @@
         <% end %>
       </h2>
     </div>
-    <div class="table">
+    <div class=" container entity__map">
       <h3 class="secondary__title" role="heading" aria-level="3">
         Informations
       </h3>
-      <div class="entity__map">
-        <div class="entity__tracks">
-          <div class="entity__informations">
-            <ul>
-              <li><i class="icon-direction"></i> <%= @track.length %>km</li>
-              <li><i class="icon-location"></i> <%= @track.location %></li>
-              <li><i class="icon-clock"></i> Posté <%= I18n.l @track.created_at %></li>
-              <% if @track.group %>
-                <li>Posté sur le groupe <%= link_to @track.group.name, @track.group %></li>
-              <% end %>
-              <li>
-                <span><i class="icon-vcard"></i> Description</span>
-                <%= @track.description %>
-              </li>
-              <li>
-                <span><i class="icon-chart-line"></i> Élévation</span>
-              </li>
-            </ul>
-            <div id="elevation_chart"></div>
-          </div>
+      <div class="entity__tracks">
+        <div class="entity__informations">
+          <ul>
+            <li><i class="icon-direction"></i> <%= @track.length %>km</li>
+            <li><i class="icon-location"></i> <%= @track.location %></li>
+            <li><i class="icon-clock"></i> Posté <%= I18n.l @track.created_at %></li>
+            <% if @track.group %>
+              <li>Posté sur le groupe <%= link_to @track.group.name, @track.group %></li>
+            <% end %>
+            <li>
+              <span><i class="icon-vcard"></i> Description</span>
+              <%= @track.description %>
+            </li>
+            <li>
+              <span><i class="icon-chart-line"></i> Élévation</span>
+            </li>
+          </ul>
+          <div id="elevation_chart"></div>
         </div>
-        <div id="map_canvas"></div>
       </div>
+      <div id="map_canvas"></div>
     </div>
-    <div class="table">
+    <div class="container table">
       <div class="entity__data">
         <div class="entity__forums">
           <h3 class="secondary__title" role="heading" arie-level="3">
@@ -120,7 +118,6 @@
         </div>
       </div>
     </div>
-  </div>
 <% content_for :script do %>
   <%= javascript_tag do %>
     var js_track_id = "<%=j @track.slug.to_s.html_safe %>";

@@ -1,11 +1,10 @@
 <% content_for :title do %>
   Évènement «<%= @happening.name %>» | Sportfun
 <% end %>
-<section>
-  <div class="container" role="main">
+<section role="main">
     <h2 role="heading" aria-level="2" class="hidden"><%= @happening.event_type.name %> <%= @happening.name %></h2>
-    <%= render "layouts/navigations/happeningNavigation" %>
-    <div class="entity__title happening">
+    <div class="container entity__title happening">
+      <%= render "layouts/navigations/happeningNavigation" %>
       <h2 role="heading" aria-level="2">
         <%= link_to @happening.event_type.name, happenings_path(params.slice(:sort).merge(event_type: @happening.event_type.id)), :class => "type #{@happening.event_type.name}" %>
         <%= @happening.name %>
@@ -28,7 +27,7 @@
         </ul>
       </div>
     </div>
-    <div class="table">
+    <div class="container entity__map">
       <h3 class="secondary__title" role="heading" aria-level="3">
         <% if current_user == @happening.user %>
           <%= link_to new_happening_track_path(@happening), :class=> "type add" do %>
@@ -37,36 +36,36 @@
         <% end %>
         Tracés
       </h3>
-      <div class="entity__map">
-        <div class="entity__tracks">
-          <div id="aside">
-            <div id="elevation_chart"></div>
-            <% if @happening.tracks.count > 0 %>
-            <ul>
-              <% @happening.tracks.each do |track| %>
-                <li class="entity__result" id="<%= track.slug %>">
-                  <ul class="result__list">
-                    <li class="result__name">
-                      <%= link_to track.name, track_path(track) %>
-                      <% if user_signed_in? && track.user == current_user %>
-                      | <%= button_to "Supprimer", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
-                      <% end %>
-                    </li>
-                    <li><%= track.favorites.count %> <i class="icon-heart"></i></li>
-                    <li class="result__length"><span id="length"><%= track.length %></span>km</li>
-                  </ul>
-                </li>
-              <% end %>
-            </ul>
-            <% else %>
-              <p class="results__none">Pas de tracés.</p>
+      <div class="entity__tracks">
+        <div id="aside">
+          <div id="elevation_chart"></div>
+          <% if @happening.tracks.count > 0 %>
+          <ul>
+            <% @happening.tracks.each do |track| %>
+              <li class="entity__result" id="<%= track.slug %>">
+                <ul class="result__list">
+                  <li class="result__name">
+                    <%= link_to track.name, track_path(track) %>
+                    <% if user_signed_in? && track.user == current_user %>
+                    | <%= button_to "Supprimer", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
+                    <% end %>
+                  </li>
+                  <li><%= track.favorites.count %> <i class="icon-heart"></i></li>
+                  <li class="result__length"><span id="length"><%= track.length %></span>km</li>
+                </ul>
+              </li>
             <% end %>
-          </div>
+          </ul>
+          <% else %>
+            <p class="results__none">Pas de tracés.</p>
+          <% end %>
         </div>
+      </div>
+      <div class="map_canvas">
         <div id="map_canvas"></div>
       </div>
     </div>
-    <div class="table">
+    <div class="container table">
       <div class="entity__data">
         <div class="entity__forums">
           <h3 class="secondary__title" role="heading" arie-level="3">
@@ -162,7 +161,6 @@
         </div>
       </div>
     </div>
-  </div>
 </section>
 <% content_for :script do %>
   <% if @tracksJs %>

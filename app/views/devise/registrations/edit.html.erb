@@ -5,8 +5,10 @@
   <div class="container">
     <div class="entity__title">
       <h2 role="heading" aria-level="2">Modifier le compte «<%= @user.username %>»</h2>
-      <h3>Pas satisfait?</h3>
-      <%= button_to "Supprimer mon compte", registration_path(resource_name), :data => { :confirm => "Etes vous certain?" }, :method => :delete %>
+      <div class="shared__links">
+        <h3>Pas satisfait?</h3>
+        <%= button_to "Supprimer mon compte", registration_path(resource_name), :data => { :confirm => "Etes vous certain?" }, :method => :delete %>
+      </div>
       <%= link_to "Retour", :back %>
     </div>
     <div class="entity__form">

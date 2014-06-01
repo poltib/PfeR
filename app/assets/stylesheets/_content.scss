@@ -317,11 +317,14 @@ table{
         }
     }
     margin-bottom: 0.5em;
+    header{
+        margin:0;
+    }
     span{
         margin-top: 0.4em;
         font-weight: lighter;
         display: block;
-        font-size: 1em;
+        font-size: 0.6em;
         color:silver;
     }
 }
@@ -435,8 +438,7 @@ table{
 /////////----------------------------------------------------------------------------------
 
 .entity__title{
-    border: 1px solid $sky;
-    border-top: none;
+    border-bottom: 1px solid $sky;
     position: relative;
     img{
         position: absolute;
@@ -452,7 +454,7 @@ table{
             font-size: 0.6em;
         }
     }
-    >a, button{
+    >a{
         position: absolute;
         right: 1.7em;
         top: 1.7em;
@@ -471,6 +473,10 @@ table{
     }
 }
 
+div.track h2{
+    border-bottom:none;
+}
+
 .user{
     h2{
         padding-left: 3em;
@@ -487,7 +493,6 @@ table{
 .table{
     display: table;
     width: 100%;
-    border-top: 2em solid $cloud;
 }
 
 .entity__data{
@@ -698,12 +703,21 @@ table{
 }
 
 .entity__map{
-    display: table-row;
-    #map_canvas{
-        width: 70%;
-        display: table-cell;
-        border: 1px solid $sky;
+    &:after{
+        content:"";
+        display:block;
+        clear:both;
     }
+    .map_canvas{
+        float: left;
+        width: 70%;
+        border-left: 1px solid $sky;
+    }
+}
+
+.newtrack .map_canvas{
+    border-right: 1px solid $sky;
+    border-left: none;
 }
 
 .table .secondary__title{
@@ -721,9 +735,7 @@ table{
 
 .entity__tracks{
     width: 30%;
-    display: table-cell;
-    border: 1px solid $sky;
-    border-right: none;
+    float: left;
     ul{
         padding-bottom: 0;
         li:last-child{
@@ -770,14 +782,10 @@ table{
 .entity__forums, .entity__gallery{
     display: table-cell;
     width: 50%;
-    margin-top: 2em;
-    border-top: 1px solid $sky;
-    border-bottom: 1px solid $sky;
-    border-right: 1px solid $sky;
 }
 
 .entity__forums{
-    border-left: 1px solid $sky;
+    border-right: 1px solid $sky;
 }
 
 

@@ -1,4 +1,5 @@
 <nav role="navigation" class="secondary__navigation">
+	<h2 role="heading" aria-level="2" class="hidden">Navigation Secondaire</h2>
 	<ul>
 		<li><%= link_to "Évènements", happenings_path, class: (controller?("happenings") && action?("index") ? 'actif' : nil) %></li>
 		<li><%= link_to "Tracés", tracks_path, class: (controller?("tracks") && action?("index") ? 'actif' : nil) %></li>

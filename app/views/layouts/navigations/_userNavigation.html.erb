@@ -1,4 +1,5 @@
 <nav role="navigation" class="secondary__navigation">
+  <h2 role="heading" aria-level="2" class="hidden">Navigation Secondaire</h2>
   <ul>
     <% if user_signed_in? && @user.id == current_user.id %>
       <li><%= link_to "Mes activités", user_path(@user), class: (controller?("users") && action?("show") ? 'actif' : nil) %></li>

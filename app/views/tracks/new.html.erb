@@ -1,27 +1,18 @@
+<% content_for :title do %>
+  Ajouter un tracé | Sportfun
+<% end %>
 <section>
+  <h2 role="heading" aria-level="2" class="hidden">Content</h2>
   <div class="container">
-    <h2 role="heading" aria-level="2" class="hidden">Content</h2>
-    <div class="left_column">
-      <div class="event__actions">
-        <h3 role="heading" aria-level="3">Informations</h3>
-        <span class="info__dist">Distance : <span id="dist">dist</span></span>
-        <div id="elevation_chart"></div>
-        <div id="mapErrors">
-          <p></p>
-        </div>
-        <%= render 'form' %>
-      </div>
+    <div class="entity__title">
+      <h2 role="heading" aria-level="2">Ajouter un tracé</h2>
+      <% if @group %>
+        <h3 class="shared__links" role="heading" aria-level="3">Sur l'évènement «<%= link_to @happening.name, @happening %>»</h3>
+      <% end %>
     </div>
-    <div class="primary_content">
-      <div class="map module">
-        <h2 role="heading" aria-level="2">
-          Créer un tracé
-          <% if @happening %>
-            sur <%= link_to @happening.name, @happening %>
-          <% end %>
-        </h2>
-        <div id="map_canvas"></div>
-        <div id="aside" class="event__actions">
+    <div class="entity__map newtrack">
+      <div class="map_canvas">
+        <div class="event__actions">
           <ul>
             <li><button id="close">Fermer le tracer</button></li>
             <li><button id="reset">Effacer tout</button></li>
@@ -29,6 +20,18 @@
             <li><button id="back">Annuler action</button></li>
             <li><button id="tiny">Effacer un point</button></li>
           </ul>
+        </div>
+        <div id="map_canvas"></div>
+      </div>
+      <div class="entity__tracks">
+        <div class="event__actions">
+          <h3 role="heading" aria-level="3">Informations</h3>
+          <span class="info__dist">Distance : <span id="dist">dist</span></span>
+          <div id="elevation_chart"></div>
+          <div id="mapErrors">
+            <p></p>
+          </div>
+          <%= render 'form' %>
         </div>
       </div>
     </div>
