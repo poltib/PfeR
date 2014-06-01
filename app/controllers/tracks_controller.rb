@@ -67,7 +67,9 @@ class TracksController < ApplicationController
   # DELETE /tracks/1
   # DELETE /tracks/1.json
   def destroy
-    FileUtils.rm_rf(Rails.root.join("public/tracks/", @track.id.to_s))
+    @track.xml_attachements.each do |xml|
+      xml.uploaded_file.file.delete
+    end
     @track.destroy
     respond_to do |format|
       format.html { redirect_to tracks_url, notice: 'Le tracé à été supprimé avec succès.' }

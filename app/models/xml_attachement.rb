@@ -28,6 +28,7 @@ class XmlAttachement < ActiveRecord::Base
     file_to_upload.write(builder.to_xml)
     file_to_upload.close()
     self.uploaded_file = File.open(name+".kml")
+    FileUtils.rm_rf(name+".kml")
     self.track_id = track_id
     self.save!
   end
@@ -63,6 +64,7 @@ class XmlAttachement < ActiveRecord::Base
     file_to_upload.write(builder.to_xml)
     file_to_upload.close()
     self.uploaded_file = File.open(name+".gpx")
+    FileUtils.rm_rf(name+".gpx")
     self.track_id = track_id
     self.save!
   end
