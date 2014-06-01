@@ -185,5 +185,15 @@ textarea{
     }
 }
 
+.entity__form{
+    &:after{
+        content:"";
+        display: block;
+        clear:both;
+    }
+    border: 1px solid $sky;
+    border-top: none;
+}
+
 .entity__creationform{
 }

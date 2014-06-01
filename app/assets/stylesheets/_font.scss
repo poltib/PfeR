@@ -30,12 +30,18 @@ html, body{
     min-height: 100%;
     background-color: $cloud;
     margin-bottom: -60px;
+    >div{
+        padding-top: 2em;
+    }
+}
+
+.welcome.index{
+    padding:0;
 }
 
 section .container{
-    margin-top: 1.5em;
+    margin-top: 3.5em;
     background-color: white;
-    border: 1px solid $sky;
 }
 
 section div.showcase{
@@ -44,7 +50,7 @@ section div.showcase{
 }
 
 section{
-    margin-bottom: 1em;
+    margin-bottom: 3.5em;
 }
 
 .news{

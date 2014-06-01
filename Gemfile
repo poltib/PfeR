@@ -78,7 +78,6 @@ gem 'mailboxer'
 # map and geocoding
 gem 'polylines'
 gem "geocoder"
-gem 'rubyzip'
 
 gem 'dotenv-rails'
 

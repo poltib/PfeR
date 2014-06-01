@@ -1,5 +1,5 @@
 class UserStatusesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:create, :destroy]
   before_action :set_user_status, only: [:destroy]
   before_filter :load_happening
   def index

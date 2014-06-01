@@ -1,3 +1,4 @@
+<% if @tracks.count > 0 %>
 <ul>
 <% @tracks.each do |track| %>
   <li class="entity__result" id="<%= track.slug %>">
@@ -23,6 +24,9 @@
 <% end %>
 <%= will_paginate @tracks %>
 </ul>
+<% else %>
+<p>Pas de tracés.</p>
+<% end %>
 
 <% content_for :script do %>
   <% if @tracksJs %>

@@ -18,6 +18,12 @@
 /////////----------------------------------------------------------------------------------
 /////////Gmap  ----------------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
+
+.tracks.show{
+    #map_canvas{
+        height: 25em;
+    }
+}
 .tracks.index{
     @include media($mobile){
         .map{
@@ -81,7 +87,7 @@
 
 
 .calendar__events {
-    padding:0.6em;
+    padding:1em;
     background-color: $beige;
     height: 80px;
 }
@@ -93,8 +99,8 @@
     position:relative;
     p{
         position: absolute;
-        top:0.6em;
-        right: 0.6em;
+        top:1em;
+        right: 1em;
     }
     border: 1px solid white;
     height: 80px;
@@ -168,7 +174,7 @@ table{
     display: inline-block;
     font-size: 0.7em;
     margin-right: 0.3em;
-    padding: 0.6em;
+    padding: 0.5em;
     border: none;
     &:hover{
         color: black;
@@ -193,7 +199,7 @@ table{
 
 .add{
     background-color: $blue;
-    padding: 0.6em;
+    padding: 1em;
     display: inline-block;
     cursor: pointer;
     color: white;
@@ -212,7 +218,7 @@ table{
 }
 
 .thumbs{
-    padding: 0.6em;
+    padding: 1em;
     li{
         position:relative;
         margin-bottom: 1.4em;
@@ -248,7 +254,7 @@ table{
     button{
         padding: 0.2em 0.15em;
         background-color: black;
-        opacity: 0.6;
+        opacity: 1;
         transition: opacity 0.2s;
         color:white;
         border:none;
@@ -292,12 +298,12 @@ table{
     }
     border-left: 1px solid $sky;
     h2{
-        padding: 0.6em;
+        padding: 1em;
     }
 }
 
 .forums__index{
-    padding: 0.6em;
+    padding: 1em;
     span{
         margin-bottom: 1em;
     }
@@ -315,7 +321,7 @@ table{
         margin-top: 0.4em;
         font-weight: lighter;
         display: block;
-        font-size: 0.6em;
+        font-size: 1em;
         color:silver;
     }
 }
@@ -335,7 +341,7 @@ table{
     @extend .forums__details;
     position: absolute;
     top:-1.6em;
-    left: 0.6em;
+    left: 1em;
 }
 
 .forum__post{
@@ -356,7 +362,7 @@ table{
         width: 80%;
     }
     h3{
-        padding: 1em 0.6em;
+        padding: 1em 1em;
     }
     margin-bottom: 1em;
 }
@@ -370,12 +376,12 @@ table{
 }
 
 .comment__form .comment__body{
-    padding: 0.6em;
+    padding: 1em;
 }
 
 .comment__header{
     position: absolute;
-    top: 0.6em;
+    top: 1em;
     left: -4.6em;
     img{
         width: 4em;
@@ -386,7 +392,7 @@ table{
 .comment__body{
     border-left: 1px solid $sky;
     h4{
-        padding-left: 0.6em;
+        padding-left: 1em;
     }
     button{
         background-color: transparent;
@@ -406,7 +412,7 @@ table{
 
 
 .markdown{
-    padding: 0.6em;
+    padding: 1em;
     h2{
         text-align: left;
     }
@@ -429,18 +435,19 @@ table{
 /////////----------------------------------------------------------------------------------
 
 .entity__title{
-    border-bottom: 1px solid $sky;
+    border: 1px solid $sky;
+    border-top: none;
     position: relative;
     img{
         position: absolute;
         width: 4.8em;
         border: 2px solid $sky;
-        left: 0.6em;
-        top: 0.6em;
+        left: 1em;
+        top: 1em;
     }
     h2{
         font-size: 2em;
-        padding: 0.8em 0.3em;
+        padding: 0.8em 0.49em;
         span{
             font-size: 0.6em;
         }
@@ -469,10 +476,10 @@ table{
         padding-left: 3em;
     }
     p{
-        padding: 0 0.6em 0.6em;
+        padding: 0 1em 1em;
         width: 65%;
         &:first-of-type{
-            padding-top: 0.6em;
+            padding-top: 1em;
         }
     }
 }
@@ -480,6 +487,7 @@ table{
 .table{
     display: table;
     width: 100%;
+    border-top: 2em solid $cloud;
 }
 
 .entity__data{
@@ -504,7 +512,7 @@ table{
         margin: 20px 0 0;
         position: relative;
         p{
-            margin: 0 0 0.6em;
+            margin: 0 0 1em;
         }
     }
     h3{
@@ -564,7 +572,7 @@ table{
 }
 
 .activity__content{
-    padding: 0.6em 0.6em 0;
+    padding: 1em 1em 0;
     border-width: 1px;
     border-style: solid;
     position: relative;
@@ -601,14 +609,14 @@ table{
     width: 70%;
     border-right: 1px solid $sky;
     >h3{
-        padding: 0.6em;
+        padding: 1em;
         font-size: 1.5em;
     }
 }
 
 
 .user__actions{
-    padding: 0 0.6em 0.6em;
+    padding: 0 1em 1em;
     margin-bottom: 1em;
     a{
         color: $blue;
@@ -618,7 +626,7 @@ table{
 
 .entity__relations{
     >h3{
-        padding: 0.6em;
+        padding: 1em;
         font-size: 1.5em;
     }
     width: 30%;
@@ -654,12 +662,18 @@ table{
 
 .entity__informations{
     h3{
-        padding: 0.6em;
+        padding: 1em;
     }
-    padding-bottom: 0.6em;
-    ul{padding: 0.8em 0;}
+    ul{
+        padding: 1em;
+        &:after{
+            content:"";
+            display: block;
+            clear:both;
+        }
+    }
     li{
-        padding:0 0.6em 0.5em;
+        padding:0 0 0.5em;
         &:last-child{
             @include span-columns(8);
         }
@@ -668,36 +682,56 @@ table{
             margin-bottom: 0.3em;
         }
     }
-    &:after{
-        content:"";
-        display: block;
-        clear:both;
-    }
 }
 
 .first__info{
-    li{
-        padding:0 0.3em 0.3em;
-    }
     @include span-columns(4);
 }
 
-.happening #map_canvas{
-    width: 70%;
-    float: left;
-    border-right: 1px solid $sky;
+.secondary__title{
+    font-size: 1.5em;
+    padding: 0.7em;
+    .type{
+        display: inline;
+        padding: 0.3em;
+    }
+}
+
+.entity__map{
+    display: table-row;
+    #map_canvas{
+        width: 70%;
+        display: table-cell;
+        border: 1px solid $sky;
+    }
+}
+
+.table .secondary__title{
+    display: block;
+    width: 100%;
+}
+
+.shared__links{
+    padding: 0 1em 1em;
+    a{
+        display: inline-block;
+        margin-top: 0.3em;
+    }
 }
 
 .entity__tracks{
     width: 30%;
-    float: right;
-    >h3{
-        font-size: 1.5em;
-        padding: 0.4em;
+    display: table-cell;
+    border: 1px solid $sky;
+    border-right: none;
+    ul{
+        padding-bottom: 0;
+        li:last-child{
+            padding: 0;
+        }
     }
-    .type{
-        display: inline;
-        padding: 0.3em;
+    #elevation_chart{
+        padding: 0 1em 1em;
     }
 }
 
@@ -707,13 +741,13 @@ table{
     li{
         float: left;
         &:first-child{
-            padding: 0.6em;
+            padding: 0.7em 1em 0.7em 0.8em;
             color: black;
             border-right: 3px solid black;
         }
     }
     a{
-        padding: 0.6em;
+        padding: 0.7em 1em;
         border: none;
         border-right: 1px solid white;
         display: inline-block;
@@ -728,7 +762,7 @@ table{
         clear: both;
     }
 
-    .active{
+    .active a{
         background-color: $cloud;
     }
 }
@@ -738,18 +772,11 @@ table{
     width: 50%;
     margin-top: 2em;
     border-top: 1px solid $sky;
-    >h3{
-        font-size: 1.5em;
-        margin-bottom: 0.5em;
-        padding: 0.4em;
-    }
-    .type{
-        display: inline;
-        padding: 0.3em;
-    }
+    border-bottom: 1px solid $sky;
+    border-right: 1px solid $sky;
 }
 
-.entity__gallery{
+.entity__forums{
     border-left: 1px solid $sky;
 }
 
@@ -758,7 +785,7 @@ table{
     background-color: $sky;
     li{
         float: left;
-        padding: 0.6em;
+        padding: 1em;
         width: auto;
         margin-right: 0.5em;
         label, input, select{
@@ -769,7 +796,7 @@ table{
         label{
             margin-right: 0.3em;
         }
-        input[type="text"], label,input[type="submit"], [type="file"]{
+        input[type="submit"], [type="file"]{
             padding: 0.2em;
         }
         input[type="text"],input[type="date"]{
@@ -797,12 +824,12 @@ table{
 }
 
 .results__none{
-    padding:0.6em;
+    padding:1em;
 }
 
 .entity__result{
     border-bottom: 1px solid $sky;
-    padding: 0.6em;
+    padding: 1em;
     &:last-child{
         border:none;
     }
@@ -816,7 +843,7 @@ table{
 
 .result__list li{
     float: left;
-    margin-right: 0.6em;
+    margin-right: 1em;
 }
 .result__list:after{
     content:"";
@@ -885,10 +912,10 @@ table{
 .signin{
     border: none;
     display: inline-block;
-    padding: 0.6em;
+    padding: 1em;
     color: $cloud;
     text-align: center;
-    margin-top: 0.6em;
+    margin-top: 1em;
     &:hover{
         color: $cloud;
     }

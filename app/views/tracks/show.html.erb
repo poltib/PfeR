@@ -5,7 +5,7 @@
   <div class="container">
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
     <%= render "layouts/navigations/trackNavigation" %>
-    <div class="entity__title happening">
+    <div class="entity__title">
       <h2 role="heading" aria-level="2">
         <%= @track.name %>
         <span>Posté par: <%= link_to @track.user.username, @track.user %></span><br>
@@ -15,40 +15,46 @@
           </span>
         <% end %>
       </h2>
-      <div class="entity__informations">
-        <ul>
-          <div class="first__info">
-            <li><i class="icon-direction"></i> <%= @track.length %>km</li>
-            <li><i class="icon-location"></i> <%= @track.location %></li>
-            <li><i class="icon-clock"></i> Posté <%= I18n.l @track.created_at %></li>
-            <% if @track.group %>
-              <li>Posté sur le groupe <%= link_to @track.group.name, @track.group %></li>
-            <% end %>
-          </div>
-          <li>
-            <span><i class="icon-vcard"></i> Description</span>
-            <%= @track.description %>
-          </li>
-        </ul>
-      </div>
     </div>
-    <div class="track map">
-      <div id="map_canvas"></div>
-      <div id="aside">
-        <div id="elevation_chart"></div>
+    <div class="table">
+      <h3 class="secondary__title" role="heading" aria-level="3">
+        Informations
+      </h3>
+      <div class="entity__map">
+        <div class="entity__tracks">
+          <div class="entity__informations">
+            <ul>
+              <li><i class="icon-direction"></i> <%= @track.length %>km</li>
+              <li><i class="icon-location"></i> <%= @track.location %></li>
+              <li><i class="icon-clock"></i> Posté <%= I18n.l @track.created_at %></li>
+              <% if @track.group %>
+                <li>Posté sur le groupe <%= link_to @track.group.name, @track.group %></li>
+              <% end %>
+              <li>
+                <span><i class="icon-vcard"></i> Description</span>
+                <%= @track.description %>
+              </li>
+              <li>
+                <span><i class="icon-chart-line"></i> Élévation</span>
+              </li>
+            </ul>
+            <div id="elevation_chart"></div>
+          </div>
+        </div>
+        <div id="map_canvas"></div>
       </div>
     </div>
     <div class="table">
       <div class="entity__data">
         <div class="entity__forums">
-          <h3 role="heading" arie-level="3">
+          <h3 class="secondary__title" role="heading" arie-level="3">
             <%= link_to new_track_forum_path(@track), :class=> "type add" do %>
               <i class="icon-pencil"></i> Poster forum
             <% end %>
             Forums
           </h3>
           <% if @track.forums.count == 0 %>
-            <p>Pas de forums</p>
+            <p class="results__none">Pas de forums.</p>
           <% else %>
             <ul>
               <% @track.forums.each do |forum| %>
@@ -72,7 +78,7 @@
           <% end %>
         </div>
         <div class="entity__gallery">
-          <h3 role="heading" aria-level="3">
+          <h3 class="secondary__title" role="heading" aria-level="3">
             <% if current_user == @track.user %>
               <span id="showImageForm" class="type add"><i class="icon-picture"></i> Ajouter une image</span>
             <% end %>
@@ -91,22 +97,26 @@
             <% end %>
           </div>
           <% end %>
-          <ul id="many" class="thumbs">
-            <% @track.images.each do |image| %>
-              <li>
-                <a href="<%= image.image.url(:medium) %>" class="thumbnail">
-                  <%= image_tag image.image.url(:thumb) %>
-                </a>
-                <% if user_signed_in? && current_user == @track.user %>
-                  <%= button_to [@track, image], method: :delete, data: { confirm: 'Are you sure?' }, form_class: "delete_image" do %>
-                    <span data-tooltip="Supprimer la photo">
-                      <i class="icon-cancel"></i>
-                    </span>
+          <% if @track.images.count > 0 %>
+            <ul id="many" class="thumbs">
+              <% @track.images.each do |image| %>
+                <li>
+                  <a href="<%= image.image.url(:medium) %>" class="thumbnail">
+                    <%= image_tag image.image.url(:thumb) %>
+                  </a>
+                  <% if user_signed_in? && current_user == @track.user %>
+                    <%= button_to [@track, image], method: :delete, data: { confirm: 'Are you sure?' }, form_class: "delete_image" do %>
+                      <span data-tooltip="Supprimer la photo">
+                        <i class="icon-cancel"></i>
+                      </span>
+                    <% end %>
                   <% end %>
-                <% end %>
-              </li>
-            <% end %>
-          </ul>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="results__none">Pas de photos.</p>
+          <% end %>
         </div>
       </div>
     </div>

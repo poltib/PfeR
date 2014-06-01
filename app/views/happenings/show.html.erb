@@ -28,42 +28,48 @@
         </ul>
       </div>
     </div>
-    <div class="happening map">
-      <div id="map_canvas"></div>
-      <div class="entity__tracks">
-        <h3 role="heading" aria-level="3">
-          <% if current_user == @happening.user %>
-            <%= link_to new_happening_track_path(@happening), :class=> "type add" do %>
-              <i class="icon-location"></i> Ajouter un tracé
-            <% end %>
+    <div class="table">
+      <h3 class="secondary__title" role="heading" aria-level="3">
+        <% if current_user == @happening.user %>
+          <%= link_to new_happening_track_path(@happening), :class=> "type add" do %>
+            <i class="icon-location"></i> Ajouter un tracé
           <% end %>
-          Tracés
-        </h3>
-        <div id="aside">
-          <div id="elevation_chart"></div>
-          <ul>
-            <% @happening.tracks.each do |track| %>
-              <li class="entity__result" id="<%= track.slug %>">
-                <ul class="result__list">
-                  <li class="result__name">
-                    <%= link_to track.name, track_path(track) %>
-                    <% if user_signed_in? && track.user == current_user %>
-                    | <%= button_to "Supprimer", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
-                    <% end %>
-                  </li>
-                  <li><%= track.favorites.count %> <i class="icon-heart"></i></li>
-                  <li class="result__length"><span id="length"><%= track.length %></span>km</li>
-                </ul>
-              </li>
+        <% end %>
+        Tracés
+      </h3>
+      <div class="entity__map">
+        <div class="entity__tracks">
+          <div id="aside">
+            <div id="elevation_chart"></div>
+            <% if @happening.tracks.count > 0 %>
+            <ul>
+              <% @happening.tracks.each do |track| %>
+                <li class="entity__result" id="<%= track.slug %>">
+                  <ul class="result__list">
+                    <li class="result__name">
+                      <%= link_to track.name, track_path(track) %>
+                      <% if user_signed_in? && track.user == current_user %>
+                      | <%= button_to "Supprimer", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
+                      <% end %>
+                    </li>
+                    <li><%= track.favorites.count %> <i class="icon-heart"></i></li>
+                    <li class="result__length"><span id="length"><%= track.length %></span>km</li>
+                  </ul>
+                </li>
+              <% end %>
+            </ul>
+            <% else %>
+              <p class="results__none">Pas de tracés.</p>
             <% end %>
-          </ul>
+          </div>
         </div>
+        <div id="map_canvas"></div>
       </div>
     </div>
     <div class="table">
       <div class="entity__data">
         <div class="entity__forums">
-          <h3 role="heading" arie-level="3">
+          <h3 class="secondary__title" role="heading" arie-level="3">
             <%= link_to new_happening_forum_path(@happening), :class=> "type add" do %>
               <i class="icon-pencil"></i> Poster forum
             <% end %>
@@ -110,11 +116,11 @@
             <% end %>
             </ul>
           <% else %>
-            <p class="results__none">Pas de forums</p>
+            <p class="results__none">Pas de forums.</p>
           <% end %>
         </div>
         <div class="entity__gallery">
-          <h3 role="heading" aria-level="3">
+          <h3 class="secondary__title" role="heading" aria-level="3">
             <% if current_user == @happening.user %>
               <span id="showImageForm" class="type add"><i class="icon-picture"></i> Ajouter une image</span>
             <% end %>
@@ -133,22 +139,26 @@
             <% end %>
           </div>
           <% end %>
-          <ul id="many" class="thumbs">
-            <% @happening.images.each do |image| %>
-              <li>
-                <a href="<%= image.image.url(:medium) %>" class="thumbnail">
-                  <%= image_tag image.image.url(:thumb) %>
-                </a>
-                <% if user_signed_in? && current_user == @happening.user %>
-                  <%= button_to [@happening, image], method: :delete, data: { confirm: 'Are you sure?' }, form_class: "delete_image" do %>
-                    <span data-tooltip="Supprimer la photo">
-                      <i class="icon-cancel"></i>
-                    </span>
+          <% if @happening.images.count > 0 %>
+            <ul id="many" class="thumbs">
+              <% @happening.images.each do |image| %>
+                <li>
+                  <a href="<%= image.image.url(:medium) %>" class="thumbnail">
+                    <%= image_tag image.image.url(:thumb) %>
+                  </a>
+                  <% if user_signed_in? && current_user == @happening.user %>
+                    <%= button_to [@happening, image], method: :delete, data: { confirm: 'Are you sure?' }, form_class: "delete_image" do %>
+                      <span data-tooltip="Supprimer la photo">
+                        <i class="icon-cancel"></i>
+                      </span>
+                    <% end %>
                   <% end %>
-                <% end %>
-              </li>
-            <% end %>
-          </ul>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="results__none">Pas de photos.</p>
+          <% end %>
         </div>
       </div>
     </div>

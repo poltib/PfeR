@@ -4,6 +4,7 @@
 <section>
 <div class="container">
   <div class="entity__title">
+  <%= link_to "Connexion avec Facebook", user_omniauth_authorize_path(:facebook) %>
     <h2 role="heading" aria-level="2">Inscription</h2>
   </div>
   <div class="entity__form">
@@ -27,7 +28,6 @@
         </ul>
       </fieldset>
     <% end %>
-    <%= link_to "Connexion avec Facebook", user_omniauth_authorize_path(:facebook), :class => "fb__button signin" %>
   </div>
   </div>
 </section>

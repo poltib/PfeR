@@ -17,20 +17,22 @@
       <% end %>
       <%= link_to "Ajouter un tracé", new_track_path %>
     </div>
-    <div class="entity__searchform">
-      <%= form_tag(tracks_path, :method => "get", id: "search-form") do %>
-        <fieldset>
-          <ul>
-            <li><%= label_tag :search, "Adresse" %>
-            <%= text_field_tag :search, params[:search], placeholder: "ex: Liège, Belgique" %></li>
-            <li class="radiusRange">
-              <%= label_tag :radius, "Rayon" %>
-              <input type="range" name="radius" id="radius" min="1" max="50" value="20"><output for="radius" id="actuRadius">20</output><span>km</span></li>
-            <li><%= submit_tag "Rechercher", :name => nil %></li>
-          </ul>
-        </fieldset>
-      <% end %>
-    </div>
+    <% if params[:user_id].blank? %>
+      <div class="entity__searchform">
+        <%= form_tag(tracks_path, :method => "get", id: "search-form") do %>
+          <fieldset>
+            <ul>
+              <li><%= label_tag :search, "Adresse" %>
+              <%= text_field_tag :search, params[:search], placeholder: "ex: Liège, Belgique" %></li>
+              <li class="radiusRange">
+                <%= label_tag :radius, "Rayon" %>
+                <input type="range" name="radius" id="radius" min="1" max="50" value="20"><output for="radius" id="actuRadius">20</output><span>km</span></li>
+              <li><%= submit_tag "Rechercher", :name => nil %></li>
+            </ul>
+          </fieldset>
+        <% end %>
+      </div>
+    <% end %>
     <div class="entity__results">
       <div class="map">
         <% if params[:user_id].blank? %>

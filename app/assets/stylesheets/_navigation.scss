@@ -259,6 +259,9 @@ nav.header__navigation{
 }
 
 .secondary__navigation{
+    border-top: 1px solid $sky;
+    border-left: 1px solid $sky;
+    border-right: 1px solid $sky;
     >ul{
         width: 100%;
         border-bottom: 1px solid $sky;
@@ -276,7 +279,7 @@ nav.header__navigation{
         display: inline-block;
         color:black;
         border: none;
-        padding: 0.6em;
+        padding: 1em;
         border-right: 1px solid $sky;
         margin-bottom: -1px;
         &:hover{

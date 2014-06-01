@@ -14,9 +14,14 @@
 .header__navbar{
     width: 100%;
     background-color: white;
+    border-bottom: 1px solid $sky;
+    position: fixed;
+    z-index: 1000;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, .2);
 }
 
 .headingImg{
+    padding-top: 3em;
     background: image-url('head.png') fixed no-repeat;
     border-bottom: 3px solid $sky;
     h2{
@@ -108,7 +113,7 @@ div.intro{
             width: 100%;
             border:none;
             background-color: $blue;
-            padding: 0.37em 0;
+            padding: 0.4em 0;
             text-align: center;
             color:$cloud;
         }

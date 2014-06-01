@@ -311,7 +311,7 @@ $(".tracks.new").ready ->
     gm_center = new google.maps.LatLng(js_location[0], js_location[1])
     map = gm_init(gm_center)
     map.setOptions({draggableCursor:"crosshair"})
-    # upLi.style.display = 'none'
+    # upLi.style.display = 'none' 
     poly = poly_init(map)
     add_chart_listener(map)
     marker_center = new google.maps.Marker({
@@ -439,13 +439,6 @@ $(".tracks.index, .happenings.show").ready ->
             dist_marker.setMap(null)
           for track_marker in tracks_markers
             track_marker.setMap(map)
-
-  $("#search-form").submit ->
-    $.get(this.action, $(this).serialize(), (data) ->
-      gm_center = new google.maps.LatLng(js_location[0], js_location[1])
-      load_map()
-    , "script")
-    return false
 
   if radius?
     radius.onchange = ()->
