@@ -43,16 +43,6 @@ class TracksController < ApplicationController
   # POST /tracks.json
   def create
     @track = Track.new(track_params)
-    if !track_params[:route]
-      tmp_segment = track_params[:polyline].scan(/\((\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\|(\d+\.\d+|\d+)\)/).to_a
-      generate_segment = tmp_segment
-      tmp_segment.each do |coords|
-        coords[0] = coords[0].to_f
-        coords[1] = coords[1].to_f
-        coords.delete(coords[2])
-      end
-      @track.polyline = Polylines::Encoder.encode_points(tmp_segment)
-    end
     @track.user = current_user
     if track_params[:happening_id]
       @happening = Happening.find_by_slug(track_params[:happening_id])
@@ -60,8 +50,6 @@ class TracksController < ApplicationController
     end
     respond_to do |format|
       if @track.save
-        Track.create_kml_file(track_params[:name], generate_segment, @track.id.to_s)
-        Track.create_gpx_file(track_params[:name], generate_segment, @track.id.to_s)
         if track_params[:happening_id]
           format.html { redirect_to @happening, notice: 'Le tracé à été ajouté avec succès.' }
           format.json { render action: 'show', status: :created, location: @happening }
