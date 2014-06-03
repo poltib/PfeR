@@ -21,7 +21,7 @@ Pfe::Application.configure do
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
   config.serve_static_assets = true
-
+  config.static_cache_control = "public, max-age=2592000"
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
@@ -78,6 +78,19 @@ Pfe::Application.configure do
   password: ENV['GMAIL_PASSWORD']
   }
   # config.action_mailer.raise_delivery_errors = true
+
+  client = Dalli::Client.new((ENV["MEMCACHIER_SERVERS"] || "").split(","),
+                           :username => ENV["MEMCACHIER_USERNAME"],
+                           :password => ENV["MEMCACHIER_PASSWORD"],
+                           :failover => true,
+                           :socket_timeout => 1.5,
+                           :socket_failure_delay => 0.2,
+                           :value_max_bytes => 10485760)
+  config.action_dispatch.rack_cache = {
+    :metastore    => client,
+    :entitystore  => client
+  }
+  config.static_cache_control = "public, max-age=2592000"
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found).
