@@ -94,4 +94,5 @@ group :production do
   gem 'memcachier'              # heroku add-on for auto config of dalli
   gem 'rack-cache'
   gem 'kgio'
+  gem 'rack-zippy'
 end
