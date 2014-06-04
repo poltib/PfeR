@@ -765,6 +765,7 @@ div.track h2{
         width: 70%;
         border-left: 1px solid $sky;
         @include media($phablet){
+            border-left: none;
             width: 100%;
             float: none;
         }

@@ -1,6 +1,7 @@
 <nav role="navigation" class="secondary__navigation entity">
   <h2 role="heading" aria-level="2" class="hidden">Navigation Secondaire</h2>
-  <ul>
+  <button id="toggle_actions_bar">Actions <em class="icon-down-open-big"></em></button>
+  <ul id="actions__menu">
     <% if user_signed_in? %>
       <li>
         <% if current_user.user_statuses.where(happening_id: @happening.id).first %>

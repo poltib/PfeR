@@ -1,6 +1,7 @@
 <nav role="navigation" class="secondary__navigation">
   <h2 role="heading" aria-level="2" class="hidden">Navigation Secondaire</h2>
-  <ul>
+  <button id="toggle_actions_bar">Actions <em class="icon-down-open-big"></em></button>
+  <ul id="actions__menu">
     <% if user_signed_in? && @user.id == current_user.id %>
       <li><%= link_to "Mes activités", user_path(@user), class: (controller?("users") && action?("show") ? 'actif' : nil) %></li>
       <li data-intro="Tu as accès aux activitées que tu auras créé ici" data-step="2"><%= link_to "Mes évènements", user_happenings_path(@user), class: (controller?("happenings") && action?("index") ? 'actif' : nil) %></li>

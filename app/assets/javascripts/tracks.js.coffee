@@ -489,4 +489,23 @@ $(".users.show").ready ->
 
   if first_user.innerText == 'true'
     introJs().start()
+
+$(".users.show, .happenings.show, .forums.show, .tracks.show, .groups.show, .users.index, .happenings.index, .tracks.index, .groups.index, .favorites.index").ready ->
+  toggle_actions = document.getElementById("toggle_actions_bar")
+  actions_menu = document.getElementById("actions__menu")
+
+  checkWidth = ()->
+    if $(window).width() < 925
+      actions_menu.className = 'hidden'
+    else
+      actions_menu.className = ''
+
+  checkWidth()
+  $(window).resize(checkWidth)
+
+  toggle_actions.addEventListener 'click', ()->
+    if actions_menu.className == 'hidden'
+      actions_menu.className = ''
+    else
+      actions_menu.className = 'hidden'
       

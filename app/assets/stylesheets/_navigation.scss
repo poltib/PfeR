@@ -437,3 +437,12 @@ nav.secondary__navigation > ul{
         }
     }
 }
+
+#toggle_actions_bar{
+    display: none;
+    border: none;
+    border-bottom: 1px solid $sky;
+    @include media($tablet){
+        display: block;
+    }
+}

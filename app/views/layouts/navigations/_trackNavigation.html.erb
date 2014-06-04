@@ -1,6 +1,7 @@
 <nav role="navigation" class="secondary__navigation entity">
   <h2 role="heading" aria-level="2" class="hidden">Navigation Secondaire</h2>
-  <ul>
+  <button id="toggle_actions_bar">Actions <em class="icon-down-open-big"></em></button>
+  <ul id="actions__menu">
     <li>
       <%= link_to download_track_path(@track), :title => 'Télécharger le tracé' do %>
         <em class="icon-download"></em> Télécharger
