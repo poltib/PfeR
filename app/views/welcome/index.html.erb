@@ -43,28 +43,28 @@
     <h2 role="heading" aria-level="2" class="hidden">Presentation</h2>
     <div class="presenter">
       <div class="presenter__icon">
-        <i class="icon-trophy"></i>
+        <em class="icon-trophy"></em>
       </div>
       <h3 role="heading" aria-level="3">Courses</h3>
       <p>Trouvez toutes les courses à proximité de chez vous. Ou ajouter vos évènements.</p>
     </div>
     <div class="presenter">
       <div class="presenter__icon">
-        <i class="icon-chart-line"></i>
+        <em class="icon-chart-line"></em>
       </div>
       <h3 role="heading" aria-level="3">Entrainements</h3>
       <p>On sait tous que s'entrainer seul est parfois pénible, <%= link_to "rechercher ici", happenings_path %> pour en trouver à proximité.</p>
     </div>
     <div class="presenter">
       <div class="presenter__icon">
-        <i class="icon-map"></i>
+        <em class="icon-map"></em>
       </div>
       <h3 role="heading" aria-level="3">Tracés d'entrainements</h3>
       <p>Parfois vous avez envie de changer d'entrainement mais vous ne savez pas ou aller, <%= link_to "rechercher ici", tracks_path %>.</p>
     </div>
     <div class="presenter">
       <div class="presenter__icon">
-        <i class="icon-users"></i>
+        <em class="icon-users"></em>
       </div>
       <h3 role="heading" aria-level="3">Communauté</h3>
       <p>les utilisateurs sont la pour s'entraider, consulter <%= link_to "les forums", forums_path %> pour trouver des informations.</p>
@@ -72,7 +72,7 @@
   </div>
 </section>
 <section>
-  <div class="container table">
+  <div class="container table allnews">
     <div class="entity__data">
       <div class="news">
         <h2 role="heading" aria-level="2">Les dernièrs évènements</h2>
@@ -83,10 +83,10 @@
                 <ul class="result__list">
                  <li class="result__date"><span class="result__day"><%= happening.date.strftime("%d") %></span> <span class="result__monthName"><%= l(happening.date , :format => "%b") %></span></li>
                 <li class="result__name">
-                  <h4 role="heading" aria-level="4">
+                  <h3 role="heading" aria-level="3">
                     <%= link_to happening.event_type.name, happenings_path(params.slice(:sort).merge(event_type: happening.event_type.id)), :class => "type #{happening.event_type.name}" %>
                     <%= link_to happening.name, happening_path(happening) %>
-                  </h4>
+                  </h3>
                 </li>
                   <li class="result__distances">
                     <% happening.tracks.each do |track| %>
@@ -110,12 +110,12 @@
                   <ul class="result__list">
                     <li class="result__date"><span class="result__day"><%= track.length %></span> <span class="result__monthName"> km</span></li>
                     <li class="result__name">
-                      <h4 role="heading" aria-level="4">
+                      <h3 role="heading" aria-level="3">
                         <%= link_to track.name, track_path(track) %>
                         <% if user_signed_in? && track.user == current_user %>
                         | <%= button_to "Supprimer", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
                         <% end %>
-                      </h4>
+                      </h3>
                     </li>
                     <% if track.happening %>
                       <li class="result__happening"><%= link_to track.happening.name, track.happening %></li>
@@ -138,9 +138,9 @@
               <li class="entity__result">
                 <ul class="result__list">
                 <li class="result__name">
-                  <h4 role="heading" aria-level="4">
+                  <h3 role="heading" aria-level="3">
                     <%= link_to group.name, group_path(group) %>
-                  </h4>
+                  </h3>
                 </li>
                   <li class="result__distances">
                     <%= group.users.count %>
@@ -162,9 +162,9 @@
                   <ul class="result__list">
                     <li class="result__date"><span class="result__day"><%= forum.created_at.strftime("%d") %></span> <span class="result__monthName"><%= l(forum.created_at , :format => "%b") %></span></li>
                     <li class="result__name">
-                      <h4 role="heading" aria-level="4">
+                      <h3 role="heading" aria-level="3">
                         <%= link_to forum.name, forum_path(forum) %>
-                      </h4>
+                      </h3>
                     </li>
                   </ul>
                 </li>

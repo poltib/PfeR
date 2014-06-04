@@ -29,6 +29,18 @@
         <div class="entity__activity">
           <h3 role="heading" aria-level="3">Activités du groupe</h3>
           <ul class="activity__timeline">
+            <% if !user_signed_in? %>
+              <li>
+                <div class="activity__relative">
+                  <span class="activity__date"><%= l(Date.today , :format => "%d %b %Y") %></span>
+                  <span class="activity__circle"></span>
+                </div>
+                <div class="activity__content">
+                  <h3>Pas d'activités</h3>
+                    <p>Cet groupe n'a pas d'activités</p>
+                </div>
+              </li>
+            <% end %>
             <% if user_signed_in? &&  current_user.id == @group.owner.id %>
               <li>
                 <div class="activity__relative">

@@ -11,13 +11,13 @@
     </div>
   <% end %>
   	<ul>
-	<li><%= f.label :name %>
+	<li><%= f.label :name, :class => "mandatory" %>
 	<%= f.text_field :name %></li>
 
-	<li><%= f.label :description %>
+	<li><%= f.label :description, :class => "mandatory" %>
 	<%= f.text_area :description %></li>
 
-	<li><%= f.label :avatar %>
+	<li><%= f.label :avatar, :class => "mandatory" %>
 	<%= f.file_field :avatar %></li>
 
 	<%= f.submit %>

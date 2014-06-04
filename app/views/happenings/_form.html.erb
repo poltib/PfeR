@@ -15,22 +15,22 @@
     <% end %>
     
 	  	<ul>
-		<li><%= f.label :name %>
+		<li><%= f.label :name, :class => "mandatory" %>
 		<%= f.text_field :name %></li>
 
-		<li><%= f.label :event_type %>
+		<li><%= f.label :event_type, :class => "mandatory" %>
 			<%= f.select(:event_type_id, EventType.all.collect {|a| [a.name, a.id]}) %></li>
 
-		<li><%= f.label :description %>
+		<li><%= f.label :description, :class => "mandatory" %>
 		<%= f.text_area :description %></li>
 
-		<li><%= f.label :address %>
+		<li><%= f.label :address, :class => "mandatory" %>
 		<%= f.text_field :address %></li>
 
 		<li><%= f.label :link %>
 		<%= f.text_field :link %></li>
 
-		<li><%= f.label :date %>
+		<li><%= f.label :date, :class => "mandatory" %>
 		<%= f.date_field :date %></li>
 
 		<%= f.submit %>

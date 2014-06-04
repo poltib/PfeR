@@ -8,12 +8,12 @@
       <%= render "layouts/navigations/forumNavigation" %>
       <div class="entity__title forum">
         <ul class="forum__details">
-          <li><i class="icon-bookmarks"></i><% for category in @forum.categories do %>
+          <li><em class="icon-bookmarks"></em><% for category in @forum.categories do %>
             <%= link_to category.name, forums_path(params.slice(:sort).merge(category_id: category.id)) %>
           <% end %></li>
-          <li><i class="icon-clock-1"></i><%= I18n.l @forum.created_at %></li>
+          <li><em class="icon-clock-1"></em><%= I18n.l @forum.created_at %></li>
           <li>
-            <i class="icon-chat"></i>
+            <em class="icon-chat"></em>
             <%= @forum.comments.count %> 
             <% if @forum.comments.count <= 1 %>
               réponse

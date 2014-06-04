@@ -12,16 +12,16 @@
       <%= devise_error_messages! %>
       <fieldset>
         <ul>
-          <li><%= f.label :username %><br />
+          <li><%= f.label :username, :class => "mandatory" %>
           <%= f.text_field :username, :autofocus => true %></li>
 
-          <li><%= f.label :email %><br />
+          <li><%= f.label :email, :class => "mandatory" %>
           <%= f.email_field :email %></li>
 
-          <li><%= f.label :password %><br />
+          <li><%= f.label :password, :class => "mandatory" %>
           <%= f.password_field :password %></li>
 
-          <li><%= f.label :password_confirmation %><br />
+          <li><%= f.label :password_confirmation, :class => "mandatory" %>
           <%= f.password_field :password_confirmation %></li>
 
           <li><%= f.submit "Inscription" %></li>

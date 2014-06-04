@@ -13,7 +13,7 @@
     </div>
     <div class="entity__categories">
       <ul>
-        <li><i class="icon-bookmarks"></i>Catégories</li>
+        <li><em class="icon-bookmarks"></em>Catégories</li>
         <% if @active %>
           <li>
         <% else %>
@@ -52,12 +52,12 @@
                     <% end %>
                   </span></h3>
                   <ul class="forums__details">
-                    <li><i class="icon-bookmarks"></i><% for category in forum.categories do %>
+                    <li><em class="icon-bookmarks"></em><% for category in forum.categories do %>
                       <%= link_to category.name, forums_path(params.slice(:sort).merge(category_id: category.id)) %>
                     <% end %></li>
-                    <li><i class="icon-clock-1"></i><%= I18n.l forum.created_at %></li>
+                    <li><em class="icon-clock-1"></em><%= I18n.l forum.created_at %></li>
                     <li>
-                      <i class="icon-chat"></i>
+                      <em class="icon-chat"></em>
                       <%= forum.comments.count %> 
                       <% if forum.comments.count <= 1 %>
                         réponse
@@ -66,7 +66,7 @@
                       <% end %>
 
                     </li>
-                    <li><i class="icon-heart"></i><%= forum.favorites.count %></li>
+                    <li><em class="icon-heart"></em><%= forum.favorites.count %></li>
                   </ul>
               </header>
             </article>

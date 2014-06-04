@@ -17,25 +17,25 @@
 
         <%= devise_error_messages! %>
         <ul>
-        <li><%= f.label :email %><br />
+        <li><%= f.label :email %>
         <%= f.email_field :email, :autofocus => true %></li>
 
-        <li><%= f.label :username %><br />
+        <li><%= f.label :username %>
         <%= f.text_field :username %></li>
 
-        <li><%= f.label :lastname %><br />
+        <li><%= f.label :lastname %>
         <%= f.text_field :lastname %></li>
 
-        <li><%= f.label :firstname %><br />
+        <li><%= f.label :firstname %>
         <%= f.text_field :firstname %></li>
 
-        <li><%= f.label :description %><br />
+        <li><%= f.label :description %>
         <%= f.text_area :description %></li>
         <li>
           <p>Votre avatar actuel</p>
           <%= image_tag @user.avatar.url(:medium) %>
         </li>
-        <li><%= f.label :avatar %><br />
+        <li><%= f.label :avatar %>
         <%= f.file_field :avatar %></li>
 
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -43,13 +43,13 @@
         <% end %>
         <li><span class="add" id="showPasswordForm">Modifier mot de passe</span></li>
         <div id="edit__password">
-          <li><%= f.label :password, "Nouveau mot de passe" %><br />
+          <li><%= f.label :password, "Nouveau mot de passe" %>
           <%= f.password_field :password, :autocomplete => "off" %></li>
 
-          <li><%= f.label :password_confirmation, "Confirmation nouveau mot de passe" %><br />
+          <li><%= f.label :password_confirmation, "Confirmation nouveau mot de passe" %>
           <%= f.password_field :password_confirmation %></li>
 
-          <li><%= f.label :current_password %><br />
+          <li><%= f.label :current_password %>
           <%= f.password_field :current_password %></li>
         </div>
 

@@ -3,25 +3,25 @@
   <ul><!-- 
     --><% if user_signed_in? %><!--
     --><li>
-      <%= link_to "Tableau de bord", user_path(current_user), class: (controller?("users") && action?("show") && params[:id] == current_user.username || controller?("happenings") && action?("index") && params[:user_id] == current_user.username || controller?("tracks") && action?("index") && params[:user_id] == current_user.username || controller?("groups") && action?("index") && params[:user_id] == current_user.username || controller?("favorites") && action?("index") && params[:user_id] == current_user.username ? 'selected' : nil) %>
+      <%= link_to "Tableau de bord", user_path(current_user), :tabindex => 1, class: (controller?("users") && action?("show") && params[:id] == current_user.username || controller?("happenings") && action?("index") && params[:user_id] == current_user.username || controller?("tracks") && action?("index") && params[:user_id] == current_user.username || controller?("groups") && action?("index") && params[:user_id] == current_user.username || controller?("favorites") && action?("index") && params[:user_id] == current_user.username ? 'selected' : nil) %>
     </li><!-- 
     --><% end %><!--
     --><li>
-      <%= link_to "Rechercher", happenings_path, class: (controller?("happenings") && action?("index") && !params[:user_id] || controller?("tracks") && action?("index") && !params[:user_id] || controller?("groups") && action?("index") && !params[:user_id] ? 'selected' : nil) %>
+      <%= link_to "Rechercher", happenings_path, :tabindex => 2, class: (controller?("happenings") && action?("index") && !params[:user_id] || controller?("tracks") && action?("index") && !params[:user_id] || controller?("groups") && action?("index") && !params[:user_id] ? 'selected' : nil) %>
     </li><!-- 
     --><li>
-      <%= link_to "Communauté", forums_path, class: (controller?("forums") && action?("index") || controller?("users") && action?("index") ? 'selected' : nil) %>
+      <%= link_to "Communauté", forums_path, :tabindex => 3, class: (controller?("forums") && action?("index") || controller?("users") && action?("index") ? 'selected' : nil) %>
     </li><!-- 
     --><% if user_signed_in? %><!--
        --><li class="nav__user nav__actions">
-          <%= link_to user_path(current_user) do %>
+          <%= link_to user_path(current_user),  :tabindex => 4 do %>
             <%= image_tag current_user.avatar.url(:thumb) %><%= current_user.username %> <i class="icon-down-open-big"></i>
           <% end %>
           <ul>
-            <li><%= link_to "Profil", user_path(current_user) %></li>
-            <li><%= link_to "Paramètres", edit_user_registration_path %></li>
+            <li><%= link_to "Profil", user_path(current_user), :tabindex => 5 %></li>
+            <li><%= link_to "Paramètres", edit_user_registration_path, :tabindex => 6 %></li>
             <li>
-              <%= button_to destroy_user_session_path, :method => :delete do %>
+              <%= button_to destroy_user_session_path, :tabindex => 7, :method => :delete do %>
                 Déconnexion
               <% end %>
             </li>

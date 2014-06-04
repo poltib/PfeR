@@ -5,12 +5,12 @@
     <ul class="result__list">
       <li class="result__distances"><span id="length"><%= track.length %></span>km</li>
       <li class="result__name">
-        <h4 role="heading" aria-level="4">
+        <h3 role="heading" aria-level="3">
           <%= link_to track.name, track_path(track) %>
           <% if user_signed_in? && track.user == current_user %>
-          | <%= button_to "Delete", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
+          | <%= button_to "Supprimer", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
           <% end %>
-        </h4>
+        </h3>
       </li>
       <li class="result__happening"><%= track.favorites.count %> <i class="icon-heart"></i></li>
       <% if track.happening %>

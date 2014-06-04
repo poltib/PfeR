@@ -23,18 +23,18 @@
       <div class="entity__tracks">
         <div class="entity__informations">
           <ul>
-            <li><i class="icon-direction"></i> <%= @track.length %>km</li>
-            <li><i class="icon-location"></i> <%= @track.location %></li>
-            <li><i class="icon-clock"></i> Posté <%= I18n.l @track.created_at %></li>
+            <li><em class="icon-direction"></em> <%= @track.length %>km</li>
+            <li><em class="icon-location"></em> <%= @track.location %></li>
+            <li><em class="icon-clock"></em> Posté <%= I18n.l @track.created_at %></li>
             <% if @track.group %>
               <li>Posté sur le groupe <%= link_to @track.group.name, @track.group %></li>
             <% end %>
             <li>
-              <span><i class="icon-vcard"></i> Description</span>
+              <span><em class="icon-vcard"></em> Description</span>
               <%= @track.description %>
             </li>
             <li>
-              <span><i class="icon-chart-line"></i> Élévation</span>
+              <span><em class="icon-chart-line"></em> Élévation</span>
             </li>
           </ul>
           <div id="elevation_chart"></div>
@@ -47,7 +47,7 @@
         <div class="entity__forums">
           <h3 class="secondary__title" role="heading" arie-level="3">
             <%= link_to new_track_forum_path(@track), :class=> "type add" do %>
-              <i class="icon-pencil"></i> Poster forum
+              <em class="icon-pencil"></em> Poster forum
             <% end %>
             Forums
           </h3>
@@ -65,8 +65,8 @@
                       Posté par <%= link_to forum.user.username, user_path(forum.user) %>
                     </span></h4>
                     <ul class="forumDetails">
-                      <li><i class="icon-clock-1"></i><%= I18n.l forum.created_at %></li>
-                      <li><i class="icon-chat"></i><%= forum.comments.count %></li>
+                      <li><em class="icon-clock-1"></em><%= I18n.l forum.created_at %></li>
+                      <li><em class="icon-chat"></em><%= forum.comments.count %></li>
                     </ul>
                 </header>
                 </article>
@@ -78,7 +78,7 @@
         <div class="entity__gallery">
           <h3 class="secondary__title" role="heading" aria-level="3">
             <% if current_user == @track.user %>
-              <span id="showImageForm" class="type add"><i class="icon-picture"></i> Ajouter une image</span>
+              <span id="showImageForm" class="type add"><em class="icon-picture"></em> Ajouter une image</span>
             <% end %>
             Photos
           </h3>
@@ -105,7 +105,7 @@
                   <% if user_signed_in? && current_user == @track.user %>
                     <%= button_to [@track, image], method: :delete, data: { confirm: 'Are you sure?' }, form_class: "delete_image" do %>
                       <span data-tooltip="Supprimer la photo">
-                        <i class="icon-cancel"></i>
+                        <em class="icon-cancel"></em>
                       </span>
                     <% end %>
                   <% end %>

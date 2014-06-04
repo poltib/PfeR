@@ -3,7 +3,7 @@
   <ul>
     <li>
       <%= link_to download_track_path(@track), :title => 'Télécharger le tracé' do %>
-        <i class="icon-download"></i> Télécharger
+        <em class="icon-download"></em> Télécharger
       <% end %>
     </li>
     <% if user_signed_in? %>
@@ -26,40 +26,40 @@
     <% end %>
     <li class="item__relations">
       <%= link_to track_favorites_path(@track), :title => 'Afficher les utilisateurs qui aiment cette évènement' do %>
-        <%= @track.favorites.count.to_s %> <span class="hidden">Favoris</span><i class="icon-star"></i>
+        <%= @track.favorites.count.to_s %> <span class="hidden">Favoris</span><em class="icon-star"></em>
       <% end %>
     </li>
     <% if user_signed_in? && current_user == @track.user %>
       <li>
         <%= button_to track_path(@track), method: :delete, data: { confirm: 'Are you sure?' } do %>
-          <i class="icon-trash"></i> Supprimer
+          <em class="icon-trash"></em> Supprimer
         <% end %>
       </li>
     <% end %>
     <li class="social">
       <div class="share__button">
-        <i class="icon-share"></i>
+        <em class="icon-share"></em>
         <span class="hidden">Partager</span>
       </div>
       <ul>
         <li>
           <a title="Partager sur Facebook" class="fb__button" href="http://www.facebook.com/share.php?u=<%= request.original_url %>" target="blank" rel="nofollow">
-            <i class="icon-facebook-squared"></i><span class="hidden">Partager sur Facebook</span>
+            <em class="icon-facebook-squared"></em><span class="hidden">Partager sur Facebook</span>
           </a>
         </li>
         <li>
           <a title="Partager sur Google plus" class="gg__button" href="https://plus.google.com/share?url=<%= request.original_url %>" target="blank" rel="nofollow">
-            <i class="icon-gplus-squared"></i><span class="hidden">Partager sur Google +</span>
+            <em class="icon-gplus-squared"></em><span class="hidden">Partager sur Google +</span>
           </a>
         </li>
         <li>
           <a title="Partager sur Twitter" class="tw__button" href="http://twitter.com/home?status=<%= request.original_url %>" target="blank" rel="nofollow">
-            <i class="icon-twitter-squared"></i><span class="hidden">Partager sur Twitter</span>
+            <em class="icon-twitter-squared"></em><span class="hidden">Partager sur Twitter</span>
           </a>
         </li>
         <li>
           <a title="Partager par mail" class="mail__button" href="mailto:?subject=Course intéressante sur Sportfun&amp;body=Course intéressante <%= @track.name %> : <%= request.original_url %>" rel="nofollow">
-            <i class="icon-mail"></i><span class="hidden">Partager par mail</span>
+            <em class="icon-mail"></em><span class="hidden">Partager par mail</span>
           </a>
         </li>
       </ul>

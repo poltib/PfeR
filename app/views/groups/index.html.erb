@@ -40,13 +40,13 @@
               <ul class="result__list">
                 <li class="result__avatar"><%= image_tag group.avatar.url(:thumb) %></li>
                 <li>
-                  <h4 role="heading" aria-level="4">
+                  <h3 role="heading" aria-level="3">
                     <%= link_to group.name, group_path(group) %>
                     <% if user_signed_in? &&  group.owner.id == current_user.id %>
                     | <%= link_to "Edit", edit_group_path(group) %>
                     | <%= link_to "Delete", group, :method => 'delete' %>
                     <% end %>
-                  </h4>
+                  </h3>
                 </li>
                 <li>
                   <span>

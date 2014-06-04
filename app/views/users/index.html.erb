@@ -38,12 +38,12 @@
               <ul class="result__list">
                 <li class="result__avatar"><%= image_tag user.avatar.url(:thumb) %></li>
                 <li>
-                  <h4 role="heading" aria-level="4">
+                  <h3 role="heading" aria-level="3">
                     <%= link_to user.username, user_path(user) %>
                     <% if user_signed_in? &&  user.id == current_user.id %>
                       | <%= link_to "Paramètres", edit_user_registration_path(user) %>
                     <% end %>
-                  </h4>
+                  </h3>
                 </li>
               </ul>
             </li>

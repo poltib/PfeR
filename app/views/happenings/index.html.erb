@@ -47,7 +47,7 @@
             <input type="checkbox">
             <label>20km</label>
             <input type="checkbox">
-            <label>40km</label>
+            <label>30km</label>
             <input type="checkbox">
             <label>toutes</label>
             <input type="checkbox">
@@ -67,14 +67,14 @@
               <ul class="result__list">
                <li class="result__date"><span class="result__day"><%= happening.date.strftime("%d") %></span> <span class="result__monthName"><%= l(happening.date , :format => "%b") %></span></li>
               <li class="result__name">
-                <h4 role="heading" aria-level="4">
+                <h3 role="heading" aria-level="3">
                   <%= link_to happening.event_type.name, happenings_path(params.slice(:sort).merge(event_type: happening.event_type.id)), :class => "type #{happening.event_type.name}" %>
                   <%= link_to happening.name, happening_path(happening) %>
                   <% if user_signed_in? && happening.user == current_user %>
                   | <%= link_to "Modifier", edit_happening_path(happening) %>
                   | <%= button_to "Supprimer", happening_path(happening), method: :delete, data: { confirm: 'Are you sure?' }  %>
                   <% end %>
-                </h4>
+                </h3>
               </li>
                 <li class="result__distances">
                   <% happening.tracks.each do |track| %>

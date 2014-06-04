@@ -2,7 +2,7 @@
   <h2 role="heading" aria-level="2" id="nav">Navigation</h2>
   <ul> 
     <% if user_signed_in? %>
-      <li><%= link_to "Tableau de bord", user_dashboard_path %></li>
+      <li><%= link_to "Tableau de bord", user_path(current_user) %></li>
     <% end %>
     <li><%= link_to "Rechercher", happenings_path %></li> 
     <li><%= link_to "Communauté", forums_path %></li>

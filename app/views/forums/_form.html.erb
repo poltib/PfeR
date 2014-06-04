@@ -11,7 +11,7 @@
     </div>
   <% end %>
   	<ul>
-	<li><%= f.label :name %>
+	<li><%= f.label :name, :class => "mandatory" %>
 	<%= f.text_field :name %></li>
   <% if params[:track_id] %>
     <%= f.hidden_field :forumable_id, :value => params[:track_id] %>
@@ -32,7 +32,7 @@
     </li>
   <% end %>
 
-	<li><%= f.label :post %>
+	<li><%= f.label :post, :class => "mandatory" %>
 	<%= f.text_area :post %></li>
 
 	<%= f.submit %>
