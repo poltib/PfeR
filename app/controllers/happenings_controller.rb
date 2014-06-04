@@ -4,9 +4,9 @@ class HappeningsController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find_by_username params[:user_id]
-      @happenings = @user.happenings_as_owner.paginate(:page => params[:page], :per_page => 3)
+      @happenings = @user.happenings_as_owner.paginate(:page => params[:page], :per_page => 10)
     else
-      @happenings = Happening.search(params[:event_type], params[:date], params[:location]).paginate(:page => params[:page], :per_page => 3)
+      @happenings = Happening.search(params[:event_type], params[:date], params[:location]).paginate(:page => params[:page], :per_page => 10)
     end
     @previousHap = Happening.all.where('date <= ?', Date.today)
     @event_types = EventType.all
@@ -26,6 +26,9 @@ class HappeningsController < ApplicationController
     @tracksJs = Array.new
     tracks.each do |track|
       @tracksJs.push([track.latitude, track.longitude, track.slug, track.length.to_f])
+    end
+    if @happening.created_at + 1.minutes > Time.now 
+      @tour = true
     end
     respond_to do |format|
       format.html # show.html.erb

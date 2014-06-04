@@ -5,13 +5,13 @@ class ForumsController < ApplicationController
     @categories = Category.all
     if params[:category_id]
       if Category.exists?(:id => params[:category_id])
-        @forums = Category.find(params[:category_id]).forums.order('updated_at')
+        @forums = Category.find(params[:category_id]).forums.order('updated_at').paginate(:page => params[:page], :per_page => 10)
         @active = [params[:category_id].to_i,Category.find(params[:category_id]).name]
       else
         redirect_to forums_path, :notice => 'Cette catégorie n\'existe pas.'
       end
     else
-      @forums = Forum.all.order('created_at desc')
+      @forums = Forum.all.order('created_at desc').paginate(:page => params[:page], :per_page => 10)
     end
   end
 

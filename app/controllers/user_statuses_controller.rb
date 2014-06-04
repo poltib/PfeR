@@ -3,7 +3,7 @@ class UserStatusesController < ApplicationController
   before_action :set_user_status, only: [:destroy]
   before_filter :load_happening
   def index
-  	@user_statuses = @happening.user_statuses
+  	@user_statuses = @happening.user_statuses.paginate(:page => params[:page], :per_page => 10)
   end
 
   def create

@@ -5,16 +5,35 @@
 /////////Content  -------------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
 #notice, #alert{
-    border: 1px solid silver;
-    background-color: white;
-    margin: 1.5em 0;
+    background-color: $greenOk;
     padding: 0.5em;
-    color: black;
+    color: white;
     text-align: center;
+    margin-top: 1em;
+    font-size: 1.2em;
 }
 
+#tour{
+    display: none;
+}
 
+#help{
+    background-color: $blue;
+    padding: 0.2em 0.5em;
+    color: white;
+    position: absolute;
+    right: 100%;
+    &:hover{
+        cursor:pointer;
+        background-color: $carrot;
+    }
+}
 
+// Fix intro Js number-step line height
+
+span.introjs-helperNumberLayer{
+    line-height: 1;
+}
 /////////----------------------------------------------------------------------------------
 /////////Gmap  ----------------------------------------------------------------------------
 /////////----------------------------------------------------------------------------------
@@ -26,7 +45,7 @@
 }
 .tracks.index{
     @include media($mobile){
-        .map{
+        #map_canvas{
             display: none;
         }
         .left_column{
@@ -137,7 +156,7 @@ table{
     text-align: center;
     .presenter__icon{
         margin: 1em 0 3em;
-        i{
+        em{
             padding:0.49em 0.4em;
             font-size: 3em;
             border: 1px solid $font;
@@ -199,7 +218,7 @@ table{
 
 .add{
     background-color: $blue;
-    padding: 1em;
+    padding: 0.5em;
     display: inline-block;
     cursor: pointer;
     color: white;
@@ -462,6 +481,13 @@ table{
         background-color: $font;
         color: white;
         border: none;
+        @include media($tablet){
+            position:relative;
+            right: 0;
+            top: 0;
+            margin: 0 1em 1em;
+            display: inline-block;
+        }
         &:hover{
             background-color: $carrot;
         }
@@ -506,15 +532,15 @@ div.track h2{
 
 .activity__timeline{
     list-style: none;
-    margin: 10px 0 0 120px;
-    padding: 10px 0 20px 30px;
+    margin-left: 25%;
+    padding: 1em;
     border-left: 8px solid $sky;
     position:relative;
     .type{
         padding: 0.3em;
     }
     li{
-        margin: 20px 0 0;
+        margin: 1em 0 0 1em;
         position: relative;
         p{
             margin: 0 0 1em;
@@ -560,15 +586,21 @@ div.track h2{
 .activity__date{
     margin-top: -10px;
     top: 50%;
-    left: -24%;
+    left: -25%;
+    @include media($large-screen){
+        left: -30%;
+    }
+    @include media($tablet){
+        left: -45%;
+    }
     position: absolute;
 }
 .activity__circle{
     margin-top: -10px;
     top: 50%;
-    left: -44px;
-    width: 20px;
-    height: 20px;
+    left: -2.9em;
+    width: 1.2em;
+    height: 1.2em;
     background: $blue;
     border: 5px solid $sky;
     border-radius: 50%;
@@ -612,6 +644,11 @@ div.track h2{
 .entity__activity{
     display: table-cell;
     width: 70%;
+    @include media($phablet){
+        width: 100%;
+        display: block;
+        border-right: none;
+    }
     border-right: 1px solid $sky;
     >h3{
         padding: 1em;
@@ -636,7 +673,11 @@ div.track h2{
     }
     width: 30%;
     display: table-cell;
-    
+    @include media($phablet){
+        width: 100%;
+        display: block;
+        border-top: 1px solid $sky;
+    }
     button{
         padding: 0.2em;
         border: 1px solid white;
@@ -663,6 +704,9 @@ div.track h2{
 .happening h2{
     padding-top: 0.3em;
     border-bottom: 1px solid $sky;
+    @include media($tablet){
+        padding-top: 0.6em;
+    }
 }
 
 .entity__informations{
@@ -681,6 +725,10 @@ div.track h2{
         padding:0 0 0.5em;
         &:last-child{
             @include span-columns(8);
+            @include media($phablet){
+                width: 100%;
+                float: none;
+            }
         }
         span{
             display: block;
@@ -691,6 +739,10 @@ div.track h2{
 
 .first__info{
     @include span-columns(4);
+    @include media($phablet){
+        width: 100%;
+        float: none;
+    }
 }
 
 .secondary__title{
@@ -712,6 +764,10 @@ div.track h2{
         float: left;
         width: 70%;
         border-left: 1px solid $sky;
+        @include media($phablet){
+            width: 100%;
+            float: none;
+        }
     }
 }
 
@@ -736,8 +792,11 @@ div.track h2{
 .entity__tracks{
     width: 30%;
     float: left;
+    @include media($phablet){
+        width: 100%;
+        float: none;
+    }
     ul{
-        padding-bottom: 0;
         li:last-child{
             padding: 0;
         }
@@ -782,10 +841,19 @@ div.track h2{
 .entity__forums, .entity__gallery{
     display: table-cell;
     width: 50%;
+    @include media($phablet){
+        width: 100%;
+        display: block;
+    }
 }
 
 .entity__forums{
     border-right: 1px solid $sky;
+    @include media($phablet){
+        border-bottom: 1px solid $sky;
+        border-right: none;
+    }
+
 }
 
 
@@ -850,7 +918,7 @@ div.track h2{
 }
 
 .result__list li{
-    float: left;
+    display: inline-block;
     margin-right: 1em;
 }
 .result__list:after{
@@ -882,8 +950,7 @@ div.track h2{
 
 .result__name{
     color:black;
-    h4{
-        padding-top: 0.75em;
+    h4, h3{
         .type{
             display: inline;
         }
@@ -907,12 +974,10 @@ div.track h2{
 }
 
 .result__happening{
-    padding-top: 0.8em;
 }
 
 .result__distances{
     font-size: 1.3em;
-    padding-top: 0.4em;
     color: $blue;
 }
 
@@ -952,4 +1017,39 @@ div.track h2{
     &:hover{
         background-color: $blue;
     }
+}
+
+
+/////////----------------------------------------------------------------------------------
+/////////Pagination  ----------------------------------------------------------------------
+/////////----------------------------------------------------------------------------------
+
+.pagination{
+    padding: 1em;
+    text-align: center;
+    a, span, em{
+        display: inline-block;
+        padding: 0.6em;
+        // margin-right: 0.3em;
+        // &:last-child{
+        //     margin: 0;
+        // }
+    }
+    a{
+        border: 1px solid $sky;
+        background-color: $cloud;
+        &:hover{
+            background-color: white;
+        }
+    }
+}
+
+.previous_page{
+    border-top-left-radius: 2em;
+    border-bottom-left-radius: 2em;
+}
+
+.next_page{
+    border-top-right-radius: 2em;
+    border-bottom-right-radius: 2em;
 }

@@ -5,9 +5,9 @@ class GroupsController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find_by_username params[:user_id]
-      @groups = @user.groups_as_owner
+      @groups = @user.groups_as_owner.paginate(:page => params[:page], :per_page => 10)
     else
-      @groups = Group.all
+      @groups = Group.all.paginate(:page => params[:page], :per_page => 10)
     end
   end
 

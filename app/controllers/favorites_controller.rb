@@ -11,9 +11,9 @@ class FavoritesController < ApplicationController
       @favoritable = find_favoritable
     end
     if params[:favoritable_type]
-      @favorites = @favoritable.favorites.where('favoritable_type = ?', params[:favoritable_type])
+      @favorites = @favoritable.favorites.where('favoritable_type = ?', params[:favoritable_type]).paginate(:page => params[:page], :per_page => 10)
     else
-      @favorites = @favoritable.favorites
+      @favorites = @favoritable.favorites.paginate(:page => params[:page], :per_page => 10)
     end
   end
 

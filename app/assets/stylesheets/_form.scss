@@ -2,6 +2,7 @@
 #error_explanation{
     width: 100%;
     padding: 1em;
+    margin-top: 1em;
     background-color: $sky;
     border: 1px solid $red;
     h2{
@@ -17,6 +18,14 @@
 #actuRadius{
     margin-left: 0.4em;
     font-size: 1.2em;
+}
+
+.mandatory{
+    &:after{
+        content:"*";
+        color: $red;
+        margin-left: 0.3em;
+    }
 }
 
 form{
@@ -87,11 +96,6 @@ textarea{
     font-weight: lighter;
 }
 
-
-[type="submit"]:focus, textarea:focus, [type="text"]:focus,[type="password"]:focus,[type="date"]:focus,[type="email"]:focus{
-    outline:none;
-}
-
 [type="submit"]:hover{
     background-color: $carrot;
 }
@@ -125,7 +129,12 @@ textarea{
     }
     @include media($mobile){
         @include shift(0);
-        @include span-columns(4)
+        float:none;
+        width: 100%;
+        padding: 1em;
+        input, label{
+            width: 100%;
+        }
     }
 }
 

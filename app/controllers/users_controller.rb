@@ -3,11 +3,14 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show]
 
   def index
-    @users = User.paginate(:page => params[:page], :per_page => 5)
+    @users = User.paginate(:page => params[:page], :per_page => 10)
   end
 
   def show
     @happenings = @user.happenings.order('date desc')
+    if @user.created_at + 1.minutes > Time.now 
+      @tour = true
+    end
     @activities = PublicActivity::Activity.order('created_at desc').where(owner_id: params[:id], owner_type: 'User')
   end
 
