@@ -210,6 +210,7 @@ $(".tracks.new").ready ->
   hide_button = document.getElementById('hideMap')
   back_button = document.getElementById('back')
   tiny_button = document.getElementById('tiny')
+  help = document.getElementById("help")
   # map
   divMap = document.getElementById "map_canvas"
   # form inputs
@@ -353,9 +354,9 @@ $(".tracks.new").ready ->
         false
 
 
-    full.addEventListener 'click', (evt) ->
-      divMap.style.width = '100%'
-      divMap.style.z-index = '100000'
+    # full.addEventListener 'click', (evt) ->
+    #   divMap.style.width = '100%'
+    #   divMap.style.z-index = '100000'
 
     google.maps.event.addListener map, 'click', (evt) ->
       if path.getLength() == 0
@@ -363,6 +364,10 @@ $(".tracks.new").ready ->
       else
         previous_point.push(path.j.length - 1)
         extend_track(path.getAt(path.j.length - 1), evt.latLng)
+
+    help.addEventListener 'click', ()->
+      introJs().start()
+
   init()
   
 
@@ -474,3 +479,14 @@ $(".tracks.index, .happenings.show").ready ->
     })
     load_map()
     add_chart_listener(map)
+
+$(".users.show").ready ->
+  first_user = document.getElementById("tour")
+  help = document.getElementById("help")
+  console.log(first_user)
+  help.addEventListener 'click', ()->
+    introJs().start()
+
+  if first_user.innerText == 'true'
+    introJs().start()
+      

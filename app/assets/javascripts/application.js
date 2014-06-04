@@ -17,5 +17,7 @@
 //= require jquery-heplbox
 //= require d3.min
 //= require eloys
+//= require intro.min
+//= require modernizer.min
 //= require turbolinks
 //= require_tree .

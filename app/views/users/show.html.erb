@@ -3,9 +3,13 @@
 <% end %>
 <section>
   <div class="container">
+    <span id="tour"><%= @tour %></span>
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
     <%= render "layouts/navigations/userNavigation" %>
-    <div class="entity__title user">
+    <div class="entity__title user" data-step="1" data-intro="Bienvenue <%= @user.username %>! Voici ton tableau de bord.">
+      <% if user_signed_in? && current_user.id == @user.id %>
+        <div id="help"><span class="hidden">aide</span>?</div>
+      <% end %>
       <%= image_tag @user.avatar.url(:thumb) %>
       <h2 role="heading" aria-level="2">
         <%= @user.username %>
@@ -17,19 +21,31 @@
     </div>
     <div class="table">
       <div class="entity__data">
-        <div class="entity__activity">
+        <div class="entity__activity" data-position="top" data-intro="Voici la section qui reprend tes activitées" data-step="6">
           <% if user_signed_in? && current_user.id == @user.id %>
-            <h3 role="heading" aria-level="3">Vos activités</h3>
+            <h3 role="heading" aria-level="3">Mes activités</h3>
           <% else %>
             <h3 role="heading" aria-level="3">Activités</h3>
           <% end %>
           <ul class="activity__timeline">
+            <% if !user_signed_in? %>
+              <li>
+                <div class="activity__relative">
+                  <span class="activity__date"><%= l(Date.today , :format => "%d %b %Y") %></span>
+                  <span class="activity__circle"></span>
+                </div>
+                <div class="activity__content">
+                  <h3>Pas d'activités</h3>
+                    <p>Cet utilisateur n'a pas d'activités</p>
+                </div>
+              </li>
+            <% end %>
             <% if user_signed_in? &&  current_user.id == @user.id %>
               <li>
                 <div class="activity__relative">
                   <span class="activity__circle"></span>
                 </div>
-                <div class="activity__content">
+                <div class="activity__content" data-position="top" data-intro="Tu peux facilement en ajouter! Il te suffit d'en rechercher, ou bien d'ajouter tes propres activitées!" data-step="7">
                   <h3>Ajouter des activités</h3>
                     <p>
                       <%= link_to "Recherchez", happenings_path %> , ou <%= link_to "créez", new_happening_path %> en une!
@@ -70,10 +86,10 @@
             <% end %>
           </ul>  
         </div>
-        <div class="entity__relations">
+        <div class="entity__relations" data-position="top" data-intro="Ici seront affiché les groupes dont tu seras membre" data-step="8">
           <% if user_signed_in? &&  current_user.id == @user.id %>
-            <h3 role="heading" aria-level="3">Vos groupes</h3>
-            <div class="user__actions">
+            <h3 role="heading" aria-level="3">Mes groupes</h3>
+            <div class="user__actions"  data-position="top" data-intro="Tu peux facilement rechercher ou ajouter des groupes" data-step="9">
               <%= link_to "Ajouter groupe", new_group_path %>
               <%= link_to "Chercher groupe", groups_path %>
             </div>

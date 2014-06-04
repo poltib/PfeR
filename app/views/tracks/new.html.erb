@@ -4,7 +4,8 @@
 <section>
   <h2 role="heading" aria-level="2" class="hidden">Content</h2>
   <div class="container">
-    <div class="entity__title">
+    <div class="entity__title" data-step="1" data-intro="Bienvenue sur l'interface de création de tracé!">
+      <div id="help"><span class="hidden">aide</span>?</div>
       <h2 role="heading" aria-level="2">Ajouter un tracé</h2>
       <% if @group %>
         <h3 class="shared__links" role="heading" aria-level="3">Sur l'évènement «<%= link_to @happening.name, @happening %>»</h3>
@@ -12,19 +13,18 @@
     </div>
     <div class="entity__map newtrack">
       <div class="map_canvas">
-        <div class="event__actions">
+        <div class="event__actions" data-step="3" data-intro="Vous avez accès à plusieurs outils pour vous aider, n'ésitez pas à en faire usage!">
           <ul>
             <li><button id="close">Fermer le tracer</button></li>
             <li><button id="reset">Effacer tout</button></li>
-            <li><button id="full">Plein écran</button></li>
             <li><button id="back">Annuler action</button></li>
             <li><button id="tiny">Effacer un point</button></li>
           </ul>
         </div>
-        <div id="map_canvas"></div>
+        <div id="map_canvas" data-position="top" data-step="2" data-intro="Pour créer un tracé, faites un clic gauche sur la map, ensuite agrandisser le tracé en répétant l'action."></div>
       </div>
       <div class="entity__tracks">
-        <div class="event__actions">
+        <div class="event__actions" data-position="top" data-step="4" data-intro="Et enfin, voici les informations relative à votre tracé. N'oubliez pas de remplir le formulaire avant de confirmer la création.">
           <h3 role="heading" aria-level="3">Informations</h3>
           <span class="info__dist">Distance : <span id="dist">dist</span></span>
           <div id="elevation_chart"></div>
