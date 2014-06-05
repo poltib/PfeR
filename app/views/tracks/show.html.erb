@@ -6,8 +6,7 @@
     <div class="container entity__title happening track">
       <%= render "layouts/navigations/trackNavigation" %>
       <h2 role="heading" aria-level="2">
-        <span>Tracé</span>
-        <%= @track.name %>
+        Tracé <%= @track.name %>
         <span>Posté par: <%= link_to @track.user.username, @track.user %></span><br>
         <% if @track.happening %>
           <span>

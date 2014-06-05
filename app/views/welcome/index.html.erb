@@ -8,23 +8,23 @@
         <div class="intro__presentation">
           <h2 role="heading" aria-level="2">Courir pour le fun</h2>
           <h3 role="heading" aria-level="3">Trouvez les meilleurs courses et tracés près de chez vous.</h3>
-          <h3 role="heading" aria-level="3">Courrez en groupe, planifiez vos entrainements et gérez votre club.</h3>
+          <h3 role="heading" aria-level="3">Courrez en groupe, planifiez vos entraînements et gérez votre club.</h3>
           <%= link_to "Connexion avec Facebook", user_omniauth_authorize_path(:facebook), :class => "fb__button signin" %>
         </div>
         <div class="intro__singup">
           <h2>Inscription</h2>
           <%= form_for(@user, :as => @user, :url => registration_path(@user)) do |f| %>
             <%= f.label :username %>
-            <%= f.text_field :username, :placeholder => 'pseudo' %>
+            <%= f.text_field :username, :placeholder => "pseudo" %>
 
             <%= f.label :email %>
-            <%= f.email_field :email, :placeholder => 'email' %>
+            <%= f.email_field :email, :placeholder => "email" %>
 
             <%= f.label :password %>
-            <%= f.password_field :password, :placeholder => 'mot de passe' %>
+            <%= f.password_field :password, :placeholder => "mot de passe" %>
 
             <%= f.label :password_confirmation %>
-            <%= f.password_field :password_confirmation, :placeholder => 'mot de passe confirmation' %>
+            <%= f.password_field :password_confirmation, :placeholder => "mot de passe confirmation" %>
 
             <%= f.submit "Inscription" %>
           <% end %>
@@ -52,22 +52,22 @@
       <div class="presenter__icon">
         <em class="icon-chart-line"></em>
       </div>
-      <h3 role="heading" aria-level="3">Entrainements</h3>
-      <p>On sait tous que s'entrainer seul est parfois pénible, <%= link_to "rechercher ici", happenings_path %> pour en trouver à proximité.</p>
+      <h3 role="heading" aria-level="3">Entraînements</h3>
+      <p>On sait tous que s’entrainer seul est parfois pénible, <%= link_to "rechercher ici", happenings_path %> pour en trouver à proximité.</p>
     </div>
     <div class="presenter">
       <div class="presenter__icon">
         <em class="icon-map"></em>
       </div>
-      <h3 role="heading" aria-level="3">Tracés d'entrainements</h3>
-      <p>Parfois vous avez envie de changer d'entrainement mais vous ne savez pas ou aller, <%= link_to "rechercher ici", tracks_path %>.</p>
+      <h3 role="heading" aria-level="3">Tracés d’entraînements</h3>
+      <p>Parfois vous avez envie de changer d’entraînement mais vous ne savez pas ou aller, <%= link_to "rechercher ici", tracks_path %>.</p>
     </div>
     <div class="presenter">
       <div class="presenter__icon">
         <em class="icon-users"></em>
       </div>
       <h3 role="heading" aria-level="3">Communauté</h3>
-      <p>les utilisateurs sont la pour s'entraider, consulter <%= link_to "les forums", forums_path %> pour trouver des informations.</p>
+      <p>les utilisateurs sont là pour s’entraider, consulter <%= link_to "les forums", forums_path %> pour trouver des informations.</p>
     </div>
   </div>
 </section>
@@ -75,7 +75,7 @@
   <div class="container table allnews">
     <div class="entity__data">
       <div class="news">
-        <h2 role="heading" aria-level="2">Les dernièrs évènements</h2>
+        <h2 role="heading" aria-level="2">Les derniers évènements</h2>
         <% if @happenings.count > 0 %>
           <ul class="entity__results">
             <% @happenings.each do |happening| %>
@@ -102,7 +102,7 @@
         <% end %>
       </div>
       <div class="news">
-        <h2 role="heading" aria-level="2">Les dernièrs tracés</h2>
+        <h2 role="heading" aria-level="2">Les derniers tracés</h2>
           <% if @tracks.count > 0 %>
             <ul class="entity__results">
               <% @tracks.each do |track| %>
@@ -113,7 +113,7 @@
                       <h3 role="heading" aria-level="3">
                         <%= link_to track.name, track_path(track) %>
                         <% if user_signed_in? && track.user == current_user %>
-                        | <%= button_to "Supprimer", track_path(track), method: :delete, data: { confirm: 'Are you sure?' }  %>
+                        | <%= button_to "Supprimer", track_path(track), method: :delete, data: { confirm: "Etes vous certain?" }  %>
                         <% end %>
                       </h3>
                     </li>
@@ -131,7 +131,7 @@
     </div>
     <div class="entity__data">
       <div class="news">
-        <h2 role="heading" aria-level="2">Les dernièrs groupes</h2>
+        <h2 role="heading" aria-level="2">Les derniers groupes</h2>
         <% if @groups.count > 0 %>
           <ul class="entity__results">
             <% @groups.each do |group| %>
@@ -154,7 +154,7 @@
         <% end %>
       </div>
       <div class="news">
-        <h2 role="heading" aria-level="2">Les dernièrs forums</h2>
+        <h2 role="heading" aria-level="2">Les derniers forums</h2>
           <% if @forums.count > 0 %>
             <ul class="entity__results">
               <% @forums.each do |forum| %>

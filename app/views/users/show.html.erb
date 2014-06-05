@@ -21,7 +21,7 @@
     </div>
     <div class="table">
       <div class="entity__data">
-        <div class="entity__activity" data-position="top" data-intro="Voici la section qui reprend tes activitées" data-step="6">
+        <div class="entity__activity" data-position="top" data-intro="Voici la section qui reprend tes activitées" data-step="2">
           <% if user_signed_in? && current_user.id == @user.id %>
             <h3 role="heading" aria-level="3">Mes activités</h3>
           <% else %>
@@ -45,7 +45,7 @@
                 <div class="activity__relative">
                   <span class="activity__circle"></span>
                 </div>
-                <div class="activity__content" data-position="top" data-intro="Tu peux facilement en ajouter! Il te suffit d'en rechercher, ou bien d'ajouter tes propres activitées!" data-step="7">
+                <div class="activity__content" data-position="top" data-intro="Tu peux facilement en ajouter! Il te suffit d'en rechercher, ou bien d'ajouter tes propres activitées!" data-step="3">
                   <h3>Ajouter des activités</h3>
                     <p>
                       <%= link_to "Recherchez", happenings_path %> , ou <%= link_to "créez", new_happening_path %> en une!
@@ -86,10 +86,10 @@
             <% end %>
           </ul>  
         </div>
-        <div class="entity__relations" data-position="top" data-intro="Ici seront affiché les groupes dont tu seras membre" data-step="8">
+        <div class="entity__relations" data-position="top" data-intro="Ici seront affiché les groupes dont tu seras membre" data-step="4">
           <% if user_signed_in? &&  current_user.id == @user.id %>
             <h3 role="heading" aria-level="3">Mes groupes</h3>
-            <div class="user__actions"  data-position="top" data-intro="Tu peux facilement rechercher ou ajouter des groupes" data-step="9">
+            <div class="user__actions"  data-position="top" data-intro="Tu peux facilement rechercher ou ajouter des groupes" data-step="5">
               <%= link_to "Ajouter groupe", new_group_path %>
               <%= link_to "Chercher groupe", groups_path %>
             </div>

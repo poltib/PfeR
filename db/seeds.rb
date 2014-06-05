@@ -8,12 +8,14 @@
 
 Category.create(name: "Conseils")
 Category.create(name: "Courses")
-Category.create(name: "Entrainements")
+Category.create(name: "Entraînements")
 Category.create(name: "Tracés")
 Category.create(name: "Questions")
 Category.create(name: "Site")
 
 EventType.create(name: "Course")
-EventType.create(name: "Entrainement")
+EventType.create(name: "Entraînement")
 EventType.create(name: "Marche")
 EventType.create(name: "Golden race")
+
+Role.create(name: "Admin")

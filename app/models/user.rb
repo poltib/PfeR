@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
       user.uid = auth.uid
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
-      user.username = auth.info.first_name+'_'+auth.info.last_name
+      user.username = auth.info.first_name+' '+auth.info.last_name
       user.firstname = auth.info.first_name
       user.lastname = auth.info.last_name
       user.description = auth.info.about
@@ -44,6 +44,11 @@ class User < ActiveRecord::Base
          user.update_attribute(:avatar, URI.parse(avatar_url))
       end
     end
+  end
+
+  def self.search(search)
+    query_obj = all
+    query_obj = query_obj.where("username LIKE ?", "%#{search}%")
   end
 
   def to_param

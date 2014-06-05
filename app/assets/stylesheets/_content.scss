@@ -323,17 +323,24 @@ table{
 
 .forums__index{
     padding: 1em;
+    border-bottom: 1px solid $sky;
     span{
         margin-bottom: 1em;
     }
+    &:last-child{
+        border:none;
+    }
 }
 
+.entity__title.forum img{
+    top: 2.8em;
+    @include media($mobile){
+        top: 6.5em;
+    }
+}
 .forum{
     h2{
-        margin-left: 20%;
-        @include media($tablet){
-            margin-left: 0;
-        }
+        margin-left: 3em;
     }
     margin-bottom: 0.5em;
     header{
@@ -353,6 +360,12 @@ table{
         display: inline-block;
         margin-right: 1em;
     }
+    @include media($mobile){
+        li{
+            width: 100%;
+            margin-bottom: 0.3em;
+        }
+    }
 
     li:last-child{
         margin-right: 0;
@@ -360,17 +373,34 @@ table{
 }
 
 .forum__details{
+    margin-top: 1em;
+    margin-left: 1em;
     @extend .forums__details;
-    position: absolute;
-    top:-1.6em;
-    left: 1em;
+    @include media($mobile){
+        li{width:100%; margin-top:0.5em;}
+    }
 }
 
 .forum__post{
-    width: 60%;
-    margin: 0 auto;
+    width: 70%;
+    float: left;
+    border-right: 1px solid $sky;
     @include media($tablet){
         width: 100%;
+        border-right: none;
+    }
+}
+
+.forum__add{
+    width: 30%;
+    float: left;
+    @include media($tablet){
+        width: 100%;
+    }
+    >h3{
+        background-color: $sky;
+        padding: 0.87em;
+        text-align: center;
     }
 }
 
@@ -378,43 +408,41 @@ table{
 ////////////////////////////////////////////////////////////////////////////////
 
 .forum__comments{
-    width: 60%;
-    margin-left: 20%;
-    @include media($tablet){
-        width: 80%;
-    }
+    border-top: 1px solid $sky;
     h3{
+        margin-top: 0.5em;
         padding: 1em 1em;
     }
     margin-bottom: 1em;
 }
 
 .forum__comment{
-    margin-bottom: 3em;
+    margin-bottom: 1.5em;
 }
 
 .forum__comment, .comment__form{
     position: relative;
 }
 
-.comment__form .comment__body{
-    padding: 1em;
-}
+.comment__body{
 
-.comment__header{
-    position: absolute;
-    top: 1em;
-    left: -4.6em;
-    img{
-        width: 4em;
-        border: 2px solid $sky;
-    }
 }
 
 .comment__body{
-    border-left: 1px solid $sky;
     h4{
-        padding-left: 1em;
+        padding: 0.6em 1em;
+        position: relative;
+        margin-left: 4em;
+        background-color: $cloud;
+        border-bottom: 1px solid $sky;
+        border-top: 1px solid $sky;
+        border-left: 1px solid $sky;
+    }
+    img{
+        width: 3em;
+        border: 2px solid $sky;
+        left: 1em;
+        position: absolute;
     }
     button{
         background-color: transparent;
@@ -426,9 +454,37 @@ table{
             color: $blue;
             background-color: transparent;
         }
+        span{
+            @include media($mobile){
+                display: none;
+            }
+        }
     }
     .markdown{
-        padding-top: 0;
+        padding-top: 1em;
+        margin-left: 4em;
+        border-bottom: 1px solid $sky;
+        border-left: 1px solid $sky;
+    }
+
+}
+.comment__form{
+    @extend .comment__body;
+    form{
+        margin-left: 4em;
+        border-bottom: 1px solid $sky;
+        border-left: 1px solid $sky;
+        textarea{
+            border:none;
+            border-bottom: 1px solid $sky;
+            margin:0;
+        }
+        input[type="submit"]{
+            margin:0;
+        }
+    }
+    h4{
+        padding: 0.8em 1em;
     }
 }
 
@@ -448,7 +504,7 @@ table{
         list-style-type: decimal;
     }
     p, ul, ol{
-        margin-top: 0.8em;
+        margin-bottom: 0.8em;
     }
 }
 
@@ -592,6 +648,10 @@ div.track h2{
     }
     @include media($tablet){
         left: -45%;
+    }
+    @include media($mobile){
+        left: -60%;
+        width: 30%;
     }
     position: absolute;
 }
@@ -791,6 +851,11 @@ div.track h2{
 }
 
 .entity__tracks{
+    .entity__informations{
+        ul{
+            padding-bottom:0;
+        }
+    }
     width: 30%;
     float: left;
     @include media($phablet){
@@ -816,6 +881,23 @@ div.track h2{
             padding: 0.7em 1em 0.7em 0.8em;
             color: black;
             border-right: 3px solid black;
+        }
+        @include media($tablet){
+            width: 25%;
+            a{display:block;}
+            &:nth-child(1), &:nth-child(2), &:nth-child(3), &:nth-child(4){
+                    border-bottom: 1px solid white;
+            }
+            &:nth-child(4n) a{
+                border-right: none;
+            }
+        }
+        @include media($phablet){
+            width: 50%;
+            border-bottom: 1px solid white;
+            &:nth-child(2n) a{
+                border-right: none;
+            }
         }
     }
     a{
@@ -865,11 +947,19 @@ div.track h2{
         padding: 1em;
         width: auto;
         margin-right: 0.5em;
-        label, input, select{
+        @include media($tablet){
+            width: 50%;
+            margin: 0;
+        }
+        @include media($phablet){
+            width: 100%;
+        }
+        label, input{
             width: auto;
             margin:0;
-            padding:0;
+            padding:0.2em;
         }
+        input[type="date"]{padding:0;}
         label{
             margin-right: 0.3em;
         }
@@ -897,6 +987,13 @@ div.track h2{
         content: "";
         display: block;
         clear: both;
+    }
+}
+
+.entity__params{
+    span{
+        display: inline-block;
+        padding: 1em 0 1em 1em;
     }
 }
 

@@ -28,6 +28,12 @@
     }
 }
 
+.password{
+    &:after{
+        content:" (min 8 caractères)*";
+    }
+}
+
 form{
     fieldset{
         padding:0;

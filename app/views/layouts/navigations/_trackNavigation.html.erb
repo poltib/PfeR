@@ -11,7 +11,7 @@
       <li>
         <% if current_user.favorites.where(favoritable_id: @track.id, favoritable_type: "Track").first %>
           <%= button_to [@track, current_user.favorites.where(favoritable_id: @track.id, favoritable_type: "Track").first], method: :delete do %>
-            Supprimer des favorits
+            Retirer des favorits
           <% end %>
         <% else %>
           <%= form_for ([@track, Favorite.new]), :html => {:class => 'button_to' } do |f| %>

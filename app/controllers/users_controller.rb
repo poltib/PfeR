@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show]
 
   def index
-    @users = User.paginate(:page => params[:page], :per_page => 10)
+    @users = User.search(params[:username]).paginate(:page => params[:page], :per_page => 10)
   end
 
   def show

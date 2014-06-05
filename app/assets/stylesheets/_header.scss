@@ -22,7 +22,7 @@
 
 .headingImg{
     padding-top: 3em;
-    background: image-url('head.png') fixed no-repeat;
+    background: image-url('head.png') fixed repeat;
     border-bottom: 3px solid $sky;
     h2{
         border:none;

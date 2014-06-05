@@ -483,9 +483,20 @@ $(".tracks.index, .happenings.show").ready ->
 $(".users.show").ready ->
   first_user = document.getElementById("tour")
   help = document.getElementById("help")
-  console.log(first_user)
-  help.addEventListener 'click', ()->
+
+  if help?
+    help.addEventListener 'click', ()->
+      introJs().start()
+
+  if first_user.innerText == 'true'
     introJs().start()
+
+$(".happenings.show").ready ->
+  first_user = document.getElementById("tour")
+  help = document.getElementById("help")
+  if help?
+    help.addEventListener 'click', ()->
+      introJs().start()
 
   if first_user.innerText == 'true'
     introJs().start()
@@ -497,15 +508,19 @@ $(".users.show, .happenings.show, .forums.show, .tracks.show, .groups.show, .use
   checkWidth = ()->
     if $(window).width() < 925
       actions_menu.className = 'hidden'
+      toggle_actions.style.display = 'block'
     else
       actions_menu.className = ''
+      toggle_actions.style.display = 'none'
 
-  checkWidth()
-  $(window).resize(checkWidth)
+  if actions_menu?
+    checkWidth()
+    $(window).resize(checkWidth)
 
-  toggle_actions.addEventListener 'click', ()->
-    if actions_menu.className == 'hidden'
-      actions_menu.className = ''
-    else
-      actions_menu.className = 'hidden'
+  if toggle_actions?
+    toggle_actions.addEventListener 'click', ()->
+      if actions_menu.className == 'hidden'
+        actions_menu.className = ''
+      else
+        actions_menu.className = 'hidden'
       

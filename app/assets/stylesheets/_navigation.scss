@@ -188,6 +188,9 @@ nav.header__navigation{
         color:black;
         padding: 1em 1.38em;
         font-size: 0.8em;
+        @include media($tablet){
+            padding: 1em 1em;
+        }
         &:hover{
             color:$blue;
             background-color: $cloud;
@@ -342,6 +345,9 @@ nav.secondary__navigation > ul{
     .actif{
         border-bottom: 1px solid white;
         color: $blue;
+        @include media($tablet){
+            background-color: $cloud;
+        }
     }
 
     li.social{
@@ -390,6 +396,10 @@ nav.secondary__navigation > ul{
     }
     li{
         display: block;
+        float: none;
+        @include media($tablet){
+            float: left;
+        }
     }
 }
 
@@ -440,9 +450,10 @@ nav.secondary__navigation > ul{
 
 #toggle_actions_bar{
     display: none;
-    border: none;
+    border: 1px solid white;
     border-bottom: 1px solid $sky;
-    @include media($tablet){
-        display: block;
+    background-color: $sky;
+    &:hover{
+        background-color: $cloud;
     }
 }

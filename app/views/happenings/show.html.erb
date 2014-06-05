@@ -2,10 +2,15 @@
   Évènement «<%= @happening.name %>» | Sportfun
 <% end %>
 <section role="main">
-  <span id="tour"><%= @tour %></span>
+  <% if user_signed_in? && current_user == @happening.user %>
+    <span id="tour"><%= @tour %></span>
+  <% end %>
   <h2 role="heading" aria-level="2" class="hidden"><%= @happening.event_type.name %> <%= @happening.name %></h2>
-  <div class="container entity__title happening">
+  <div class="container entity__title happening" data-step="1" data-info="Félicitation! vous vennez de créer votre premier évènement.">
     <%= render "layouts/navigations/happeningNavigation" %>
+    <% if user_signed_in? && current_user == @happening.user %>
+      <div id="help"><span class="hidden">aide</span>?</div>
+    <% end %>
     <h2 role="heading" aria-level="2">
       <%= link_to @happening.event_type.name, happenings_path(params.slice(:sort).merge(event_type: @happening.event_type.id)), :class => "type #{@happening.event_type.name}" %>
       <%= @happening.name %>
@@ -19,7 +24,7 @@
           <% if @happening.group %>
             <li><em class="icon-globe"></em> Posté sur le groupe <%= link_to @happening.group.name, @happening.group %></li>
           <% end %>
-          <li><em class="icon-link"></em> <a href="http://<%= @happening.link %>"><%= @happening.link %></a></li>
+          <li><em class="icon-link"></em> <a href="<%= @happening.link %>"><%= @happening.link %></a></li>
         </div>
         <li>
           <span><em class="icon-vcard"></em> Description</span>
@@ -29,7 +34,7 @@
     </div>
   </div>
   <div class="container entity__map">
-    <h3 class="secondary__title" role="heading" aria-level="3">
+    <h3 class="secondary__title" role="heading" aria-level="3" data-step="2" data-info="N'oubliez pas d'ajouter des tracés à votre évènement pour le rendre parfait.">
       <% if current_user == @happening.user %>
         <%= link_to new_happening_track_path(@happening), :class=> "type add" do %>
           <em class="icon-location"></em> Ajouter un tracé

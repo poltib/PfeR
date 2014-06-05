@@ -1,15 +1,13 @@
 <li class="forum__comment">
 	<article>
-		<header class="comment__header">
-			<%= image_tag comment.user.avatar.url(:thumb) %>
-		</header>
 		<div class="comment__body">
+			<%= image_tag comment.user.avatar.url(:thumb) %>
 			<h4>
 				<%= link_to comment.user.username, user_path(comment.user) %> Il y a <%= distance_of_time_in_words_to_now(comment.created_at, include_seconds: true) %>
 				<% if  user_signed_in? && comment.user.id == current_user.id %>
 					<span>
-						<%= button_to [@forum, comment], method: :delete do %>
-							<i class="icon-cancel"></i> supprimer
+						<%= button_to [@forum, comment], method: :delete, data: { confirm: 'Etes vous certain de vouloir supprimer ce commentaire?' } do %>
+							<em class="icon-cancel"></em> <span>supprimer</span>
 						<% end %>
 					</span>
 				<% end %>

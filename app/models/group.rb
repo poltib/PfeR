@@ -13,4 +13,8 @@ class Group < ActiveRecord::Base
   has_many :happenings
   has_many :tracks
 
+  def self.search(search)
+    query_obj = all
+    query_obj = query_obj.where("name LIKE ?", "%#{search}%")
+  end
 end

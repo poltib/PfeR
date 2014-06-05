@@ -34,7 +34,7 @@ class Happening < ActiveRecord::Base
     self.slug = self.date.strftime("%d %m %Y").parameterize+"_"+self.name.parameterize
   end
 
-  def self.search(event_type, date, location)
+  def self.search(event_type, date, address)
     query_obj = all
     if date.blank?
       query_obj = query_obj.where("date >= ?", Date.today)
@@ -42,7 +42,7 @@ class Happening < ActiveRecord::Base
       query_obj = query_obj.where("date >= ?", date) unless date.blank?
     end
     query_obj = query_obj.where("event_type_id = ?", event_type) unless event_type.blank?
-    query_obj = query_obj.near(location, 20, :units => :km) unless location.blank?
+    query_obj = query_obj.near(address, 20, :units => :km) unless address.blank?
 
     query_obj.order("date")
   end

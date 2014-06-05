@@ -10,30 +10,30 @@
     </div>
   <% end %>
   <fieldset>
-  	<% if params[:group_id] %>
+    <% if params[:group_id] %>
       <%= f.hidden_field :group_id , :value => params[:group_id] %>
     <% end %>
     
-	  	<ul>
-		<li><%= f.label :name, :class => "mandatory" %>
-		<%= f.text_field :name %></li>
+      <ul>
+    <li><%= f.label :name, :class => "mandatory" %>
+    <%= f.text_field :name %></li>
 
-		<li><%= f.label :event_type, :class => "mandatory" %>
-			<%= f.select(:event_type_id, EventType.all.collect {|a| [a.name, a.id]}) %></li>
+    <li><%= f.label :event_type, :class => "mandatory" %>
+      <%= f.select(:event_type_id, EventType.all.collect {|a| [a.name, a.id]}) %></li>
 
-		<li><%= f.label :description, :class => "mandatory" %>
-		<%= f.text_area :description %></li>
+    <li><%= f.label :description, :class => "mandatory" %>
+    <%= f.text_area :description %></li>
 
-		<li><%= f.label :address, :class => "mandatory" %>
-		<%= f.text_field :address %></li>
+    <li><%= f.label :address, :class => "mandatory" %>
+    <%= f.text_field :address %></li>
 
-		<li><%= f.label :link %>
-		<%= f.text_field :link %></li>
+    <li><%= f.label :link %>
+    <%= f.text_field :link %></li>
 
-		<li><%= f.label :date, :class => "mandatory" %>
-		<%= f.date_field :date %></li>
+    <li><%= f.label :date, :class => "mandatory" %>
+    <%= f.date_field :date %></li>
 
-		<%= f.submit %>
-		</ul>
-		</fieldset>
+    <%= f.submit %>
+    </ul>
+    </fieldset>
 <% end %>

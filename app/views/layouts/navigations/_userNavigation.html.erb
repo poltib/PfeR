@@ -1,13 +1,13 @@
-<nav role="navigation" class="secondary__navigation">
+<nav data-step="6" data-intro="Vous avez accès aux tracés et évènements, retrouvez ceux que vous avez créé, et créé en de nouveaux!" role="navigation" class="secondary__navigation">
   <h2 role="heading" aria-level="2" class="hidden">Navigation Secondaire</h2>
   <button id="toggle_actions_bar">Actions <em class="icon-down-open-big"></em></button>
   <ul id="actions__menu">
     <% if user_signed_in? && @user.id == current_user.id %>
       <li><%= link_to "Mes activités", user_path(@user), class: (controller?("users") && action?("show") ? 'actif' : nil) %></li>
-      <li data-intro="Tu as accès aux activitées que tu auras créé ici" data-step="2"><%= link_to "Mes évènements", user_happenings_path(@user), class: (controller?("happenings") && action?("index") ? 'actif' : nil) %></li>
-      <li data-intro="Tu as également accès à tous tes tracés" data-step="3"><%= link_to "Mes tracés", user_tracks_path(@user), class: (controller?("tracks") && action?("index") ? 'actif' : nil) %></li>
-      <li data-intro="Voici la liste des groupes ou tu es l'administrateur" data-step="4"><%= link_to "Mes groupes", user_groups_path(@user), class: (controller?("groups") && action?("index") ? 'actif' : nil) %></li>
-      <li data-intro="Et finalement cette partie reprend tous tes favoris" data-step="5"><%= link_to "Mes favoris", user_favorites_path(@user), class: (controller?("favorites") && action?("index") ? 'actif' : nil) %></li>
+      <li><%= link_to "Mes évènements", user_happenings_path(@user), class: (controller?("happenings") && action?("index") ? 'actif' : nil) %></li>
+      <li><%= link_to "Mes tracés", user_tracks_path(@user), class: (controller?("tracks") && action?("index") ? 'actif' : nil) %></li>
+      <li><%= link_to "Mes groupes", user_groups_path(@user), class: (controller?("groups") && action?("index") ? 'actif' : nil) %></li>
+      <li><%= link_to "Mes favoris", user_favorites_path(@user), class: (controller?("favorites") && action?("index") ? 'actif' : nil) %></li>
       <li>
         <%= button_to destroy_user_session_path, :method => :delete do %>
           Déconnexion

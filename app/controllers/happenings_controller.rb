@@ -27,7 +27,7 @@ class HappeningsController < ApplicationController
     tracks.each do |track|
       @tracksJs.push([track.latitude, track.longitude, track.slug, track.length.to_f])
     end
-    if @happening.created_at + 1.minutes > Time.now 
+    if @happening.created_at + 1.minutes > Time.now && @happening.user.happenings.count < 2
       @tour = true
     end
     respond_to do |format|

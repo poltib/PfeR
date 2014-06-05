@@ -25,6 +25,7 @@ class ForumsController < ApplicationController
 
   def show
   	@comment = Comment.new
+    @others = Forum.limit(5).order("RANDOM()").where('id !=?', @forum.id)
   end
 
   def create

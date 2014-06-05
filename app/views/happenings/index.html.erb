@@ -17,6 +17,16 @@
       <% end %>
       <%= link_to "Ajouter un évènement", new_happening_path %>
     </div>
+    <% if !params[:date].blank? | !params[:event_type].blank? | !params[:address].blank? %>
+      <div class="entity__params">
+        <span>Type&nbsp;:
+        <%= @event_types.where('id =?',params[:event_type]).first.name unless params[:event_type].blank? %></span>
+        <span>Date&nbsp;:
+        <%= params[:date] unless params[:date].blank? %></span>
+        <span>Lieu&nbsp;:
+        <%= params[:address] unless params[:address].blank? %></span>
+      </div>
+    <% end %>
     <div class="entity__searchform">
       <%= form_tag(happenings_path, :method => "get", id: "search-form") do %>
         <fieldset>
@@ -26,14 +36,12 @@
             <%= date_field_tag :date, params[:date] %>
           </li>
           <li>
-            <%= label_tag :location, "Lieu" %>
-            <%= text_field_tag  :location, params[:location] %>
+            <%= label_tag :address, "Lieu" %>
+            <%= text_field_tag  :address, params[:address] %>
           </li>
           <li>
-            <% @event_types.each do |type| %>
-              <%= radio_button_tag :event_type, type.id %>
-              <%= label_tag :event_type, type.name, :value => type.id %>
-            <% end %>
+              <%= label_tag :event_type, "type" %>
+              <%= select_tag 'event_type', options_from_collection_for_select(@event_types, "id", "name", params[:event_type]) %>
           </li>
           <!-- <li>
             <label>Adresse</label>
