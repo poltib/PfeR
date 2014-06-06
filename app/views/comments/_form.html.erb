@@ -12,8 +12,35 @@
       </div>
     <% end %>
     <ul>
-     <li><%= f.text_area :comment, :placeholder => "votre commentaire...", :rows =>"5" %></li>
-     <li><%= f.submit %></li>
+      <div class="markdown__tuto">
+        <h3 role="heading" aria-level="3">Aide pour les posts</h3>
+        <ul>
+          <li>
+            <h4 role="header" aria-level="4">Les titres</h4>
+            <p>#Mon titre de niveau 1</p>
+            <p>##Mon titre de niveau 2</p>
+          </li>
+          <li>
+            <h4 role="header" aria-level="4">Les paragraphes</h4>
+            <p>Deux sauts à la ligne</p>
+          </li>
+          <li>
+            <h4 role="header" aria-level="4">Les listes</h4>
+            <p>-(quatre espaces)Mon premier objet de liste <br>
+            -(quatre espaces)Mon second objet de liste</p>
+          </li>
+          <li>
+            <h4 role="header" aria-level="4">Les liens</h4>
+            <p>[nom du lien](addres du site) ex&nbsp;: [google](http://google.be)</p>
+          </li>
+          <li>
+            <h4 role="header" aria-level="4">Les images</h4>
+            <p>![Description de l'image](URL de l'image)</p>
+          </li>
+        </ul>
+      </div>
+      <li><%= f.text_area :comment, :placeholder => "votre commentaire...", :rows =>"5" %></li>
+      <li><%= f.submit %></li>
     </ul>
   </fieldset>
 <% end %>

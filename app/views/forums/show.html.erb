@@ -48,7 +48,7 @@
         <% if  user_signed_in? %>
           <h3 role="heading" aria-level="3">Répondre</h3>
           <div class="comment__form">
-            <%= image_tag current_user.avatar.url(:thumb) %>
+            <%= image_tag current_user.avatar.url(:thumb), :class=>'avatar' %>
             <h4 role="heading" aria-level="4"><%= current_user.username %></h4>
             <%= render "comments/form" %>
           </div>

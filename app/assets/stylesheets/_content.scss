@@ -332,7 +332,7 @@ table{
     }
 }
 
-.entity__title.forum img{
+.entity__title.forum img:first-of-type{
     top: 2.8em;
     @include media($mobile){
         top: 6.5em;
@@ -438,7 +438,7 @@ table{
         border-top: 1px solid $sky;
         border-left: 1px solid $sky;
     }
-    img{
+    .avatar{
         width: 3em;
         border: 2px solid $sky;
         left: 1em;
@@ -486,11 +486,30 @@ table{
     h4{
         padding: 0.8em 1em;
     }
+    .markdown__tuto{
+        border:none;
+        border-bottom: 1px solid $sky;
+        margin-top: 0;
+        h3, h4{
+            padding:0;
+            border: none;
+            margin-left: 0;
+        }
+    }
 }
 
 
 .markdown{
     padding: 1em;
+    img{
+        display: block;
+        max-width: 60%;
+        margin: 0 auto;
+        border: 2px solid $sky;
+        @include media($phablet){
+            max-width: 100%;
+        }
+    }
     h2{
         text-align: left;
     }
@@ -505,6 +524,26 @@ table{
     }
     p, ul, ol{
         margin-bottom: 0.8em;
+        &:last-child{
+            margin-bottom: 0;
+        }
+    }
+}
+
+.markdown__tuto{
+    margin-top: 0.5em;
+    padding: 1em;
+    border: 1px solid $sky;
+    background-color: $cloud;
+    h3, h4{
+        margin-bottom: 0.5em;
+    }
+    h4{
+        margin-top: 1em;
+        border-bottom: 1px solid $sky;
+    }
+    li{
+        margin-bottom: 0.5em;
     }
 }
 
