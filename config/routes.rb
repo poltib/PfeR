@@ -56,4 +56,8 @@ Pfe::Application.routes.draw do
       delete :delete
     end
   end
+
+  %w( 404 422 500 ).each do |code|
+    get code, :to => "errors#show", :code => code
+  end
 end

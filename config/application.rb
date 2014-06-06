@@ -26,5 +26,7 @@ module Pfe
     config.i18n.default_locale = :fr
 
     config.cache_store = :dalli_store
+
+    config.exceptions_app = self.routes
   end
 end
