@@ -100,8 +100,8 @@
 				.appendTo("body")
 				.on("load", function(){
 					$container.animate({
-						width: $img.width(),
-						height: $img.height()
+						width: $img.width() + 10,
+						height: $img.height() + 10
 					}, "fast", function(){
 						$img.remove().appendTo($container).show().on("click", nextImage);
 					});
