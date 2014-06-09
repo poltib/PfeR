@@ -487,7 +487,7 @@ $(".users.show").ready ->
     help.addEventListener 'click', ()->
       introJs().start()
 
-  if first_user.innerText == 'true'
+  if first_user? && first_user.innerText == 'true'
     introJs().start()
 
 $(".happenings.show").ready ->
@@ -497,7 +497,7 @@ $(".happenings.show").ready ->
     help.addEventListener 'click', ()->
       introJs().start()
 
-  if first_user.innerText == 'true'
+  if first_user? && first_user.innerText == 'true'
     introJs().start()
 
 $(".users.show, .happenings.show, .forums.show, .tracks.show, .groups.show, .users.index, .happenings.index, .tracks.index, .groups.index, .favorites.index").ready ->
