@@ -502,15 +502,15 @@ $(".happenings.show").ready ->
 
 $(".users.show, .happenings.show, .forums.show, .tracks.show, .groups.show, .users.index, .happenings.index, .tracks.index, .groups.index, .favorites.index").ready ->
   toggle_actions = document.getElementById("toggle_actions_bar")
-  actions_menu = document.getElementById("actions__menu")
+  actions_menu = $("#actions__menu")
 
   checkWidth = ()->
     width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
     if width < 925
-      actions_menu.className = 'hidden'
+      actions_menu.addClass('hidden')
       toggle_actions.style.display = 'block'
     else
-      actions_menu.className = ''
+      actions_menu.removeClass('hidden')
       toggle_actions.style.display = 'none'
 
   if actions_menu?
@@ -519,8 +519,8 @@ $(".users.show, .happenings.show, .forums.show, .tracks.show, .groups.show, .use
 
   if toggle_actions?
     toggle_actions.addEventListener 'click', ()->
-      if actions_menu.className == 'hidden'
-        actions_menu.className = ''
+      if actions_menu.attr('class') == 'hidden'
+        actions_menu.removeClass('hidden')
       else
-        actions_menu.className = 'hidden'
+        actions_menu.addClass('hidden')
       
