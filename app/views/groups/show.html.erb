@@ -10,7 +10,7 @@
         Groupe «<%= @group.name %>»
       </h2>
       <% if user_signed_in? &&  !@groupers.collect(&:user_id).include?(current_user.id) %>
-        <%= form_for ([@group, Grouper.new]), :html => {:class => 'button_to' } do |f| %>
+        <%= form_for ([@group, Grouper.new]), :html => {:class => 'send__request' } do |f| %>
           <%= f.hidden_field :user_id, :value => current_user.id %>
           <%= f.hidden_field :group_id, :value => @group.id %>
           <%= button_tag do %>
@@ -41,7 +41,7 @@
                 </div>
               </li>
             <% end %>
-            <% if user_signed_in? &&  current_user.id == @group.owner.id %>
+            <% if user_signed_in? &&  current_user.id == @group.owner.id && @group.happenings.count < 1 %>
               <li>
                 <div class="activity__relative">
                   <span class="activity__date"><%= l(Date.today , :format => "%d %b %Y") %></span>

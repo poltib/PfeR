@@ -6,7 +6,7 @@
     <span id="tour"><%= @tour %></span>
   <% end %>
   <h2 role="heading" aria-level="2" class="hidden"><%= @happening.event_type.name %> <%= @happening.name %></h2>
-  <div class="container entity__title happening" data-step="1" data-info="Félicitation! vous vennez de créer votre premier évènement.">
+  <div class="container entity__title happening" data-step="1" data-intro="Félicitation! vous vennez de créer un évènement.">
     <%= render "layouts/navigations/happeningNavigation" %>
     <% if user_signed_in? && current_user == @happening.user %>
       <div id="help"><span class="hidden">aide</span>?</div>
@@ -34,7 +34,7 @@
     </div>
   </div>
   <div class="container entity__map">
-    <h3 class="secondary__title" role="heading" aria-level="3" data-step="2" data-info="N'oubliez pas d'ajouter des tracés à votre évènement pour le rendre parfait.">
+    <h3 class="secondary__title" role="heading" aria-level="3" data-step="2" data-intro="N’oubliez pas d’ajouter des tracés à votre évènement pour le rendre parfait.">
       <% if current_user == @happening.user %>
         <%= link_to new_happening_track_path(@happening), :class=> "type add" do %>
           <em class="icon-location"></em> Ajouter un tracé

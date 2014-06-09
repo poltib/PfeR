@@ -28,7 +28,7 @@
             <h3 role="heading" aria-level="3">Activités</h3>
           <% end %>
           <ul class="activity__timeline">
-            <% if !user_signed_in? %>
+            <% if !user_signed_in? && @user.happenings.count < 1 %>
               <li>
                 <div class="activity__relative">
                   <span class="activity__date"><%= l(Date.today , :format => "%d %b %Y") %></span>
