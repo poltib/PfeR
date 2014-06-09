@@ -15,7 +15,6 @@
 //= require jquery_ujs
 //= require jquery-readyselector
 //= require jquery-heplbox
-//= require d3.min
 //= require eloys
 //= require intro.min
 //= require modernizer.min
