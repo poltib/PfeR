@@ -527,7 +527,7 @@ $(".users.show, .happenings.show, .forums.show, .tracks.show, .groups.show, .use
     checkWidth()
     $(window).resize(checkWidth)
     if !toggle_actions.addEventListener
-      help.attachEvent "onclick", ()->
+      toggle_actions.attachEvent "onclick", ()->
         if actions_menu.attr('class') == 'hidden'
           actions_menu.removeClass('hidden')
         else
