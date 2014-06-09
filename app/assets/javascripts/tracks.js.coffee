@@ -484,8 +484,13 @@ $(".users.show").ready ->
   help = document.getElementById("help")
 
   if help?
-    help.addEventListener 'click', ()->
-      introJs().start()
+    if !help.addEventListener
+      help.attachEvent "onclick", ()->
+        introJs().start()
+    else
+      help.addEventListener("click", ()->
+        introJs().start()
+      , false)
 
   if first_user? && first_user.innerText == 'true'
     introJs().start()
@@ -494,8 +499,13 @@ $(".happenings.show").ready ->
   first_user = document.getElementById("tour")
   help = document.getElementById("help")
   if help?
-    help.addEventListener 'click', ()->
-      introJs().start()
+    if !help.addEventListener
+      help.attachEvent "onclick", ()->
+        introJs().start()
+    else
+      help.addEventListener("click", ()->
+        introJs().start()
+      , false)
 
   if first_user? && first_user.innerText == 'true'
     introJs().start()
@@ -516,9 +526,17 @@ $(".users.show, .happenings.show, .forums.show, .tracks.show, .groups.show, .use
   if actions_menu? && toggle_actions?
     checkWidth()
     $(window).resize(checkWidth)
-    toggle_actions.addEventListener 'click', ()->
-      if actions_menu.attr('class') == 'hidden'
-        actions_menu.removeClass('hidden')
-      else
-        actions_menu.addClass('hidden')
+    if !toggle_actions.addEventListener
+      help.attachEvent "onclick", ()->
+        if actions_menu.attr('class') == 'hidden'
+          actions_menu.removeClass('hidden')
+        else
+          actions_menu.addClass('hidden')
+    else
+      toggle_actions.addEventListener('click', ()->
+        if actions_menu.attr('class') == 'hidden'
+          actions_menu.removeClass('hidden')
+        else
+          actions_menu.addClass('hidden')
+      , false)
       
