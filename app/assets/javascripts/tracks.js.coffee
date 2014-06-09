@@ -39,7 +39,7 @@ gm_init = (gm_center) ->
   map_options = {
     zoom: 14,
     center: gm_center,
-    backgroundColor: "rgba(0,0,0,0)",
+    backgroundColor: "rgb(0,0,0)",
     scrollwheel: false,
     mapTypeControlOptions: {
       mapTypeIds: mapTypeIds,
