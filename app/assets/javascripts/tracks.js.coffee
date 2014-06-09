@@ -506,7 +506,8 @@ $(".users.show, .happenings.show, .forums.show, .tracks.show, .groups.show, .use
   actions_menu = document.getElementById("actions__menu")
 
   checkWidth = ()->
-    if $(window).innerWidth() < 925
+    width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+    if width < 925
       actions_menu.className = 'hidden'
       toggle_actions.style.display = 'block'
     else
