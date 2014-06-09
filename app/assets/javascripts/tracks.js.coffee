@@ -513,11 +513,9 @@ $(".users.show, .happenings.show, .forums.show, .tracks.show, .groups.show, .use
       actions_menu.removeClass('hidden')
       toggle_actions.style.display = 'none'
 
-  if actions_menu?
+  if actions_menu? && toggle_actions?
     checkWidth()
     $(window).resize(checkWidth)
-
-  if toggle_actions?
     toggle_actions.addEventListener 'click', ()->
       if actions_menu.attr('class') == 'hidden'
         actions_menu.removeClass('hidden')

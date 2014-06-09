@@ -75,7 +75,7 @@
 		};
 
 		var elementClicked = function(e){
-			e.preventDefault();
+			if(e.preventDefault) e.preventDefault();
 			iCurrentIndex = aElements.indexOf($(this).attr("href"));
 			openBox();
 		};
