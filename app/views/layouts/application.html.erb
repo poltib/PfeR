@@ -8,12 +8,12 @@
   <meta name="keywords" content="tracé, courses, joggings, randonnées, golden race, groupe d'entraînement" />
   <title><%= yield :title %></title>
   <!--[if IE 7]>
-    <link rel="stylesheet" href="/stylesheets/fontello-ie7.css">
+    <%= stylesheet_link_tag "fontello-ie7", media: "all" %>
   <![endif]-->
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-    <script src="/javascripts/html5shiv.min.js"></script>
-    <script src="/javascripts/respond.min.js "></script>
+    <%= javascript_include_tag "respond.min" %>
+    <%= javascript_include_tag "html5shiv.min" %>
   <![endif]-->
   <%= stylesheet_link_tag "application", media: "all" %>
   <%= csrf_meta_tags %>
