@@ -114,7 +114,6 @@ plotElevation = (results, status) ->
     fill: '#00AA00',
     vAxis: {minValue: 0},
     colors: ["#3498db"],
-    backgroundColor: 'transparent',
     focusBorderColor: '#00AA00',
     tooltip: { trigger: 'none' },
   }
