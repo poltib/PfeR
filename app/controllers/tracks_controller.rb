@@ -103,12 +103,12 @@ class TracksController < ApplicationController
       if params[:search] && params[:search] != ""
         @location = Geocoder.coordinates(params[:search])
       else
-        user_location = request.location
-        if user_location.latitude === 0.0 && user_location.longitude === 0.0
-          @location = [50.633333, 5.566667]
-        else
-          @location = [user_location.latitude, user_location.longitude]
-        end
+        # user_location = request.location
+        # if user_location.latitude === 0.0 && user_location.longitude === 0.0
+        @location = [50.633333, 5.566667]
+        # else
+        #   @location = [user_location.latitude, user_location.longitude]
+        # end
       end
     end
 
