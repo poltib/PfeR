@@ -29,7 +29,7 @@
         <div class="entity__activity">
           <h3 role="heading" aria-level="3">Activités du groupe</h3>
           <ul class="activity__timeline">
-            <% if !user_signed_in? %>
+            <% if !user_signed_in? && @group.happenings.count < 1 %>
               <li>
                 <div class="activity__relative">
                   <span class="activity__date"><%= l(Date.today , :format => "%d %b %Y") %></span>

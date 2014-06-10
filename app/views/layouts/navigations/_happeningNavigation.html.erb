@@ -28,7 +28,7 @@
       <li>
         <% if current_user.favorites.where(favoritable_id: @happening.id, favoritable_type: "Happening").first %>
           <%= button_to [@happening, current_user.favorites.where(favoritable_id: @happening.id, favoritable_type: "Happening").first], method: :delete do %>
-            Retirer des favorits
+            Retirer des favoris
           <% end %>
         <% else %>
           <%= form_for ([@happening, Favorite.new]), :html => {:class => 'button_to' } do |f| %>
@@ -36,7 +36,7 @@
             <%= f.hidden_field :favoritable_id, :value => @happening.id %>
             <%= f.hidden_field :favoritable_type, :value => "Happening" %>
             <%= button_tag do %>
-              Ajouter aux favorits
+              Ajouter aux favoris
             <% end %>
           <% end %>
         <% end %>

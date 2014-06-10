@@ -53,6 +53,6 @@ production:
   adapter: postgresql
   encoding: unicode
   database: pfe_production
-  pool: 10
+  pool: 20
   username: pfe
   password:
