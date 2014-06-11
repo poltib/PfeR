@@ -6,7 +6,7 @@
       <li>
         <% if current_user.favorites.where(favoritable_id: @forum.id, favoritable_type: "Forum").first %>
           <%= button_to [@forum, current_user.favorites.where(favoritable_id: @forum.id, favoritable_type: "Forum").first], method: :delete do %>
-            Retirer des favorits
+            Retirer des favoris
           <% end %>
         <% else %>
           <%= form_for ([@forum, Favorite.new]), :html => {:class => 'button_to' } do |f| %>
@@ -14,7 +14,7 @@
             <%= f.hidden_field :favoritable_id, :value => @forum.id %>
             <%= f.hidden_field :favoritable_type, :value => "Forum" %>
             <%= button_tag do %>
-              Ajouter aux favorits
+              Ajouter aux favoris
             <% end %>
           <% end %>
         <% end %>
