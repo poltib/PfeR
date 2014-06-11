@@ -15,12 +15,25 @@ end_marker = null
 start_marker = null
 
 # Spiner
-$(document).on('page:fetch', ( =>
-  $(".loading-indicator").show()
-))
-$(document).on('page:change', ( =>
-  $(".loading-indicator").hide()
-))
+
+@PageSpinner =
+  spin: (ms=500)->
+    @spinner = setTimeout( (=> @add_spinner()), ms)
+    $(document).on 'page:change', =>
+      @remove_spinner()
+  spinner_html: '
+    <span class="div__loader"><em class="loader icon-cw"></em></span>
+  '
+  spinner: null
+  add_spinner: ->
+    $('.header__navbar').append(@spinner_html)
+  remove_spinner: ->
+    clearTimeout(@spinner)
+    $('.div__loader').on 'hidden', ->
+      $(this).remove()
+ 
+$(document).on 'page:fetch', ->
+  PageSpinner.spin()
 
 if google?
   path = new google.maps.MVCArray()

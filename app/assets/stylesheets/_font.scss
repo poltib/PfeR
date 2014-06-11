@@ -79,7 +79,7 @@ section{
         font-size: 1.4em;
         border-bottom: 1px solid $sky;
     }
-    @include media($phablet){
+    @include media($tablet){
         width: 100%;
         display: block;
         border:1px solid $sky;
@@ -146,3 +146,22 @@ a:hover{
     display: none;
 }
 
+@keyframes Rotate {
+  from { transform:rotate(0deg);}
+  to { transform:rotate(360deg);}
+}
+
+.loader {
+    transform-origin: 46% 49%;
+    animation: Rotate 800ms infinite linear;
+    display: inline-block;
+    margin:0;    
+    color: silver;
+}
+.div__loader{
+    position: absolute;
+    z-index:10007;
+    top: 9px;
+    left: 8px;
+    font-size:26px; 
+}
