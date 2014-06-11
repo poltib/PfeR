@@ -171,7 +171,7 @@ display_on_map = (data,map) ->
     remainingDist -= 1000
     km_number++
   static_map = "https://maps.googleapis.com/maps/api/staticmap?size=400x400&path=weight:5%7Ccolor:black%7Cenc:"+ data.polyline
-  document.getElementById("mapstat").setAttribute("content",static_map)
+  document.getElementById("mapstat").setAttribute("src",static_map)
 
 
 calc_bounds = (track_path) ->
