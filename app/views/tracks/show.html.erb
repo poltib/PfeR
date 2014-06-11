@@ -1,10 +1,12 @@
 <% content_for :title do %>
   Tracé «<%= @track.name %>» | Sportfun
 <% end %>
+<% content_for :metaImage do %>
+  <meta id="mapstat" property="og:image"content= />
+<% end %>
 
 <section>
     <h2 role="heading" aria-level="2" class="hidden">Content</h2>
-    <img src="" class="hidden" id="mapstat">
     <div class="container entity__title happening track">
       <%= render "layouts/navigations/trackNavigation" %>
       <h2 role="heading" aria-level="2">

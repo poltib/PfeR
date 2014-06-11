@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Site web de partage de tracés et de planification d’événements dédiés à la course à pied">
   <meta name="keywords" content="tracé, courses, joggings, randonnées, golden race, groupe d'entraînement" />
+  <meta name="author" content="Jérémy Thiry">
   <title><%= yield :title %></title>
+  <%= yield :metaImage %>
   <%= stylesheet_link_tag "application", media: "all" %>
   <!--[if IE 7]>
     <%= stylesheet_link_tag "fontello-ie7", media: "all" %>

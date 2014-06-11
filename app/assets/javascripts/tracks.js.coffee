@@ -170,8 +170,8 @@ display_on_map = (data,map) ->
     dist_markers.push(createMarker(map, track_path.GetPointAtDistance(1000*km_number),km_number))
     remainingDist -= 1000
     km_number++
-  static_map = "https://maps.googleapis.com/maps/api/staticmap?size=400x400&path=weight:5%7Ccolor:black%7Cenc:"+ data.polyline
-  document.getElementById("mapstat").setAttribute("src",static_map)
+  static_map = "http://maps.googleapis.com/maps/api/staticmap?size=400x400&path=weight:5%7Ccolor:black%7Cenc:"+ data.polyline
+  document.getElementById("mapstat").setAttribute("content",static_map)
 
 
 calc_bounds = (track_path) ->
