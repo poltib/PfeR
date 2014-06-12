@@ -15,7 +15,7 @@ class TracksController < ApplicationController
     end
     @tracksJs = Array.new
     @tracks.each do |track|
-      @tracksJs.push([track.latitude, track.longitude, track.slug])
+      @tracksJs.push([track.latitude, track.longitude, track.slug, track.length])
     end
   end
 
