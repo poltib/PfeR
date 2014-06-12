@@ -53,7 +53,7 @@
             <%= render "comments/form" %>
           </div>
         <% else %>
-          <p class="results__none">Vous devez être connecté pour participer à la discussion.</p>
+          <p class="results__none">Vous devez être connecté pour participer à la discussion. <%= link_to "Inscription", new_registration_path(User)%>, <%= link_to "connexion", new_user_session_path %></p>
         <% end %>
       </div>
     </div>

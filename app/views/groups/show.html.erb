@@ -19,6 +19,7 @@
         <% end %>
       <% end %>
       <p>Céé par <%= link_to @group.owner.username, @group.owner %></p>
+      <p><%= @group.address %></p>
       <p><%= @group.description %></p>
       <% if user_signed_in? &&  current_user.id == @group.owner.id %>
         <%= link_to "Paramètres", edit_group_path %>
