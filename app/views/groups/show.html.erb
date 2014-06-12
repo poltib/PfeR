@@ -42,7 +42,21 @@
                 </div>
               </li>
             <% end %>
-            <% if user_signed_in? &&  current_user.id == @group.owner.id && @group.happenings.count < 1 %>
+            <% if @group.happenings.count >= 1 && user_signed_in? &&  current_user.id == @group.owner.id %>
+              <li>
+                <div class="activity__relative">
+                  <span class="activity__date"><%= l(Date.today , :format => "%d %b %Y") %></span>
+                  <span class="activity__circle"></span>
+                </div>
+                <div class="activity__content">
+                  <h3>Ajoutez des activités!</h3>
+                  <p>
+                    <%= link_to "Ajouter", new_group_happening_path(@group) %>.
+                  </p>
+                </div>
+              </li>
+            <% end %>
+            <% if @group.happenings.count < 1 && user_signed_in? %>
               <li>
                 <div class="activity__relative">
                   <span class="activity__date"><%= l(Date.today , :format => "%d %b %Y") %></span>
@@ -57,18 +71,6 @@
                   <% else %>
                     <p>Cet groupe n'a pas d'activités</p>
                   <% end %>
-                </div>
-              </li>
-            <% end %>
-            <% if @group.happenings.count < 1 && user_signed_in? &&  current_user.id != @group.owner.id %>
-              <li>
-                <div class="activity__relative">
-                  <span class="activity__date"><%= l(Date.today , :format => "%d %b %Y") %></span>
-                  <span class="activity__circle"></span>
-                </div>
-                <div class="activity__content">
-                  <h3>Pas d'activités</h3>
-                  <p>Cet groupe n'a pas d'activités</p>
                 </div>
               </li>
             <% else %>
@@ -131,7 +133,7 @@
               </li>
             <% end %>
           </ul>
-          <% if @waiting_users.count > 0 && @group.owner.id == current_user.id %>
+          <% if @waiting_users.count > 0 && user_signed_in? && @group.owner.id == current_user.id %>
             <h3 role="heading" aria-level="3">
               <%= @waiting_users.count %> 
               <% if @waiting_users.count <= 1 %>
