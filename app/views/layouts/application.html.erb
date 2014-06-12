@@ -15,7 +15,10 @@
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
     <%= javascript_include_tag "respond.min" %>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <%= javascript_include_tag "html5shiv.min" %>
+  <![endif]-->
+  <!--[if (gte IE 6)&(lte IE 8)]>
+    <%= javascript_include_tag "selectivizr-min" %>
   <![endif]-->
   <%= csrf_meta_tags %>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
