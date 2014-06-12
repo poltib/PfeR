@@ -467,9 +467,8 @@ $(".tracks.index, .happenings.show").ready ->
         position: new google.maps.LatLng(track[0], track[1]),
         map: map,
         id: track[2],
-        icon: image_path(track[3]+'.svg')
-      }))
         icon: image_path(track[3].toString().replace(NUMBERS_DOT_NUMBERS, '$1')+'km.svg')
+      })
     for track_marker in tracks_markers
       google.maps.event.addListener(track_marker, 'click', load_track_on_click)
 
