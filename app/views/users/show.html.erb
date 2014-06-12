@@ -76,7 +76,10 @@
                     <span class="activity__circle"></span>
                   </div>
                   <div class="activity__content">
-                    <h3><%= link_to happening.event_type.name, happenings_path(params.slice(:sort).merge(event_type: happening.event_type.id)), :class => "type #{happening.event_type.name}" %><%= link_to happening.name, happening %></h3>
+                    <h3><%= link_to happening.event_type.name, happenings_path(params.slice(:sort).merge(event_type: happening.event_type.id)), :class => "type #{happening.event_type.name}" %><%= link_to happening.name, happening %> 
+                    <%= link_to happening_user_statuses_path(happening), :title => 'Afficher les utilisateurs qui participent cette évènement', :class => "timeline__part" do %>
+                      <%= happening.user_statuses.count.to_s %> <span class="hidden">Participants</span><em class="icon-users"></em>
+                    <% end %></h3>
                     <p>
                       <%= happening.description %>
                     </p>
