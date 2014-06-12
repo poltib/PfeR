@@ -17,6 +17,14 @@
       <% end %>
       <%= link_to "Ajouter un groupe", new_group_path %>
     </div>
+    <% if !params[:name].blank? | !params[:address].blank? %>
+      <div class="entity__params">
+        <span>Nom&nbsp;:
+        <%= params[:name] unless params[:name].blank? %></span>
+        <span>Lieu&nbsp;:
+        <%= params[:address] unless params[:address].blank? %></span>
+      </div>
+    <% end %>
     <div class="entity__searchform">
       <%= form_tag(groups_path, :method => "get", id: "search-form") do %>
         <fieldset>
@@ -24,6 +32,10 @@
           <li>
             <%= label_tag :name, "Nom" %>
             <%= text_field_tag  :name, params[:name] %>
+          </li>
+          <li>
+            <%= label_tag :address, "Adresse" %>
+            <%= text_field_tag  :address, params[:address] %>
           </li>
           <li>
             <%= submit_tag "Rechercher", :name => nil %>

@@ -243,6 +243,9 @@ fr:
       comment:
         one: Commentaire
         other: Commentaires
+      forum:
+        one: Forum
+        other: Forums
       event_type:
         one: Type d'évènement
         other: Types d'évènement

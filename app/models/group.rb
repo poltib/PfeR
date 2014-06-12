@@ -1,7 +1,9 @@
 class Group < ActiveRecord::Base
-	mount_uploader :avatar, ImageUploader, :delayed=> true 
+	mount_uploader :avatar, ImageUploader, :delayed=> true
+  geocoded_by :address  
+  after_validation :geocode, :if => :address_changed? 
 
-  validates :name, :description, :avatar, presence: true
+  validates :name, :description, :address, :avatar, presence: true
   validates :name, uniqueness: true
 
   has_many :groupers, :conditions => 'accepted_on IS NOT NULL', :dependent => :destroy
@@ -13,8 +15,9 @@ class Group < ActiveRecord::Base
   has_many :happenings
   has_many :tracks
 
-  def self.search(search)
+  def self.search(search, address)
     query_obj = all
     query_obj = query_obj.where("name LIKE ?", "%#{search}%")
+    query_obj = query_obj.near(address, 20, :units => :km)
   end
 end

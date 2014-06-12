@@ -1,6 +1,6 @@
 <% content_for :title do %>
   <% if params[:user_id] %>
-    Favoris de <%= @favoritable.username %>
+    Favoris de <%= @favoritable.username %> | Sportfun
   <% else %>
     Tous les utilisateurs qui ont en favoris <%= @favoritable.name %> | Sportfun
   <% end %>
@@ -46,16 +46,23 @@
         <ul>
           <% if params[:user_id] %>
             <% @favorites.each do |favorite| %>
-                <li class="entity__result">
-                  <ul class="result__list">
-                    <li>
-                      <h4 role="heading" aria-level="4">
-                        <span><%= favorite.favoritable_type %></span>
-                        <%= link_to favorite.favoritable.name, favorite.favoritable %>
-                      </h4>
-                    </li>
-                  </ul>
-                </li>
+              <li class="entity__result">
+                <ul class="result__list">
+                  <li>
+                    <h4 role="heading" aria-level="4">
+                      <% case favorite.favoritable_type %>
+                      <% when 'Happening' %>
+                        <%= I18n.t 'activerecord.models.happening.one' %>
+                      <% when 'Forum' %>
+                        <%= I18n.t 'activerecord.models.forum.one' %>
+                      <% when 'Track' %>
+                        <%= I18n.t 'activerecord.models.track.one' %>
+                      <% end %>
+                      <%= link_to favorite.favoritable.name, favorite.favoritable %>
+                    </h4>
+                  </li>
+                </ul>
+              </li>
             <% end %>
           <% else %>
             <% @favorites.each do |favorite| %>

@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
       @user = User.find_by_username params[:user_id]
       @groups = @user.groups_as_owner.paginate(:page => params[:page], :per_page => 10)
     else
-      @groups = Group.search(params[:name]).paginate(:page => params[:page], :per_page => 10)
+      @groups = Group.search(params[:name], params[:address]).paginate(:page => params[:page], :per_page => 10)
     end
   end
 
@@ -62,6 +62,6 @@ class GroupsController < ApplicationController
     end
 
     def group_params
-      params.require(:group).permit(:name, :description, :avatar, :user_id)
+      params.require(:group).permit(:name, :description, :address, :avatar, :user_id)
     end
 end
