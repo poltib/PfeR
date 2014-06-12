@@ -1,5 +1,6 @@
 NUMBERS_DOT_THREENUMBERS = /^(\d+)(\d{3})(\.\d+)/
 THREENUMBERS_DOT_NUMBERS = /^(\d{3})(\.\d+)/
+NUMBERS_DOT_NUMBERS = /^(\d+)(\.\d+)/
 COORD = /^(\d+\.)(\d{0,13})(\d+)/
 poly = 1
 chart = 1
@@ -170,8 +171,6 @@ display_on_map = (data,map) ->
     dist_markers.push(createMarker(map, track_path.GetPointAtDistance(1000*km_number),km_number))
     remainingDist -= 1000
     km_number++
-  static_map = "http://maps.googleapis.com/maps/api/staticmap?size=200x200&path=weight:5%7Ccolor:red%7Cenc:"+ data.polyline+"&format=png"
-  document.getElementById("mapstat").setAttribute("content",static_map)
 
 
 calc_bounds = (track_path) ->
@@ -470,6 +469,7 @@ $(".tracks.index, .happenings.show").ready ->
         id: track[2],
         icon: image_path(track[3]+'.svg')
       }))
+        icon: image_path(track[3].toString().replace(NUMBERS_DOT_NUMBERS, '$1')+'km.svg')
     for track_marker in tracks_markers
       google.maps.event.addListener(track_marker, 'click', load_track_on_click)
 
