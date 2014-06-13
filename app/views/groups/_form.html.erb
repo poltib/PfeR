@@ -18,7 +18,8 @@
 	<%= f.text_area :description %></li>
 
   <li><%= f.label :address, :class => "mandatory" %>
-  <%= f.text_field :address %></li>
+  <p>Soyez le plus précis possible. (ex: Liège, Belgique)</p>
+  <%= f.text_field :address, :placeholder => "Liège, Belgique" %></li>
 
 	<li><%= f.label :avatar, :class => "mandatory" %>
 	<%= f.file_field :avatar %></li>

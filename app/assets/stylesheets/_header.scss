@@ -22,7 +22,7 @@
 
 .headingImg{
     padding-top: 3em;
-    background: image-url('head.png') fixed repeat;
+    background: image-url('head1.png') fixed repeat;
     border-bottom: 3px solid $sky;
     h2{
         border:none;
@@ -69,7 +69,6 @@ div.intro{
 .intro__singup{
     h2{
         color: $sky;
-        text-align: center;
         line-height: 2.5;
     }
     @include span-columns(5);
@@ -90,7 +89,7 @@ div.intro{
         @include span-columns(4 of 4);
     }
     label{@extend %visuallyhidden;}
-    input, .signin{
+    input, .signin, h2{
         @include span-columns(3 of 5);
         @include shift(1);
 

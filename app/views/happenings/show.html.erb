@@ -24,7 +24,9 @@
           <% if @happening.group %>
             <li><em class="icon-globe"></em> Posté sur le groupe <%= link_to @happening.group.name, @happening.group %></li>
           <% end %>
-          <li><em class="icon-link"></em> <a href="<%= @happening.link %>"><%= @happening.link %></a></li>
+          <% if @happening.link? %>
+            <li><em class="icon-link"></em> <a href="<%= @happening.link %>"><%= @happening.link %></a></li>
+          <% end %>
         </div>
         <li>
           <span><em class="icon-vcard"></em> Description</span>
